@@ -35,6 +35,10 @@
             border-bottom: 1px solid #E1E8E5;
         }
         
+        .info-row:last-child {
+            border-bottom: none;
+        }
+        
         .info-label {
             color: #6C757D;
             font-weight: 600;
@@ -75,10 +79,12 @@
             display: flex;
             gap: 15px;
             margin: 30px 0;
+            flex-wrap: wrap;
         }
         
         .search-input {
             flex: 1;
+            min-width: 250px;
             padding: 12px 20px;
             border: 2px solid #E1E8E5;
             border-radius: 12px;
@@ -88,6 +94,20 @@
         .search-input:focus {
             outline: none;
             border-color: #CFA892;
+        }
+        
+        @media (max-width: 600px) {
+            .search-box {
+                flex-direction: column;
+            }
+            
+            .search-input {
+                width: 100%;
+            }
+            
+            .btn {
+                width: 100%;
+            }
         }
     </style>
 </head>
@@ -115,8 +135,9 @@
     <!-- CONTENIDO PRINCIPAL -->
     <div class="verify-container">
         <div class="verify-card">
+            <div style="font-size: 4rem; margin-bottom: 20px;">🔍</div>
             <h1 style="color: #1B2C27; font-size: 2.5rem; margin-bottom: 20px;">
-                🔍 Verificar Diploma
+                Verificar Diploma
             </h1>
             <p style="color: #6C757D; font-size: 1.1rem; margin-bottom: 30px;">
                 Verifica la autenticidad de un diploma emitido por Empírica Legal Lab
@@ -132,12 +153,33 @@
                     onkeypress="if(event.key==='Enter') verifyDiploma()"
                 >
                 <button class="btn btn-primary" onclick="verifyDiploma()">
-                    Verificar
+                    Verificar Diploma
                 </button>
             </div>
 
             <!-- RESULTADO DE VERIFICACIÓN -->
             <div id="verificationResult"></div>
+        </div>
+
+        <!-- INFORMACIÓN ADICIONAL -->
+        <div style="background: white; padding: 30px; border-radius: 15px; box-shadow: 0 4px 20px rgba(27, 44, 39, 0.1); margin-top: 40px;">
+            <h3 style="color: #1B2C27; margin-bottom: 20px; text-align: center;">
+                ℹ️ Sobre la Verificación de Diplomas
+            </h3>
+            <div style="color: #6C757D; line-height: 1.8;">
+                <p style="margin-bottom: 15px;">
+                    <strong style="color: #1B2C27;">¿Cómo funciona?</strong><br>
+                    Cada diploma emitido por Empírica Legal Lab contiene un código QR único que permite verificar su autenticidad en línea. Solo los diplomas auténticos aparecerán en nuestra base de datos oficial.
+                </p>
+                <p style="margin-bottom: 15px;">
+                    <strong style="color: #1B2C27;">¿Qué información se muestra?</strong><br>
+                    Al verificar un diploma válido, se mostrará: nombre del titular, curso completado, fecha de emisión, calificación obtenida y número de firma electrónica SAT.
+                </p>
+                <p>
+                    <strong style="color: #1B2C27;">¿Tienes dudas?</strong><br>
+                    Contacta con nosotros por WhatsApp: <a href="https://wa.me/529982570828" style="color: #1B2C27; font-weight: 600;">+52 998 257 0828</a>
+                </p>
+            </div>
         </div>
     </div>
 
@@ -146,18 +188,52 @@
         <div class="footer-container">
             <div class="footer-section">
                 <img src="https://i.postimg.cc/tCVcj2Sw/Captura-de-pantalla-2025-10-04-a-la-s-2-33-47-p-m.png" alt="Logo" style="height: 60px; margin-bottom: 20px;">
-                <p>© 2025 Empírica Legal Lab</p>
+                <p>Formación jurídica accesible para todos.</p>
+                <p style="margin-top: 15px; opacity: 0.8;">
+                    © 2025 Empírica Legal Lab<br>
+                    Todos los derechos reservados
+                </p>
             </div>
+            
+            <div class="footer-section">
+                <h4>Verificación</h4>
+                <ul>
+                    <li><a href="verificar.html">Verificar Diploma</a></li>
+                    <li><a href="diplomas.html">Información de Diplomas</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-section">
+                <h4>Empírica Legal Lab</h4>
+                <ul>
+                    <li><a href="index.html">Catálogo de Cursos</a></li>
+                    <li><a href="contacto.html">Contacto</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-section">
+                <h4>Contacto</h4>
+                <p>📱 WhatsApp: +52 998 257 0828</p>
+                <p>✉️ Email: jorge_clemente@empirica.mx</p>
+            </div>
+        </div>
+        
+        <div class="footer-bottom">
+            <p>Desarrollado con ❤️ para democratizar el conocimiento jurídico</p>
         </div>
     </footer>
 
     <!-- BOTÓN FLOTANTE WHATSAPP -->
-    <a href="https://wa.me/529982570828" class="whatsapp-float" target="_blank">
+    <a href="https://wa.me/529982570828?text=Hola,%20tengo%20una%20duda%20sobre%20verificación%20de%20diplomas" class="whatsapp-float" target="_blank" title="Contáctanos por WhatsApp">
         📱
     </a>
 
     <script>
-        // Función para obtener parámetros de la URL
+        // ============================================
+        // SISTEMA DE VERIFICACIÓN DE DIPLOMAS
+        // ============================================
+
+        // Obtener parámetro de la URL (cuando escanean QR)
         function getURLParameter(name) {
             const urlParams = new URLSearchParams(window.location.search);
             return urlParams.get(name);
@@ -177,114 +253,151 @@
             const diplomaId = document.getElementById('searchInput').value.trim().toUpperCase();
             const resultDiv = document.getElementById('verificationResult');
             
+            // Validar que se ingresó un ID
             if (!diplomaId) {
                 resultDiv.innerHTML = `
                     <div class="verify-status status-invalid">
-                        ❌ Por favor ingresa un ID de diploma
+                        ❌ Por favor ingresa un ID de diploma válido
                     </div>
                 `;
                 return;
             }
 
-            // Mostrar loading
+            // Mostrar estado de carga
             resultDiv.innerHTML = `
                 <div class="verify-status status-loading">
-                    ⏳ Verificando diploma...
+                    ⏳ Verificando diploma en nuestra base de datos...
                 </div>
             `;
 
             try {
-                // Cargar base de datos de diplomas
+                // Cargar base de datos de diplomas desde GitHub
                 const response = await fetch('data/diplomas.json');
+                
+                if (!response.ok) {
+                    throw new Error('No se pudo cargar la base de datos');
+                }
+                
                 const data = await response.json();
                 
-                // Buscar el diploma
+                // Buscar el diploma por ID
                 const diploma = data.diplomas.find(d => d.id === diplomaId);
                 
                 if (diploma) {
-                    // Diploma encontrado - VÁLIDO
+                    // ✅ DIPLOMA ENCONTRADO - VÁLIDO
                     resultDiv.innerHTML = `
                         <div class="verify-status status-valid">
                             ✅ Diploma Verificado Exitosamente
                         </div>
                         
                         <div class="diploma-info">
-                            <h3 style="color: #1B2C27; margin-bottom: 20px; text-align: center;">
-                                Información del Diploma
+                            <h3 style="color: #1B2C27; margin-bottom: 20px; text-align: center; font-size: 1.3rem;">
+                                📜 Información del Diploma
                             </h3>
                             
                             <div class="info-row">
-                                <span class="info-label">ID del Diploma:</span>
+                                <span class="info-label">🆔 ID del Diploma:</span>
                                 <span class="info-value">${diploma.id}</span>
                             </div>
                             
                             <div class="info-row">
-                                <span class="info-label">Nombre Completo:</span>
+                                <span class="info-label">👤 Nombre Completo:</span>
                                 <span class="info-value">${diploma.nombre_completo}</span>
                             </div>
                             
                             <div class="info-row">
-                                <span class="info-label">Curso:</span>
+                                <span class="info-label">📚 Curso:</span>
                                 <span class="info-value">${diploma.curso}</span>
                             </div>
                             
                             <div class="info-row">
-                                <span class="info-label">Fecha de Emisión:</span>
+                                <span class="info-label">📅 Fecha de Emisión:</span>
                                 <span class="info-value">${formatDate(diploma.fecha_emision)}</span>
                             </div>
                             
                             <div class="info-row">
-                                <span class="info-label">Calificación:</span>
+                                <span class="info-label">📊 Calificación:</span>
                                 <span class="info-value">${diploma.calificacion}%</span>
                             </div>
                             
                             <div class="info-row">
-                                <span class="info-label">Firma Electrónica SAT:</span>
-                                <span class="info-value">${diploma.firma_sat}</span>
+                                <span class="info-label">🔐 Firma Electrónica SAT:</span>
+                                <span class="info-value" style="font-family: monospace; font-size: 0.9rem;">${diploma.firma_sat}</span>
                             </div>
                         </div>
                         
-                        <p style="color: #6C757D; font-size: 0.95rem; margin-top: 20px;">
-                            ✓ Este diploma ha sido emitido y firmado electrónicamente por Empírica Legal Lab.<br>
-                            ✓ Contiene firma electrónica SAT con validez oficial.<br>
-                            ✓ Fecha de verificación: ${new Date().toLocaleDateString('es-MX')}
-                        </p>
+                        <div style="background: #E8F3EA; padding: 20px; border-radius: 10px; margin-top: 20px; text-align: left;">
+                            <h4 style="color: #155724; margin-bottom: 10px;">✓ Certificación Válida</h4>
+                            <ul style="list-style: none; padding: 0; color: #155724; font-size: 0.95rem;">
+                                <li style="margin-bottom: 8px;">✓ Este diploma ha sido emitido oficialmente por Empírica Legal Lab</li>
+                                <li style="margin-bottom: 8px;">✓ Contiene firma electrónica SAT con validez oficial</li>
+                                <li style="margin-bottom: 8px;">✓ Fecha de verificación: ${new Date().toLocaleDateString('es-MX', {
+                                    year: 'numeric',
+                                    month: 'long',
+                                    day: 'numeric'
+                                })}</li>
+                            </ul>
+                        </div>
                     `;
                 } else {
-                    // Diploma NO encontrado - INVÁLIDO
+                    // ❌ DIPLOMA NO ENCONTRADO - INVÁLIDO
                     resultDiv.innerHTML = `
                         <div class="verify-status status-invalid">
                             ❌ Diploma No Encontrado
                         </div>
                         
-                        <p style="color: #6C757D; margin-top: 20px;">
-                            El ID <strong>"${diplomaId}"</strong> no corresponde a ningún diploma emitido por Empírica Legal Lab.
-                        </p>
+                        <div style="background: #FFF3CD; padding: 20px; border-radius: 10px; margin-top: 20px; text-align: left;">
+                            <p style="color: #856404; margin-bottom: 15px; font-size: 1.05rem;">
+                                <strong>El ID "${diplomaId}" no corresponde a ningún diploma emitido por Empírica Legal Lab.</strong>
+                            </p>
+                            <p style="color: #856404; font-size: 0.95rem; margin-bottom: 10px;">
+                                Posibles causas:
+                            </p>
+                            <ul style="color: #856404; font-size: 0.95rem; margin-left: 20px;">
+                                <li>El ID fue ingresado incorrectamente</li>
+                                <li>El diploma es falso o no ha sido emitido por nosotros</li>
+                                <li>El diploma está en proceso y aún no ha sido registrado</li>
+                            </ul>
+                        </div>
                         
-                        <p style="color: #6C757D; margin-top: 15px; font-size: 0.95rem;">
-                            Si crees que esto es un error, por favor contacta a:<br>
-                            📱 WhatsApp: +52 998 257 0828<br>
-                            ✉️ Email: jorge_clemente@empirica.mx
-                        </p>
+                        <div style="background: #F8D7DA; padding: 20px; border-radius: 10px; margin-top: 20px; border: 2px solid #DC3545;">
+                            <h4 style="color: #721C24; margin-bottom: 15px;">⚠️ ¿Crees que esto es un error?</h4>
+                            <p style="color: #721C24; margin-bottom: 15px;">
+                                Si compraste este diploma y crees que debería estar verificado, por favor contáctanos inmediatamente:
+                            </p>
+                            <div style="color: #721C24;">
+                                <p style="margin-bottom: 8px;"><strong>📱 WhatsApp:</strong> <a href="https://wa.me/529982570828?text=Hola,%20tengo%20un%20problema%20con%20la%20verificación%20del%20diploma%20${diplomaId}" style="color: #721C24; text-decoration: underline;">+52 998 257 0828</a></p>
+                                <p><strong>✉️ Email:</strong> jorge_clemente@empirica.mx</p>
+                            </div>
+                        </div>
                     `;
                 }
             } catch (error) {
-                // Error al cargar la base de datos
+                // ⚠️ ERROR AL CARGAR LA BASE DE DATOS
                 resultDiv.innerHTML = `
                     <div class="verify-status status-invalid">
-                        ❌ Error al verificar el diploma
+                        ❌ Error de Conexión
                     </div>
-                    <p style="color: #6C757D; margin-top: 20px;">
-                        No se pudo conectar con la base de datos. Por favor intenta más tarde.
-                    </p>
+                    <div style="background: #F8D7DA; padding: 20px; border-radius: 10px; margin-top: 20px;">
+                        <p style="color: #721C24; margin-bottom: 15px;">
+                            No se pudo conectar con la base de datos de diplomas. Por favor verifica:
+                        </p>
+                        <ul style="color: #721C24; margin-left: 20px; font-size: 0.95rem;">
+                            <li>Que tengas conexión a internet</li>
+                            <li>Que el sitio esté funcionando correctamente</li>
+                        </ul>
+                        <p style="color: #721C24; margin-top: 15px;">
+                            Si el problema persiste, contacta a soporte: <a href="https://wa.me/529982570828" style="color: #721C24; text-decoration: underline;">+52 998 257 0828</a>
+                        </p>
+                    </div>
                 `;
-                console.error('Error:', error);
+                console.error('Error al verificar diploma:', error);
             }
         }
 
-        // Función para formatear fechas
+        // Formatear fechas en español
         function formatDate(dateString) {
-            const date = new Date(dateString);
+            const date = new Date(dateString + 'T00:00:00');
             return date.toLocaleDateString('es-MX', {
                 year: 'numeric',
                 month: 'long',
@@ -292,10 +405,20 @@
             });
         }
 
-        // Función para el menú móvil
+        // Menú móvil
         function toggleMenu() {
             document.getElementById('navMenu').classList.toggle('active');
         }
+
+        // Cerrar menú al hacer clic en un enlace
+        document.querySelectorAll('.nav-menu a').forEach(link => {
+            link.addEventListener('click', () => {
+                const navMenu = document.getElementById('navMenu');
+                if (navMenu.classList.contains('active')) {
+                    navMenu.classList.remove('active');
+                }
+            });
+        });
     </script>
 </body>
 </html>
