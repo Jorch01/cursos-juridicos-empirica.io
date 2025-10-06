@@ -1,0 +1,26 @@
+{
+  "diplomas": [
+    {
+      "id": "EMPJUR-2025-001",
+      "nombre_completo": "María González Pérez",
+      "email": "maria.gonzalez@ejemplo.com",
+      "curso": "Derecho para No Abogados",
+      "fecha_emision": "2025-01-15",
+      "calificacion": 85,
+      "firma_sat": "ABC123XYZ789",
+      "diploma_url": "diplomas/EMPJUR-2025-001.pdf",
+      "qr_code": "https://tuusuario.github.io/cursos-juridicos-empirica/verificar.html?id=EMPJUR-2025-001"
+    },
+    {
+      "id": "EMPJUR-2025-002",
+      "nombre_completo": "Juan Carlos Hernández",
+      "email": "juan.hernandez@ejemplo.com",
+      "curso": "Derecho para No Abogados",
+      "fecha_emision": "2025-01-20",
+      "calificacion": 92,
+      "firma_sat": "DEF456UVW012",
+      "diploma_url": "diplomas/EMPJUR-2025-002.pdf",
+      "qr_code": "https://tuusuario.github.io/cursos-juridicos-empirica/verificar.html?id=EMPJUR-2025-002"
+    }
+  ]
+}
