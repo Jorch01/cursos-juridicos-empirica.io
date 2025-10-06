@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Diplomas con Valor Curricular | Empírica Legal Lab</title>
+    <meta name="description" content="Obtén tu diploma oficial con firma electrónica SAT. Certificados con validez curricular por $200 MXN.">
+    <link rel="stylesheet" href="css/styles.css">
+    <style>
+        .diplomas-hero {
+            background: linear-gradient(135deg, #1B2C27 0%, #2d4942 100%);
+            color: white;
+            padding: 80px 20px;
+            text-align: center;
+        }
+        
+        .diplomas-hero h1 {
+            font-size: 3rem;
+            color: #CFA892;
+            margin-bottom: 20px;
+        }
+        
+        .process-section {
+            max-width: 1000px;
+            margin: 60px auto;
+            padding: 0 20px;
+        }
+        
+        .process-steps {
+            display: grid;
+            gap: 30px;
+            margin-top: 40px;
+        }
+        
+        .step-card {
+            background: white;
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 4px 20px rgba(27, 44, 39, 0.1);
+            display: grid;
+            grid-template-columns: 80px 1fr;
+            gap: 30px;
+            align-items: center;
+        }
+        
+        .step-number {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, #1B2C27, #CFA892);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            font-weight: 700;
+        }
+        
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+            max-width: 1200px;
+            margin: 60px auto;
+            padding: 0 20px;
+        }
+        
+        .feature-box {
+            background: white;
+            padding: 40px;
+            border-radius: 15px;
+            text-align: center;
+            box-shadow: 0 4px 20px rgba(27, 44, 39, 0.1);
+        }
+        
+        .feature-icon {
+            font-size: 4rem;
+            margin-bottom: 20px;
+            display: block;
+        }
+        
+        .pricing-card {
+            background: linear-gradient(135deg, #CFA892, #d4b89e);
+            color: #1B2C27;
+            padding: 60px 40px;
+            border-radius: 20px;
+            text-align: center;
+            max-width: 600px;
+            margin: 60px auto;
+            box-shadow: 0 8px 30px rgba(0,0,0,0.2);
+        }
+        
+        .price {
+            font-size: 4rem;
+            font-weight: 700;
+            margin: 20px 0;
+        }
+        
+        @media (max-width: 768px) {
+            .diplomas-hero h1 {
+                font-size: 2rem;
+            }
+            
+            .step-card {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+            
+            .step-number {
+                margin: 0 auto;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- HEADER -->
+    <header class="header">
+        <nav class="nav-container">
+            <div class="logo-container">
+                <img src="https://i.postimg.cc/tCVcj2Sw/Captura-de-pantalla-2025-10-04-a-la-s-2-33-47-p-m.png" alt="Empírica Legal Lab" class="logo-img">
+                <div class="logo-text">
+                    <h1>Empírica Legal Lab</h1>
+                    <p>Formación jurídica accesible</p>
+                </div>
+            </div>
+            <button class="mobile-menu-toggle" onclick="toggleMenu()">☰</button>
+            <ul class="nav-menu" id="navMenu">
+                <li><a href="index.html">Inicio</a></li>
+                <li><a href="index.html#cursos">Cursos</a></li>
+                <li><a href="diplomas.html">Diplomas</a></li>
+                <li><a href="contacto.html">Contacto</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- HERO -->
+    <section class="diplomas-hero">
+        <h1>🎓 Diplomas con Valor Curricular</h1>
+        <p style="font-size: 1.3rem; max-width: 800px; margin: 0 auto;">
+            Certifica tus conocimientos con diplomas oficiales firmados electrónicamente por Empírica Legal Lab
+        </p>
+    </section>
+
+    <!-- CARACTERÍSTICAS -->
+    <div class="features-grid">
+        <div class="feature-box">
+            <span class="feature-icon">📜</span>
+            <h3 style="color: #1B2C27; margin-bottom: 15px;">Firma Electrónica SAT</h3>
+            <p style="color: #6C757D;">Validez oficial con tecnología de firma electrónica avanzada del SAT</p>
+        </div>
+        <div class="feature-box">
+            <span class="feature-icon">✅</span>
+            <h3 style="color: #1B2C27; margin-bottom: 15px;">Verificable en Línea</h3>
+            <p style="color: #6C757D;">Código QR único para verificar la autenticidad del diploma</p>
+        </div>
+        <div class="feature-box">
+            <span class="feature-icon">💼</span>
+            <h3 style="color: #1B2C27; margin-bottom: 15px;">Valor Curricular</h3>
+            <p style="color: #6C757D;">Ideal para tu CV, LinkedIn y expediente profesional</p>
+        </div>
+        <div class="feature-box">
+            <span class="feature-icon">📧</span>
+            <h3 style="color: #1B2C27; margin-bottom: 15px;">Formato Digital</h3>
+            <p style="color: #6C757D;">PDF de alta calidad listo para imprimir o compartir</p>
+        </div>
+    </div>
+
+    <!-- PROCESO -->
+    <section class="process-section">
+        <h2 style="color: #1B2C27; text-align: center; font-size: 2.5rem; margin-bottom: 50px;">
+            ¿Cómo obtener tu diploma?
+        </h2>
+        
+        <div class="process-steps">
+            <div class="step-card">
+                <div class="step-number">1</div>
+                <div>
+                    <h3 style="color: #1B2C27; margin-bottom: 10px;">Completa el curso</h3>
+                    <p style="color: #6C757D; line-height: 1.7;">
+                        Ve la clase completa, estudia los materiales y realiza los 13 ejercicios interactivos. El curso es 100% gratuito y a tu ritmo.
+                    </p>
+                </div>
+            </div>
+
+            <div class="step-card">
+                <div class="step-number">2</div>
+                <div>
+                    <h3 style="color: #1B2C27; margin-bottom: 10px;">Aprueba los ejercicios</h3>
+                    <p style="color: #6C757D; line-height: 1.7;">
+                        Completa los ejercicios y envía tus resultados por WhatsApp. Calificación mínima aprobatoria: 60%.
+                    </p>
+                </div>
+            </div>
+
+            <div class="step-card">
+                <div class="step-number">3</div>
+                <div>
+                    <h3 style="color: #1B2C27; margin-bottom: 10px;">Solicita tu diploma</h3>
+                    <p style="color: #6C757D; line-height: 1.7;">
+                        Contacta por WhatsApp al +52 998 257 0828 para solicitar la emisión de tu diploma oficial.
+                    </p>
+                </div>
+            </div>
+
+            <div class="step-card">
+                <div class="step-number">4</div>
+                <div>
+                    <h3 style="color: #1B2C27; margin-bottom: 10px;">Realiza el pago</h3>
+                    <p style="color: #6C757D; line-height: 1.7;">
+                        Realiza el pago de $200 MXN. Aceptamos transferencia bancaria, OXXO, tarjeta de crédito/débito.
+                    </p>
+                </div>
+            </div>
+
+            <div class="step-card">
+                <div class="step-number">5</div>
+                <div>
+                    <h3 style="color: #1B2C27; margin-bottom: 10px;">Recibe tu diploma</h3>
+                    <p style="color: #6C757D; line-height: 1.7;">
+                        En menos de 48 horas recibirás tu diploma en PDF firmado electrónicamente, listo para usar.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- PRECIO -->
+    <div class="pricing-card">
+        <h2 style="font-size: 2rem; margin-bottom: 10px;">Inversión por Diploma</h2>
+        <div class="price">$200</div>
+        <p style="font-size: 1.1rem;">Pesos mexicanos</p>
+        <hr style="margin: 30px 0; opacity: 0.3;">
+        <ul style="list-style: none; text-align: left; margin: 20px 0;">
+            <li style="padding: 10px 0;">✓ Diploma en PDF de alta calidad</li>
+            <li style="padding: 10px 0;">✓ Firma electrónica SAT</li>
+            <li style="padding: 10px 0;">✓ Código QR de verificación</li>
+            <li style="padding: 10px 0;">✓ Entrega en 48 horas</li>
+            <li style="padding: 10px 0;">✓ Soporte técnico incluido</li>
+        </ul>
+        <a href="https://wa.me/529982570828?text=Hola,%20quiero%20solicitar%20mi%20diploma%20del%20curso" 
+           class="btn btn-primary" 
+           style="width: 100%; margin-top: 20px; padding: 15px; font-size: 1.1rem;">
+            📱 Solicitar Diploma por WhatsApp
+        </a>
+    </div>
+
+    <!-- FAQ -->
+    <section style="max-width: 900px; margin: 60px auto; padding: 0 20px;">
+        <h2 style="color: #1B2C27; text-align: center; font-size: 2.5rem; margin-bottom: 50px;">
+            Preguntas Frecuentes
+        </h2>
+        
+        <div style="background: white; padding: 40px; border-radius: 15px; box-shadow: 0 4px 20px rgba(27, 44, 39, 0.1);">
+            <div style="margin-bottom: 30px;">
+                <h4 style="color: #1B2C27; margin-bottom: 10px;">¿El diploma tiene validez oficial?</h4>
+                <p style="color: #6C757D; line-height: 1.7;">
+                    Sí, el diploma cuenta con firma electrónica SAT y es emitido por Empírica Legal Lab. Tiene valor curricular para tu expediente profesional, CV y LinkedIn.
+                </p>
+            </div>
+            
+            <div style="margin-bottom: 30px;">
+                <h4 style="color: #1B2C27; margin-bottom: 10px;">¿Es obligatorio pagar por el diploma?</h4>
+                <p style="color: #6C757D; line-height: 1.7;">
+                    No. El curso completo es 100% gratuito. El diploma es completamente opcional y solo tiene un costo si deseas obtener el certificado oficial.
+                </p>
+            </div>
+            
+            <div style="margin-bottom: 30px;">
+                <h4 style="color: #1B2C27; margin-bottom: 10px;">¿Qué métodos de pago aceptan?</h4>
+                <p style="color: #6C757D; line-height: 1.7;">
+                    Aceptamos transferencia bancaria, pago en OXXO, tarjeta de crédito/débito. Los detalles de pago te los proporcionamos por WhatsApp.
+                </p>
+            </div>
+            
+            <div style="margin-bottom: 30px;">
+                <h4 style="color: #1B2C27; margin-bottom: 10px;">¿Cuánto tarda en llegar el diploma?</h4>
+                <p style="color: #6C757D; line-height: 1.7;">
+                    Una vez confirmado tu pago, recibirás tu diploma en formato PDF en menos de 48 horas hábiles vía email.
+                </p>
+            </div>
+            
+            <div>
+                <h4 style="color: #1B2C27; margin-bottom: 10px;">¿Puedo verificar la autenticidad del diploma?</h4>
+                <p style="color: #6C757D; line-height: 1.7;">
+                    Sí, cada diploma incluye un código QR único que permite verificar su autenticidad en línea.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-section">
+                <img src="https://i.postimg.cc/tCVcj2Sw/Captura-de-pantalla-2025-10-04-a-la-s-2-33-47-p-m.png" alt="Logo" style="height: 60px; margin-bottom: 20px;">
+                <p>Formación jurídica accesible para todos.</p>
+                <p style="margin-top: 15px; opacity: 0.8;">
+                    © 2025 Empírica Legal Lab<br>
+                    Todos los derechos reservados
+                </p>
+            </div>
+            
+            <div class="footer-section">
+                <h4>Cursos</h4>
+                <ul>
+                    <li><a href="cursos/derecho-no-abogados/index.html">Derecho para No Abogados</a></li>
+                    <li><a href="index.html#cursos">Catálogo Completo</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-section">
+                <h4>Empírica Legal Lab</h4>
+                <ul>
+                    <li><a href="contacto.html">Contacto</a></li>
+                    <li><a href="https://www.empirica.mx" target="_blank">Sitio Web Oficial</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-section">
+                <h4>Contacto</h4>
+                <p>📱 WhatsApp: +52 998 257 0828</p>
+                <p>✉️ Email: jorge_clemente@empirica.mx</p>
+            </div>
+        </div>
+        
+        <div class="footer-bottom">
+            <p>Desarrollado con ❤️ para democratizar el conocimiento jurídico</p>
+        </div>
+    </footer>
+
+    <!-- BOTÓN FLOTANTE WHATSAPP -->
+    <a href="https://wa.me/529982570828?text=Hola,%20quiero%20información%20sobre%20diplomas" class="whatsapp-float" target="_blank" title="Contáctanos por WhatsApp">
+        📱
+    </a>
+
+    <script src="js/main.js"></script>
+</body>
+</html>
