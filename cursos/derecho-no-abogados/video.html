@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clase Completa - Derecho para No Abogados | Empírica Legal Lab</title>
+    <link rel="stylesheet" href="../../css/styles.css">
+    <style>
+        .video-section {
+            max-width: 1400px;
+            margin: 40px auto;
+            padding: 0 20px;
+        }
+        
+        .video-container {
+            background: #000;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 8px 30px rgba(0,0,0,0.3);
+            margin-bottom: 40px;
+        }
+        
+        .video-placeholder {
+            aspect-ratio: 16/9;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            color: white;
+            background: linear-gradient(135deg, #1B2C27, #2d4942);
+        }
+        
+        .video-placeholder .icon {
+            font-size: 5rem;
+            margin-bottom: 20px;
+            opacity: 0.7;
+        }
+        
+        .video-info {
+            background: white;
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 4px 20px rgba(27, 44, 39, 0.1);
+            margin-bottom: 40px;
+        }
+        
+        .chapters-list {
+            list-style: none;
+            display: grid;
+            gap: 15px;
+        }
+        
+        .chapter-item {
+            background: #F5F5F5;
+            padding: 20px;
+            border-radius: 10px;
+            border-left: 4px solid #CFA892;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .chapter-item:hover {
+            background: white;
+            box-shadow: 0 4px 15px rgba(27, 44, 39, 0.1);
+            transform: translateX(5px);
+        }
+        
+        .chapter-time {
+            color: #CFA892;
+            font-weight: 700;
+            font-size: 0.9rem;
+        }
+        
+        .chapter-title {
+            color: #1B2C27;
+            font-weight: 600;
+            margin-top: 5px;
+        }
+        
+        .sidebar {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 4px 20px rgba(27, 44, 39, 0.1);
+            position: sticky;
+            top: 100px;
+        }
+        
+        .content-grid {
+            display: grid;
+            grid-template-columns: 1fr 350px;
+            gap: 40px;
+        }
+        
+        @media (max-width: 968px) {
+            .content-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .sidebar {
+                position: static;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- HEADER -->
+    <header class="header">
+        <nav class="nav-container">
+            <div class="logo-container">
+                <img src="https://i.postimg.cc/tCVcj2Sw/Captura-de-pantalla-2025-10-04-a-la-s-2-33-47-p-m.png" alt="Empírica Legal Lab" class="logo-img">
+                <div class="logo-text">
+                    <h1>Empírica Legal Lab</h1>
+                    <p>Formación jurídica accesible</p>
+                </div>
+            </div>
+            <button class="mobile-menu-toggle" onclick="toggleMenu()">☰</button>
+            <ul class="nav-menu" id="navMenu">
+                <li><a href="../../index.html">Inicio</a></li>
+                <li><a href="../../index.html#cursos">Cursos</a></li>
+                <li><a href="../../diplomas.html">Diplomas</a></li>
+                <li><a href="../../contacto.html">Contacto</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- CONTENIDO PRINCIPAL -->
+    <section class="video-section">
+        <div style="margin-bottom: 30px;">
+            <a href="index.html" style="color: #CFA892; text-decoration: none; font-weight: 600;">
+                ← Volver al curso
+            </a>
+        </div>
+
+        <div class="content-grid">
+            <!-- COLUMNA PRINCIPAL -->
+            <div>
+                <h1 style="color: #1B2C27; font-size: 2.5rem; margin-bottom: 30px;">
+                    🎥 Clase Completa: Derecho para No Abogados
+                </h1>
+
+                <!-- VIDEO PLAYER -->
+                <div class="video-container">
+                    <div class="video-placeholder">
+                        <span class="icon">🎬</span>
+                        <h2 style="margin-bottom: 10px;">Video en Proceso de Edición</h2>
+                        <p style="opacity: 0.8; max-width: 500px; text-align: center;">
+                            El video del curso estará disponible próximamente. Mientras tanto, puedes explorar los ejercicios y la presentación.
+                        </p>
+                        <div style="margin-top: 30px; display: flex; gap: 15px;">
+                            <a href="ejercicios.html" class="btn btn-secondary">Ver Ejercicios</a>
+                            <a href="presentacion.html" class="btn btn-primary">Ver Presentación</a>
+                        </div>
+                    </div>
+                    
+                    <!-- CUANDO TENGAS EL VIDEO, REEMPLAZA EL DIV ANTERIOR CON ESTO:
+                    <iframe 
+                        width="100%" 
+                        height="100%" 
+                        src="TU_URL_DE_YOUTUBE_AQUI" 
+                        title="Derecho para No Abogados" 
+                        frameborder="0" 
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                        allowfullscreen
+                        style="aspect-ratio: 16/9;">
+                    </iframe>
+                    -->
+                </div>
+
+                <!-- INFORMACIÓN DEL VIDEO -->
+                <div class="video-info">
+                    <h2 style="color: #1B2C27; margin-bottom: 20px; font-size: 1.8rem;">
+                        Sobre esta clase
+                    </h2>
+                    <p style="color: #6C757D; line-height: 1.8; margin-bottom: 20px;">
+                        En esta clase de 4 horas, el Mtro. Jorge Israel Clemente Marié te guiará a través de los fundamentos del derecho mexicano con un enfoque 100% práctico. Aprenderás a identificar situaciones legales, leer contratos, conocer tus derechos y prevenir fraudes.
+                    </p>
+                    
+                    <div style="background: #F5F5F5; padding: 20px; border-radius: 10px; margin-top: 20px;">
+                        <h3 style="color: #1B2C27; margin-bottom: 15px;">🎯 Lo que aprenderás:</h3>
+                        <ul style="list-style: none; padding: 0;">
+                            <li style="padding: 8px 0; padding-left: 25px; position: relative;">
+                                <span style="position: absolute; left: 0; color: #CFA892;">✓</span>
+                                Fundamentos del sistema jurídico mexicano
+                            </li>
+                            <li style="padding: 8px 0; padding-left: 25px; position: relative;">
+                                <span style="position: absolute; left: 0; color: #CFA892;">✓</span>
+                                Cómo leer y entender contratos básicos
+                            </li>
+                            <li style="padding: 8px 0; padding-left: 25px; position: relative;">
+                                <span style="position: absolute; left: 0; color: #CFA892;">✓</span>
+                                Identificación de cláusulas abusivas
+                            </li>
+                            <li style="padding: 8px 0; padding-left: 25px; position: relative;">
+                                <span style="position: absolute; left: 0; color: #CFA892;">✓</span>
+                                Derechos laborales y cálculo de finiquitos
+                            </li>
+                            <li style="padding: 8px 0; padding-left: 25px; position: relative;">
+                                <span style="position: absolute; left: 0; color: #CFA892;">✓</span>
+                                Instituciones de apoyo al ciudadano
+                            </li>
+                            <li style="padding: 8px 0; padding-left: 25px; position: relative;">
+                                <span style="position: absolute; left: 0; color: #CFA892;">✓</span>
+                                Prevención de fraudes y estafas comunes
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- CAPÍTULOS DEL VIDEO -->
+                <div style="background: white; padding: 40px; border-radius: 15px; box-shadow: 0 4px 20px rgba(27, 44, 39, 0.1);">
+                    <h2 style="color: #1B2C27; margin-bottom: 30px; font-size: 1.8rem;">
+                        📚 Capítulos de la Clase
+                    </h2>
+                    <ul class="chapters-list">
+                        <li class="chapter-item">
+                            <div class="chapter-time">00:00 - 00:30</div>
+                            <div class="chapter-title">Introducción y Objetivos del Curso</div>
+                        </li>
+                        <li class="chapter-item">
+                            <div class="chapter-time">00:30 - 01:15</div>
+                            <div class="chapter-title">Módulo 1: Fundamentos del Derecho</div>
+                        </li>
+                        <li class="chapter-item">
+                            <div class="chapter-time">01:15 - 02:00</div>
+                            <div class="chapter-title">Jerarquía de Leyes y Sistema Jurídico</div>
+                        </li>
+                        <li class="chapter-item">
+                            <div class="chapter-time">02:00 - 02:45</div>
+                            <div class="chapter-title">Cómo Leer Contratos y Documentos Legales</div>
+                        </li>
+                        <li class="chapter-item">
+                            <div class="chapter-time">02:45 - 03:15</div>
+                            <div class="chapter-title">Casos Prácticos Laborales</div>
+                        </li>
+                        <li class="chapter-item">
+                            <div class="chapter-time">03:15 - 03:45</div>
+                            <div class="chapter-title">Instituciones de Apoyo y Procedimientos</div>
+                        </li>
+                        <li class="chapter-item">
+                            <div class="chapter-time">03:45 - 04:00</div>
+                            <div class="chapter-title">Prevención de Fraudes y Cierre</div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- SIDEBAR -->
+            <div>
+                <div class="sidebar">
+                    <h3 style="color: #1B2C27; margin-bottom: 20px;">Recursos del Curso</h3>
+                    
+                    <a href="ejercicios.html" class="btn btn-primary" style="width: 100%; margin-bottom: 15px;">
+                        📝 Ejercicios
+                    </a>
+                    
+                    <a href="presentacion.html" class="btn btn-secondary" style="width: 100%; margin-bottom: 15px;">
+                        📊 Presentación
+                    </a>
+                    
+                    <a href="index.html" class="btn btn-secondary" style="width: 100%; margin-bottom: 30px;">
+                        📖 Información del Curso
+                    </a>
+
+                    <div style="background: linear-gradient(135deg, #1B2C27, #2d4942); padding: 25px; border-radius: 12px; color: white; text-align: center;">
+                        <h4 style="color: #CFA892; margin-bottom: 15px;">🎓 Obtén tu Diploma</h4>
+                        <p style="font-size: 0.95rem; margin-bottom: 20px; opacity: 0.95;">
+                            Certifica tus conocimientos con un diploma oficial
+                        </p>
+                        <a href="../../diplomas.html" class="btn btn-secondary" style="width: 100%;">
+                            Más Información
+                        </a>
+                    </div>
+
+                    <div style="margin-top: 30px; padding: 20px; background: #F5F5F5; border-radius: 10px;">
+                        <h4 style="color: #1B2C27; margin-bottom: 15px; font-size: 1.1rem;">
+                            💡 Consejos para Aprovechar la Clase
+                        </h4>
+                        <ul style="list-style: none; padding: 0; font-size: 0.9rem; color: #6C757D;">
+                            <li style="margin-bottom: 10px;">✓ Toma notas mientras ves la clase</li>
+                            <li style="margin-bottom: 10px;">✓ Pausa cuando necesites reflexionar</li>
+                            <li style="margin-bottom: 10px;">✓ Revisa la presentación después</li>
+                            <li style="margin-bottom: 10px;">✓ Practica con los ejercicios</li>
+                            <li>✓ Consulta tus dudas por WhatsApp</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-section">
+                <img src="https://i.postimg.cc/tCVcj2Sw/Captura-de-pantalla-2025-10-04-a-la-s-2-33-47-p-m.png" alt="Logo" style="height: 60px; margin-bottom: 20px;">
+                <p>Formación jurídica accesible para todos.</p>
+            </div>
+            
+            <div class="footer-section">
+                <h4>Curso</h4>
+                <ul>
+                    <li><a href="video.html">Clase Completa</a></li>
+                    <li><a href="ejercicios.html">Ejercicios</a></li>
+                    <li><a href="presentacion.html">Presentación</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-section">
+                <h4>Contacto</h4>
+                <p>📱 WhatsApp: +52 998 257 0828</p>
+                <p>✉️ Email: jorge_clemente@empirica.mx</p>
+            </div>
+        </div>
+        
+        <div class="footer-bottom">
+            <p>© 2025 Empírica Legal Lab</p>
+        </div>
+    </footer>
+
+    <!-- WHATSAPP FLOTANTE -->
+    <a href="https://wa.me/529982570828?text=Tengo%20una%20duda%20sobre%20la%20clase" class="whatsapp-float" target="_blank">
+        📱
+    </a>
+
+    <script>
+        function toggleMenu() {
+            document.getElementById('navMenu').classList.toggle('active');
+        }
+    </script>
+</body>
+</html>
