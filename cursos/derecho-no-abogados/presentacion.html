@@ -1,0 +1,1971 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Derecho para No Abogados - Presentación</title>
+<style>
+* {
+margin: 0;
+padding: 0;
+box-sizing: border-box;
+}
+
+body {
+font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+overflow: hidden;
+background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+color: #333;
+height: 100vh;
+position: relative;
+}
+
+.presentation-container {
+width: 100%;
+height: 100vh;
+display: flex;
+align-items: center;
+justify-content: center;
+position: relative;
+}
+
+.slide {
+width: 90%;
+max-width: 1200px;
+height: 85vh;
+background: white;
+border-radius: 20px;
+box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+padding: 60px;
+display: none;
+animation: slideIn 0.5s ease;
+overflow-y: auto;
+position: relative;
+}
+
+.slide.active {
+display: block;
+}
+
+@keyframes slideIn {
+from {
+opacity: 0;
+transform: translateX(100px);
+}
+to {
+opacity: 1;
+transform: translateX(0);
+}
+}
+
+.slide h1 {
+color: #2c3e50;
+font-size: 3em;
+margin-bottom: 30px;
+text-align: center;
+position: relative;
+}
+
+.slide h2 {
+color: #3498db;
+font-size: 2.2em;
+margin-bottom: 20px;
+margin-top: 30px;
+border-bottom: 3px solid #3498db;
+padding-bottom: 10px;
+}
+
+.slide h3 {
+color: #2c3e50;
+font-size: 1.8em;
+margin: 20px 0;
+}
+
+.slide p {
+font-size: 1.2em;
+line-height: 1.8;
+margin-bottom: 20px;
+color: #555;
+}
+
+.slide ul {
+list-style: none;
+padding-left: 0;
+}
+
+.slide li {
+font-size: 1.15em;
+margin-bottom: 15px;
+padding-left: 35px;
+position: relative;
+line-height: 1.6;
+}
+
+.slide li:before {
+content: "▶";
+position: absolute;
+left: 0;
+color: #3498db;
+font-weight: bold;
+}
+
+.slide-number {
+position: absolute;
+top: 20px;
+right: 20px;
+background: #3498db;
+color: white;
+padding: 8px 15px;
+border-radius: 20px;
+font-weight: bold;
+font-size: 0.9em;
+}
+
+.navigation {
+position: fixed;
+bottom: 30px;
+left: 50%;
+transform: translateX(-50%);
+display: flex;
+gap: 20px;
+z-index: 1000;
+}
+
+.nav-btn {
+background: white;
+border: none;
+width: 60px;
+height: 60px;
+border-radius: 50%;
+cursor: pointer;
+box-shadow: 0 5px 20px rgba(0,0,0,0.2);
+display: flex;
+align-items: center;
+justify-content: center;
+font-size: 1.5em;
+transition: all 0.3s;
+}
+
+.nav-btn:hover {
+transform: scale(1.1);
+box-shadow: 0 8px 30px rgba(0,0,0,0.3);
+}
+
+.nav-btn:active {
+transform: scale(0.95);
+}
+
+.nav-btn:disabled {
+opacity: 0.3;
+cursor: not-allowed;
+}
+
+.progress-bar {
+position: fixed;
+top: 0;
+left: 0;
+width: 100%;
+height: 5px;
+background: rgba(255,255,255,0.3);
+z-index: 1000;
+}
+
+.progress {
+height: 100%;
+background: linear-gradient(90deg, #3498db, #2ecc71);
+transition: width 0.5s;
+}
+
+.module-header {
+background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+color: white;
+padding: 40px;
+border-radius: 15px;
+margin-bottom: 30px;
+text-align: center;
+}
+
+.module-header h1 {
+color: white;
+margin-bottom: 10px;
+}
+
+.icon-container {
+font-size: 5em;
+text-align: center;
+margin: 30px 0;
+animation: float 3s ease-in-out infinite;
+}
+
+@keyframes float {
+0%, 100% { transform: translateY(0px); }
+50% { transform: translateY(-20px); }
+}
+
+.two-columns {
+display: grid;
+grid-template-columns: 1fr 1fr;
+gap: 40px;
+margin-top: 30px;
+}
+
+.column {
+padding: 20px;
+background: #f8f9fa;
+border-radius: 10px;
+}
+
+.highlight-box {
+background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+padding: 30px;
+border-radius: 15px;
+margin: 20px 0;
+border-left: 5px solid #3498db;
+}
+
+.pyramid {
+display: flex;
+flex-direction: column;
+align-items: center;
+margin: 30px 0;
+}
+
+.pyramid-level {
+padding: 15px 30px;
+margin: 5px 0;
+border-radius: 10px;
+font-weight: bold;
+color: white;
+text-align: center;
+transition: all 0.3s;
+}
+
+.pyramid-level:hover {
+transform: scale(1.05);
+}
+
+.pyramid-level:nth-child(1) {
+background: #e74c3c;
+width: 300px;
+}
+
+.pyramid-level:nth-child(2) {
+background: #f39c12;
+width: 350px;
+}
+
+.pyramid-level:nth-child(3) {
+background: #f1c40f;
+width: 400px;
+}
+
+.pyramid-level:nth-child(4) {
+background: #2ecc71;
+width: 450px;
+}
+
+.pyramid-level:nth-child(5) {
+background: #3498db;
+width: 500px;
+}
+
+.card {
+background: white;
+border-radius: 15px;
+padding: 25px;
+box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+margin: 20px 0;
+transition: all 0.3s;
+}
+
+.card:hover {
+transform: translateY(-5px);
+box-shadow: 0 15px 40px rgba(0,0,0,0.2);
+}
+
+.badge {
+display: inline-block;
+padding: 5px 15px;
+border-radius: 20px;
+font-size: 0.9em;
+font-weight: bold;
+margin: 5px;
+}
+
+.badge.valid {
+background: #d4edda;
+color: #155724;
+}
+
+.badge.warning {
+background: #fff3cd;
+color: #856404;
+}
+
+.badge.invalid {
+background: #f8d7da;
+color: #721c24;
+}
+
+.checklist {
+background: #f8f9fa;
+padding: 20px;
+border-radius: 10px;
+margin: 20px 0;
+}
+
+.checklist-item {
+padding: 10px;
+margin: 5px 0;
+background: white;
+border-radius: 8px;
+border-left: 4px solid #3498db;
+transition: all 0.3s;
+}
+
+.checklist-item:hover {
+transform: translateX(10px);
+box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+}
+
+.emoji-large {
+font-size: 4em;
+display: block;
+text-align: center;
+margin: 20px 0;
+}
+
+.fullscreen-btn {
+position: fixed;
+top: 20px;
+right: 20px;
+background: white;
+border: none;
+padding: 10px 20px;
+border-radius: 25px;
+cursor: pointer;
+box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+font-size: 1em;
+z-index: 1000;
+}
+
+.table {
+width: 100%;
+border-collapse: collapse;
+margin: 20px 0;
+}
+
+.table th {
+background: #3498db;
+color: white;
+padding: 15px;
+text-align: left;
+}
+
+.table td {
+padding: 12px;
+border-bottom: 1px solid #ddd;
+}
+
+.table tr:hover {
+background: #f8f9fa;
+}
+
+.contract-example {
+background: #f8f9fa;
+border: 2px solid #ddd;
+border-radius: 10px;
+padding: 20px;
+margin: 20px 0;
+font-family: 'Courier New', monospace;
+font-size: 0.9em;
+line-height: 1.4;
+}
+
+.clause-green {
+background: #d4edda;
+border-left: 4px solid #28a745;
+padding: 10px;
+margin: 5px 0;
+border-radius: 5px;
+}
+
+.clause-yellow {
+background: #fff3cd;
+border-left: 4px solid #ffc107;
+padding: 10px;
+margin: 5px 0;
+border-radius: 5px;
+}
+
+.clause-red {
+background: #f8d7da;
+border-left: 4px solid #dc3545;
+padding: 10px;
+margin: 5px 0;
+border-radius: 5px;
+}
+
+@media (max-width: 768px) {
+.slide {
+padding: 30px;
+height: 90vh;
+}
+
+.slide h1 {
+font-size: 2em;
+}
+
+.slide h2 {
+font-size: 1.5em;
+}
+
+.two-columns {
+grid-template-columns: 1fr;
+}
+
+.pyramid-level {
+width: 90% !important;
+}
+}
+
+.menu-btn {
+position: fixed;
+top: 20px;
+left: 20px;
+background: white;
+border: none;
+padding: 10px 20px;
+border-radius: 25px;
+cursor: pointer;
+box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+font-size: 1em;
+z-index: 1000;
+}
+
+.menu {
+position: fixed;
+top: 0;
+left: -300px;
+width: 300px;
+height: 100vh;
+background: white;
+box-shadow: 5px 0 20px rgba(0,0,0,0.2);
+transition: left 0.3s;
+z-index: 999;
+overflow-y: auto;
+padding: 20px;
+}
+
+.menu.open {
+left: 0;
+}
+
+.menu h3 {
+color: #2c3e50;
+margin-bottom: 20px;
+}
+
+.menu-item {
+padding: 10px;
+margin: 5px 0;
+background: #f8f9fa;
+border-radius: 8px;
+cursor: pointer;
+transition: all 0.3s;
+}
+
+.menu-item:hover {
+background: #3498db;
+color: white;
+}
+
+.menu-item.active {
+background: #2c3e50;
+color: white;
+}
+</style>
+</head>
+<body>
+<div class="progress-bar">
+<div class="progress" id="progress"></div>
+</div>
+
+<button class="menu-btn" onclick="toggleMenu()">☰ Menú</button>
+<button class="fullscreen-btn" onclick="toggleFullscreen()">⛶ Pantalla completa</button>
+
+<div class="menu" id="menu">
+<h3>📚 Módulos del Curso</h3>
+<div class="menu-item" onclick="goToSlide(0)">Portada</div>
+<div class="menu-item" onclick="goToSlide(1)">Módulo 0: Introducción</div>
+<div class="menu-item" onclick="goToSlide(5)">Módulo 1: Fundamentos</div>
+<div class="menu-item" onclick="goToSlide(9)">Módulo 2: Jerarquía Legal</div>
+<div class="menu-item" onclick="goToSlide(12)">Módulo 3: Áreas del Derecho</div>
+<div class="menu-item" onclick="goToSlide(16)">Módulo 4: ¿Necesito Abogado?</div>
+<div class="menu-item" onclick="goToSlide(18)">Módulo 5: Contratos</div>
+<div class="menu-item" onclick="goToSlide(22)">Módulo 6: Derechos Laborales</div>
+<div class="menu-item" onclick="goToSlide(26)">Módulo 7: Instituciones</div>
+<div class="menu-item" onclick="goToSlide(29)">Módulo 8: Plazos</div>
+<div class="menu-item" onclick="goToSlide(32)">Módulo 9: Fraudes</div>
+<div class="menu-item" onclick="goToSlide(36)">Módulo 10: Casos Prácticos</div>
+<div class="menu-item" onclick="goToSlide(40)">Módulo 11: Documentos</div>
+<div class="menu-item" onclick="goToSlide(44)">Módulo 12: Evaluación</div>
+</div>
+
+<div class="presentation-container">
+<!-- Slide 0: Portada -->
+<div class="slide active">
+<div class="module-header">
+<span class="emoji-large">⚖️</span>
+<h1>DERECHO PARA NO ABOGADOS</h1>
+<p style="font-size: 1.5em;">Curso Intensivo de Introducción al Derecho</p>
+<p style="font-size: 1.2em; margin-top: 20px;">Casos Prácticos para la Vida Diaria</p>
+</div>
+<div style="text-align: center; margin-top: 50px;">
+<h3>Mtro. Jorge Israel Clemente Marié</h3>
+<p style="font-size: 1.2em; color: #666;">Maestro en Amparo</p>
+<div style="margin-top: 40px;">
+<p>📅 9 y 11 de septiembre 2024</p>
+<p>⏰ 20:00 - 22:00 hrs</p>
+<p>💻 Modalidad en línea</p>
+</div>
+</div>
+</div>
+
+<!-- Slide 1: Objetivo -->
+<div class="slide">
+<span class="slide-number">1 / 47</span>
+<h1>🎯 Objetivo del Curso</h1>
+<div class="highlight-box">
+<h3>¿Para qué este curso?</h3>
+<ul>
+<li>Entender el sistema jurídico mexicano de manera simple</li>
+<li>Identificar situaciones que requieren atención legal</li>
+<li>Leer y comprender contratos básicos sin ayuda</li>
+<li>Conocer tus derechos fundamentales como ciudadano</li>
+<li>Saber exactamente cuándo necesitas un abogado</li>
+<li>Protegerte de fraudes y abusos comunes</li>
+</ul>
+</div>
+<div class="icon-container">
+🧠
+</div>
+</div>
+
+<!-- Slide 2: Qué NO es -->
+<div class="slide">
+<span class="slide-number">2 / 47</span>
+<h1>❌ Expectativas Claras</h1>
+<div class="two-columns">
+<div class="column">
+<h3 style="color: #e74c3c;">Este curso NO:</h3>
+<ul>
+<li>❌ Te convierte en abogado</li>
+<li>❌ Es para litigar solo</li>
+<li>❌ Reemplaza asesoría legal</li>
+<li>❌ Te da licencia para ejercer</li>
+</ul>
+</div>
+<div class="column">
+<h3 style="color: #27ae60;">Este curso SÍ:</h3>
+<ul>
+<li>✅ Te protege mejor</li>
+<li>✅ Te ayuda a decidir</li>
+<li>✅ Te ahorra problemas</li>
+<li>✅ Te empodera legalmente</li>
+</ul>
+</div>
+</div>
+</div>
+
+<!-- Slide 3: Metodología -->
+<div class="slide">
+<span class="slide-number">3 / 47</span>
+<h1>📋 Metodología del Curso</h1>
+<div class="card">
+<h3>Cómo aprenderemos:</h3>
+<ul>
+<li>🗣️ Lenguaje simple y claro - sin tecnicismos</li>
+<li>📖 Casos de la vida real que te han pasado</li>
+<li>✍️ Ejercicios prácticos con documentos reales</li>
+<li>📋 Análisis de contratos que usas diario</li>
+<li>💻 Evaluación en línea interactiva</li>
+</ul>
+</div>
+<div class="highlight-box" style="background: #fff3cd; border-left-color: #ffc107;">
+<h3>⚠️ Importante:</h3>
+<p>Para obtener tu diploma, debes completar los ejercicios en:</p>
+<p style="font-size: 1.3em; font-weight: bold;">🌐 https://jorch01.github.io/ejercicios.io/</p>
+</div>
+</div>
+
+<!-- Slide 4: Instructor -->
+<div class="slide">
+<span class="slide-number">4 / 47</span>
+<div class="module-header">
+<h1>👨‍🏫 Tu Instructor</h1>
+</div>
+<div style="text-align: center;">
+<span class="emoji-large">👨‍⚖️</span>
+<h2>Mtro. Jorge Israel Clemente Marié</h2>
+<p style="font-size: 1.2em; color: #666;">Maestro en Amparo</p>
+</div>
+<div class="two-columns" style="margin-top: 30px;">
+<div class="column">
+<h3>📚 Experiencia Académica</h3>
+<ul>
+<li>Profesor Titular - Escuela Superior de Leyes</li>
+<li>Cátedra de Política y Estado</li>
+<li>Cátedra de Inglés Jurídico</li>
+<li>Especialización en Derechos Humanos</li>
+</ul>
+</div>
+<div class="column">
+<h3>💡 Filosofía de Enseñanza</h3>
+<p style="font-style: italic; color: #666;">
+"Mi objetivo es democratizar el conocimiento jurídico, haciendo que el derecho sea comprensible y útil para todos, no solo para los abogados."
+</p>
+</div>
+</div>
+</div>
+
+<!-- Slide 5: El Derecho en tu Vida -->
+<div class="slide">
+<span class="slide-number">5 / 47</span>
+<h1>🏠 El Derecho en tu Vida Diaria</h1>
+<p style="text-align: center; font-size: 1.3em; color: #666;">El derecho está presente en cada acción que realizas:</p>
+<div class="two-columns">
+<div class="card">
+<span style="font-size: 2em;">☕</span>
+<h3>Comprar un café</h3>
+<p>= Contrato de compraventa</p>
+</div>
+<div class="card">
+<span style="font-size: 2em;">🏠</span>
+<h3>Rentar casa</h3>
+<p>= Contrato de arrendamiento</p>
+</div>
+<div class="card">
+<span style="font-size: 2em;">💼</span>
+<h3>Tu trabajo</h3>
+<p>= Relación laboral regulada</p>
+</div>
+<div class="card">
+<span style="font-size: 2em;">🚗</span>
+<h3>Manejar</h3>
+<p>= Reglamento de tránsito</p>
+</div>
+</div>
+</div>
+
+<!-- Slide 6: Funciones del Derecho -->
+<div class="slide">
+<span class="slide-number">6 / 47</span>
+<h1>🔧 Funciones del Derecho</h1>
+<div class="card">
+<h3>1. Organizar la sociedad 🏛️</h3>
+<p>Define roles, responsabilidades e instituciones</p>
+</div>
+<div class="card">
+<h3>2. Proteger derechos 🛡️</h3>
+<p>Garantiza vida, libertad, propiedad y dignidad</p>
+</div>
+<div class="card">
+<h3>3. Resolver conflictos 🤝</h3>
+<p>Ofrece mecanismos pacíficos con reglas claras</p>
+</div>
+<div class="card">
+<h3>4. Establecer consecuencias ⚖️</h3>
+<p>Define sanciones y reparación del daño</p>
+</div>
+</div>
+
+<!-- Slide 7: Sistema Jurídico -->
+<div class="slide">
+<span class="slide-number">7 / 47</span>
+<h1>🏛️ Sistema Jurídico Mexicano</h1>
+<p style="text-align: center; font-size: 1.2em;">Analogía empresarial para entender los tres poderes:</p>
+<div class="two-columns">
+<div class="card" style="background: linear-gradient(135deg, #3498db, #2980b9); color: white;">
+<h3>📜 LEGISLATIVO</h3>
+<p><strong>= Consejo Directivo</strong></p>
+<ul>
+<li>Crea las políticas (leyes)</li>
+<li>Diputados y Senadores</li>
+<li>Representan al pueblo</li>
+</ul>
+</div>
+<div class="card" style="background: linear-gradient(135deg, #e74c3c, #c0392b); color: white;">
+<h3>🏢 EJECUTIVO</h3>
+<p><strong>= Gerencia General</strong></p>
+<ul>
+<li>Implementa las políticas</li>
+<li>Presidente, Gobernadores</li>
+<li>Administra recursos</li>
+</ul>
+</div>
+</div>
+<div class="card" style="background: linear-gradient(135deg, #27ae60, #229954); color: white; margin-top: 20px;">
+<h3>⚖️ JUDICIAL</h3>
+<p><strong>= Departamento de Compliance</strong></p>
+<ul>
+<li>Resuelve disputas</li>
+<li>Jueces y Tribunales</li>
+<li>Interpreta las leyes</li>
+</ul>
+</div>
+</div>
+
+<!-- Slide 8: Niveles de Gobierno -->
+<div class="slide">
+<span class="slide-number">8 / 47</span>
+<h1>🌍 Niveles de Gobierno</h1>
+<div class="card">
+<h3>🇲🇽 FEDERAL</h3>
+<ul>
+<li>Moneda nacional</li>
+<li>Ejército y marina</li>
+<li>Relaciones exteriores</li>
+<li>Comercio internacional</li>
+</ul>
+</div>
+<div class="card">
+<h3>🏛️ ESTATAL</h3>
+<ul>
+<li>Educación básica</li>
+<li>Seguridad pública local</li>
+<li>Registro civil</li>
+<li>Tránsito estatal</li>
+</ul>
+</div>
+<div class="card">
+<h3>🏘️ MUNICIPAL</h3>
+<ul>
+<li>Agua potable</li>
+<li>Recolección de basura</li>
+<li>Alumbrado público</li>
+<li>Mercados y parques</li>
+</ul>
+</div>
+</div>
+
+<!-- Slide 9: Pirámide de Kelsen -->
+<div class="slide">
+<span class="slide-number">9 / 47</span>
+<h1>⛰️ Jerarquía de Leyes</h1>
+<p style="text-align: center; font-size: 1.2em;">La Pirámide de Kelsen - Orden jerárquico</p>
+<div class="pyramid">
+<div class="pyramid-level">🏛️ CONSTITUCIÓN</div>
+<div class="pyramid-level">🌍 TRATADOS INTERNACIONALES</div>
+<div class="pyramid-level">📜 LEYES FEDERALES</div>
+<div class="pyramid-level">🏛 LEYES ESTATALES</div>
+<div class="pyramid-level">🏘 REGLAMENTOS MUNICIPALES</div>
+</div>
+<div class="highlight-box">
+<h3>⚠️ Regla de oro:</h3>
+<p>La ley inferior NUNCA puede contradecir a la superior</p>
+</div>
+</div>
+
+<!-- Slide 10: Ejemplo Práctico -->
+<div class="slide">
+<span class="slide-number">10 / 47</span>
+<h1>🐕 Caso: Prohibición de Mascotas</h1>
+<div class="card">
+<h3>Situación:</h3>
+<p>El reglamento de tu edificio dice: "Prohibido tener mascotas"</p>
+<p>Pero la Constitución protege tu derecho a la propiedad privada</p>
+</div>
+<div class="two-columns">
+<div class="card" style="background: #d4edda;">
+<h3>✅ SÍ pueden:</h3>
+<ul>
+<li>Regular tamaño</li>
+<li>Limitar cantidad</li>
+<li>Definir zonas permitidas</li>
+<li>Exigir limpieza</li>
+</ul>
+</div>
+<div class="card" style="background: #f8d7da;">
+<h3>❌ NO pueden:</h3>
+<ul>
+<li>Prohibir absolutamente</li>
+<li>Violar tu propiedad</li>
+<li>Discriminar arbitrariamente</li>
+<li>Imponer multas excesivas</li>
+</ul>
+</div>
+</div>
+</div>
+
+<!-- Slide 11: Derechos Fundamentales -->
+<div class="slide">
+<span class="slide-number">11 / 47</span>
+<h1>🛡️ Tus Derechos Fundamentales</h1>
+<div class="two-columns">
+<div>
+<h3>Derechos básicos:</h3>
+<div class="card">
+<h4>❤️ VIDA</h4>
+<p>Nadie puede dañarte física o psicológicamente</p>
+</div>
+<div class="card">
+<h4>🕊️ LIBERTAD</h4>
+<p>Hacer todo lo que no esté prohibido por ley</p>
+</div>
+<div class="card">
+<h4>🏠 PROPIEDAD</h4>
+<p>Lo tuyo está protegido legalmente</p>
+</div>
+<div class="card">
+<h4>⚖️ DEBIDO PROCESO</h4>
+<p>Derecho a defenderte si te acusan</p>
+</div>
+</div>
+<div>
+<h3>Obligaciones ciudadanas:</h3>
+<div class="checklist">
+<div class="checklist-item">💰 Pagar impuestos</div>
+<div class="checklist-item">⚖️ Respetar las leyes</div>
+<div class="checklist-item">🤝 Respetar derechos ajenos</div>
+<div class="checklist-item">📝 Cumplir contratos</div>
+</div>
+</div>
+</div>
+</div>
+
+<!-- Slide 12: Derecho Civil -->
+<div class="slide">
+<span class="slide-number">12 / 47</span>
+<h1>🏠 Derecho Civil</h1>
+<p style="text-align: center; font-size: 1.3em;">Regula relaciones entre particulares</p>
+<div class="two-columns">
+<div class="card">
+<h3>¿Qué regula?</h3>
+<ul>
+<li>Contratos diversos</li>
+<li>Matrimonios y divorcios</li>
+<li>Herencias y testamentos</li>
+<li>Propiedad privada</li>
+<li>Arrendamientos</li>
+</ul>
+</div>
+<div class="card">
+<h3>¿Cuándo lo usas?</h3>
+<ul>
+<li>Al rentar o comprar casa</li>
+<li>Al casarte o divorciarte</li>
+<li>Al hacer testamento</li>
+<li>En compraventas</li>
+<li>En contratos de servicios</li>
+</ul>
+</div>
+</div>
+</div>
+
+<!-- Slide 13: Derecho Penal -->
+<div class="slide">
+<span class="slide-number">13 / 47</span>
+<h1>🚨 Derecho Penal</h1>
+<div class="highlight-box" style="background: #f8d7da; border-left-color: #dc3545;">
+<h3>⚠️ IMPORTANTE:</h3>
+<p style="font-size: 1.2em;">En materia penal SIEMPRE necesitas abogado</p>
+</div>
+<div class="card">
+<h3>¿Qué regula?</h3>
+<ul>
+<li>Delitos (robo, fraude, lesiones)</li>
+<li>Penas y sanciones</li>
+<li>Proceso penal</li>
+<li>Derechos del acusado y víctima</li>
+</ul>
+</div>
+<div class="card">
+<h3>Señales de alerta:</h3>
+<ul>
+<li>🚨 Te acusan de un delito</li>
+<li>🚔 Eres víctima de un delito</li>
+<li>📨 Recibes citatorio judicial</li>
+<li>👮 Te detienen autoridades</li>
+</ul>
+</div>
+</div>
+
+<!-- Slide 14: Derecho Laboral ACTUALIZADO -->
+<div class="slide">
+<span class="slide-number">14 / 47</span>
+<h1>💼 Derecho Laboral</h1>
+<div class="card">
+<h3>Derechos básicos del trabajador:</h3>
+<table class="table">
+<tr>
+<th>Prestación</th>
+<th>Mínimo Legal 2025</th>
+</tr>
+<tr>
+<td>Salario mínimo</td>
+<td><strong>$278.80 por día</strong></td>
+</tr>
+<tr>
+<td>Vacaciones (año 1)</td>
+<td><strong>12 días (Reforma 2023)</strong></td>
+</tr>
+<tr>
+<td>Aguinaldo</td>
+<td>15 días mínimo</td>
+</tr>
+<tr>
+<td>Prima vacacional</td>
+<td>25% sobre vacaciones</td>
+</tr>
+<tr>
+<td>Seguridad social</td>
+<td>IMSS obligatorio</td>
+</tr>
+</table>
+</div>
+<div class="highlight-box" style="background: #d4edda; border-left-color: #28a745;">
+<p><strong>✅ Actualización 2025:</strong> Desde la reforma de "Vacaciones Dignas" de 2023, los trabajadores tienen derecho a 12 días de vacaciones desde el primer año, aumentando 2 días por año hasta llegar a 20.</p>
+</div>
+</div>
+
+<!-- Slide 15: Derecho Administrativo -->
+<div class="slide">
+<span class="slide-number">15 / 47</span>
+<h1>🏛️ Derecho Administrativo</h1>
+<p style="text-align: center; font-size: 1.2em;">Tu relación con el gobierno</p>
+<div class="card">
+<h3>¿Cuándo aparece?</h3>
+<ul>
+<li>🚗 Multas de tránsito</li>
+<li>📄 Permisos y licencias</li>
+<li>🔒 Clausuras de negocios</li>
+<li>📋 Trámites oficiales</li>
+</ul>
+</div>
+<div class="card">
+<h3>Tus recursos legales:</h3>
+<ul>
+<li>📝 Queja administrativa</li>
+<li>📋 Recurso de revisión</li>
+<li>⚖️ Juicio de nulidad</li>
+<li>🏛️ Amparo (con abogado)</li>
+</ul>
+</div>
+</div>
+
+<!-- Slide 16: SÍ necesitas abogado -->
+<div class="slide">
+<span class="slide-number">16 / 47</span>
+<h1>🚨 SÍ Necesitas Abogado</h1>
+<div class="highlight-box" style="background: #f8d7da; border-left-color: #dc3545;">
+<h3>Casos que SIEMPRE requieren profesional:</h3>
+<ul>
+<li>⚖️ Cualquier proceso penal</li>
+<li>💔 Divorcios con conflicto de bienes o hijos</li>
+<li>🏠 Compraventa de inmuebles</li>
+<li>🏢 Constitución de empresas</li>
+<li>👴 Herencias complicadas o en disputa</li>
+<li>💼 Demandas laborales por montos grandes</li>
+</ul>
+</div>
+<div class="card">
+<h3>Señales de alerta para buscar abogado:</h3>
+<ul>
+<li>⚠️ La otra parte tiene abogado</li>
+<li>⚠️ Hay mucho dinero involucrado (>3 meses de salario)</li>
+<li>⚠️ Pueden quitarte libertad o propiedad</li>
+<li>⚠️ No entiendes los documentos</li>
+<li>⚠️ El documento tiene muchas páginas</li>
+</ul>
+</div>
+</div>
+
+<!-- Slide 17: NO necesitas abogado -->
+<div class="slide">
+<span class="slide-number">17 / 47</span>
+<h1>✅ NO Necesitas Abogado</h1>
+<div class="card" style="background: #d4edda;">
+<h3>Puedes hacerlo solo:</h3>
+<ul>
+<li>🛒 Quejas en PROFECO</li>
+<li>🚗 Multas de tránsito simples</li>
+<li>🏠 Contratos de renta estándar</li>
+<li>🔧 Reclamaciones de garantía</li>
+<li>💑 Divorcios de mutuo acuerdo sin hijos ni bienes</li>
+</ul>
+</div>
+<div class="card">
+<h3>Instituciones que te ayudan GRATIS:</h3>
+<ul>
+<li><strong>PROFECO</strong> - Derechos del consumidor</li>
+<li><strong>CONDUSEF</strong> - Servicios financieros</li>
+<li><strong>CONAPRED</strong> - Casos de discriminación</li>
+<li><strong>Defensoría Pública</strong> - Si no tienes recursos</li>
+</ul>
+</div>
+</div>
+
+<!-- Slide 18: Anatomía de un Contrato -->
+<div class="slide">
+<span class="slide-number">18 / 47</span>
+<h1>📋 Anatomía de un Contrato</h1>
+<div class="card">
+<h3>📝 ENCABEZADO</h3>
+<ul>
+<li>¿Quiénes? - Identificación de las partes</li>
+<li>¿Cuándo? - Fecha del contrato</li>
+<li>¿Dónde? - Lugar de celebración</li>
+</ul>
+</div>
+<div class="card">
+<h3>📋 CLÁUSULAS ESENCIALES</h3>
+<ul>
+<li><strong>OBJETO:</strong> ¿Qué se está acordando?</li>
+<li><strong>PRECIO:</strong> ¿Cuánto cuesta?</li>
+<li><strong>PLAZO:</strong> ¿Cuánto dura?</li>
+<li><strong>OBLIGACIONES:</strong> ¿Qué debe hacer cada uno?</li>
+<li><strong>INCUMPLIMIENTO:</strong> ¿Qué pasa si fallo?</li>
+</ul>
+</div>
+<div class="card">
+<h3>✍️ FIRMAS</h3>
+<ul>
+<li>Partes principales</li>
+<li>Testigos (cuando se requieren)</li>
+</ul>
+</div>
+</div>
+
+<!-- Slide 19: Técnica OPEN -->
+<div class="slide">
+<span class="slide-number">19 / 47</span>
+<h1>🔍 Técnica OPEN para Leer Contratos</h1>
+<p style="text-align: center; font-size: 1.3em;">Lectura rápida y efectiva</p>
+<div class="card" style="background: linear-gradient(135deg, #3498db, #2980b9); color: white;">
+<h2 style="color: white;">O - OBJETO</h2>
+<p style="font-size: 1.2em;">¿Qué estoy comprando/rentando/contratando?</p>
+</div>
+<div class="card" style="background: linear-gradient(135deg, #27ae60, #229954); color: white;">
+<h2 style="color: white;">P - PRECIO</h2>
+<p style="font-size: 1.2em;">¿Cuánto pago y cómo?</p>
+</div>
+<div class="card" style="background: linear-gradient(135deg, #f39c12, #d68910); color: white;">
+<h2 style="color: white;">E - ENTREGA</h2>
+<p style="font-size: 1.2em;">¿Cuándo y cómo recibo?</p>
+</div>
+<div class="card" style="background: linear-gradient(135deg, #e74c3c, #c0392b); color: white;">
+<h2 style="color: white;">N - NO CUMPLIMIENTO</h2>
+<p style="font-size: 1.2em;">¿Qué pasa si algo sale mal?</p>
+</div>
+</div>
+
+<!-- Slide 20: Cláusulas Abusivas -->
+<div class="slide">
+<span class="slide-number">20 / 47</span>
+<h1>⚠️ Identificar Cláusulas Abusivas</h1>
+<div class="two-columns">
+<div>
+<h3 style="color: #27ae60;">VÁLIDAS ✅</h3>
+<div class="badge valid">Depósito de 1 mes</div>
+<div class="badge valid">Incremento anual 5%</div>
+<div class="badge valid">Penalización del 10%</div>
+<div class="badge valid">Aviso con 30 días</div>
+</div>
+<div>
+<h3 style="color: #e74c3c;">ABUSIVAS ❌</h3>
+<div class="badge invalid">Renuncia a todos tus derechos</div>
+<div class="badge invalid">Entrada sin avisar</div>
+<div class="badge invalid">Pierde depósito + 3 meses</div>
+<div class="badge invalid">Sin garantía ninguna</div>
+<div class="badge invalid">Interés 10% mensual</div>
+</div>
+</div>
+</div>
+
+<!-- Slide 21: Ejercicio Práctico - Contrato de Arrendamiento -->
+<div class="slide">
+<span class="slide-number">21 / 47</span>
+<h1>📋 Ejercicio: Análisis de Contrato Real</h1>
+<h3>Contrato de Arrendamiento - María González vs Juan Carlos Hernández</h3>
+<div class="contract-example">
+<div class="clause-green">
+<strong>✅ CLÁUSULA PROTECTORA:</strong><br>
+"El ARRENDATARIO declara haber recibido el inmueble en perfecto estado. Se anexa inventario detallado con fotografías fechadas."
+</div>
+<div class="clause-red">
+<strong>❌ CLÁUSULA PELIGROSA:</strong><br>
+"La ARRENDADORA podrá incrementar la renta en cualquier momento y en la cantidad que considere conveniente, bastando para ello un aviso de 15 días."
+</div>
+<div class="clause-red">
+<strong>❌ CLÁUSULA ABUSIVA:</strong><br>
+"El ARRENDATARIO renuncia expresamente a todos los derechos que le otorga la Ley Federal de Protección al Consumidor, el Código Civil y cualquier otra legislación aplicable."
+</div>
+<div class="clause-yellow">
+<strong>⚠️ CLÁUSULA NEUTRAL:</strong><br>
+"La renta mensual es de $8,500.00, pagadera por mes adelantado los primeros 5 días de cada mes."
+</div>
+</div>
+</div>
+
+<!-- Slide 22: Prestaciones de Ley ACTUALIZADO -->
+<div class="slide">
+<span class="slide-number">22 / 47</span>
+<h1>💼 Prestaciones de Ley Actualizadas</h1>
+<table class="table">
+<thead>
+<tr>
+<th>Prestación</th>
+<th>Mínimo Legal 2025</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>💰 Salario mínimo</td>
+<td><strong>$278.80 por día</strong></td>
+</tr>
+<tr>
+<td>🏖️ Vacaciones año 1</td>
+<td><strong>12 días (Reforma 2023)</strong></td>
+</tr>
+<tr>
+<td>🎁 Aguinaldo</td>
+<td>15 días mínimo</td>
+</tr>
+<tr>
+<td>🌴 Prima vacacional</td>
+<td>25% sobre vacaciones</td>
+</tr>
+<tr>
+<td>🏥 Seguridad social</td>
+<td>IMSS obligatorio</td>
+</tr>
+<tr>
+<td>🏠 Vivienda</td>
+<td>INFONAVIT 5%</td>
+</tr>
+</tbody>
+</table>
+<div class="highlight-box" style="background: #fff3cd; border-left-color: #ffc107;">
+<h3>⚠️ IMPORTANTE - Prima de Antigüedad:</h3>
+<p><strong>Solo se paga después de 15 años de trabajo</strong>, sin importar si es despido justificado, injustificado o renuncia voluntaria.</p>
+</div>
+</div>
+
+<!-- Slide 23: Despido Injustificado -->
+<div class="slide">
+<span class="slide-number">23 / 47</span>
+<h1>⚠️ Despido Injustificado</h1>
+<div class="highlight-box">
+<h3>Tus derechos si te despiden sin causa:</h3>
+<ul>
+<li>💰 3 meses de salario integrado (indemnización)</li>
+<li>👴 Prima de antigüedad (SOLO si tienes 15+ años)</li>
+<li>🎁 Parte proporcional de aguinaldo</li>
+<li>🏖️ Vacaciones no gozadas</li>
+<li>⏰ Salarios caídos (si ganas el juicio)</li>
+</ul>
+</div>
+<div class="card" style="background: #fff3cd;">
+<h3>⏰ IMPORTANTE:</h3>
+<p style="font-size: 1.3em; font-weight: bold;">Tienes 1 AÑO para demandar por despido injustificado</p>
+</div>
+</div>
+
+<!-- Slide 24: Cálculo de Finiquito -->
+<div class="slide">
+<span class="slide-number">24 / 47</span>
+<h1>🧮 Ejemplo: Cálculo de Finiquito</h1>
+<div class="card">
+<h3>Caso: Juan - 2 años trabajando, $8,000/mes</h3>
+<p>Despedido sin causa justificada</p>
+</div>
+<table class="table">
+<tr>
+<th>Concepto</th>
+<th>Cálculo</th>
+<th>Monto</th>
+</tr>
+<tr>
+<td>Indemnización</td>
+<td>3 meses × $8,000</td>
+<td style="font-weight: bold;">$24,000</td>
+</tr>
+<tr>
+<td>Prima antigüedad</td>
+<td><strong>NO APLICA</strong> (menos de 15 años)</td>
+<td style="font-weight: bold; color: #dc3545;">$0</td>
+</tr>
+<tr>
+<td>Aguinaldo proporcional</td>
+<td>9 meses/12 × 15 días</td>
+<td style="font-weight: bold;">$3,287</td>
+</tr>
+<tr>
+<td>Vacaciones no gozadas</td>
+<td>14 días × $267</td>
+<td style="font-weight: bold;">$3,733</td>
+</tr>
+<tr style="background: #d4edda;">
+<td colspan="2"><strong>TOTAL</strong></td>
+<td style="font-size: 1.3em; font-weight: bold;">$31,020</td>
+</tr>
+</table>
+</div>
+
+<!-- Slide 25: Renuncia vs Despido -->
+<div class="slide">
+<span class="slide-number">25 / 47</span>
+<h1>🚪 Renuncia vs Despido</h1>
+<div class="two-columns">
+<div class="card" style="background: #fff3cd;">
+<h3>SI RENUNCIAS:</h3>
+<ul>
+<li>✅ Finiquito proporcional</li>
+<li>✅ Aguinaldo proporcional</li>
+<li>✅ Vacaciones no gozadas</li>
+<li>✅ Prima vacacional</li>
+<li>❌ NO indemnización</li>
+<li>⚠️ Prima antigüedad SOLO si tienes 15+ años</li>
+</ul>
+</div>
+<div class="card" style="background: #d4edda;">
+<h3>SI TE DESPIDEN:</h3>
+<ul>
+<li>✅ Todo lo de renuncia</li>
+<li>✅ + Indemnización 3 meses</li>
+<li>✅ + Prima antigüedad (si tienes 15+ años)</li>
+<li>✅ + Posibles salarios caídos</li>
+<li>✅ Derecho a demandar</li>
+</ul>
+</div>
+</div>
+</div>
+
+<!-- Slide 26: PROFECO -->
+<div class="slide">
+<span class="slide-number">26 / 47</span>
+<h1>🛒 PROFECO</h1>
+<div class="card">
+<h3>Procuraduría Federal del Consumidor</h3>
+<p>Tu defensor como consumidor</p>
+</div>
+<div class="two-columns">
+<div class="card">
+<h3>¿Cuándo acudir?</h3>
+<ul>
+<li>Publicidad engañosa</li>
+<li>No respetan garantías</li>
+<li>Cobros indebidos</li>
+<li>Incumplimiento de ofertas</li>
+<li>Cláusulas abusivas</li>
+</ul>
+</div>
+<div class="card">
+<h3>Servicios GRATUITOS:</h3>
+<ul>
+<li>📞 Teléfono del consumidor</li>
+<li>💻 Concilianet (online)</li>
+<li>🏢 Conciliación presencial</li>
+<li>⚖️ Arbitraje</li>
+</ul>
+<p style="font-weight: bold; margin-top: 20px;">📞 55 5568 8722</p>
+</div>
+</div>
+</div>
+
+<!-- Slide 27: CONDUSEF -->
+<div class="slide">
+<span class="slide-number">27 / 47</span>
+<h1>🏦 CONDUSEF</h1>
+<div class="card">
+<h3>Comisión Nacional para la Protección de Usuarios de Servicios Financieros</h3>
+<p>Tu defensor ante bancos y financieras</p>
+</div>
+<div class="two-columns">
+<div class="card">
+<h3>¿Cuándo acudir?</h3>
+<ul>
+<li>Cargos no reconocidos</li>
+<li>Negativa de seguros</li>
+<li>Problemas con créditos</li>
+<li>Buró de crédito</li>
+<li>Fraudes bancarios</li>
+</ul>
+</div>
+<div class="card">
+<h3>Servicios GRATUITOS:</h3>
+<ul>
+<li>💡 Asesoría financiera</li>
+<li>⚖️ Defensa legal</li>
+<li>🧮 Simuladores de crédito</li>
+<li>📚 Educación financiera</li>
+</ul>
+<p style="font-weight: bold; margin-top: 20px;">📞 55 5340 0999</p>
+</div>
+</div>
+</div>
+
+<!-- Slide 28: Otras Instituciones -->
+<div class="slide">
+<span class="slide-number">28 / 47</span>
+<h1>🏛 Más Instituciones de Apoyo</h1>
+<div class="card">
+<h3>CONAPRED - Discriminación</h3>
+<ul>
+<li>📞 55 5262 1490</li>
+<li>Quejas por discriminación</li>
+<li>Asesoría y acompañamiento</li>
+</ul>
+</div>
+<div class="card">
+<h3>MINISTERIO PÚBLICO - Delitos</h3>
+<ul>
+<li>Denuncias penales</li>
+<li>Órdenes de protección</li>
+<li>Asesor jurídico gratuito</li>
+</ul>
+</div>
+<div class="card">
+<h3>DEFENSORÍA PÚBLICA - Sin recursos</h3>
+<ul>
+<li>Abogados gratuitos del gobierno</li>
+<li>Requiere estudio socioeconómico</li>
+<li>Para casos penales y familiares</li>
+</ul>
+</div>
+</div>
+
+<!-- Slide 29: Prescripción -->
+<div class="slide">
+<span class="slide-number">29 / 47</span>
+<h1>⏰ Prescripción - Plazos Importantes</h1>
+<p style="text-align: center; font-size: 1.2em;">"Fecha de caducidad" de tus derechos</p>
+<table class="table">
+<tr>
+<th>Plazo</th>
+<th>Aplica para</th>
+</tr>
+<tr>
+<td style="font-weight: bold;">10 años</td>
+<td>Deudas hipotecarias</td>
+</tr>
+<tr>
+<td style="font-weight: bold;">5 años</td>
+<td>Pensiones alimenticias atrasadas</td>
+</tr>
+<tr>
+<td style="font-weight: bold;">3 años</td>
+<td>Salarios no pagados, honorarios</td>
+</tr>
+<tr>
+<td style="font-weight: bold;">2 años</td>
+<td>Daños por accidente</td>
+</tr>
+<tr>
+<td style="font-weight: bold;">1 año</td>
+<td>Despido injustificado</td>
+</tr>
+<tr>
+<td style="font-weight: bold;">6 meses</td>
+<td>Garantías comerciales</td>
+</tr>
+<tr>
+<td style="font-weight: bold;">30 días</td>
+<td>Devoluciones online</td>
+</tr>
+<tr>
+<td style="font-weight: bold;">5 días</td>
+<td>Multas de tránsito CDMX</td>
+</tr>
+</table>
+</div>
+
+<!-- Slide 30: Cómo Contar Plazos -->
+<div class="slide">
+<span class="slide-number">30 / 47</span>
+<h1>📅 Cómo Contar Plazos Legales</h1>
+<div class="checklist">
+<div class="checklist-item">1️⃣ El día de notificación NO cuenta</div>
+<div class="checklist-item">2️⃣ Se empieza a contar al día siguiente</div>
+<div class="checklist-item">3️⃣ Solo días hábiles (salvo que diga "naturales")</div>
+<div class="checklist-item">4️⃣ Si vence en inhábil, pasa al siguiente hábil</div>
+<div class="checklist-item">5️⃣ SIEMPRE guarda evidencia de cuándo te enteraste</div>
+</div>
+<div class="highlight-box">
+<h3>💡 Tip importante:</h3>
+<p>Toma foto o screenshot de todo: notificaciones, fechas, documentos. Tu celular es tu mejor aliado para probar plazos.</p>
+</div>
+</div>
+
+<!-- Slide 31: Medios Alternativos -->
+<div class="slide">
+<span class="slide-number">31 / 47</span>
+<h1>🤝 Medios Alternativos de Solución</h1>
+<div class="card">
+<h3>MEDIACIÓN</h3>
+<ul>
+<li>Tercero neutral facilita el diálogo</li>
+<li>TÚ controlas el resultado</li>
+<li>Rápido y barato</li>
+</ul>
+</div>
+<div class="card">
+<h3>CONCILIACIÓN</h3>
+<ul>
+<li>Conciliador propone soluciones</li>
+<li>Gratuito en instituciones públicas</li>
+<li>2-3 meses promedio</li>
+</ul>
+</div>
+<div class="card">
+<h3>ARBITRAJE</h3>
+<ul>
+<li>Árbitro decide como juez privado</li>
+<li>Decisión es definitiva</li>
+<li>Más rápido que juicio tradicional</li>
+</ul>
+</div>
+<div class="highlight-box">
+<h3>¿Cuándo evitar el juicio?</h3>
+<p>Si el monto es menor a $50,000, necesitas resolver rápido, o quieres mantener la relación</p>
+</div>
+</div>
+
+<!-- Slide 32: Fraude Telefónico -->
+<div class="slide">
+<span class="slide-number">32 / 47</span>
+<h1>📞 Fraude Telefónico</h1>
+<div class="card" style="background: #f8d7da;">
+<h3>Modus Operandi:</h3>
+<ul>
+<li>"Tu familiar está secuestrado"</li>
+<li>Urgencia extrema y presión</li>
+<li>Piden depósito inmediato</li>
+<li>No te dejan colgar o verificar</li>
+</ul>
+</div>
+<div class="card" style="background: #d4edda;">
+<h3>🛡️ Defensa:</h3>
+<ol>
+<li><strong>CUELGA</strong> inmediatamente</li>
+<li><strong>LLAMA</strong> a tu familiar directamente</li>
+<li><strong>NUNCA</strong> des información personal</li>
+<li><strong>ESTABLECE</strong> palabra clave familiar</li>
+</ol>
+</div>
+<div class="highlight-box">
+<p style="font-size: 1.3em; text-align: center;">
+<strong>Recuerda:</strong> Los delincuentes juegan con tu miedo. Respira, cuelga y verifica.
+</p>
+</div>
+</div>
+
+<!-- Slide 33: Fraudes Digitales -->
+<div class="slide">
+<span class="slide-number">33 / 47</span>
+<h1>💻 Fraudes Digitales</h1>
+<div class="card">
+<h3>🚨 Señales de alerta:</h3>
+<ul>
+<li>Correos con links sospechosos</li>
+<li>"Urgente: verifica tu cuenta"</li>
+<li>Premios que no esperabas</li>
+<li>Piden contraseñas o NIP</li>
+<li>Errores de ortografía evidentes</li>
+</ul>
+</div>
+<div class="card" style="background: #d4edda;">
+<h3>🔒 Reglas de seguridad:</h3>
+<ul>
+<li>Bancos NUNCA piden contraseñas</li>
+<li>Verifica URLs siempre (https y candado)</li>
+<li>No clicks en correos raros</li>
+<li>Llama directamente al banco</li>
+<li>Usa autenticación de dos factores</li>
+</ul>
+</div>
+</div>
+
+<!-- Slide 34: Fraudes Inmobiliarios -->
+<div class="slide">
+<span class="slide-number">34 / 47</span>
+<h1>🏠 Fraudes Inmobiliarios</h1>
+<div class="card" style="background: #f8d7da;">
+<h3>🚩 Banderas rojas:</h3>
+<ul>
+<li>Precio demasiado bajo (50% del mercado)</li>
+<li>Urgen depósito sin ver propiedad</li>
+<li>No tienen papeles o están "en trámite"</li>
+<li>Evitan reunirse en persona</li>
+<li>"Estoy fuera del país, pero confía"</li>
+<li>Solo aceptan efectivo</li>
+</ul>
+</div>
+<div class="card" style="background: #d4edda;">
+<h3>✅ Verificación obligatoria:</h3>
+<ul>
+<li>Consulta Registro Público de la Propiedad</li>
+<li>Pide identificación oficial del dueño</li>
+<li>Nunca adelantes sin contrato firmado</li>
+<li>Verifica que quien renta es el dueño</li>
+<li>Visita el inmueble en diferentes horarios</li>
+</ul>
+</div>
+</div>
+
+<!-- Slide 35: Checklist Anti-fraude -->
+<div class="slide">
+<span class="slide-number">35 / 47</span>
+<h1>✅ Checklist Anti-Fraude</h1>
+<div class="checklist">
+<div class="checklist-item">□ ¿La oferta es demasiado buena para ser verdad?</div>
+<div class="checklist-item">□ ¿Te presionan para decidir YA?</div>
+<div class="checklist-item">□ ¿Piden dinero por adelantado?</div>
+<div class="checklist-item">□ ¿Evitan darte documentos oficiales?</div>
+<div class="checklist-item">□ ¿No tienen oficinas físicas verificables?</div>
+<div class="checklist-item">□ ¿Prometen ganancias garantizadas sin riesgo?</div>
+<div class="checklist-item">□ ¿Solo aceptan efectivo o transferencias?</div>
+<div class="checklist-item">□ ¿Te contactaron ellos primero?</div>
+</div>
+<div class="highlight-box" style="background: #f8d7da; border-left-color: #dc3545;">
+<h3>⚠️ Si marcaste alguna = 🚨 POSIBLE FRAUDE</h3>
+<p>Detente, investiga más y consulta con alguien de confianza</p>
+</div>
+</div>
+
+<!-- Slide 36: Caso María -->
+<div class="slide">
+<span class="slide-number">36 / 47</span>
+<h1>👩 Caso María - Despido</h1>
+<div class="card">
+<h3>Contexto:</h3>
+<ul>
+<li>3 años trabajando</li>
+<li>Salario: $10,000 mensuales</li>
+<li>La despiden sin dar razón</li>
+</ul>
+</div>
+<div class="two-columns">
+<div class="card">
+<h3>Opción 1: Negociar</h3>
+<ul>
+<li>✅ Rápido (días)</li>
+<li>⚠️ 60-80% del total</li>
+</ul>
+</div>
+<div class="card">
+<h3>Opción 2: Conciliar</h3>
+<ul>
+<li>✅ 2-3 meses</li>
+<li>✅ Gratuito</li>
+</ul>
+</div>
+</div>
+<div class="card">
+<h3>Opción 3: Demandar</h3>
+<ul>
+<li>✅ 100% + salarios caídos</li>
+<li>❌ 1-2 años</li>
+</ul>
+</div>
+<div class="highlight-box">
+<h3>Cálculo aproximado: $30,000 (SIN prima antigüedad - menos de 15 años)</h3>
+</div>
+</div>
+
+<!-- Slide 37: Caso Juan -->
+<div class="slide">
+<span class="slide-number">37 / 47</span>
+<h1>📱 Caso Juan - Celular</h1>
+<div class="card">
+<h3>Situación:</h3>
+<ul>
+<li>Celular de $8,000</li>
+<li>Dejó de funcionar a los 3 meses</li>
+<li>Tienda niega garantía</li>
+</ul>
+</div>
+<div class="card">
+<h3>Proceso PROFECO:</h3>
+<ol>
+<li>Registrar queja en Concilianet</li>
+<li>Adjuntar ticket y evidencias</li>
+<li>Audiencia de conciliación</li>
+<li>Posibles resultados:</li>
+</ol>
+</div>
+<div class="two-columns">
+<div class="badge valid">Cambio por nuevo</div>
+<div class="badge valid">Reparación gratuita</div>
+<div class="badge valid">Devolución del dinero</div>
+<div class="badge valid">Bonificación extra</div>
+</div>
+</div>
+
+<!-- Slide 38: Caso Pedro -->
+<div class="slide">
+<span class="slide-number">38 / 47</span>
+<h1>👨‍👩‍👧 Caso Pedro - Pensión</h1>
+<div class="card">
+<h3>¿Qué incluye la pensión alimenticia?</h3>
+<ul>
+<li>🍽️ Comida y vestido</li>
+<li>📚 Educación completa</li>
+<li>🏥 Salud y medicinas</li>
+<li>🏠 Vivienda digna</li>
+<li>🎮 Recreación</li>
+</ul>
+</div>
+<div class="two-columns">
+<div class="card">
+<h3>¿Cuánto?</h3>
+<p>15-30% por hijo (aproximado)</p>
+<p>Según capacidad económica</p>
+</div>
+<div class="card">
+<h3>¿Hasta cuándo?</h3>
+<p>Mínimo 18 años</p>
+<p>Si estudian: hasta terminar</p>
+</div>
+</div>
+</div>
+
+<!-- Slide 39: Caso Ana - Contrato Real -->
+<div class="slide">
+<span class="slide-number">39 / 47</span>
+<h1>📋 Caso Ana - Análisis de Contrato Real</h1>
+<div class="card">
+<h3>Cláusulas del contrato de arrendamiento detectadas:</h3>
+</div>
+<div class="clause-red">
+<strong>❌ PELIGROSA:</strong> "La ARRENDADORA podrá incrementar la renta en cualquier momento y en la cantidad que considere conveniente"
+</div>
+<div class="clause-red">
+<strong>❌ ABUSIVA:</strong> "El ARRENDATARIO renuncia expresamente a todos los derechos que le otorga la Ley"
+</div>
+<div class="clause-red">
+<strong>❌ PELIGROSA:</strong> "El ARRENDATARIO será responsable de cualquier daño, incluyendo fenómenos naturales"
+</div>
+<div class="clause-green">
+<strong>✅ PROTECTORA:</strong> "Se anexa inventario detallado con fotografías fechadas"
+</div>
+
+<div class="card" style="margin-top: 30px;">
+<h3>Negociación sugerida:</h3>
+<ul>
+<li>Eliminar renuncias absolutas</li>
+<li>Limitar incrementos al 5% anual</li>
+<li>Excluir responsabilidad por casos fortuitos</li>
+<li>Mantener inventario detallado</li>
+</ul>
+</div>
+</div>
+
+<!-- Slide 40: Documentos de Identidad -->
+<div class="slide">
+<span class="slide-number">40 / 47</span>
+<h1>🆔 Documentos de Identidad</h1>
+<div class="checklist">
+<div class="checklist-item">✓ INE/IFE vigente</div>
+<div class="checklist-item">✓ CURP impreso</div>
+<div class="checklist-item">✓ Acta de nacimiento (5 copias certificadas)</div>
+<div class="checklist-item">✓ RFC (si trabajas)</div>
+<div class="checklist-item">✓ Pasaporte (si viajas)</div>
+<div class="checklist-item">✓ Comprobante de domicilio reciente</div>
+</div>
+<div class="highlight-box">
+<h3>💡 Tip tecnológico:</h3>
+<p>Escanea todo y guarda en la nube (Google Drive, Dropbox). Tendrás respaldo permanente y acceso desde cualquier lugar.</p>
+</div>
+</div>
+
+<!-- Slide 41: Documentos de Propiedad -->
+<div class="slide">
+<span class="slide-number">41 / 47</span>
+<h1>🏠 Documentos de Propiedad</h1>
+<div class="card">
+<h3>Guarda ORIGINALES de:</h3>
+<ul>
+<li>🏠 Escrituras de inmuebles</li>
+<li>🚗 Facturas de vehículos</li>
+<li>💰 Títulos de inversiones</li>
+<li>🏦 Estados de cuenta importantes</li>
+<li>🛡️ Contratos de seguros</li>
+</ul>
+</div>
+<div class="highlight-box" style="background: #fff3cd; border-left-color: #ffc107;">
+<h3>⚠️ Recomendación:</h3>
+<p>Considera una caja de seguridad bancaria para documentos muy valiosos. Cuesta ~$2,000 al año y protege tu patrimonio.</p>
+</div>
+</div>
+
+<!-- Slide 42: Documentos Laborales -->
+<div class="slide">
+<span class="slide-number">42 / 47</span>
+<h1>💼 Documentos Laborales</h1>
+<div class="card">
+<h3>Tu archivo laboral debe tener:</h3>
+<ul>
+<li>📝 Contratos de trabajo (todos)</li>
+<li>💰 Recibos de nómina (últimos 2 años)</li>
+<li>📜 Cartas de recomendación</li>
+<li>🎓 Constancias de capacitación</li>
+<li>✅ Finiquitos anteriores</li>
+</ul>
+</div>
+<div class="highlight-box">
+<p><strong>Importante:</strong> Guarda versión digital + física. Los recibos de nómina son tu mejor prueba de relación laboral.</p>
+</div>
+</div>
+
+<!-- Slide 43: Testamento -->
+<div class="slide">
+<span class="slide-number">43 / 47</span>
+<h1>📜 Testamento</h1>
+<div class="card" style="background: #d4edda;">
+<h3>🍂 Septiembre: Mes del Testamento</h3>
+<ul>
+<li>50% de descuento con notarios</li>
+<li>Costo normal: $3,000-5,000</li>
+<li>En septiembre: $1,500-2,500</li>
+</ul>
+</div>
+<div class="card">
+<h3>Ventajas de hacer testamento:</h3>
+<ul>
+<li>✅ Evitas pleitos familiares</li>
+<li>✅ Proteges a tu familia</li>
+<li>✅ Decides tú quién recibe qué</li>
+<li>✅ Más barato que juicio sucesorio</li>
+</ul>
+</div>
+<div class="card">
+<h3>Contenido básico:</h3>
+<ul>
+<li>Herederos universales</li>
+<li>Legados específicos</li>
+<li>Albacea (ejecutor)</li>
+<li>Tutor para menores</li>
+</ul>
+</div>
+</div>
+
+<!-- Slide 44: Plataforma de Evaluación -->
+<div class="slide">
+<span class="slide-number">44 / 47</span>
+<h1>📊 Evaluación del Curso</h1>
+<div class="card">
+<h3>Para obtener tu diploma:</h3>
+<ol>
+<li>Acceder a la plataforma en línea</li>
+<li>Completar 13 ejercicios interactivos</li>
+<li>Realizar autoevaluación</li>
+<li>Evaluar el curso</li>
+<li>Enviar resultados por WhatsApp</li>
+</ol>
+</div>
+<div class="highlight-box" style="background: #d4edda; border-left-color: #28a745;">
+<h3>🌐 Plataforma de ejercicios:</h3>
+<p style="font-size: 1.5em; font-weight: bold; text-align: center;">
+https://jorch01.github.io/ejercicios.io/
+</p>
+<p style="text-align: center;">Calificación mínima aprobatoria: 60%</p>
+</div>
+</div>
+
+<!-- Slide 45: Compromisos -->
+<div class="slide">
+<span class="slide-number">45 / 47</span>
+<h1>📋 Compromisos de Acción</h1>
+<p style="text-align: center; font-size: 1.3em;">¿Qué harás con este conocimiento?</p>
+<div class="checklist">
+<div class="checklist-item">□ Revisar mis contratos actuales</div>
+<div class="checklist-item">□ Organizar mis documentos importantes</div>
+<div class="checklist-item">□ Hacer testamento en septiembre</div>
+<div class="checklist-item">□ Verificar mis derechos laborales</div>
+<div class="checklist-item">□ Checar mi buró de crédito</div>
+<div class="checklist-item">□ Crear archivo digital de respaldo</div>
+<div class="checklist-item">□ Establecer palabra clave familiar</div>
+<div class="checklist-item">□ Revisar cláusulas de mi renta</div>
+</div>
+</div>
+
+<!-- Slide 46: Directorio -->
+<div class="slide">
+<span class="slide-number">46 / 47</span>
+<h1>📞 Directorio de Emergencia Legal</h1>
+<table class="table">
+<tr>
+<th>Institución</th>
+<th>Teléfono</th>
+<th>Para qué</th>
+</tr>
+<tr>
+<td>Emergencias</td>
+<td><strong>911</strong></td>
+<td>Cualquier emergencia</td>
+</tr>
+<tr>
+<td>Denuncia anónima</td>
+<td><strong>089</strong></td>
+<td>Reportar delitos</td>
+</tr>
+<tr>
+<td>PROFECO</td>
+<td><strong>55 5568 8722</strong></td>
+<td>Consumidor</td>
+</tr>
+<tr>
+<td>CONDUSEF</td>
+<td><strong>55 5340 0999</strong></td>
+<td>Bancos y seguros</td>
+</tr>
+<tr>
+<td>CONAPRED</td>
+<td><strong>55 5262 1490</strong></td>
+<td>Discriminación</td>
+</tr>
+<tr>
+<td>LOCATEL CDMX</td>
+<td><strong>55 5658 1111</strong></td>
+<td>Información general</td>
+</tr>
+</table>
+</div>
+
+<!-- Slide 47: Mensaje Final -->
+<div class="slide">
+<span class="slide-number">47 / 47</span>
+<div class="module-header">
+<h1>🎓 ¡Ahora eres un Ciudadano Empoderado!</h1>
+</div>
+<div style="text-align: center; margin: 40px 0;">
+<p style="font-size: 1.5em; font-style: italic; color: #666;">
+"El derecho no es solo para abogados.<br>
+Es la herramienta que todos tenemos<br>
+para vivir en sociedad de manera justa y segura."
+</p>
+</div>
+<div class="highlight-box">
+<h3>Recuerda siempre:</h3>
+<ul style="font-size: 1.2em;">
+<li>📋 Documenta todo</li>
+<li>👀 Lee antes de firmar</li>
+<li>❓ Pregunta sin pena</li>
+<li>⏰ Actúa a tiempo</li>
+<li>🤝 Busca ayuda cuando la necesites</li>
+</ul>
+</div>
+<div style="text-align: center; margin-top: 40px;">
+<h3>¡Gracias por tu participación!</h3>
+<p>Mtro. Jorge Israel Clemente Marié</p>
+<p>📧 jorge_clemente@empirica.mx</p>
+</div>
+</div>
+</div>
+
+<div class="navigation">
+<button class="nav-btn" id="prevBtn" onclick="changeSlide(-1)">◀</button>
+<button class="nav-btn" id="nextBtn" onclick="changeSlide(1)">▶</button>
+</div>
+
+<script>
+let currentSlide = 0;
+const slides = document.querySelectorAll('.slide');
+const totalSlides = slides.length;
+
+function showSlide(n) {
+slides[currentSlide].classList.remove('active');
+currentSlide = (n + totalSlides) % totalSlides;
+slides[currentSlide].classList.add('active');
+
+// Update progress bar
+const progress = ((currentSlide + 1) / totalSlides) * 100;
+document.getElementById('progress').style.width = progress + '%';
+
+// Update navigation buttons
+document.getElementById('prevBtn').disabled = currentSlide === 0;
+document.getElementById('nextBtn').disabled = currentSlide === totalSlides - 1;
+
+// Update menu active state
+updateMenuActive();
+}
+
+function changeSlide(direction) {
+showSlide(currentSlide + direction);
+}
+
+function goToSlide(slideIndex) {
+showSlide(slideIndex);
+closeMenu();
+}
+
+function toggleMenu() {
+const menu = document.getElementById('menu');
+menu.classList.toggle('open');
+}
+
+function closeMenu() {
+document.getElementById('menu').classList.remove('open');
+}
+
+function updateMenuActive() {
+const menuItems = document.querySelectorAll('.menu-item');
+menuItems.forEach(item => item.classList.remove('active'));
+
+// Add active class based on current slide
+if (currentSlide === 0) menuItems[0]?.classList.add('active');
+else if (currentSlide >= 1 && currentSlide <= 4) menuItems[1]?.classList.add('active');
+else if (currentSlide >= 5 && currentSlide <= 8) menuItems[2]?.classList.add('active');
+// ... continue for other modules
+}
+
+function toggleFullscreen() {
+if (!document.fullscreenElement) {
+document.documentElement.requestFullscreen();
+} else {
+document.exitFullscreen();
+}
+}
+
+// Keyboard navigation
+document.addEventListener('keydown', function(e) {
+if (e.key === 'ArrowLeft' && currentSlide > 0) {
+changeSlide(-1);
+} else if (e.key === 'ArrowRight' && currentSlide < totalSlides - 1) {
+changeSlide(1);
+} else if (e.key === 'Escape') {
+closeMenu();
+} else if (e.key === 'f' || e.key === 'F') {
+toggleFullscreen();
+}
+});
+
+// Touch support for mobile
+let touchStartX = 0;
+let touchEndX = 0;
+
+document.addEventListener('touchstart', function(e) {
+touchStartX = e.changedTouches[0].screenX;
+});
+
+document.addEventListener('touchend', function(e) {
+touchEndX = e.changedTouches[0].screenX;
+handleSwipe();
+});
+
+function handleSwipe() {
+if (touchEndX < touchStartX - 50 && currentSlide < totalSlides - 1) {
+changeSlide(1);
+}
+if (touchEndX > touchStartX + 50 && currentSlide > 0) {
+changeSlide(-1);
+}
+}
+
+// Initialize
+showSlide(0);
+</script>
+</body>
+</html>
