@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Verificar Diploma | Empírica Legal Lab</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <style>
+        .verify-container {
+            max-width: 800px;
+            margin: 60px auto;
+            padding: 0 20px;
+        }
+        
+        .verify-card {
+            background: white;
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 4px 20px rgba(27, 44, 39, 0.1);
+            text-align: center;
+        }
+        
+        .diploma-info {
+            background: #F5F5F5;
+            padding: 30px;
+            border-radius: 12px;
+            margin: 30px 0;
+            text-align: left;
+        }
+        
+        .info-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 12px 0;
+            border-bottom: 1px solid #E1E8E5;
+        }
+        
+        .info-label {
+            color: #6C757D;
+            font-weight: 600;
+        }
+        
+        .info-value {
+            color: #1B2C27;
+            font-weight: 700;
+        }
+        
+        .verify-status {
+            padding: 20px;
+            border-radius: 12px;
+            margin: 30px 0;
+            font-size: 1.1rem;
+            font-weight: 600;
+        }
+        
+        .status-valid {
+            background: #D4EDDA;
+            color: #155724;
+            border: 2px solid #28A745;
+        }
+        
+        .status-invalid {
+            background: #F8D7DA;
+            color: #721C24;
+            border: 2px solid #DC3545;
+        }
+        
+        .status-loading {
+            background: #FFF3CD;
+            color: #856404;
+            border: 2px solid #FFC107;
+        }
+        
+        .search-box {
+            display: flex;
+            gap: 15px;
+            margin: 30px 0;
+        }
+        
+        .search-input {
+            flex: 1;
+            padding: 12px 20px;
+            border: 2px solid #E1E8E5;
+            border-radius: 12px;
+            font-size: 1rem;
+        }
+        
+        .search-input:focus {
+            outline: none;
+            border-color: #CFA892;
+        }
+    </style>
+</head>
+<body>
+    <!-- HEADER -->
+    <header class="header">
+        <nav class="nav-container">
+            <div class="logo-container">
+                <img src="https://i.postimg.cc/tCVcj2Sw/Captura-de-pantalla-2025-10-04-a-la-s-2-33-47-p-m.png" alt="Empírica Legal Lab" class="logo-img">
+                <div class="logo-text">
+                    <h1>Empírica Legal Lab</h1>
+                    <p>Formación jurídica accesible</p>
+                </div>
+            </div>
+            <button class="mobile-menu-toggle" onclick="toggleMenu()">☰</button>
+            <ul class="nav-menu" id="navMenu">
+                <li><a href="index.html">Inicio</a></li>
+                <li><a href="index.html#cursos">Cursos</a></li>
+                <li><a href="diplomas.html">Diplomas</a></li>
+                <li><a href="contacto.html">Contacto</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- CONTENIDO PRINCIPAL -->
+    <div class="verify-container">
+        <div class="verify-card">
+            <h1 style="color: #1B2C27; font-size: 2.5rem; margin-bottom: 20px;">
+                🔍 Verificar Diploma
+            </h1>
+            <p style="color: #6C757D; font-size: 1.1rem; margin-bottom: 30px;">
+                Verifica la autenticidad de un diploma emitido por Empírica Legal Lab
+            </p>
+
+            <!-- BÚSQUEDA MANUAL -->
+            <div class="search-box">
+                <input 
+                    type="text" 
+                    id="searchInput" 
+                    class="search-input" 
+                    placeholder="Ingresa el ID del diploma (ej: EMPJUR-2025-001)"
+                    onkeypress="if(event.key==='Enter') verifyDiploma()"
+                >
+                <button class="btn btn-primary" onclick="verifyDiploma()">
+                    Verificar
+                </button>
+            </div>
+
+            <!-- RESULTADO DE VERIFICACIÓN -->
+            <div id="verificationResult"></div>
+        </div>
+    </div>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-section">
+                <img src="https://i.postimg.cc/tCVcj2Sw/Captura-de-pantalla-2025-10-04-a-la-s-2-33-47-p-m.png" alt="Logo" style="height: 60px; margin-bottom: 20px;">
+                <p>© 2025 Empírica Legal Lab</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- BOTÓN FLOTANTE WHATSAPP -->
+    <a href="https://wa.me/529982570828" class="whatsapp-float" target="_blank">
+        📱
+    </a>
+
+    <script>
+        // Función para obtener parámetros de la URL
+        function getURLParameter(name) {
+            const urlParams = new URLSearchParams(window.location.search);
+            return urlParams.get(name);
+        }
+
+        // Verificar automáticamente si viene del QR
+        window.addEventListener('load', function() {
+            const diplomaId = getURLParameter('id');
+            if (diplomaId) {
+                document.getElementById('searchInput').value = diplomaId;
+                verifyDiploma();
+            }
+        });
+
+        // Función principal de verificación
+        async function verifyDiploma() {
+            const diplomaId = document.getElementById('searchInput').value.trim().toUpperCase();
+            const resultDiv = document.getElementById('verificationResult');
+            
+            if (!diplomaId) {
+                resultDiv.innerHTML = `
+                    <div class="verify-status status-invalid">
+                        ❌ Por favor ingresa un ID de diploma
+                    </div>
+                `;
+                return;
+            }
+
+            // Mostrar loading
+            resultDiv.innerHTML = `
+                <div class="verify-status status-loading">
+                    ⏳ Verificando diploma...
+                </div>
+            `;
+
+            try {
+                // Cargar base de datos de diplomas
+                const response = await fetch('data/diplomas.json');
+                const data = await response.json();
+                
+                // Buscar el diploma
+                const diploma = data.diplomas.find(d => d.id === diplomaId);
+                
+                if (diploma) {
+                    // Diploma encontrado - VÁLIDO
+                    resultDiv.innerHTML = `
+                        <div class="verify-status status-valid">
+                            ✅ Diploma Verificado Exitosamente
+                        </div>
+                        
+                        <div class="diploma-info">
+                            <h3 style="color: #1B2C27; margin-bottom: 20px; text-align: center;">
+                                Información del Diploma
+                            </h3>
+                            
+                            <div class="info-row">
+                                <span class="info-label">ID del Diploma:</span>
+                                <span class="info-value">${diploma.id}</span>
+                            </div>
+                            
+                            <div class="info-row">
+                                <span class="info-label">Nombre Completo:</span>
+                                <span class="info-value">${diploma.nombre_completo}</span>
+                            </div>
+                            
+                            <div class="info-row">
+                                <span class="info-label">Curso:</span>
+                                <span class="info-value">${diploma.curso}</span>
+                            </div>
+                            
+                            <div class="info-row">
+                                <span class="info-label">Fecha de Emisión:</span>
+                                <span class="info-value">${formatDate(diploma.fecha_emision)}</span>
+                            </div>
+                            
+                            <div class="info-row">
+                                <span class="info-label">Calificación:</span>
+                                <span class="info-value">${diploma.calificacion}%</span>
+                            </div>
+                            
+                            <div class="info-row">
+                                <span class="info-label">Firma Electrónica SAT:</span>
+                                <span class="info-value">${diploma.firma_sat}</span>
+                            </div>
+                        </div>
+                        
+                        <p style="color: #6C757D; font-size: 0.95rem; margin-top: 20px;">
+                            ✓ Este diploma ha sido emitido y firmado electrónicamente por Empírica Legal Lab.<br>
+                            ✓ Contiene firma electrónica SAT con validez oficial.<br>
+                            ✓ Fecha de verificación: ${new Date().toLocaleDateString('es-MX')}
+                        </p>
+                    `;
+                } else {
+                    // Diploma NO encontrado - INVÁLIDO
+                    resultDiv.innerHTML = `
+                        <div class="verify-status status-invalid">
+                            ❌ Diploma No Encontrado
+                        </div>
+                        
+                        <p style="color: #6C757D; margin-top: 20px;">
+                            El ID <strong>"${diplomaId}"</strong> no corresponde a ningún diploma emitido por Empírica Legal Lab.
+                        </p>
+                        
+                        <p style="color: #6C757D; margin-top: 15px; font-size: 0.95rem;">
+                            Si crees que esto es un error, por favor contacta a:<br>
+                            📱 WhatsApp: +52 998 257 0828<br>
+                            ✉️ Email: jorge_clemente@empirica.mx
+                        </p>
+                    `;
+                }
+            } catch (error) {
+                // Error al cargar la base de datos
+                resultDiv.innerHTML = `
+                    <div class="verify-status status-invalid">
+                        ❌ Error al verificar el diploma
+                    </div>
+                    <p style="color: #6C757D; margin-top: 20px;">
+                        No se pudo conectar con la base de datos. Por favor intenta más tarde.
+                    </p>
+                `;
+                console.error('Error:', error);
+            }
+        }
+
+        // Función para formatear fechas
+        function formatDate(dateString) {
+            const date = new Date(dateString);
+            return date.toLocaleDateString('es-MX', {
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric'
+            });
+        }
+
+        // Función para el menú móvil
+        function toggleMenu() {
+            document.getElementById('navMenu').classList.toggle('active');
+        }
+    </script>
+</body>
+</html>
