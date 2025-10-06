@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cursos Jurídicos Gratuitos | Empírica Legal Lab</title>
+    <meta name="description" content="Plataforma de cursos jurídicos gratuitos con diplomas opcionales. Aprende derecho práctico a tu ritmo.">
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <!-- HEADER -->
+    <header class="header">
+        <nav class="nav-container">
+            <div class="logo-container">
+                <img src="https://i.postimg.cc/tCVcj2Sw/Captura-de-pantalla-2025-10-04-a-la-s-2-33-47-p-m.png" alt="Empírica Legal Lab" class="logo-img">
+                <div class="logo-text">
+                    <h1>Empírica Legal Lab</h1>
+                    <p>Formación jurídica accesible</p>
+                </div>
+            </div>
+            <button class="mobile-menu-toggle" onclick="toggleMenu()">☰</button>
+            <ul class="nav-menu" id="navMenu">
+                <li><a href="index.html">Inicio</a></li>
+                <li><a href="#cursos">Cursos</a></li>
+                <li><a href="diplomas.html">Diplomas</a></li>
+                <li><a href="contacto.html">Contacto</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- HERO -->
+    <section class="hero">
+        <h1>🎓 Formación Jurídica para Todos</h1>
+        <p>Aprende derecho práctico con nuestros cursos 100% gratuitos. Obtén tu diploma oficial con firma electrónica SAT.</p>
+        <a href="#cursos" class="cta-button">Explorar Cursos Gratuitos</a>
+    </section>
+
+    <!-- CURSOS -->
+    <section class="courses-section" id="cursos">
+        <h2 class="section-title">Catálogo de Cursos</h2>
+        
+        <div class="courses-grid">
+            <!-- CURSO 1: DERECHO PARA NO ABOGADOS -->
+            <div class="course-card">
+                <div class="course-header">
+                    <span class="course-icon">⚖️</span>
+                    <h3>Derecho para No Abogados</h3>
+                    <span class="badge">GRATUITO</span>
+                </div>
+                <div class="course-body">
+                    <div class="course-meta">
+                        <div class="meta-item">
+                            <span class="icon">⏱️</span>
+                            <div class="label">Duración</div>
+                            <div class="value">4 horas</div>
+                        </div>
+                        <div class="meta-item">
+                            <span class="icon">📊</span>
+                            <div class="label">Nivel</div>
+                            <div class="value">Básico</div>
+                        </div>
+                        <div class="meta-item">
+                            <span class="icon">🎓</span>
+                            <div class="label">Diploma</div>
+                            <div class="value">$200</div>
+                        </div>
+                    </div>
+                    <p class="course-description">
+                        Aprende los fundamentos del derecho mexicano y herramientas prácticas para situaciones legales cotidianas. Sin tecnicismos, con casos reales.
+                    </p>
+                    <ul class="course-features">
+                        <li>Clase grabada en video HD</li>
+                        <li>13 ejercicios interactivos</li>
+                        <li>Presentación descargable</li>
+                        <li>Materiales complementarios</li>
+                        <li>Acceso ilimitado de por vida</li>
+                    </ul>
+                    <div class="course-footer">
+                        <a href="cursos/derecho-no-abogados/index.html" class="btn btn-primary">Comenzar Curso</a>
+                        <a href="cursos/derecho-no-abogados/index.html#info" class="btn btn-secondary">Más Info</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- CURSO 2: PRÓXIMAMENTE -->
+            <div class="course-card" style="opacity: 0.7;">
+                <div class="course-header">
+                    <span class="course-icon">📝</span>
+                    <h3>Contratos Empresariales</h3>
+                    <span class="badge">PRÓXIMAMENTE</span>
+                </div>
+                <div class="course-body">
+                    <div class="course-meta">
+                        <div class="meta-item">
+                            <span class="icon">⏱️</span>
+                            <div class="label">Duración</div>
+                            <div class="value">6 horas</div>
+                        </div>
+                        <div class="meta-item">
+                            <span class="icon">📊</span>
+                            <div class="label">Nivel</div>
+                            <div class="value">Intermedio</div>
+                        </div>
+                        <div class="meta-item">
+                            <span class="icon">🎓</span>
+                            <div class="label">Diploma</div>
+                            <div class="value">$200</div>
+                        </div>
+                    </div>
+                    <p class="course-description">
+                        Domina la redacción y análisis de contratos comerciales. Aprende a proteger los intereses de tu empresa con cláusulas efectivas.
+                    </p>
+                    <ul class="course-features">
+                        <li>Clase grabada profesional</li>
+                        <li>Plantillas de contratos</li>
+                        <li>Casos prácticos empresariales</li>
+                        <li>Ejercicios de redacción</li>
+                        <li>Certificado profesional</li>
+                    </ul>
+                    <div class="course-footer">
+                        <button class="btn btn-primary" disabled style="cursor: not-allowed;">Disponible Pronto</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- CURSO 3: PRÓXIMAMENTE -->
+            <div class="course-card" style="opacity: 0.7;">
+                <div class="course-header">
+                    <span class="course-icon">💼</span>
+                    <h3>Derecho Laboral Práctico</h3>
+                    <span class="badge">PRÓXIMAMENTE</span>
+                </div>
+                <div class="course-body">
+                    <div class="course-meta">
+                        <div class="meta-item">
+                            <span class="icon">⏱️</span>
+                            <div class="label">Duración</div>
+                            <div class="value">5 horas</div>
+                        </div>
+                        <div class="meta-item">
+                            <span class="icon">📊</span>
+                            <div class="label">Nivel</div>
+                            <div class="value">Intermedio</div>
+                        </div>
+                        <div class="meta-item">
+                            <span class="icon">🎓</span>
+                            <div class="label">Diploma</div>
+                            <div class="value">$200</div>
+                        </div>
+                    </div>
+                    <p class="course-description">
+                        Conoce a fondo tus derechos laborales. Desde contratación hasta finiquitos, aprende a defender tus prestaciones legales.
+                    </p>
+                    <ul class="course-features">
+                        <li>Casos reales laborales</li>
+                        <li>Calculadora de finiquitos</li>
+                        <li>Formatos descargables</li>
+                        <li>Actualización 2025</li>
+                        <li>Soporte por WhatsApp</li>
+                    </ul>
+                    <div class="course-footer">
+                        <button class="btn btn-primary" disabled style="cursor: not-allowed;">Disponible Pronto</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECCIÓN DIPLOMAS -->
+    <section class="diplomas-section">
+        <div class="diplomas-container">
+            <h2>🎓 Diplomas con Valor Curricular</h2>
+            <p style="font-size: 1.2rem; margin-bottom: 30px;">
+                Certifica tus conocimientos con nuestros diplomas oficiales firmados electrónicamente
+            </p>
+            
+            <div class="diplomas-grid">
+                <div class="diploma-feature">
+                    <div class="icon">📜</div>
+                    <h4>Firma Electrónica SAT</h4>
+                    <p>Validez oficial con tecnología de firma electrónica avanzada</p>
+                </div>
+                <div class="diploma-feature">
+                    <div class="icon">✅</div>
+                    <h4>Verificable en Línea</h4>
+                    <p>Código QR único para verificar autenticidad del diploma</p>
+                </div>
+                <div class="diploma-feature">
+                    <div class="icon">💼</div>
+                    <h4>Valor Curricular</h4>
+                    <p>Ideal para tu CV, LinkedIn y expediente profesional</p>
+                </div>
+            </div>
+
+            <div class="price-box">
+                <p style="font-size: 1.2rem; margin-bottom: 10px;">Inversión por diploma</p>
+                <div class="price">$200 MXN</div>
+                <p style="margin-top: 15px; opacity: 0.9;">
+                    Solo pagas si deseas el diploma. El curso es 100% gratuito.
+                </p>
+            </div>
+
+            <a href="https://wa.me/529982570828?text=Hola,%20quiero%20información%20sobre%20diplomas" class="btn btn-secondary" style="display: inline-block; margin-top: 20px; padding: 15px 40px;">
+                📱 Solicitar Información por WhatsApp
+            </a>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-section">
+                <img src="https://i.postimg.cc/tCVcj2Sw/Captura-de-pantalla-2025-10-04-a-la-s-2-33-47-p-m.png" alt="Logo" style="height: 60px; margin-bottom: 20px;">
+                <p>Formación jurídica accesible para todos.</p>
+                <p style="margin-top: 15px; opacity: 0.8;">
+                    © 2025 Empírica Legal Lab<br>
+                    Todos los derechos reservados
+                </p>
+            </div>
+            
+            <div class="footer-section">
+                <h4>Cursos</h4>
+                <ul>
+                    <li><a href="cursos/derecho-no-abogados/index.html">Derecho para No Abogados</a></li>
+                    <li><a href="#cursos">Catálogo Completo</a></li>
+                    <li><a href="diplomas.html">Información de Diplomas</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-section">
+                <h4>Empírica Legal Lab</h4>
+                <ul>
+                    <li><a href="contacto.html">Contacto</a></li>
+                    <li><a href="https://www.empirica.mx" target="_blank">Sitio Web Oficial</a></li>
+                    <li><a href="#">Términos y Condiciones</a></li>
+                    <li><a href="#">Política de Privacidad</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-section">
+                <h4>Contacto</h4>
+                <p>📱 WhatsApp: +52 998 257 0828</p>
+                <p>✉️ Email: jorge_clemente@empirica.mx</p>
+                <p style="margin-top: 15px;">
+                    <strong>Horario de Atención:</strong><br>
+                    Lunes a Viernes: 9:00 - 18:00 hrs<br>
+                    Sábados: 9:00 - 14:00 hrs
+                </p>
+            </div>
+        </div>
+        
+        <div class="footer-bottom">
+            <p>Desarrollado con ❤️ para democratizar el conocimiento jurídico</p>
+        </div>
+    </footer>
+
+    <!-- BOTÓN FLOTANTE WHATSAPP -->
+    <a href="https://wa.me/529982570828?text=Hola,%20tengo%20una%20consulta%20sobre%20los%20cursos" class="whatsapp-float" target="_blank" title="Contáctanos por WhatsApp">
+        📱
+    </a>
+
+    <script src="js/main.js"></script>
+</body>
+</html>
