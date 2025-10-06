@@ -1,0 +1,655 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Derecho para No Abogados - Curso Gratuito | Empírica Legal Lab</title>
+    <meta name="description" content="Curso gratuito de introducción al derecho mexicano. 4 horas de contenido práctico con casos reales.">
+    <link rel="stylesheet" href="../../css/styles.css">
+    <style>
+        .course-hero {
+            background: linear-gradient(135deg, #1B2C27 0%, #2d4942 100%);
+            color: white;
+            padding: 60px 20px;
+        }
+        
+        .course-hero-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            align-items: center;
+        }
+        
+        .course-info h1 {
+            font-size: 2.5rem;
+            color: #CFA892;
+            margin-bottom: 20px;
+        }
+        
+        .course-badges {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+        
+        .badge-item {
+            background: #CFA892;
+            color: #1B2C27;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-weight: 700;
+            font-size: 0.9rem;
+        }
+        
+        .course-sidebar {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 8px 30px rgba(0,0,0,0.2);
+        }
+        
+        .course-sidebar h3 {
+            color: #1B2C27;
+            margin-bottom: 20px;
+            font-size: 1.3rem;
+        }
+        
+        .sidebar-stats {
+            margin-bottom: 25px;
+        }
+        
+        .stat-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 12px 0;
+            border-bottom: 1px solid #E1E8E5;
+        }
+        
+        .stat-row:last-child {
+            border-bottom: none;
+        }
+        
+        .stat-label {
+            color: #6C757D;
+        }
+        
+        .stat-value {
+            font-weight: 700;
+            color: #1B2C27;
+        }
+        
+        .content-section {
+            max-width: 1200px;
+            margin: 60px auto;
+            padding: 0 20px;
+        }
+        
+        .content-tabs {
+            display: flex;
+            gap: 0;
+            margin-bottom: 40px;
+            border-bottom: 3px solid #E1E8E5;
+            overflow-x: auto;
+        }
+        
+        .tab-btn {
+            background: none;
+            border: none;
+            padding: 15px 30px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: #6C757D;
+            cursor: pointer;
+            border-bottom: 3px solid transparent;
+            transition: all 0.3s;
+            white-space: nowrap;
+        }
+        
+        .tab-btn:hover {
+            color: #1B2C27;
+        }
+        
+        .tab-btn.active {
+            color: #1B2C27;
+            border-bottom-color: #CFA892;
+        }
+        
+        .tab-content {
+            display: none;
+        }
+        
+        .tab-content.active {
+            display: block;
+            animation: fadeIn 0.5s;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        .modules-grid {
+            display: grid;
+            gap: 25px;
+        }
+        
+        .module-card {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 4px 20px rgba(27, 44, 39, 0.1);
+            border-left: 5px solid #CFA892;
+        }
+        
+        .module-card h4 {
+            color: #1B2C27;
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+        }
+        
+        .module-topics {
+            list-style: none;
+        }
+        
+        .module-topics li {
+            padding: 10px 0;
+            padding-left: 30px;
+            position: relative;
+            color: #2C3E50;
+        }
+        
+        .module-topics li::before {
+            content: '▸';
+            position: absolute;
+            left: 0;
+            color: #CFA892;
+            font-weight: 700;
+        }
+        
+        .resources-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 25px;
+        }
+        
+        .resource-card {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            text-align: center;
+            box-shadow: 0 4px 20px rgba(27, 44, 39, 0.1);
+            transition: all 0.3s;
+            text-decoration: none;
+            color: inherit;
+        }
+        
+        .resource-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 30px rgba(27, 44, 39, 0.15);
+        }
+        
+        .resource-icon {
+            font-size: 3rem;
+            margin-bottom: 15px;
+            display: block;
+        }
+        
+        .resource-card h4 {
+            color: #1B2C27;
+            margin-bottom: 10px;
+        }
+        
+        .resource-card p {
+            color: #6C757D;
+            font-size: 0.95rem;
+        }
+        
+        .instructor-section {
+            background: white;
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 4px 20px rgba(27, 44, 39, 0.1);
+        }
+        
+        .instructor-grid {
+            display: grid;
+            grid-template-columns: 200px 1fr;
+            gap: 40px;
+            align-items: start;
+        }
+        
+        .instructor-photo {
+            width: 100%;
+            border-radius: 15px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+        }
+        
+        .cta-section {
+            background: linear-gradient(135deg, #1B2C27 0%, #2d4942 100%);
+            padding: 60px 20px;
+            text-align: center;
+            color: white;
+            margin: 60px 0;
+        }
+        
+        .cta-section h2 {
+            font-size: 2.5rem;
+            color: #CFA892;
+            margin-bottom: 20px;
+        }
+        
+        .cta-buttons {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-top: 30px;
+        }
+        
+        @media (max-width: 768px) {
+            .course-hero-container {
+                grid-template-columns: 1fr;
+            }
+            
+            .instructor-grid {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+            
+            .content-tabs {
+                flex-wrap: nowrap;
+            }
+            
+            .tab-btn {
+                font-size: 0.95rem;
+                padding: 12px 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- HEADER -->
+    <header class="header">
+        <nav class="nav-container">
+            <div class="logo-container">
+                <img src="https://i.postimg.cc/tCVcj2Sw/Captura-de-pantalla-2025-10-04-a-la-s-2-33-47-p-m.png" alt="Empírica Legal Lab" class="logo-img">
+                <div class="logo-text">
+                    <h1>Empírica Legal Lab</h1>
+                    <p>Formación jurídica accesible</p>
+                </div>
+            </div>
+            <button class="mobile-menu-toggle" onclick="toggleMenu()">☰</button>
+            <ul class="nav-menu" id="navMenu">
+                <li><a href="../../index.html">Inicio</a></li>
+                <li><a href="../../index.html#cursos">Cursos</a></li>
+                <li><a href="../../diplomas.html">Diplomas</a></li>
+                <li><a href="../../contacto.html">Contacto</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- HERO DEL CURSO -->
+    <section class="course-hero">
+        <div class="course-hero-container">
+            <div class="course-info">
+                <h1>⚖️ Derecho para No Abogados</h1>
+                <div class="course-badges">
+                    <span class="badge-item">GRATUITO</span>
+                    <span class="badge-item">4 HORAS</span>
+                    <span class="badge-item">ACCESO ILIMITADO</span>
+                </div>
+                <p style="font-size: 1.2rem; margin-bottom: 30px; opacity: 0.95;">
+                    Aprende los fundamentos del derecho mexicano con casos prácticos. Sin tecnicismos, 100% aplicable a tu vida diaria.
+                </p>
+                <p style="margin-bottom: 20px;">
+                    <strong style="color: #CFA892;">Instructor:</strong> Mtro. Jorge Israel Clemente Marié<br>
+                    Maestro en Amparo | 10+ años de experiencia
+                </p>
+            </div>
+            
+            <div class="course-sidebar">
+                <h3>Detalles del Curso</h3>
+                <div class="sidebar-stats">
+                    <div class="stat-row">
+                        <span class="stat-label">⏱️ Duración</span>
+                        <span class="stat-value">4 horas</span>
+                    </div>
+                    <div class="stat-row">
+                        <span class="stat-label">📊 Nivel</span>
+                        <span class="stat-value">Básico</span>
+                    </div>
+                    <div class="stat-row">
+                        <span class="stat-label">📝 Ejercicios</span>
+                        <span class="stat-value">13 prácticos</span>
+                    </div>
+                    <div class="stat-row">
+                        <span class="stat-label">💰 Costo</span>
+                        <span class="stat-value">GRATIS</span>
+                    </div>
+                    <div class="stat-row">
+                        <span class="stat-label">🎓 Diploma</span>
+                        <span class="stat-value">$200 MXN</span>
+                    </div>
+                    <div class="stat-row">
+                        <span class="stat-label">🔄 Acceso</span>
+                        <span class="stat-value">De por vida</span>
+                    </div>
+                </div>
+                <a href="#recursos" class="btn btn-primary" style="width: 100%; margin-bottom: 10px;">Comenzar Ahora</a>
+                <a href="https://wa.me/529982570828?text=Hola,%20quiero%20información%20sobre%20el%20curso%20Derecho%20para%20No%20Abogados" class="btn btn-secondary" style="width: 100%;">📱 Consultar por WhatsApp</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- CONTENIDO DEL CURSO -->
+    <section class="content-section">
+        <div class="content-tabs">
+            <button class="tab-btn active" onclick="openTab(event, 'descripcion')">📖 Descripción</button>
+            <button class="tab-btn" onclick="openTab(event, 'contenido')">📚 Contenido</button>
+            <button class="tab-btn" onclick="openTab(event, 'recursos')">🎥 Recursos</button>
+            <button class="tab-btn" onclick="openTab(event, 'instructor')">👨‍🏫 Instructor</button>
+        </div>
+
+        <!-- TAB: DESCRIPCIÓN -->
+        <div id="descripcion" class="tab-content active">
+            <h2 style="color: #1B2C27; margin-bottom: 30px; font-size: 2rem;">¿Qué aprenderás?</h2>
+            <div style="background: white; padding: 40px; border-radius: 15px; box-shadow: 0 4px 20px rgba(27, 44, 39, 0.1);">
+                <p style="font-size: 1.1rem; line-height: 1.8; color: #2C3E50; margin-bottom: 30px;">
+                    Este curso está diseñado para personas <strong>sin formación jurídica</strong> que desean comprender el sistema legal mexicano y aplicar ese conocimiento en su vida diaria. A través de un enfoque práctico y casos reales, aprenderás a:
+                </p>
+                
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 25px; margin-top: 30px;">
+                    <div style="padding: 20px; background: #F5F5F5; border-radius: 10px; border-left: 4px solid #CFA892;">
+                        <h4 style="color: #1B2C27; margin-bottom: 10px;">✅ Identificar situaciones legales</h4>
+                        <p style="color: #6C757D;">Reconocer cuándo una situación requiere atención legal y cuándo puedes resolverla tú mismo</p>
+                    </div>
+                    <div style="padding: 20px; background: #F5F5F5; border-radius: 10px; border-left: 4px solid #CFA892;">
+                        <h4 style="color: #1B2C27; margin-bottom: 10px;">📋 Leer contratos</h4>
+                        <p style="color: #6C757D;">Comprender contratos básicos y detectar cláusulas problemáticas o abusivas</p>
+                    </div>
+                    <div style="padding: 20px; background: #F5F5F5; border-radius: 10px; border-left: 4px solid #CFA892;">
+                        <h4 style="color: #1B2C27; margin-bottom: 10px;">💼 Conocer tus derechos</h4>
+                        <p style="color: #6C757D;">Entender tus derechos como trabajador, consumidor y ciudadano mexicano</p>
+                    </div>
+                    <div style="padding: 20px; background: #F5F5F5; border-radius: 10px; border-left: 4px solid #CFA892;">
+                        <h4 style="color: #1B2C27; margin-bottom: 10px;">🏛️ Usar instituciones públicas</h4>
+                        <p style="color: #6C757D;">Saber dónde acudir (PROFECO, CONDUSEF, etc.) según tu problema legal</p>
+                    </div>
+                    <div style="padding: 20px; background: #F5F5F5; border-radius: 10px; border-left: 4px solid #CFA892;">
+                        <h4 style="color: #1B2C27; margin-bottom: 10px;">🛡️ Prevenir fraudes</h4>
+                        <p style="color: #6C757D;">Identificar señales de estafas comunes y proteger tu patrimonio</p>
+                    </div>
+                    <div style="padding: 20px; background: #F5F5F5; border-radius: 10px; border-left: 4px solid #CFA892;">
+                        <h4 style="color: #1B2C27; margin-bottom: 10px;">⚖️ Decidir cuándo necesitas abogado</h4>
+                        <p style="color: #6C757D;">Evaluar cuándo puedes actuar solo y cuándo requieres asesoría profesional</p>
+                    </div>
+                </div>
+
+                <h3 style="color: #1B2C27; margin: 40px 0 20px; font-size: 1.6rem;">¿Para quién es este curso?</h3>
+                <ul style="list-style: none; padding: 0;">
+                    <li style="padding: 10px 0; padding-left: 30px; position: relative;">
+                        <span style="position: absolute; left: 0; color: #CFA892; font-weight: 700;">✓</span>
+                        Emprendedores y dueños de pequeños negocios
+                    </li>
+                    <li style="padding: 10px 0; padding-left: 30px; position: relative;">
+                        <span style="position: absolute; left: 0; color: #CFA892; font-weight: 700;">✓</span>
+                        Profesionistas de áreas no jurídicas
+                    </li>
+                    <li style="padding: 10px 0; padding-left: 30px; position: relative;">
+                        <span style="position: absolute; left: 0; color: #CFA892; font-weight: 700;">✓</span>
+                        Estudiantes universitarios de cualquier carrera
+                    </li>
+                    <li style="padding: 10px 0; padding-left: 30px; position: relative;">
+                        <span style="position: absolute; left: 0; color: #CFA892; font-weight: 700;">✓</span>
+                        Personas que rentan o planean comprar una propiedad
+                    </li>
+                    <li style="padding: 10px 0; padding-left: 30px; position: relative;">
+                        <span style="position: absolute; left: 0; color: #CFA892; font-weight: 700;">✓</span>
+                        Empleados que desean conocer sus derechos laborales
+                    </li>
+                    <li style="padding: 10px 0; padding-left: 30px; position: relative;">
+                        <span style="position: absolute; left: 0; color: #CFA892; font-weight: 700;">✓</span>
+                        Cualquier persona interesada en proteger sus intereses legales
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- TAB: CONTENIDO -->
+        <div id="contenido" class="tab-content">
+            <h2 style="color: #1B2C27; margin-bottom: 30px; font-size: 2rem;">Programa del Curso</h2>
+            <div class="modules-grid">
+                <div class="module-card">
+                    <h4>📖 Módulo 1: Fundamentos del Derecho</h4>
+                    <p style="color: #6C757D; margin-bottom: 15px;">Comprende el sistema jurídico mexicano desde cero</p>
+                    <ul class="module-topics">
+                        <li>¿Qué es el Derecho y para qué sirve?</li>
+                        <li>Sistema jurídico mexicano: estructura básica</li>
+                        <li>Jerarquía de leyes (Constitución, leyes federales, estatales)</li>
+                        <li>Derechos y obligaciones fundamentales del ciudadano</li>
+                        <li>Diferencia entre derecho civil, penal, laboral y administrativo</li>
+                        <li>¿Cuándo necesito un abogado y cuándo no?</li>
+                    </ul>
+                </div>
+
+                <div class="module-card">
+                    <h4>💼 Módulo 2: Aplicación Práctica</h4>
+                    <p style="color: #6C757D; margin-bottom: 15px;">Casos reales y herramientas para la vida diaria</p>
+                    <ul class="module-topics">
+                        <li>Cómo leer y entender un contrato básico</li>
+                        <li>Documentos legales esenciales que todos debemos conocer</li>
+                        <li>Casos prácticos: arrendamiento y compraventa</li>
+                        <li>Identificación de cláusulas problemáticas</li>
+                        <li>Procedimientos legales básicos y plazos importantes</li>
+                        <li>Instituciones de apoyo al ciudadano (PROFECO, CONDUSEF, etc.)</li>
+                        <li>Medios alternativos de solución de conflictos</li>
+                        <li>Análisis de casos reales en materia laboral</li>
+                        <li>Casos de derecho familiar y sucesiones básicas</li>
+                        <li>Prevención de fraudes y estafas comunes</li>
+                    </ul>
+                </div>
+
+                <div class="module-card">
+                    <h4>⚖️ Temas Especializados</h4>
+                    <p style="color: #6C757D; margin-bottom: 15px;">Áreas de mayor impacto en tu vida cotidiana</p>
+                    <ul class="module-topics">
+                        <li><strong>Derecho Laboral:</strong> Derechos del trabajador, despidos, prestaciones</li>
+                        <li><strong>Derecho del Consumidor:</strong> Garantías, devoluciones, reclamaciones PROFECO</li>
+                        <li><strong>Derecho Inmobiliario:</strong> Contratos de arrendamiento, compraventa</li>
+                        <li><strong>Derecho Financiero:</strong> Créditos, buró de crédito, protección ante fraudes</li>
+                        <li><strong>Derecho Familiar:</strong> Pensión alimenticia, testamentos, divorcios</li>
+                        <li><strong>Responsabilidad Civil:</strong> Accidentes, seguros, indemnizaciones</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- TAB: RECURSOS -->
+        <div id="recursos" class="tab-content">
+            <h2 style="color: #1B2C27; margin-bottom: 30px; font-size: 2rem;">Recursos del Curso</h2>
+            <div class="resources-grid">
+                <a href="video.html" class="resource-card">
+                    <span class="resource-icon">🎥</span>
+                    <h4>Clase Completa</h4>
+                    <p>Video de 4 horas con todo el contenido del curso</p>
+                </a>
+
+                <a href="ejercicios.html" class="resource-card">
+                    <span class="resource-icon">📝</span>
+                    <h4>Ejercicios Interactivos</h4>
+                    <p>13 ejercicios prácticos autocalificables</p>
+                </a>
+
+                <a href="presentacion.html" class="resource-card">
+                    <span class="resource-icon">📊</span>
+                    <h4>Presentación</h4>
+                    <p>47 diapositivas interactivas del curso</p>
+                </a>
+
+                <a href="#" onclick="alert('Materiales disponibles después de ver la clase')" class="resource-card">
+                    <span class="resource-icon">📄</span>
+                    <h4>Materiales Descargables</h4>
+                    <p>Plantillas, formatos y guías en PDF</p>
+                </a>
+
+                <a href="#" onclick="alert('Disponible en la sección de ejercicios')" class="resource-card">
+                    <span class="resource-icon">📋</span>
+                    <h4>Casos Prácticos</h4>
+                    <p>Análisis de situaciones reales</p>
+                </a>
+
+                <a href="../../diplomas.html" class="resource-card">
+                    <span class="resource-icon">🎓</span>
+                    <h4>Diploma Oficial</h4>
+                    <p>Certificado con firma electrónica SAT</p>
+                </a>
+            </div>
+        </div>
+
+        <!-- TAB: INSTRUCTOR -->
+        <div id="instructor" class="tab-content">
+            <div class="instructor-section">
+                <h2 style="color: #1B2C27; margin-bottom: 30px; font-size: 2rem;">Tu Instructor</h2>
+                <div class="instructor-grid">
+                    <div>
+                        <div style="width: 200px; height: 200px; background: linear-gradient(135deg, #1B2C27, #CFA892); border-radius: 15px; display: flex; align-items: center; justify-content: center; color: white; font-size: 4rem;">
+                            👨‍⚖️
+                        </div>
+                    </div>
+                    <div>
+                        <h3 style="color: #1B2C27; font-size: 1.8rem; margin-bottom: 10px;">Mtro. Jorge Israel Clemente Marié</h3>
+                        <p style="color: #CFA892; font-size: 1.2rem; margin-bottom: 20px; font-weight: 600;">Maestro en Amparo</p>
+                        
+                        <p style="font-size: 1.1rem; line-height: 1.8; color: #2C3E50; margin-bottom: 25px;">
+                            El Maestro Jorge Israel Clemente Marié es un destacado jurista especializado en Amparo, con una sólida formación académica y amplia experiencia en la docencia del derecho. Su enfoque pedagógico combina el rigor académico con la aplicación práctica del conocimiento jurídico, haciéndolo accesible para audiencias diversas.
+                        </p>
+                        
+                        <h4 style="color: #1B2C27; margin-bottom: 15px;">Experiencia Docente:</h4>
+                        <ul style="list-style: none; padding: 0; margin-bottom: 25px;">
+                            <li style="padding: 8px 0; padding-left: 25px; position: relative;">
+                                <span style="position: absolute; left: 0; color: #CFA892;">📚</span>
+                                Profesor Titular - Escuela Superior de Leyes
+                            </li>
+                            <li style="padding: 8px 0; padding-left: 25px; position: relative;">
+                                <span style="position: absolute; left: 0; color: #CFA892;">⚖️</span>
+                                Cátedra de Política y Estado
+                            </li>
+                            <li style="padding: 8px 0; padding-left: 25px; position: relative;">
+                                <span style="position: absolute; left: 0; color: #CFA892;">🌍</span>
+                                Cátedra de Inglés Jurídico
+                            </li>
+                            <li style="padding: 8px 0; padding-left: 25px; position: relative;">
+                                <span style="position: absolute; left: 0; color: #CFA892;">🎓</span>
+                                10+ años de experiencia en formación jurídica
+                            </li>
+                        </ul>
+                        
+                        <div style="background: #F5F5F5; padding: 20px; border-radius: 10px; border-left: 4px solid #CFA892;">
+                            <p style="font-style: italic; color: #2C3E50; font-size: 1.05rem;">
+                                "Mi objetivo es democratizar el conocimiento jurídico, haciendo que el derecho sea comprensible y útil para todos, no solo para los abogados. En este curso, traduciremos el complejo lenguaje legal a términos prácticos que cualquier persona pueda aplicar en su vida diaria."
+                            </p>
+                            <p style="text-align: right; margin-top: 10px; color: #1B2C27; font-weight: 600;">
+                                - Mtro. Jorge Israel Clemente Marié
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA FINAL -->
+    <section class="cta-section">
+        <h2>¿Listo para empezar?</h2>
+        <p style="font-size: 1.2rem; max-width: 700px; margin: 0 auto 30px;">
+            Comienza ahora tu formación jurídica. Acceso 100% gratuito e ilimitado.
+        </p>
+        <div class="cta-buttons">
+            <a href="video.html" class="btn btn-secondary" style="padding: 15px 40px; font-size: 1.1rem;">
+                🎥 Ver Clase Completa
+            </a>
+            <a href="ejercicios.html" class="btn btn-primary" style="padding: 15px 40px; font-size: 1.1rem;">
+                📝 Ir a Ejercicios
+            </a>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-section">
+                <img src="https://i.postimg.cc/tCVcj2Sw/Captura-de-pantalla-2025-10-04-a-la-s-2-33-47-p-m.png" alt="Logo" style="height: 60px; margin-bottom: 20px;">
+                <p>Formación jurídica accesible para todos.</p>
+                <p style="margin-top: 15px; opacity: 0.8;">
+                    © 2025 Empírica Legal Lab<br>
+                    Todos los derechos reservados
+                </p>
+            </div>
+            
+            <div class="footer-section">
+                <h4>Curso</h4>
+                <ul>
+                    <li><a href="video.html">Clase Completa</a></li>
+                    <li><a href="ejercicios.html">Ejercicios</a></li>
+                    <li><a href="presentacion.html">Presentación</a></li>
+                    <li><a href="../../diplomas.html">Obtener Diploma</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-section">
+                <h4>Empírica Legal Lab</h4>
+                <ul>
+                    <li><a href="../../index.html">Catálogo de Cursos</a></li>
+                    <li><a href="../../contacto.html">Contacto</a></li>
+                    <li><a href="https://www.empirica.mx" target="_blank">Sitio Web Oficial</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-section">
+                <h4>Contacto</h4>
+                <p>📱 WhatsApp: +52 998 257 0828</p>
+                <p>✉️ Email: jorge_clemente@empirica.mx</p>
+                <p style="margin-top: 15px;">
+                    <strong>Horario de Atención:</strong><br>
+                    Lunes a Viernes: 9:00 - 18:00 hrs<br>
+                    Sábados: 9:00 - 14:00 hrs
+                </p>
+            </div>
+        </div>
+        
+        <div class="footer-bottom">
+            <p>Desarrollado con ❤️ para democratizar el conocimiento jurídico</p>
+        </div>
+    </footer>
+
+    <!-- BOTÓN FLOTANTE WHATSAPP -->
+    <a href="https://wa.me/529982570828?text=Hola,%20tengo%20dudas%20sobre%20el%20curso%20Derecho%20para%20No%20Abogados" class="whatsapp-float" target="_blank" title="Contáctanos por WhatsApp">
+        📱
+    </a>
+
+    <script>
+        function toggleMenu() {
+            const navMenu = document.getElementById('navMenu');
+            navMenu.classList.toggle('active');
+        }
+        
+        function openTab(evt, tabName) {
+            const tabContents = document.getElementsByClassName('tab-content');
+            for (let i = 0; i < tabContents.length; i++) {
+                tabContents[i].classList.remove('active');
+            }
+            
+            const tabButtons = document.getElementsByClassName('tab-btn');
+            for (let i = 0; i < tabButtons.length; i++) {
+                tabButtons[i].classList.remove('active');
+            }
+            
+            document.getElementById(tabName).classList.add('active');
+            evt.currentTarget.classList.add('active');
+        }
+    </script>
+</body>
+</html>
