@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contacto | Empírica Legal Lab</title>
+    <meta name="description" content="Contáctanos para consultas sobre cursos jurídicos, diplomas y asesoría legal.">
+    <link rel="stylesheet" href="css/styles.css">
+    <style>
+        .contact-hero {
+            background: linear-gradient(135deg, #1B2C27 0%, #2d4942 100%);
+            color: white;
+            padding: 80px 20px;
+            text-align: center;
+        }
+        
+        .contact-hero h1 {
+            font-size: 3rem;
+            color: #CFA892;
+            margin-bottom: 20px;
+        }
+        
+        .contact-container {
+            max-width: 1200px;
+            margin: 60px auto;
+            padding: 0 20px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+        }
+        
+        .contact-info {
+            background: white;
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 4px 20px rgba(27, 44, 39, 0.1);
+        }
+        
+        .contact-info h2 {
+            color: #1B2C27;
+            margin-bottom: 30px;
+            font-size: 2rem;
+        }
+        
+        .info-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 20px;
+            margin-bottom: 30px;
+            padding: 20px;
+            background: #F5F5F5;
+            border-radius: 10px;
+            border-left: 4px solid #CFA892;
+        }
+        
+        .info-icon {
+            font-size: 2rem;
+            color: #CFA892;
+        }
+        
+        .info-content h3 {
+            color: #1B2C27;
+            margin-bottom: 8px;
+            font-size: 1.2rem;
+        }
+        
+        .info-content p {
+            color: #6C757D;
+            margin: 5px 0;
+        }
+        
+        .info-content a {
+            color: #1B2C27;
+            text-decoration: none;
+            font-weight: 600;
+            transition: color 0.3s;
+        }
+        
+        .info-content a:hover {
+            color: #CFA892;
+        }
+        
+        .quick-contact {
+            background: white;
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 4px 20px rgba(27, 44, 39, 0.1);
+        }
+        
+        .quick-contact h2 {
+            color: #1B2C27;
+            margin-bottom: 30px;
+            font-size: 2rem;
+        }
+        
+        .contact-buttons {
+            display: grid;
+            gap: 20px;
+        }
+        
+        .contact-btn {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            padding: 20px;
+            background: #F5F5F5;
+            border-radius: 12px;
+            text-decoration: none;
+            color: #1B2C27;
+            transition: all 0.3s;
+            border: 2px solid transparent;
+        }
+        
+        .contact-btn:hover {
+            background: white;
+            border-color: #CFA892;
+            transform: translateX(5px);
+        }
+        
+        .contact-btn-icon {
+            font-size: 2.5rem;
+        }
+        
+        .contact-btn-content h4 {
+            margin-bottom: 5px;
+            font-size: 1.2rem;
+        }
+        
+        .contact-btn-content p {
+            color: #6C757D;
+            font-size: 0.9rem;
+        }
+        
+        .map-section {
+            max-width: 1200px;
+            margin: 60px auto;
+            padding: 0 20px;
+        }
+        
+        .map-container {
+            background: white;
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 4px 20px rgba(27, 44, 39, 0.1);
+        }
+        
+        .schedule-table {
+            width: 100%;
+            margin-top: 30px;
+        }
+        
+        .schedule-table td {
+            padding: 15px;
+            border-bottom: 1px solid #E1E8E5;
+        }
+        
+        .schedule-table td:first-child {
+            font-weight: 600;
+            color: #1B2C27;
+        }
+        
+        .schedule-table td:last-child {
+            color: #6C757D;
+        }
+        
+        @media (max-width: 768px) {
+            .contact-hero h1 {
+                font-size: 2rem;
+            }
+            
+            .contact-container {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- HEADER -->
+    <header class="header">
+        <nav class="nav-container">
+            <div class="logo-container">
+                <img src="https://i.postimg.cc/tCVcj2Sw/Captura-de-pantalla-2025-10-04-a-la-s-2-33-47-p-m.png" alt="Empírica Legal Lab" class="logo-img">
+                <div class="logo-text">
+                    <h1>Empírica Legal Lab</h1>
+                    <p>Formación jurídica accesible</p>
+                </div>
+            </div>
+            <button class="mobile-menu-toggle" onclick="toggleMenu()">☰</button>
+            <ul class="nav-menu" id="navMenu">
+                <li><a href="index.html">Inicio</a></li>
+                <li><a href="index.html#cursos">Cursos</a></li>
+                <li><a href="diplomas.html">Diplomas</a></li>
+                <li><a href="contacto.html">Contacto</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- HERO -->
+    <section class="contact-hero">
+        <h1>📞 Contáctanos</h1>
+        <p style="font-size: 1.3rem; max-width: 800px; margin: 0 auto;">
+            Estamos aquí para resolver tus dudas sobre nuestros cursos y diplomas
+        </p>
+    </section>
+
+    <!-- CONTENIDO PRINCIPAL -->
+    <div class="contact-container">
+        <!-- INFORMACIÓN DE CONTACTO -->
+        <div class="contact-info">
+            <h2>Información de Contacto</h2>
+            
+            <div class="info-item">
+                <div class="info-icon">📱</div>
+                <div class="info-content">
+                    <h3>WhatsApp</h3>
+                    <p><a href="https://wa.me/529982570828" target="_blank">+52 998 257 0828</a></p>
+                    <p style="font-size: 0.9rem; margin-top: 5px;">Respuesta rápida por mensajería</p>
+                </div>
+            </div>
+
+            <div class="info-item">
+                <div class="info-icon">✉️</div>
+                <div class="info-content">
+                    <h3>Email</h3>
+                    <p><a href="mailto:jorge_clemente@empirica.mx">jorge_clemente@empirica.mx</a></p>
+                    <p style="font-size: 0.9rem; margin-top: 5px;">Respuesta en 24 horas hábiles</p>
+                </div>
+            </div>
+
+            <div class="info-item">
+                <div class="info-icon">🌐</div>
+                <div class="info-content">
+                    <h3>Sitio Web Oficial</h3>
+                    <p><a href="https://www.empirica.mx" target="_blank">www.empirica.mx</a></p>
+                    <p style="font-size: 0.9rem; margin-top: 5px;">Conoce todos nuestros servicios legales</p>
+                </div>
+            </div>
+
+            <div class="info-item">
+                <div class="info-icon">🕐</div>
+                <div class="info-content">
+                    <h3>Horario de Atención</h3>
+                    <table class="schedule-table">
+                        <tr>
+                            <td>Lunes a Viernes</td>
+                            <td>9:00 - 18:00 hrs</td>
+                        </tr>
+                        <tr>
+                            <td>Sábados</td>
+                            <td>9:00 - 14:00 hrs</td>
+                        </tr>
+                        <tr>
+                            <td>Domingos</td>
+                            <td>Cerrado</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- CONTACTO RÁPIDO -->
+        <div class="quick-contact">
+            <h2>Contacto Rápido</h2>
+            <p style="color: #6C757D; margin-bottom: 30px;">
+                Elige el canal de tu preferencia para ponerte en contacto con nosotros
+            </p>
+            
+            <div class="contact-buttons">
+                <a href="https://wa.me/529982570828?text=Hola,%20tengo%20una%20consulta%20sobre%20los%20cursos" target="_blank" class="contact-btn">
+                    <div class="contact-btn-icon">📱</div>
+                    <div class="contact-btn-content">
+                        <h4>WhatsApp</h4>
+                        <p>Respuesta inmediata por chat</p>
+                    </div>
+                </a>
+
+                <a href="mailto:jorge_clemente@empirica.mx?subject=Consulta%20sobre%20cursos%20jurídicos" class="contact-btn">
+                    <div class="contact-btn-icon">✉️</div>
+                    <div class="contact-btn-content">
+                        <h4>Email</h4>
+                        <p>Envíanos un correo detallado</p>
+                    </div>
+                </a>
+
+                <a href="https://www.empirica.mx" target="_blank" class="contact-btn">
+                    <div class="contact-btn-icon">🌐</div>
+                    <div class="contact-btn-content">
+                        <h4>Sitio Web</h4>
+                        <p>Visita nuestro portal principal</p>
+                    </div>
+                </a>
+
+                <a href="tel:+529982570828" class="contact-btn">
+                    <div class="contact-btn-icon">📞</div>
+                    <div class="contact-btn-content">
+                        <h4>Teléfono</h4>
+                        <p>+52 998 257 0828</p>
+                    </div>
+                </a>
+            </div>
+
+            <div style="margin-top: 40px; padding: 30px; background: linear-gradient(135deg, #1B2C27, #2d4942); border-radius: 15px; color: white; text-align: center;">
+                <h3 style="color: #CFA892; margin-bottom: 15px; font-size: 1.5rem;">¿Necesitas asesoría legal personalizada?</h3>
+                <p style="margin-bottom: 20px; opacity: 0.95;">
+                    Además de nuestros cursos, ofrecemos servicios legales profesionales en diversas áreas del derecho.
+                </p>
+                <a href="https://www.empirica.mx" target="_blank" class="btn btn-secondary" style="display: inline-block;">
+                    Conocer Servicios Legales
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- PREGUNTAS FRECUENTES -->
+    <section class="map-section">
+        <div class="map-container">
+            <h2 style="color: #1B2C27; margin-bottom: 30px; font-size: 2rem;">Preguntas Frecuentes</h2>
+            
+            <div style="display: grid; gap: 20px;">
+                <details style="background: #F5F5F5; padding: 20px; border-radius: 10px; border-left: 4px solid #CFA892;">
+                    <summary style="font-weight: 600; color: #1B2C27; cursor: pointer; font-size: 1.1rem;">
+                        ¿Los cursos realmente son gratuitos?
+                    </summary>
+                    <p style="margin-top: 15px; color: #6C757D; line-height: 1.7;">
+                        Sí, todos nuestros cursos son 100% gratuitos. Puedes acceder a todo el contenido (videos, ejercicios, materiales) sin ningún costo. Solo pagas si deseas obtener el diploma oficial con firma electrónica SAT.
+                    </p>
+                </details>
+
+                <details style="background: #F5F5F5; padding: 20px; border-radius: 10px; border-left: 4px solid #CFA892;">
+                    <summary style="font-weight: 600; color: #1B2C27; cursor: pointer; font-size: 1.1rem;">
+                        ¿Cómo solicito mi diploma?
+                    </summary>
+                    <p style="margin-top: 15px; color: #6C757D; line-height: 1.7;">
+                        Primero completa el curso y aprueba los ejercicios con mínimo 60%. Luego contacta por WhatsApp al +52 998 257 0828 para solicitar tu diploma. El costo es de $200 MXN y lo recibes en menos de 48 horas.
+                    </p>
+                </details>
+
+                <details style="background: #F5F5F5; padding: 20px; border-radius: 10px; border-left: 4px solid #CFA892;">
+                    <summary style="font-weight: 600; color: #1B2C27; cursor: pointer; font-size: 1.1rem;">
+                        ¿Puedo tomar varios cursos?
+                    </summary>
+                    <p style="margin-top: 15px; color: #6C757D; line-height: 1.7;">
+                        ¡Por supuesto! Puedes tomar todos los cursos que desees de forma gratuita. Cada curso tiene su propio diploma opcional de $200 MXN si deseas certificarte.
+                    </p>
+                </details>
+
+                <details style="background: #F5F5F5; padding: 20px; border-radius: 10px; border-left: 4px solid #CFA892;">
+                    <summary style="font-weight: 600; color: #1B2C27; cursor: pointer; font-size: 1.1rem;">
+                        ¿Ofrecen asesoría legal personalizada?
+                    </summary>
+                    <p style="margin-top: 15px; color: #6C757D; line-height: 1.7;">
+                        Sí, Empírica Legal Lab ofrece servicios legales profesionales. Visita <a href="https://www.empirica.mx" target="_blank" style="color: #1B2C27; font-weight: 600;">www.empirica.mx</a> o contáctanos por WhatsApp para conocer nuestros servicios.
+                    </p>
+                </details>
+
+                <details style="background: #F5F5F5; padding: 20px; border-radius: 10px; border-left: 4px solid #CFA892;">
+                    <summary style="font-weight: 600; color: #1B2C27; cursor: pointer; font-size: 1.1rem;">
+                        ¿Los diplomas tienen validez oficial?
+                    </summary>
+                    <p style="margin-top: 15px; color: #6C757D; line-height: 1.7;">
+                        Los diplomas cuentan con firma electrónica SAT y tienen valor curricular. Son perfectos para tu CV, LinkedIn y expediente profesional. Cada diploma incluye código QR para verificar su autenticidad.
+                    </p>
+                </details>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA FINAL -->
+    <section class="cta-section">
+        <h2>¿Listo para comenzar?</h2>
+        <p style="font-size: 1.2rem; max-width: 700px; margin: 0 auto 30px;">
+            Explora nuestro catálogo de cursos gratuitos y certifica tus conocimientos
+        </p>
+        <div class="cta-buttons">
+            <a href="index.html#cursos" class="btn btn-secondary" style="padding: 15px 40px; font-size: 1.1rem;">
+                Ver Catálogo de Cursos
+            </a>
+            <a href="https://wa.me/529982570828?text=Hola,%20quiero%20más%20información" class="btn btn-primary" style="padding: 15px 40px; font-size: 1.1rem;">
+                📱 Contactar por WhatsApp
+            </a>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-section">
+                <img src="https://i.postimg.cc/tCVcj2Sw/Captura-de-pantalla-2025-10-04-a-la-s-2-33-47-p-m.png" alt="Logo" style="height: 60px; margin-bottom: 20px;">
+                <p>Formación jurídica accesible para todos.</p>
+                <p style="margin-top: 15px; opacity: 0.8;">
+                    © 2025 Empírica Legal Lab<br>
+                    Todos los derechos reservados
+                </p>
+            </div>
+            
+            <div class="footer-section">
+                <h4>Cursos</h4>
+                <ul>
+                    <li><a href="cursos/derecho-no-abogados/index.html">Derecho para No Abogados</a></li>
+                    <li><a href="index.html#cursos">Catálogo Completo</a></li>
+                    <li><a href="diplomas.html">Información de Diplomas</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-section">
+                <h4>Empírica Legal Lab</h4>
+                <ul>
+                    <li><a href="contacto.html">Contacto</a></li>
+                    <li><a href="https://www.empirica.mx" target="_blank">Sitio Web Oficial</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-section">
+                <h4>Contacto</h4>
+                <p>📱 WhatsApp: +52 998 257 0828</p>
+                <p>✉️ Email: jorge_clemente@empirica.mx</p>
+                <p style="margin-top: 15px;">
+                    <strong>Horario de Atención:</strong><br>
+                    Lunes a Viernes: 9:00 - 18:00 hrs<br>
+                    Sábados: 9:00 - 14:00 hrs
+                </p>
+            </div>
+        </div>
+        
+        <div class="footer-bottom">
+            <p>Desarrollado con ❤️ para democratizar el conocimiento jurídico</p>
+        </div>
+    </footer>
+
+    <!-- BOTÓN FLOTANTE WHATSAPP -->
+    <a href="https://wa.me/529982570828?text=Hola,%20tengo%20una%20consulta" class="whatsapp-float" target="_blank" title="Contáctanos por WhatsApp">
+        📱
+    </a>
+
+    <script src="js/main.js"></script>
+</body>
+</html>
