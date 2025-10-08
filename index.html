@@ -281,6 +281,93 @@
     
 </head>
 <body>
+    
+    <!-- ========================================
+         POPUP DE CAPTURA DE DATOS (OBLIGATORIO)
+         ======================================== -->
+    <div id="welcomeOverlay">
+        <div class="welcome-modal">
+            <!-- Header -->
+            <div class="modal-header">
+                <span class="icon">🎓</span>
+                <h2>¡Bienvenido a Empírica Legal Lab!</h2>
+                <p>Para acceder a nuestros cursos gratuitos, por favor completa el registro</p>
+            </div>
+
+            <!-- Formulario -->
+            <div class="modal-content">
+                <form id="welcomeForm">
+                    <!-- Nombre Completo -->
+                    <div class="form-group">
+                        <label class="form-label" for="userName">
+                            Nombre Completo <span class="required">*</span>
+                        </label>
+                        <input 
+                            type="text" 
+                            id="userName" 
+                            class="form-input" 
+                            placeholder="Ej: María González López"
+                            required
+                            autocomplete="name"
+                        >
+                        <span class="error-message" id="nameError">Por favor ingresa tu nombre completo</span>
+                    </div>
+
+                    <!-- Correo Electrónico -->
+                    <div class="form-group">
+                        <label class="form-label" for="userEmail">
+                            Correo Electrónico <span class="required">*</span>
+                        </label>
+                        <input 
+                            type="email" 
+                            id="userEmail" 
+                            class="form-input" 
+                            placeholder="correo@ejemplo.com"
+                            required
+                            autocomplete="email"
+                        >
+                        <span class="error-message" id="emailError">Por favor ingresa un correo válido</span>
+                    </div>
+
+                    <!-- Disclaimer Legal -->
+                    <div class="legal-disclaimer">
+                        <div class="title">
+                            🔒 Aviso de Privacidad
+                        </div>
+                        <p>
+                            Los datos personales proporcionados (nombre y correo electrónico) serán utilizados 
+                            únicamente con fines <strong>educativos e informativos</strong> relacionados con los 
+                            cursos de Empírica Legal Lab. No compartiremos tu información con terceros y podrás 
+                            solicitar su eliminación en cualquier momento contactándonos por WhatsApp.
+                        </p>
+                    </div>
+
+                    <!-- Checkbox de aceptación -->
+                    <div class="checkbox-group">
+                        <input type="checkbox" id="acceptTerms" required>
+                        <label for="acceptTerms">
+                            Acepto el uso de mis datos para fines educativos e informativos según el 
+                            <a href="#" target="_blank">Aviso de Privacidad</a>
+                        </label>
+                    </div>
+
+                    <!-- Botón de envío -->
+                    <button type="submit" class="submit-btn" id="submitBtn">
+                        <span class="icon">📱</span>
+                        Acceder al Sitio vía WhatsApp
+                    </button>
+                </form>
+            </div>
+
+            <!-- Footer -->
+            <div class="modal-footer">
+                <div class="security-badge">
+                    🔐 Tus datos están protegidos
+                </div>
+            </div>
+        </div>
+    </div>
+    
     <!-- HEADER -->
     <header class="header">
         <nav class="nav-container">
@@ -533,5 +620,236 @@
     </a>
 
     <script src="js/main.js"></script>
+
+    <!-- ========================================
+         SCRIPT DE CONTROL DEL POPUP
+         ======================================== -->
+    <script>
+        (function() {
+            'use strict';
+
+            // Configuración
+            const CONFIG = {
+                whatsappNumber: '529982570828', // Tu número de WhatsApp
+                storageKey: 'empirica_user_registered',
+                requiredFields: ['userName', 'userEmail', 'acceptTerms']
+            };
+
+            // Elementos del DOM
+            const overlay = document.getElementById('welcomeOverlay');
+            const form = document.getElementById('welcomeForm');
+            const submitBtn = document.getElementById('submitBtn');
+            const nameInput = document.getElementById('userName');
+            const emailInput = document.getElementById('userEmail');
+            const acceptTerms = document.getElementById('acceptTerms');
+
+            // Verificar si el usuario ya se registró
+            function checkRegistration() {
+                const isRegistered = localStorage.getItem(CONFIG.storageKey);
+                if (isRegistered === 'true') {
+                    hideOverlay();
+                    return true;
+                }
+                return false;
+            }
+
+            // Ocultar overlay
+            function hideOverlay() {
+                overlay.classList.add('hidden');
+                document.body.style.overflow = 'auto';
+            }
+
+            // Mostrar overlay
+            function showOverlay() {
+                overlay.classList.remove('hidden');
+                document.body.style.overflow = 'hidden';
+            }
+
+            // Validar email
+            function isValidEmail(email) {
+                const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                return emailRegex.test(email);
+            }
+
+            // Validar nombre completo (al menos 2 palabras)
+            function isValidName(name) {
+                const trimmedName = name.trim();
+                const words = trimmedName.split(/\s+/);
+                return words.length >= 2 && trimmedName.length >= 5;
+            }
+
+            // Mostrar error
+            function showError(inputId, errorId, message) {
+                const input = document.getElementById(inputId);
+                const error = document.getElementById(errorId);
+                input.classList.add('error');
+                error.textContent = message;
+                error.classList.add('show');
+            }
+
+            // Limpiar error
+            function clearError(inputId, errorId) {
+                const input = document.getElementById(inputId);
+                const error = document.getElementById(errorId);
+                input.classList.remove('error');
+                error.classList.remove('show');
+            }
+
+            // Enviar a WhatsApp
+            function sendToWhatsApp(name, email) {
+                const message = `🎓 *NUEVO REGISTRO - EMPÍRICA LEGAL LAB*
+
+👤 *Nombre:* ${name}
+📧 *Correo:* ${email}
+📅 *Fecha:* ${new Date().toLocaleString('es-MX')}
+🌐 *Página:* ${window.location.pathname}
+
+✅ Usuario registrado correctamente`;
+
+                const encodedMessage = encodeURIComponent(message);
+                const whatsappURL = `https://wa.me/${CONFIG.whatsappNumber}?text=${encodedMessage}`;
+                
+                // Abrir WhatsApp en nueva ventana
+                window.open(whatsappURL, '_blank');
+                
+                // Guardar registro después de 2 segundos (tiempo para que se abra WhatsApp)
+                setTimeout(() => {
+                    localStorage.setItem(CONFIG.storageKey, 'true');
+                    localStorage.setItem('empirica_user_name', name);
+                    localStorage.setItem('empirica_user_email', email);
+                    hideOverlay();
+                    
+                    // Mostrar mensaje de confirmación
+                    showSuccessMessage();
+                }, 2000);
+            }
+
+            // Mostrar mensaje de éxito
+            function showSuccessMessage() {
+                const successDiv = document.createElement('div');
+                successDiv.style.cssText = `
+                    position: fixed;
+                    top: 20px;
+                    right: 20px;
+                    background: linear-gradient(135deg, #10B981, #059669);
+                    color: white;
+                    padding: 20px 30px;
+                    border-radius: 12px;
+                    box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+                    z-index: 1000000;
+                    font-weight: 600;
+                    animation: slideInRight 0.5s ease;
+                `;
+                successDiv.innerHTML = '✅ ¡Registro exitoso! Bienvenido a Empírica Legal Lab';
+                document.body.appendChild(successDiv);
+
+                setTimeout(() => {
+                    successDiv.style.animation = 'slideOutRight 0.5s ease';
+                    setTimeout(() => successDiv.remove(), 500);
+                }, 3000);
+            }
+
+            // Manejar envío del formulario
+            form.addEventListener('submit', function(e) {
+                e.preventDefault();
+
+                // Limpiar errores previos
+                clearError('userName', 'nameError');
+                clearError('userEmail', 'emailError');
+
+                const name = nameInput.value.trim();
+                const email = emailInput.value.trim();
+                const termsAccepted = acceptTerms.checked;
+
+                let hasErrors = false;
+
+                // Validar nombre
+                if (!isValidName(name)) {
+                    showError('userName', 'nameError', 'Ingresa tu nombre completo (nombre y apellido)');
+                    hasErrors = true;
+                }
+
+                // Validar email
+                if (!isValidEmail(email)) {
+                    showError('userEmail', 'emailError', 'Ingresa un correo electrónico válido');
+                    hasErrors = true;
+                }
+
+                // Validar términos
+                if (!termsAccepted) {
+                    alert('⚠️ Debes aceptar el aviso de privacidad para continuar');
+                    hasErrors = true;
+                }
+
+                // Si hay errores, no enviar
+                if (hasErrors) {
+                    return;
+                }
+
+                // Deshabilitar botón y cambiar texto
+                submitBtn.disabled = true;
+                submitBtn.innerHTML = '<span class="icon">⏳</span> Redirigiendo a WhatsApp...';
+
+                // Enviar a WhatsApp
+                sendToWhatsApp(name, email);
+            });
+
+            // Limpiar errores al escribir
+            nameInput.addEventListener('input', () => clearError('userName', 'nameError'));
+            emailInput.addEventListener('input', () => clearError('userEmail', 'emailError'));
+
+            // Prevenir cierre del modal
+            overlay.addEventListener('click', function(e) {
+                if (e.target === overlay) {
+                    // Shake animation
+                    const modal = overlay.querySelector('.welcome-modal');
+                    modal.style.animation = 'shake 0.5s ease';
+                    setTimeout(() => {
+                        modal.style.animation = 'slideUp 0.5s ease';
+                    }, 500);
+                }
+            });
+
+            // Agregar animación de shake
+            const style = document.createElement('style');
+            style.textContent = `
+                @keyframes shake {
+                    0%, 100% { transform: translateX(0); }
+                    25% { transform: translateX(-10px); }
+                    75% { transform: translateX(10px); }
+                }
+                @keyframes slideInRight {
+                    from { transform: translateX(400px); opacity: 0; }
+                    to { transform: translateX(0); opacity: 1; }
+                }
+                @keyframes slideOutRight {
+                    from { transform: translateX(0); opacity: 1; }
+                    to { transform: translateX(400px); opacity: 0; }
+                }
+            `;
+            document.head.appendChild(style);
+
+            // Bloquear scroll del body inicialmente
+            document.body.style.overflow = 'hidden';
+
+            // Inicializar
+            if (!checkRegistration()) {
+                showOverlay();
+            }
+
+            // IMPORTANTE: Prevenir acceso sin registro
+            if (!checkRegistration()) {
+                // Bloquear interacción con el resto de la página
+                document.addEventListener('click', function(e) {
+                    if (!overlay.contains(e.target) && !overlay.classList.contains('hidden')) {
+                        e.preventDefault();
+                        e.stopPropagation();
+                    }
+                }, true);
+            }
+
+        })();
+    </script>
+
 </body>
 </html>
