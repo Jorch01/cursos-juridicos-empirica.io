@@ -652,7 +652,7 @@
     // ═══════════════════════════════════════
     async function saveToGoogleSheets(name, email) {
         console.log('📊 Iniciando guardado en Google Sheets...');
-        
+    
         try {
             const data = {
                 fecha: new Date().toLocaleString('es-MX'),
@@ -660,23 +660,32 @@
                 email: email,
                 pagina: window.location.href
             };
-            
+        
             console.log('📤 Enviando datos:', data);
-            
+            console.log('📍 URL destino:', CONFIG.googleSheetsURL);
+        
+            // CAMBIO: Quitar 'mode: no-cors' temporalmente para ver errores
             const response = await fetch(CONFIG.googleSheetsURL, {
                 method: 'POST',
-                mode: 'no-cors',
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify(data)
+               body: JSON.stringify(data),
+                redirect: 'follow' // Seguir redirecciones
             });
-            
+        
+            console.log('📥 Respuesta recibida, status:', response.status);
+        
+            const result = await response.text();
+            console.log('📄 Contenido respuesta:', result);
             console.log('✅ Datos enviados a Google Sheets');
+        
             return true;
-            
+        
         } catch (error) {
-            console.error('❌ Error al guardar en Google Sheets:', error);
+            console.error('❌ Error completo:', error);
+            console.error('Tipo de error:', error.name);
+            console.error('Mensaje:', error.message);
             return false;
         }
     }
