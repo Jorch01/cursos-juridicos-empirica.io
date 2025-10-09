@@ -625,105 +625,69 @@
          SCRIPT DE CONTROL DEL POPUP
          ======================================== -->
     <script>
-        (function() {
-            'use strict';
+(function() {
+    'use strict';
 
-            // Configuración
-            const CONFIG = {
-                whatsappNumber: '529982570828', // Tu número de WhatsApp
-                storageKey: 'empirica_user_registered',
-                requiredFields: ['userName', 'userEmail', 'acceptTerms']
+    // ═══════════════════════════════════════
+    // CONFIGURACIÓN
+    // ═══════════════════════════════════════
+    const CONFIG = {
+        whatsappNumber: '529982570828',
+        googleSheetsURL: 'https://script.google.com/macros/s/AKfycbxeQX_-QcKzT8URwkkKK_5fHxw_a2Lmg_tkLw8nhuWcEiWDJTFrMvIKZMyYpHYHmOaoSw/exec',
+        storageKey: 'empirica_user_registered'
+    };
+
+    // ═══════════════════════════════════════
+    // ELEMENTOS DEL DOM
+    // ═══════════════════════════════════════
+    const overlay = document.getElementById('welcomeOverlay');
+    const form = document.getElementById('welcomeForm');
+    const submitBtn = document.getElementById('submitBtn');
+    const nameInput = document.getElementById('userName');
+    const emailInput = document.getElementById('userEmail');
+    const acceptTerms = document.getElementById('acceptTerms');
+
+    // ═══════════════════════════════════════
+    // FUNCIÓN 1: GUARDAR EN GOOGLE SHEETS
+    // ═══════════════════════════════════════
+    async function saveToGoogleSheets(name, email) {
+        console.log('📊 Iniciando guardado en Google Sheets...');
+        
+        try {
+            const data = {
+                fecha: new Date().toLocaleString('es-MX'),
+                nombre: name,
+                email: email,
+                pagina: window.location.href
             };
-
-            // Elementos del DOM
-            const overlay = document.getElementById('welcomeOverlay');
-            const form = document.getElementById('welcomeForm');
-            const submitBtn = document.getElementById('submitBtn');
-            const nameInput = document.getElementById('userName');
-            const emailInput = document.getElementById('userEmail');
-            const acceptTerms = document.getElementById('acceptTerms');
-
-            // Verificar si el usuario ya se registró
-            function checkRegistration() {
-                const isRegistered = localStorage.getItem(CONFIG.storageKey);
-                if (isRegistered === 'true') {
-                    hideOverlay();
-                    return true;
-                }
-                return false;
-            }
-
-            // Ocultar overlay
-            function hideOverlay() {
-                overlay.classList.add('hidden');
-                document.body.style.overflow = 'auto';
-            }
-
-            // Mostrar overlay
-            function showOverlay() {
-                overlay.classList.remove('hidden');
-                document.body.style.overflow = 'hidden';
-            }
-
-            // Validar email
-            function isValidEmail(email) {
-                const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-                return emailRegex.test(email);
-            }
-
-            // Validar nombre completo (al menos 2 palabras)
-            function isValidName(name) {
-                const trimmedName = name.trim();
-                const words = trimmedName.split(/\s+/);
-                return words.length >= 2 && trimmedName.length >= 5;
-            }
-
-            // Mostrar error
-            function showError(inputId, errorId, message) {
-                const input = document.getElementById(inputId);
-                const error = document.getElementById(errorId);
-                input.classList.add('error');
-                error.textContent = message;
-                error.classList.add('show');
-            }
-
-            // Limpiar error
-            function clearError(inputId, errorId) {
-                const input = document.getElementById(inputId);
-                const error = document.getElementById(errorId);
-                input.classList.remove('error');
-                error.classList.remove('show');
-            }
-
-async function sendToWhatsApp(name, email) {
-    // IMPORTANTE: Pega aquí la URL que acabas de copiar
-    const GOOGLE_SHEETS_URL = 'https://script.google.com/macros/s/AKfycbxeQX_-QcKzT8URwkkKK_5fHxw_a2Lmg_tkLw8nhuWcEiWDJTFrMvIKZMyYpHYHmOaoSw/exec';
-    
-    // 1. GUARDAR EN GOOGLE SHEETS
-    try {
-        const data = {
-            fecha: new Date().toLocaleString('es-MX'),
-            nombre: name,
-            email: email,
-            pagina: window.location.href
-        };
-        
-        await fetch(GOOGLE_SHEETS_URL, {
-            method: 'POST',
-            mode: 'no-cors',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(data)
-        });
-        
-        console.log('✅ Datos guardados en Google Sheets');
-    } catch (error) {
-        console.error('❌ Error:', error);
+            
+            console.log('📤 Enviando datos:', data);
+            
+            const response = await fetch(CONFIG.googleSheetsURL, {
+                method: 'POST',
+                mode: 'no-cors',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(data)
+            });
+            
+            console.log('✅ Datos enviados a Google Sheets');
+            return true;
+            
+        } catch (error) {
+            console.error('❌ Error al guardar en Google Sheets:', error);
+            return false;
+        }
     }
-    
-    // 2. ENVIAR A WHATSAPP (tu código existente)
-    const message = `🎓 *NUEVO REGISTRO - EMPÍRICA LEGAL LAB*
+
+    // ═══════════════════════════════════════
+    // FUNCIÓN 2: ENVIAR A WHATSAPP
+    // ═══════════════════════════════════════
+    function sendToWhatsApp(name, email) {
+        console.log('💬 Preparando mensaje de WhatsApp...');
+        
+        const message = `🎓 *NUEVO REGISTRO - EMPÍRICA LEGAL LAB*
 
 👤 *Nombre:* ${name}
 📧 *Correo:* ${email}
@@ -748,146 +712,235 @@ Los datos personales proporcionados (nombre y correo electrónico) serán utiliz
 
 Gracias por unirte a Empírica Legal Lab. Disfruta de nuestros cursos gratuitos.`;
 
-    const encodedMessage = encodeURIComponent(message);
-    const whatsappURL = `https://wa.me/${CONFIG.whatsappNumber}?text=${encodedMessage}`;
+        const encodedMessage = encodeURIComponent(message);
+        const whatsappURL = `https://wa.me/${CONFIG.whatsappNumber}?text=${encodedMessage}`;
+        
+        console.log('📱 Abriendo WhatsApp...');
+        window.open(whatsappURL, '_blank');
+    }
+
+    // ═══════════════════════════════════════
+    // FUNCIONES DE UTILIDAD
+    // ═══════════════════════════════════════
     
-    window.open(whatsappURL, '_blank');
+    function checkRegistration() {
+        const isRegistered = localStorage.getItem(CONFIG.storageKey);
+        if (isRegistered === 'true') {
+            hideOverlay();
+            return true;
+        }
+        return false;
+    }
+
+    function hideOverlay() {
+        overlay.classList.add('hidden');
+        document.body.style.overflow = 'auto';
+    }
+
+    function showOverlay() {
+        overlay.classList.remove('hidden');
+        document.body.style.overflow = 'hidden';
+    }
+
+    function isValidEmail(email) {
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        return emailRegex.test(email);
+    }
+
+    function isValidName(name) {
+        const trimmedName = name.trim();
+        const words = trimmedName.split(/\s+/);
+        return words.length >= 2 && trimmedName.length >= 5;
+    }
+
+    function showError(inputId, errorId, message) {
+        const input = document.getElementById(inputId);
+        const error = document.getElementById(errorId);
+        input.classList.add('error');
+        error.textContent = message;
+        error.classList.add('show');
+    }
+
+    function clearError(inputId, errorId) {
+        const input = document.getElementById(inputId);
+        const error = document.getElementById(errorId);
+        input.classList.remove('error');
+        error.classList.remove('show');
+    }
+
+    function showSuccessMessage() {
+        const successDiv = document.createElement('div');
+        successDiv.style.cssText = `
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: linear-gradient(135deg, #10B981, #059669);
+            color: white;
+            padding: 20px 30px;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            z-index: 1000000;
+            font-weight: 600;
+            animation: slideInRight 0.5s ease;
+        `;
+        successDiv.innerHTML = '✅ ¡Registro exitoso! Bienvenido a Empírica Legal Lab';
+        document.body.appendChild(successDiv);
+
+        setTimeout(() => {
+            successDiv.style.animation = 'slideOutRight 0.5s ease';
+            setTimeout(() => successDiv.remove(), 500);
+        }, 3000);
+    }
+
+    // ═══════════════════════════════════════
+    // MANEJO DEL FORMULARIO
+    // ═══════════════════════════════════════
     
-    setTimeout(() => {
-        localStorage.setItem(CONFIG.storageKey, 'true');
-        localStorage.setItem('empirica_user_name', name);
-        localStorage.setItem('empirica_user_email', email);
-        hideOverlay();
-        showSuccessMessage();
-    }, 2000);
-}
+    form.addEventListener('submit', async function(e) {
+        e.preventDefault();
+        console.log('📝 Formulario enviado');
 
-            // Mostrar mensaje de éxito
-            function showSuccessMessage() {
-                const successDiv = document.createElement('div');
-                successDiv.style.cssText = `
-                    position: fixed;
-                    top: 20px;
-                    right: 20px;
-                    background: linear-gradient(135deg, #10B981, #059669);
-                    color: white;
-                    padding: 20px 30px;
-                    border-radius: 12px;
-                    box-shadow: 0 10px 30px rgba(0,0,0,0.3);
-                    z-index: 1000000;
-                    font-weight: 600;
-                    animation: slideInRight 0.5s ease;
-                `;
-                successDiv.innerHTML = '✅ ¡Registro exitoso! Bienvenido a Empírica Legal Lab';
-                document.body.appendChild(successDiv);
+        // Limpiar errores previos
+        clearError('userName', 'nameError');
+        clearError('userEmail', 'emailError');
 
-                setTimeout(() => {
-                    successDiv.style.animation = 'slideOutRight 0.5s ease';
-                    setTimeout(() => successDiv.remove(), 500);
-                }, 3000);
-            }
+        const name = nameInput.value.trim();
+        const email = emailInput.value.trim();
+        const termsAccepted = acceptTerms.checked;
 
-            // Manejar envío del formulario
-            form.addEventListener('submit', function(e) {
+        let hasErrors = false;
+
+        // Validar nombre
+        if (!isValidName(name)) {
+            showError('userName', 'nameError', 'Ingresa tu nombre completo (nombre y apellido)');
+            hasErrors = true;
+        }
+
+        // Validar email
+        if (!isValidEmail(email)) {
+            showError('userEmail', 'emailError', 'Ingresa un correo electrónico válido');
+            hasErrors = true;
+        }
+
+        // Validar términos
+        if (!termsAccepted) {
+            alert('⚠️ Debes aceptar el aviso de privacidad para continuar');
+            hasErrors = true;
+        }
+
+        // Si hay errores, detener
+        if (hasErrors) {
+            console.log('❌ Hay errores en el formulario');
+            return;
+        }
+
+        // Deshabilitar botón
+        submitBtn.disabled = true;
+        submitBtn.innerHTML = '<span class="icon">⏳</span> Procesando...';
+
+        console.log('✅ Validación exitosa');
+        console.log('👤 Nombre:', name);
+        console.log('📧 Email:', email);
+
+        // PASO 1: Guardar en Google Sheets
+        console.log('🔄 PASO 1: Guardando en Google Sheets...');
+        const sheetsSaved = await saveToGoogleSheets(name, email);
+        
+        if (sheetsSaved) {
+            console.log('✅ PASO 1 COMPLETADO: Datos guardados en Sheets');
+        } else {
+            console.warn('⚠️ PASO 1 FALLÓ: Error al guardar en Sheets (continuando de todos modos)');
+        }
+
+        // Pequeña pausa
+        await new Promise(resolve => setTimeout(resolve, 500));
+
+        // PASO 2: Enviar a WhatsApp
+        console.log('🔄 PASO 2: Enviando a WhatsApp...');
+        sendToWhatsApp(name, email);
+        console.log('✅ PASO 2 COMPLETADO: WhatsApp abierto');
+
+        // PASO 3: Guardar registro local y cerrar popup
+        console.log('🔄 PASO 3: Finalizando registro...');
+        setTimeout(() => {
+            localStorage.setItem(CONFIG.storageKey, 'true');
+            localStorage.setItem('empirica_user_name', name);
+            localStorage.setItem('empirica_user_email', email);
+            hideOverlay();
+            showSuccessMessage();
+            console.log('✅ PASO 3 COMPLETADO: Registro finalizado');
+            console.log('🎉 PROCESO COMPLETO');
+        }, 2000);
+    });
+
+    // ═══════════════════════════════════════
+    // EVENT LISTENERS
+    // ═══════════════════════════════════════
+    
+    nameInput.addEventListener('input', () => clearError('userName', 'nameError'));
+    emailInput.addEventListener('input', () => clearError('userEmail', 'emailError'));
+
+    overlay.addEventListener('click', function(e) {
+        if (e.target === overlay) {
+            const modal = overlay.querySelector('.welcome-modal');
+            modal.style.animation = 'shake 0.5s ease';
+            setTimeout(() => {
+                modal.style.animation = 'slideUp 0.5s ease';
+            }, 500);
+        }
+    });
+
+    // ═══════════════════════════════════════
+    // ANIMACIONES
+    // ═══════════════════════════════════════
+    
+    const style = document.createElement('style');
+    style.textContent = `
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-10px); }
+            75% { transform: translateX(10px); }
+        }
+        @keyframes slideInRight {
+            from { transform: translateX(400px); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+        @keyframes slideOutRight {
+            from { transform: translateX(0); opacity: 1; }
+            to { transform: translateX(400px); opacity: 0; }
+        }
+    `;
+    document.head.appendChild(style);
+
+    // ═══════════════════════════════════════
+    // INICIALIZACIÓN
+    // ═══════════════════════════════════════
+    
+    console.log('🚀 Sistema de registro inicializado');
+    console.log('📊 Google Sheets URL:', CONFIG.googleSheetsURL);
+    console.log('💬 WhatsApp:', CONFIG.whatsappNumber);
+    
+    document.body.style.overflow = 'hidden';
+
+    if (!checkRegistration()) {
+        showOverlay();
+        console.log('👋 Mostrando popup de registro');
+    } else {
+        console.log('✅ Usuario ya registrado');
+    }
+
+    // Prevenir acceso sin registro
+    if (!checkRegistration()) {
+        document.addEventListener('click', function(e) {
+            if (!overlay.contains(e.target) && !overlay.classList.contains('hidden')) {
                 e.preventDefault();
-
-                // Limpiar errores previos
-                clearError('userName', 'nameError');
-                clearError('userEmail', 'emailError');
-
-                const name = nameInput.value.trim();
-                const email = emailInput.value.trim();
-                const termsAccepted = acceptTerms.checked;
-
-                let hasErrors = false;
-
-                // Validar nombre
-                if (!isValidName(name)) {
-                    showError('userName', 'nameError', 'Ingresa tu nombre completo (nombre y apellido)');
-                    hasErrors = true;
-                }
-
-                // Validar email
-                if (!isValidEmail(email)) {
-                    showError('userEmail', 'emailError', 'Ingresa un correo electrónico válido');
-                    hasErrors = true;
-                }
-
-                // Validar términos
-                if (!termsAccepted) {
-                    alert('⚠️ Debes aceptar el aviso de privacidad para continuar');
-                    hasErrors = true;
-                }
-
-                // Si hay errores, no enviar
-                if (hasErrors) {
-                    return;
-                }
-
-                // Deshabilitar botón y cambiar texto
-                submitBtn.disabled = true;
-                submitBtn.innerHTML = '<span class="icon">⏳</span> Redirigiendo a WhatsApp...';
-
-                // Enviar a WhatsApp
-                sendToWhatsApp(name, email);
-            });
-
-            // Limpiar errores al escribir
-            nameInput.addEventListener('input', () => clearError('userName', 'nameError'));
-            emailInput.addEventListener('input', () => clearError('userEmail', 'emailError'));
-
-            // Prevenir cierre del modal
-            overlay.addEventListener('click', function(e) {
-                if (e.target === overlay) {
-                    // Shake animation
-                    const modal = overlay.querySelector('.welcome-modal');
-                    modal.style.animation = 'shake 0.5s ease';
-                    setTimeout(() => {
-                        modal.style.animation = 'slideUp 0.5s ease';
-                    }, 500);
-                }
-            });
-
-            // Agregar animación de shake
-            const style = document.createElement('style');
-            style.textContent = `
-                @keyframes shake {
-                    0%, 100% { transform: translateX(0); }
-                    25% { transform: translateX(-10px); }
-                    75% { transform: translateX(10px); }
-                }
-                @keyframes slideInRight {
-                    from { transform: translateX(400px); opacity: 0; }
-                    to { transform: translateX(0); opacity: 1; }
-                }
-                @keyframes slideOutRight {
-                    from { transform: translateX(0); opacity: 1; }
-                    to { transform: translateX(400px); opacity: 0; }
-                }
-            `;
-            document.head.appendChild(style);
-
-            // Bloquear scroll del body inicialmente
-            document.body.style.overflow = 'hidden';
-
-            // Inicializar
-            if (!checkRegistration()) {
-                showOverlay();
+                e.stopPropagation();
             }
+        }, true);
+    }
 
-            // IMPORTANTE: Prevenir acceso sin registro
-            if (!checkRegistration()) {
-                // Bloquear interacción con el resto de la página
-                document.addEventListener('click', function(e) {
-                    if (!overlay.contains(e.target) && !overlay.classList.contains('hidden')) {
-                        e.preventDefault();
-                        e.stopPropagation();
-                    }
-                }, true);
-            }
-
-        })();
-    </script>
+})();
+</script>
 
 </body>
 </html>
