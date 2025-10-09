@@ -652,6 +652,7 @@
     // ═══════════════════════════════════════
     async function saveToGoogleSheets(name, email) {
         console.log('📊 Iniciando guardado en Google Sheets...');
+        console.log('🔗 URL objetivo:', CONFIG.googleSheetsURL);
     
         try {
             const data = {
@@ -661,31 +662,38 @@
                 pagina: window.location.href
             };
         
-            console.log('📤 Enviando datos:', data);
-            console.log('📍 URL destino:', CONFIG.googleSheetsURL);
+            console.log('📤 Datos a enviar:', data);
+            console.log('📤 Iniciando fetch...');
         
-            // CAMBIO: Quitar 'mode: no-cors' temporalmente para ver errores
+            // QUITAMOS 'mode: no-cors' temporalmente para ver errores
             const response = await fetch(CONFIG.googleSheetsURL, {
                 method: 'POST',
                 headers: {
-                    'Content-Type': 'application/json',
+                    'Content-Type': 'text/plain', // Cambio importante
                 },
-               body: JSON.stringify(data),
-                redirect: 'follow' // Seguir redirecciones
+                body: JSON.stringify(data),
+                redirect: 'follow'
             });
         
-            console.log('📥 Respuesta recibida, status:', response.status);
+            console.log('📥 Respuesta status:', response.status);
+            console.log('📥 Respuesta OK:', response.ok);
         
-            const result = await response.text();
-            console.log('📄 Contenido respuesta:', result);
-            console.log('✅ Datos enviados a Google Sheets');
+            const responseText = await response.text();
+            console.log('📄 Respuesta completa:', responseText);
         
-            return true;
+            if (response.ok) {
+                console.log('✅ Datos guardados exitosamente');
+                return true;
+            } else {
+                console.error('❌ Error en respuesta:', response.status);
+                return false;
+            }
         
         } catch (error) {
-            console.error('❌ Error completo:', error);
-            console.error('Tipo de error:', error.name);
+            console.error('❌ ERROR COMPLETO:');
+            console.error('Tipo:', error.name);
             console.error('Mensaje:', error.message);
+            console.error('Stack:', error.stack);
             return false;
         }
     }
