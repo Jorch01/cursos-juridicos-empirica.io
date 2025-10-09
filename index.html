@@ -695,23 +695,14 @@
                 error.classList.remove('show');
             }
 
-// Enviar a WhatsApp Y guardar en Google Sheets
 async function sendToWhatsApp(name, email) {
-    // URL de tu Google Apps Script
-    const GOOGLE_SHEETS_URL = 'https://script.google.com/macros/s/AKfycbxeQX_-QcKzT8URwkkKK_5fHxw_a2Lmg_tkLw8nhuWcEiWDJTFrMvIKZMyYpHYHmOaoSw/exec';
+    // IMPORTANTE: Pega aquí la URL que acabas de copiar
+    const GOOGLE_SHEETS_URL = 'https://script.google.com/macros/s/TU_URL_NUEVA_AQUI/exec';
     
-    // 1. GUARDAR EN GOOGLE SHEETS PRIMERO
+    // 1. GUARDAR EN GOOGLE SHEETS
     try {
         const data = {
-            fecha: new Date().toLocaleString('es-MX', { 
-                timeZone: 'America/Mexico_City',
-                year: 'numeric',
-                month: '2-digit',
-                day: '2-digit',
-                hour: '2-digit',
-                minute: '2-digit',
-                second: '2-digit'
-            }),
+            fecha: new Date().toLocaleString('es-MX'),
             nombre: name,
             email: email,
             pagina: window.location.href
@@ -728,10 +719,10 @@ async function sendToWhatsApp(name, email) {
         
         console.log('✅ Datos guardados en Google Sheets');
     } catch (error) {
-        console.error('❌ Error al guardar en Google Sheets:', error);
+        console.error('❌ Error:', error);
     }
     
-    // 2. ENVIAR A WHATSAPP
+    // 2. ENVIAR A WHATSAPP (tu código existente)
     const message = `🎓 *NUEVO REGISTRO - EMPÍRICA LEGAL LAB*
 
 👤 *Nombre:* ${name}
