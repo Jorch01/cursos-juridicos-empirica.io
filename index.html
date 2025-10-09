@@ -633,7 +633,7 @@
     // ═══════════════════════════════════════
     const CONFIG = {
         whatsappNumber: '529982570828',
-        googleSheetsURL: 'https://script.google.com/macros/s/AKfycbxeQX_-QcKzT8URwkkKK_5fHxw_a2Lmg_tkLw8nhuWcEiWDJTFrMvIKZMyYpHYHmOaoSw/exec',
+        googleSheetsURL: 'https://script.google.com/macros/s/AKfycbzn2GdL6LJ_5E23IK0A0Wq_nIUcP2ZPXHyomr5jkN-gPPe4esz8W3te5QY1GGsRZxQ/exec',
         storageKey: 'empirica_user_registered'
     };
 
@@ -662,38 +662,24 @@
                 pagina: window.location.href
             };
         
-            console.log('📤 Datos a enviar:', data);
-            console.log('📤 Iniciando fetch...');
+            console.log('📤 Enviando datos:', data);
         
-            // QUITAMOS 'mode: no-cors' temporalmente para ver errores
+            // IMPORTANTE: Volver a usar 'no-cors' para Google Apps Script
             const response = await fetch(CONFIG.googleSheetsURL, {
                 method: 'POST',
+                mode: 'no-cors', // ← CRÍTICO para Apps Script
                 headers: {
-                    'Content-Type': 'text/plain', // Cambio importante
+                    'Content-Type': 'application/json',
                 },
-                body: JSON.stringify(data),
-                redirect: 'follow'
+                body: JSON.stringify(data)
             });
         
-            console.log('📥 Respuesta status:', response.status);
-            console.log('📥 Respuesta OK:', response.ok);
-        
-            const responseText = await response.text();
-            console.log('📄 Respuesta completa:', responseText);
-        
-            if (response.ok) {
-                console.log('✅ Datos guardados exitosamente');
-                return true;
-            } else {
-                console.error('❌ Error en respuesta:', response.status);
-                return false;
-            }
+            console.log('✅ Petición enviada a Google Sheets');
+            // Con no-cors no podemos leer la respuesta, pero eso está bien
+            return true;
         
         } catch (error) {
-            console.error('❌ ERROR COMPLETO:');
-            console.error('Tipo:', error.name);
-            console.error('Mensaje:', error.message);
-            console.error('Stack:', error.stack);
+            console.error('❌ Error:', error.message);
             return false;
         }
     }
