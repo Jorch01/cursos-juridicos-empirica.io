@@ -253,6 +253,22 @@
             }
         }
 
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-10px); }
+            75% { transform: translateX(10px); }
+        }
+
+        @keyframes slideInRight {
+            from { transform: translateX(400px); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+
+        @keyframes slideOutRight {
+            from { transform: translateX(0); opacity: 1; }
+            to { transform: translateX(400px); opacity: 0; }
+        }
+
         /* Responsive */
         @media (max-width: 600px) {
             .welcome-modal {
@@ -305,6 +321,7 @@
                         <input 
                             type="text" 
                             id="userName" 
+                            name="name"
                             class="form-input" 
                             placeholder="Ej: María González López"
                             required
@@ -321,6 +338,7 @@
                         <input 
                             type="email" 
                             id="userEmail" 
+                            name="email"
                             class="form-input" 
                             placeholder="correo@ejemplo.com"
                             required
@@ -328,6 +346,11 @@
                         >
                         <span class="error-message" id="emailError">Por favor ingresa un correo válido</span>
                     </div>
+
+                    <!-- Campos ocultos para Web3Forms -->
+                    <input type="hidden" name="access_key" value="80754869-803a-450b-989a-3235e11ec713">
+                    <input type="hidden" name="subject" value="Nuevo Registro - Empírica Legal Lab">
+                    <input type="hidden" name="from_name" value="Empírica Legal Lab">
 
                     <!-- Disclaimer Legal -->
                     <div class="legal-disclaimer">
@@ -621,7 +644,7 @@
 
     <script src="js/main.js"></script>
 
-        <!-- ========================================
+    <!-- ========================================
          SCRIPT DE CONTROL DEL POPUP
          ======================================== -->
     <script>
@@ -633,8 +656,8 @@
     // ═══════════════════════════════════════
     const CONFIG = {
         whatsappNumber: '529982570828',
-        googleSheetsURL: 'https://script.google.com/macros/s/AKfycbzn2GdL6LJ_5E23IK0A0Wq_nIUcP2ZPXHyomr5jkN-gPPe4esz8W3te5QY1GGsRZxQ/exec',
-        storageKey: 'empirica_user_registered'
+        storageKey: 'empirica_user_registered',
+        web3formsEndpoint: 'https://api.web3forms.com/submit'
     };
 
     // ═══════════════════════════════════════
@@ -648,44 +671,46 @@
     const acceptTerms = document.getElementById('acceptTerms');
 
     // ═══════════════════════════════════════
-    // FUNCIÓN 1: GUARDAR EN GOOGLE SHEETS
+    // FUNCIÓN: GUARDAR DATOS CON WEB3FORMS
     // ═══════════════════════════════════════
-    async function saveToGoogleSheets(name, email) {
-        console.log('📊 Iniciando guardado en Google Sheets...');
-        console.log('🔗 URL objetivo:', CONFIG.googleSheetsURL);
-    
+    async function saveToWeb3Forms(formData) {
+        console.log('📊 Enviando datos a Web3Forms...');
+        
         try {
-            const data = {
-                fecha: new Date().toLocaleString('es-MX'),
-                nombre: name,
-                email: email,
-                pagina: window.location.href
-            };
-        
-            console.log('📤 Enviando datos:', data);
-        
-            // IMPORTANTE: Volver a usar 'no-cors' para Google Apps Script
-            const response = await fetch(CONFIG.googleSheetsURL, {
+            const response = await fetch(CONFIG.web3formsEndpoint, {
                 method: 'POST',
-                mode: 'no-cors', // ← CRÍTICO para Apps Script
                 headers: {
                     'Content-Type': 'application/json',
+                    'Accept': 'application/json'
                 },
-                body: JSON.stringify(data)
+                body: JSON.stringify({
+                    access_key: formData.get('access_key'),
+                    name: formData.get('name'),
+                    email: formData.get('email'),
+                    subject: formData.get('subject'),
+                    from_name: formData.get('from_name'),
+                    fecha: new Date().toLocaleString('es-MX'),
+                    pagina: window.location.href
+                })
             });
-        
-            console.log('✅ Petición enviada a Google Sheets');
-            // Con no-cors no podemos leer la respuesta, pero eso está bien
-            return true;
-        
+
+            const result = await response.json();
+
+            if (result.success) {
+                console.log('✅ Datos guardados exitosamente en Web3Forms');
+                return true;
+            } else {
+                console.error('❌ Error en Web3Forms:', result.message);
+                return false;
+            }
         } catch (error) {
-            console.error('❌ Error:', error.message);
+            console.error('❌ Error al conectar con Web3Forms:', error);
             return false;
         }
     }
 
     // ═══════════════════════════════════════
-    // FUNCIÓN 2: ENVIAR A WHATSAPP
+    // FUNCIÓN: ENVIAR A WHATSAPP
     // ═══════════════════════════════════════
     function sendToWhatsApp(name, email) {
         console.log('💬 Preparando mensaje de WhatsApp...');
@@ -701,19 +726,15 @@
 
 🔒 *AVISO DE PRIVACIDAD ACEPTADO*
 
-Los datos personales proporcionados (nombre y correo electrónico) serán utilizados únicamente con fines *educativos e informativos* relacionados con los cursos de Empírica Legal Lab. 
+Los datos personales proporcionados serán utilizados únicamente con fines *educativos e informativos* relacionados con los cursos de Empírica Legal Lab.
 
-✅ *Acepto que:*
-- Mis datos NO serán compartidos con terceros
-- Serán usados solo para fines educativos e informativos
-- Puedo solicitar su eliminación en cualquier momento
-- He leído y acepto el Aviso de Privacidad
+✅ Usuario acepta términos y condiciones
 
 ━━━━━━━━━━━━━━━━━━━━━━
 
 ✅ *REGISTRO CONFIRMADO*
 
-Gracias por unirte a Empírica Legal Lab. Disfruta de nuestros cursos gratuitos.`;
+Gracias por unirte a Empírica Legal Lab.`;
 
         const encodedMessage = encodeURIComponent(message);
         const whatsappURL = `https://wa.me/${CONFIG.whatsappNumber}?text=${encodedMessage}`;
@@ -845,14 +866,15 @@ Gracias por unirte a Empírica Legal Lab. Disfruta de nuestros cursos gratuitos.
         console.log('👤 Nombre:', name);
         console.log('📧 Email:', email);
 
-        // PASO 1: Guardar en Google Sheets
-        console.log('🔄 PASO 1: Guardando en Google Sheets...');
-        const sheetsSaved = await saveToGoogleSheets(name, email);
+        // PASO 1: Guardar con Web3Forms
+        console.log('🔄 PASO 1: Guardando datos...');
+        const formData = new FormData(form);
+        const saved = await saveToWeb3Forms(formData);
         
-        if (sheetsSaved) {
-            console.log('✅ PASO 1 COMPLETADO: Datos guardados en Sheets');
+        if (saved) {
+            console.log('✅ PASO 1 COMPLETADO: Datos guardados');
         } else {
-            console.warn('⚠️ PASO 1 FALLÓ: Error al guardar en Sheets (continuando de todos modos)');
+            console.warn('⚠️ PASO 1 FALLÓ: Error al guardar (continuando de todos modos)');
         }
 
         // Pequeña pausa
@@ -873,7 +895,7 @@ Gracias por unirte a Empírica Legal Lab. Disfruta de nuestros cursos gratuitos.
             showSuccessMessage();
             console.log('✅ PASO 3 COMPLETADO: Registro finalizado');
             console.log('🎉 PROCESO COMPLETO');
-        }, 2000);
+        }, 1500);
     });
 
     // ═══════════════════════════════════════
@@ -894,33 +916,11 @@ Gracias por unirte a Empírica Legal Lab. Disfruta de nuestros cursos gratuitos.
     });
 
     // ═══════════════════════════════════════
-    // ANIMACIONES
-    // ═══════════════════════════════════════
-    
-    const style = document.createElement('style');
-    style.textContent = `
-        @keyframes shake {
-            0%, 100% { transform: translateX(0); }
-            25% { transform: translateX(-10px); }
-            75% { transform: translateX(10px); }
-        }
-        @keyframes slideInRight {
-            from { transform: translateX(400px); opacity: 0; }
-            to { transform: translateX(0); opacity: 1; }
-        }
-        @keyframes slideOutRight {
-            from { transform: translateX(0); opacity: 1; }
-            to { transform: translateX(400px); opacity: 0; }
-        }
-    `;
-    document.head.appendChild(style);
-
-    // ═══════════════════════════════════════
     // INICIALIZACIÓN
     // ═══════════════════════════════════════
     
     console.log('🚀 Sistema de registro inicializado');
-    console.log('📊 Google Sheets URL:', CONFIG.googleSheetsURL);
+    console.log('📊 Web3Forms activado');
     console.log('💬 WhatsApp:', CONFIG.whatsappNumber);
     
     document.body.style.overflow = 'hidden';
