@@ -7,6 +7,9 @@
     <meta name="description" content="Plataforma de cursos jurídicos gratuitos con diplomas opcionales. Aprende derecho práctico a tu ritmo.">
     <link rel="stylesheet" href="css/styles.css">
 
+    <!-- EmailJS -->
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+
     <!-- Google tag (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-L7ZSMV2JYL"></script>
     <script>
@@ -312,7 +315,7 @@
 
             <!-- Formulario -->
             <div class="modal-content">
-                <form id="welcomeForm" action="https://api.web3forms.com/submit" method="POST">
+                <form id="welcomeForm">
                     <!-- Nombre Completo -->
                     <div class="form-group">
                         <label class="form-label" for="userName">
@@ -321,7 +324,6 @@
                         <input 
                             type="text" 
                             id="userName" 
-                            name="name"
                             class="form-input" 
                             placeholder="Ej: María González López"
                             required
@@ -338,7 +340,6 @@
                         <input 
                             type="email" 
                             id="userEmail" 
-                            name="email"
                             class="form-input" 
                             placeholder="correo@ejemplo.com"
                             required
@@ -346,11 +347,6 @@
                         >
                         <span class="error-message" id="emailError">Por favor ingresa un correo válido</span>
                     </div>
-
-                    <!-- Campos ocultos para Web3Forms -->
-                    <input type="hidden" name="access_key" value="80754869-803a-450b-989a-3235e11ec713">
-                    <input type="hidden" name="subject" value="Nuevo Registro - Empírica Legal Lab">
-                    <input type="hidden" name="from_name" value="Empírica Legal Lab">
 
                     <!-- Disclaimer Legal -->
                     <div class="legal-disclaimer">
@@ -645,20 +641,29 @@
     <script src="js/main.js"></script>
 
     <!-- ========================================
-         SCRIPT DE CONTROL DEL POPUP
+         SCRIPT DE CONTROL DEL POPUP CON EMAILJS
          ======================================== -->
     <script>
 (function() {
     'use strict';
 
     // ═══════════════════════════════════════
-    // CONFIGURACIÓN
+    // ⚙️ CONFIGURACIÓN DE EMAILJS
     // ═══════════════════════════════════════
+    // 🔥 REEMPLAZA ESTOS VALORES CON TUS CREDENCIALES DE EMAILJS:
+    const EMAILJS_CONFIG = {
+        publicKey: 'jv0XSfQ9iDd3mL_zD',      // Ej: 'aBcD1234eFgH5678'
+        serviceId: 'service_EmpLegalEdu',       // Ej: 'service_xxxxxx'
+        templateId: 'template_y20twci'      // Ej: 'template_xxxxxx'
+    };
+
     const CONFIG = {
         whatsappNumber: '529982570828',
-        storageKey: 'empirica_user_registered',
-        web3formsEndpoint: 'https://api.web3forms.com/submit'
+        storageKey: 'empirica_user_registered'
     };
+
+    // Inicializar EmailJS
+    emailjs.init(EMAILJS_CONFIG.publicKey);
 
     // ═══════════════════════════════════════
     // ELEMENTOS DEL DOM
@@ -671,33 +676,36 @@
     const acceptTerms = document.getElementById('acceptTerms');
 
     // ═══════════════════════════════════════
-    // FUNCIÓN: GUARDAR DATOS CON WEB3FORMS
+    // FUNCIÓN: ENVIAR A EMAILJS
     // ═══════════════════════════════════════
-    async function saveToWeb3Forms(formData) {
-        console.log('📊 Enviando datos a Web3Forms...');
+    async function sendToEmailJS(name, email) {
+        console.log('📧 Enviando datos a EmailJS...');
         
         try {
-            // Agregar campos adicionales al FormData
-            formData.append('fecha', new Date().toLocaleString('es-MX'));
-            formData.append('pagina', window.location.href);
+            const templateParams = {
+                from_name: name,
+                user_email: email,
+                registration_date: new Date().toLocaleString('es-MX', {
+                    dateStyle: 'full',
+                    timeStyle: 'short'
+                }),
+                page_url: window.location.href
+            };
 
-            const response = await fetch(CONFIG.web3formsEndpoint, {
-                method: 'POST',
-                body: formData // ¡Enviar FormData directamente, NO JSON!
-            });
+            console.log('📤 Parámetros:', templateParams);
 
-            const result = await response.json();
+            const response = await emailjs.send(
+                EMAILJS_CONFIG.serviceId,
+                EMAILJS_CONFIG.templateId,
+                templateParams
+            );
 
-            if (result.success) {
-                console.log('✅ Datos guardados exitosamente en Web3Forms');
-                console.log('📧 Respuesta:', result);
-                return true;
-            } else {
-                console.error('❌ Error en Web3Forms:', result.message);
-                return false;
-            }
+            console.log('✅ Email enviado exitosamente:', response.status, response.text);
+            return true;
+
         } catch (error) {
-            console.error('❌ Error al conectar con Web3Forms:', error);
+            console.error('❌ Error al enviar email:', error);
+            // Aunque falle el email, continuamos con el proceso
             return false;
         }
     }
@@ -719,15 +727,19 @@
 
 🔒 *AVISO DE PRIVACIDAD ACEPTADO*
 
-Los datos personales proporcionados serán utilizados únicamente con fines *educativos e informativos* relacionados con los cursos de Empírica Legal Lab.
+Los datos personales proporcionados (nombre y correo electrónico) serán utilizados únicamente con fines *educativos e informativos* relacionados con los cursos de Empírica Legal Lab. 
 
-✅ Usuario acepta términos y condiciones
+✅ *Acepto que:*
+- Mis datos NO serán compartidos con terceros
+- Serán usados solo para fines educativos e informativos
+- Puedo solicitar su eliminación en cualquier momento
+- He leído y acepto el Aviso de Privacidad
 
 ━━━━━━━━━━━━━━━━━━━━━━
 
 ✅ *REGISTRO CONFIRMADO*
 
-Gracias por unirte a Empírica Legal Lab.`;
+Gracias por unirte a Empírica Legal Lab. Disfruta de nuestros cursos gratuitos.`;
 
         const encodedMessage = encodeURIComponent(message);
         const whatsappURL = `https://wa.me/${CONFIG.whatsappNumber}?text=${encodedMessage}`;
@@ -859,15 +871,14 @@ Gracias por unirte a Empírica Legal Lab.`;
         console.log('👤 Nombre:', name);
         console.log('📧 Email:', email);
 
-        // PASO 1: Guardar con Web3Forms
-        console.log('🔄 PASO 1: Guardando datos...');
-        const formData = new FormData(form);
-        const saved = await saveToWeb3Forms(formData);
+        // PASO 1: Enviar a EmailJS
+        console.log('🔄 PASO 1: Enviando a EmailJS...');
+        const emailSent = await sendToEmailJS(name, email);
         
-        if (saved) {
-            console.log('✅ PASO 1 COMPLETADO: Datos guardados');
+        if (emailSent) {
+            console.log('✅ PASO 1 COMPLETADO: Email enviado correctamente');
         } else {
-            console.warn('⚠️ PASO 1 FALLÓ: Error al guardar (continuando de todos modos)');
+            console.warn('⚠️ PASO 1 FALLÓ: Error al enviar email (continuando de todos modos)');
         }
 
         // Pequeña pausa
@@ -888,7 +899,7 @@ Gracias por unirte a Empírica Legal Lab.`;
             showSuccessMessage();
             console.log('✅ PASO 3 COMPLETADO: Registro finalizado');
             console.log('🎉 PROCESO COMPLETO');
-        }, 1500);
+        }, 2000);
     });
 
     // ═══════════════════════════════════════
@@ -913,7 +924,7 @@ Gracias por unirte a Empírica Legal Lab.`;
     // ═══════════════════════════════════════
     
     console.log('🚀 Sistema de registro inicializado');
-    console.log('📊 Web3Forms activado');
+    console.log('📧 EmailJS configurado');
     console.log('💬 WhatsApp:', CONFIG.whatsappNumber);
     
     document.body.style.overflow = 'hidden';
