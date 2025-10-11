@@ -312,7 +312,7 @@
 
             <!-- Formulario -->
             <div class="modal-content">
-                <form id="welcomeForm">
+                <form id="welcomeForm" action="https://api.web3forms.com/submit" method="POST">
                     <!-- Nombre Completo -->
                     <div class="form-group">
                         <label class="form-label" for="userName">
@@ -677,27 +677,20 @@
         console.log('📊 Enviando datos a Web3Forms...');
         
         try {
+            // Agregar campos adicionales al FormData
+            formData.append('fecha', new Date().toLocaleString('es-MX'));
+            formData.append('pagina', window.location.href);
+
             const response = await fetch(CONFIG.web3formsEndpoint, {
                 method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Accept': 'application/json'
-                },
-                body: JSON.stringify({
-                    access_key: formData.get('access_key'),
-                    name: formData.get('name'),
-                    email: formData.get('email'),
-                    subject: formData.get('subject'),
-                    from_name: formData.get('from_name'),
-                    fecha: new Date().toLocaleString('es-MX'),
-                    pagina: window.location.href
-                })
+                body: formData // ¡Enviar FormData directamente, NO JSON!
             });
 
             const result = await response.json();
 
             if (result.success) {
                 console.log('✅ Datos guardados exitosamente en Web3Forms');
+                console.log('📧 Respuesta:', result);
                 return true;
             } else {
                 console.error('❌ Error en Web3Forms:', result.message);
