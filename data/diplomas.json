@@ -2,12 +2,12 @@
   "diplomas": [
     {
       "id": "EMPJUR-2025-001",
-      "nombre_completo": "María González Pérez",
-      "email": "maria.gonzalez@ejemplo.com",
+      "nombre_completo": "Angel Solis Enriquez",
+      "email": "solisangelo@gmail.com.com",
       "curso": "Derecho para No Abogados",
-      "fecha_emision": "2025-01-15",
-      "calificacion": 85,
-      "firma_sat": "ABC123XYZ789",
+      "fecha_emision": "2025-10-11",
+      "calificacion": 100,
+      "firma_sat": "contenida en el documento",
       "diploma_url": "diplomas/EMPJUR-2025-001.pdf",
       "qr_code": "https://jorch01.github.io/cursos-juridicos-empirica.io/verificar.html?id=EMPJUR-2025-001"
     },
