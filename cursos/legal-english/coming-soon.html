@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ejercicios - Legal English | Empírica Legal Lab</title>
+    <meta name="description" content="Los ejercicios, clases grabadas y material adicional estarán disponibles cuando el curso inicie.">
+    <link rel="stylesheet" href="../../css/styles.css">
+
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-L7ZSMV2JYL"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-L7ZSMV2JYL');
+    </script>
+
+    <style>
+        .coming-soon-section {
+            min-height: 80vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, #1B2C27 0%, #2d4942 100%);
+            padding: 60px 20px;
+        }
+
+        .coming-soon-container {
+            max-width: 800px;
+            background: white;
+            border-radius: 20px;
+            padding: 60px 40px;
+            text-align: center;
+            box-shadow: 0 10px 50px rgba(0, 0, 0, 0.3);
+        }
+
+        .coming-soon-icon {
+            font-size: 5rem;
+            margin-bottom: 30px;
+            animation: float 3s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+        }
+
+        .coming-soon-container h1 {
+            color: #1B2C27;
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+        }
+
+        .coming-soon-container p {
+            color: #6C757D;
+            font-size: 1.2rem;
+            line-height: 1.8;
+            margin-bottom: 30px;
+        }
+
+        .course-start-date {
+            background: linear-gradient(135deg, #CFA892, #B88968);
+            color: white;
+            padding: 20px 30px;
+            border-radius: 15px;
+            margin: 30px 0;
+            font-size: 1.3rem;
+            font-weight: 700;
+        }
+
+        .feature-list {
+            text-align: left;
+            margin: 40px auto;
+            max-width: 600px;
+        }
+
+        .feature-item {
+            padding: 15px;
+            margin-bottom: 15px;
+            background: #F5F5F5;
+            border-radius: 10px;
+            border-left: 4px solid #CFA892;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .feature-item-icon {
+            font-size: 2rem;
+        }
+
+        .feature-item-text {
+            flex: 1;
+        }
+
+        .feature-item-text h3 {
+            color: #1B2C27;
+            margin-bottom: 5px;
+            font-size: 1.1rem;
+        }
+
+        .feature-item-text p {
+            color: #6C757D;
+            margin: 0;
+            font-size: 0.95rem;
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-top: 40px;
+        }
+
+        @media (max-width: 768px) {
+            .coming-soon-container {
+                padding: 40px 25px;
+            }
+
+            .coming-soon-container h1 {
+                font-size: 2rem;
+            }
+
+            .coming-soon-icon {
+                font-size: 3.5rem;
+            }
+
+            .cta-buttons {
+                flex-direction: column;
+            }
+
+            .cta-buttons .btn {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- HEADER -->
+    <header class="header">
+        <nav class="nav-container">
+            <div class="logo-container">
+                <img src="https://i.postimg.cc/tCVcj2Sw/Captura-de-pantalla-2025-10-04-a-la-s-2-33-47-p-m.png" alt="Empírica Legal Lab" class="logo-img">
+                <div class="logo-text">
+                    <h1>Empírica Legal Lab</h1>
+                    <p>Formación jurídica accesible</p>
+                </div>
+            </div>
+            <button class="mobile-menu-toggle" onclick="toggleMenu()">☰</button>
+            <ul class="nav-menu" id="navMenu">
+                <li><a href="../../index.html">Inicio</a></li>
+                <li><a href="../../index.html#cursos">Cursos</a></li>
+                <li><a href="../../diplomas.html">Diplomas</a></li>
+                <li><a href="../../contacto.html">Contacto</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- COMING SOON SECTION -->
+    <section class="coming-soon-section">
+        <div class="coming-soon-container">
+            <div class="coming-soon-icon">📚</div>
+
+            <h1>Contenido Próximamente</h1>
+
+            <p>
+                Los <strong>ejercicios interactivos</strong>, <strong>clases grabadas en video</strong> y
+                <strong>material adicional</strong> del curso Legal English: Anglo-American Law in Action
+                estarán disponibles cuando el curso inicie.
+            </p>
+
+            <div class="course-start-date">
+                📅 Fecha de Inicio: 24 de Noviembre de 2025
+            </div>
+
+            <div class="feature-list">
+                <div class="feature-item">
+                    <div class="feature-item-icon">🎥</div>
+                    <div class="feature-item-text">
+                        <h3>Clases Grabadas en Video</h3>
+                        <p>Acceso completo a todas las lecciones en video HD</p>
+                    </div>
+                </div>
+
+                <div class="feature-item">
+                    <div class="feature-item-icon">📝</div>
+                    <div class="feature-item-text">
+                        <h3>Ejercicios Interactivos</h3>
+                        <p>Prácticas autocalificables para cada módulo</p>
+                    </div>
+                </div>
+
+                <div class="feature-item">
+                    <div class="feature-item-icon">📄</div>
+                    <div class="feature-item-text">
+                        <h3>Material Descargable</h3>
+                        <p>Documentos, casos reales y recursos complementarios</p>
+                    </div>
+                </div>
+
+                <div class="feature-item">
+                    <div class="feature-item-icon">⚖️</div>
+                    <div class="feature-item-text">
+                        <h3>Casos Reales 2023-2024</h3>
+                        <p>Análisis de decisiones actuales de Cortes Supremas</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="cta-buttons">
+                <a href="index.html" class="btn btn-primary">
+                    📖 Ver Información del Curso
+                </a>
+                <a href="https://wa.me/529982570828?text=Hola,%20quiero%20más%20información%20sobre%20Legal%20English" class="btn btn-secondary">
+                    📱 Contactar por WhatsApp
+                </a>
+            </div>
+
+            <p style="margin-top: 40px; font-size: 1rem; color: #1B2C27;">
+                <strong>¿Tienes dudas?</strong><br>
+                Contáctanos y te mantendremos informado sobre el lanzamiento del contenido.
+            </p>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-section">
+                <img src="https://i.postimg.cc/tCVcj2Sw/Captura-de-pantalla-2025-10-04-a-la-s-2-33-47-p-m.png" alt="Logo" style="height: 60px; margin-bottom: 20px;">
+                <p>Formación jurídica accesible para todos.</p>
+                <p style="margin-top: 15px; opacity: 0.8;">
+                    © 2025 Empírica Legal Lab<br>
+                    Todos los derechos reservados
+                </p>
+            </div>
+
+            <div class="footer-section">
+                <h4>Curso</h4>
+                <ul>
+                    <li><a href="index.html">Legal English</a></li>
+                    <li><a href="../../diplomas.html">Obtener Diploma</a></li>
+                    <li><a href="https://www.empirica.mx" target="_blank">Sitio Web Oficial</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-section">
+                <h4>Empírica Legal Lab</h4>
+                <ul>
+                    <li><a href="../../index.html">Catálogo de Cursos</a></li>
+                    <li><a href="../../contacto.html">Contacto</a></li>
+                    <li><a href="../../index.html#cursos">Más Cursos</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-section">
+                <h4>Contacto</h4>
+                <p>📱 WhatsApp: +52 998 257 0828</p>
+                <p>✉️ Email: jorge_clemente@empirica.mx</p>
+                <p style="margin-top: 15px;">
+                    <strong>Horario de Atención:</strong><br>
+                    Lunes a Viernes: 9:00 - 18:00 hrs<br>
+                    Sábados: 9:00 - 14:00 hrs
+                </p>
+                <div style="margin-top: 20px;">
+                    <h4 style="margin-bottom: 10px;">Síguenos</h4>
+                    <div class="social-links">
+                        <a href="https://www.tiktok.com/@jorchcm0" target="_blank" title="TikTok" aria-label="TikTok">🎵</a>
+                        <a href="https://www.youtube.com/@klementeh" target="_blank" title="YouTube" aria-label="YouTube">▶️</a>
+                        <a href="https://www.linkedin.com/in/jorge-israel-c/" target="_blank" title="LinkedIn" aria-label="LinkedIn">💼</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <p>Desarrollado con ❤️ para democratizar el conocimiento jurídico</p>
+        </div>
+    </footer>
+
+    <!-- BOTÓN FLOTANTE WHATSAPP -->
+    <a href="https://wa.me/529982570828?text=Hola,%20tengo%20dudas%20sobre%20el%20curso%20Legal%20English" class="whatsapp-float" target="_blank" title="Contáctanos por WhatsApp">
+        📱
+    </a>
+
+    <script>
+        function toggleMenu() {
+            const navMenu = document.getElementById('navMenu');
+            navMenu.classList.toggle('active');
+        }
+    </script>
+
+</body>
+</html>
