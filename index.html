@@ -3,8 +3,27 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cursos Jurídicos Gratuitos | Empírica Legal Lab</title>
-    <meta name="description" content="Plataforma de cursos jurídicos gratuitos con diplomas opcionales. Aprende derecho práctico a tu ritmo.">
+    <title>Cursos Jurídicos Gratuitos Online | Derecho para No Abogados y Legal English | Empírica Legal Lab</title>
+    <meta name="description" content="Aprende derecho práctico 100% gratis. Cursos de Derecho para No Abogados y Legal English con casos reales. Diplomas certificados desde $100 MXN. Instructor: Mtro. Jorge Israel Clemente Marié.">
+    <meta name="keywords" content="cursos juridicos gratis, derecho para no abogados, legal english, cursos de derecho online, diplomas juridicos, empírica legal lab, jorge clemente">
+    <meta name="author" content="Mtro. Jorge Israel Clemente Marié - Empírica Legal Lab">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://cursos-juridicos-empirica.io/">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://cursos-juridicos-empirica.io/">
+    <meta property="og:title" content="Cursos Jurídicos Gratuitos Online | Empírica Legal Lab">
+    <meta property="og:description" content="Aprende derecho práctico 100% gratis. Cursos de Derecho para No Abogados y Legal English con casos reales.">
+    <meta property="og:image" content="https://i.postimg.cc/tCVcj2Sw/Captura-de-pantalla-2025-10-04-a-la-s-2-33-47-p-m.png">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://cursos-juridicos-empirica.io/">
+    <meta property="twitter:title" content="Cursos Jurídicos Gratuitos Online | Empírica Legal Lab">
+    <meta property="twitter:description" content="Aprende derecho práctico 100% gratis. Cursos de Derecho para No Abogados y Legal English con casos reales.">
+    <meta property="twitter:image" content="https://i.postimg.cc/tCVcj2Sw/Captura-de-pantalla-2025-10-04-a-la-s-2-33-47-p-m.png">
+
     <link rel="stylesheet" href="css/styles.css">
 
     <!-- EmailJS -->
@@ -319,33 +338,43 @@
                     <!-- Nombre Completo -->
                     <div class="form-group">
                         <label class="form-label" for="userName">
-                            Nombre Completo <span class="required">*</span>
+                            Nombre Completo <span class="required" aria-label="campo requerido">*</span>
                         </label>
-                        <input 
-                            type="text" 
-                            id="userName" 
-                            class="form-input" 
+                        <input
+                            type="text"
+                            id="userName"
+                            name="name"
+                            class="form-input"
                             placeholder="Ej: María González López"
                             required
                             autocomplete="name"
+                            inputmode="text"
+                            aria-required="true"
+                            aria-describedby="nameError"
+                            aria-invalid="false"
                         >
-                        <span class="error-message" id="nameError">Por favor ingresa tu nombre completo</span>
+                        <span class="error-message" id="nameError" role="alert" aria-live="polite">Por favor ingresa tu nombre completo</span>
                     </div>
 
                     <!-- Correo Electrónico -->
                     <div class="form-group">
                         <label class="form-label" for="userEmail">
-                            Correo Electrónico <span class="required">*</span>
+                            Correo Electrónico <span class="required" aria-label="campo requerido">*</span>
                         </label>
-                        <input 
-                            type="email" 
-                            id="userEmail" 
-                            class="form-input" 
+                        <input
+                            type="email"
+                            id="userEmail"
+                            name="email"
+                            class="form-input"
                             placeholder="correo@ejemplo.com"
                             required
                             autocomplete="email"
+                            inputmode="email"
+                            aria-required="true"
+                            aria-describedby="emailError"
+                            aria-invalid="false"
                         >
-                        <span class="error-message" id="emailError">Por favor ingresa un correo válido</span>
+                        <span class="error-message" id="emailError" role="alert" aria-live="polite">Por favor ingresa un correo válido</span>
                     </div>
 
                     <!-- Disclaimer Legal -->
@@ -371,8 +400,8 @@
                     </div>
 
                     <!-- Botón de envío -->
-                    <button type="submit" class="submit-btn" id="submitBtn">
-                        <span class="icon">📱</span>
+                    <button type="submit" class="submit-btn" id="submitBtn" onclick="gtag('event', 'form_submit', {'event_category': 'engagement', 'event_label': 'Welcome Form', 'value': 1});" aria-label="Enviar formulario y acceder al sitio">
+                        <span class="icon" aria-hidden="true">📱</span>
                         Acceder al Sitio vía WhatsApp
                     </button>
                 </form>
@@ -455,8 +484,8 @@
                         <li>Acceso ilimitado de por vida</li>
                     </ul>
                     <div class="course-footer">
-                        <a href="cursos/derecho-no-abogados/index.html" class="btn btn-primary">Comenzar Curso</a>
-                        <a href="cursos/derecho-no-abogados/index.html#info" class="btn btn-secondary">Más Info</a>
+                        <a href="cursos/derecho-no-abogados/index.html" class="btn btn-primary" onclick="gtag('event', 'course_start', {'event_category': 'engagement', 'event_label': 'Derecho para No Abogados', 'value': 1});" aria-label="Comenzar curso de Derecho para No Abogados">Comenzar Curso</a>
+                        <a href="cursos/derecho-no-abogados/index.html#info" class="btn btn-secondary" onclick="gtag('event', 'view_course_info', {'event_category': 'engagement', 'event_label': 'Derecho para No Abogados'});" aria-label="Ver más información del curso de Derecho para No Abogados">Más Info</a>
                     </div>
                 </div>
             </div>
@@ -497,8 +526,8 @@
                         <li>Inicio: 24 noviembre 2025</li>
                     </ul>
                     <div class="course-footer">
-                        <a href="cursos/legal-english/index.html" class="btn btn-primary">Conocer Curso</a>
-                        <a href="cursos/legal-english/index.html#info" class="btn btn-secondary">Más Info</a>
+                        <a href="cursos/legal-english/index.html" class="btn btn-primary" onclick="gtag('event', 'course_start', {'event_category': 'engagement', 'event_label': 'Legal English', 'value': 1});" aria-label="Conocer curso de Legal English">Conocer Curso</a>
+                        <a href="cursos/legal-english/index.html#info" class="btn btn-secondary" onclick="gtag('event', 'view_course_info', {'event_category': 'engagement', 'event_label': 'Legal English'});" aria-label="Ver más información del curso de Legal English">Más Info</a>
                     </div>
                 </div>
             </div>
@@ -585,7 +614,7 @@
                 </p>
             </div>
 
-            <a href="https://wa.me/529982570828?text=Hola,%20quiero%20información%20sobre%20diplomas" class="btn btn-secondary" style="display: inline-block; margin-top: 20px; padding: 15px 40px;">
+            <a href="https://wa.me/529982570828?text=Hola,%20quiero%20información%20sobre%20diplomas" class="btn btn-secondary" style="display: inline-block; margin-top: 20px; padding: 15px 40px;" onclick="gtag('event', 'whatsapp_click', {'event_category': 'contact', 'event_label': 'Diplomas Info', 'value': 1});" aria-label="Contactar por WhatsApp para información sobre diplomas">
                 📱 Solicitar Información por WhatsApp
             </a>
         </div>
@@ -649,7 +678,7 @@
     </footer>
 
     <!-- BOTÓN FLOTANTE WHATSAPP -->
-    <a href="https://wa.me/529982570828?text=Hola,%20tengo%20una%20consulta%20sobre%20los%20cursos" class="whatsapp-float" target="_blank" title="Contáctanos por WhatsApp">
+    <a href="https://wa.me/529982570828?text=Hola,%20tengo%20una%20consulta%20sobre%20los%20cursos" class="whatsapp-float" target="_blank" title="Contáctanos por WhatsApp" onclick="gtag('event', 'whatsapp_click', {'event_category': 'contact', 'event_label': 'Floating Button', 'value': 1});" aria-label="Abrir chat de WhatsApp con el instructor" role="button">
         📱
     </a>
 
