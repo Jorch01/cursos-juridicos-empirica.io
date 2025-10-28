@@ -1403,6 +1403,168 @@
         let attempts = {}; // Track de intentos por pregunta
         const MAX_ATTEMPTS = 2;
 
+        // ============================================
+        // PERSISTENCIA DE INTENTOS EN LOCALSTORAGE
+        // ============================================
+
+        // Clave única para almacenar intentos de este curso
+        const ATTEMPTS_STORAGE_KEY = 'derecho_no_abogados_attempts';
+        const ANSWERS_STORAGE_KEY = 'derecho_no_abogados_answers';
+
+        // Función para guardar intentos en localStorage
+        function saveAttemptsToStorage() {
+            try {
+                localStorage.setItem(ATTEMPTS_STORAGE_KEY, JSON.stringify(attempts));
+                localStorage.setItem(ANSWERS_STORAGE_KEY, JSON.stringify(answers));
+            } catch (error) {
+                console.error('Error al guardar intentos:', error);
+            }
+        }
+
+        // Función para cargar intentos desde localStorage
+        function loadAttemptsFromStorage() {
+            try {
+                const savedAttempts = localStorage.getItem(ATTEMPTS_STORAGE_KEY);
+                const savedAnswers = localStorage.getItem(ANSWERS_STORAGE_KEY);
+
+                if (savedAttempts) {
+                    attempts = JSON.parse(savedAttempts);
+                }
+                if (savedAnswers) {
+                    answers = JSON.parse(savedAnswers);
+                }
+
+                // Restaurar el estado visual de las preguntas
+                restoreQuestionStates();
+            } catch (error) {
+                console.error('Error al cargar intentos:', error);
+            }
+        }
+
+        // Función para restaurar el estado visual de las preguntas
+        function restoreQuestionStates() {
+            // Restaurar preguntas bloqueadas y respuestas previas
+            for (let questionId in answers) {
+                const answer = answers[questionId];
+                const attemptsUsed = attempts[questionId] || 0;
+
+                // Buscar el ejercicio correspondiente
+                let exerciseDiv = null;
+
+                // Para preguntas de tipo cláusula (q4-q9)
+                if (questionId.match(/^q[4-9]$/)) {
+                    exerciseDiv = document.querySelector(`[data-question="${questionId}"]`)?.closest('.exercise');
+                    if (exerciseDiv && (answer.correct || attemptsUsed >= MAX_ATTEMPTS)) {
+                        lockQuestion(exerciseDiv, questionId, answer.correct);
+
+                        // Mostrar el resultado previo
+                        const resultDiv = exerciseDiv.querySelector('.result');
+                        if (answer.correct) {
+                            resultDiv.className = 'result success';
+                            resultDiv.textContent = '✅ ¡Correcto! Has identificado correctamente esta cláusula.';
+                        } else {
+                            resultDiv.className = 'result error';
+                            resultDiv.textContent = '🔒 Has usado tus 2 intentos. La pregunta ha sido bloqueada.';
+                        }
+                        resultDiv.style.display = 'block';
+
+                        // Marcar la opción seleccionada
+                        const selectedOption = exerciseDiv.querySelector(`[onclick*="${answer.value}"]`);
+                        if (selectedOption) {
+                            selectedOption.classList.add('selected');
+                        }
+                    }
+                }
+                // Para preguntas de radio buttons (q1, q2, q11, q12, q15)
+                else if (questionId.match(/^q(1|2|11|12|15)$/)) {
+                    const radioInput = document.querySelector(`input[name="${questionId}"][value="${answer.value}"]`);
+                    if (radioInput) {
+                        radioInput.checked = true;
+                        exerciseDiv = radioInput.closest('.exercise');
+
+                        if (answer.correct || attemptsUsed >= MAX_ATTEMPTS) {
+                            lockQuestion(exerciseDiv, questionId, answer.correct);
+
+                            // Mostrar el resultado previo
+                            const resultDiv = exerciseDiv.querySelector('.result');
+                            if (answer.correct) {
+                                resultDiv.className = 'result success';
+                                resultDiv.textContent = '✅ ¡Correcto!';
+                            } else {
+                                resultDiv.className = 'result error';
+                                resultDiv.textContent = '🔒 Has usado tus 2 intentos. La pregunta ha sido bloqueada.';
+                            }
+                            resultDiv.style.display = 'block';
+                        }
+                    }
+                }
+                // Para preguntas de checkboxes (q3, q14)
+                else if (questionId.match(/^q(3|14)$/)) {
+                    if (Array.isArray(answer.value)) {
+                        answer.value.forEach(val => {
+                            const checkbox = document.querySelector(`input[name="${questionId}"][value="${val}"]`);
+                            if (checkbox) {
+                                checkbox.checked = true;
+                            }
+                        });
+                    }
+
+                    const firstCheckbox = document.querySelector(`input[name="${questionId}"]`);
+                    if (firstCheckbox) {
+                        exerciseDiv = firstCheckbox.closest('.exercise');
+
+                        if (answer.correct || attemptsUsed >= MAX_ATTEMPTS) {
+                            lockQuestion(exerciseDiv, questionId, answer.correct);
+
+                            // Mostrar el resultado previo
+                            const resultDiv = exerciseDiv.querySelector('.result');
+                            if (answer.correct) {
+                                resultDiv.className = 'result success';
+                                resultDiv.textContent = '✅ ¡Correcto!';
+                            } else {
+                                resultDiv.className = 'result error';
+                                resultDiv.textContent = '🔒 Has usado tus 2 intentos. La pregunta ha sido bloqueada.';
+                            }
+                            resultDiv.style.display = 'block';
+                        }
+                    }
+                }
+                // Para preguntas de matching (q10, q13)
+                else if (questionId.match(/^q(10|13)$/)) {
+                    exerciseDiv = document.getElementById(questionId)?.closest('.exercise');
+                    if (exerciseDiv && (answer.correct || attemptsUsed >= MAX_ATTEMPTS)) {
+                        lockQuestion(exerciseDiv, questionId, answer.correct);
+
+                        // Mostrar el resultado previo
+                        const resultDiv = exerciseDiv.querySelector('.result');
+                        if (answer.correct) {
+                            resultDiv.className = 'result success';
+                            resultDiv.textContent = '✅ ¡Perfecto! Has relacionado correctamente todos los elementos.';
+                        } else {
+                            resultDiv.className = 'result error';
+                            resultDiv.textContent = '🔒 Has usado tus 2 intentos. La pregunta ha sido bloqueada.';
+                        }
+                        resultDiv.style.display = 'block';
+                    }
+                }
+            }
+        }
+
+        // Función para limpiar datos guardados (útil para testing o reset)
+        function clearStoredAttempts() {
+            localStorage.removeItem(ATTEMPTS_STORAGE_KEY);
+            localStorage.removeItem(ANSWERS_STORAGE_KEY);
+            attempts = {};
+            answers = {};
+        }
+
+        // Cargar intentos al iniciar la página
+        loadAttemptsFromStorage();
+
+        // ============================================
+        // FIN PERSISTENCIA
+        // ============================================
+
         // Timer
         setInterval(() => {
             const elapsed = Math.floor((Date.now() - startTime) / 1000);
@@ -1502,6 +1664,9 @@
                 answers[questionId] = { correct: false, value: classification, attempts: attempts[questionId] };
             }
             resultDiv.style.display = 'block';
+
+            // Guardar en localStorage
+            saveAttemptsToStorage();
         }
 
         // Función para bloquear una pregunta
@@ -1564,6 +1729,9 @@
                     resultDiv.style.display = 'block';
                     answers[questionName] = { correct: false, value: this.value, attempts: attempts[questionName] };
                 }
+
+                // Guardar en localStorage
+                saveAttemptsToStorage();
             });
         });
 
@@ -1645,6 +1813,9 @@
                 answers[questionName] = { correct: false, value: selected, attempts: attempts[questionName] };
             }
             resultDiv.style.display = 'block';
+
+            // Guardar en localStorage
+            saveAttemptsToStorage();
         }
 
         // Sistema de relacionar mejorado para móviles y desktop
@@ -1852,6 +2023,9 @@
                     answers[questionId] = { correct: false, attempts: attempts[questionId] };
                 }
                 resultDiv.style.display = 'block';
+
+                // Guardar en localStorage
+                saveAttemptsToStorage();
             } else {
                 resultDiv.style.display = 'none';
             }
