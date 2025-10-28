@@ -416,6 +416,38 @@ body {
 }
 
 /* ============================================
+   REDES SOCIALES
+   ============================================ */
+.social-links {
+    display: flex;
+    gap: 15px;
+    margin-top: 15px;
+}
+
+.social-links a {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 45px;
+    height: 45px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 50%;
+    color: var(--white);
+    text-decoration: none;
+    font-size: 1.3rem;
+    transition: all 0.3s ease;
+    border: 2px solid transparent;
+}
+
+.social-links a:hover {
+    background: var(--secondary);
+    color: var(--primary);
+    transform: translateY(-3px);
+    border-color: var(--white);
+    box-shadow: 0 5px 15px rgba(207, 168, 146, 0.4);
+}
+
+/* ============================================
    WHATSAPP FLOTANTE
    ============================================ */
 .whatsapp-float {
