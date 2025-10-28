@@ -4,6 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Plataforma de Ejercicios - Derecho para No Abogados</title>
+
+    <!-- EmailJS -->
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+
     <style>
         * {
             margin: 0;
@@ -1006,7 +1010,7 @@
                     </label>
                     <label class="option">
                         <input type="radio" name="q12" value="b">
-                        b) 6 meses
+                        b) 2 meses
                     </label>
                     <label class="option">
                         <input type="radio" name="q12" value="c">
@@ -1355,12 +1359,12 @@
         </div>
 
         <button class="btn btn-whatsapp" onclick="submitForm()">
-            ENVIAR RESULTADOS POR WHATSAPP
+            📧 ENVIAR RESULTADOS (Email + WhatsApp)
         </button>
 
         <div class="loading" id="loading">
             <div class="spinner"></div>
-            <p>Preparando resultados para WhatsApp...</p>
+            <p>Enviando resultados por email y preparando WhatsApp...</p>
         </div>
     </div>
 
@@ -1368,14 +1372,27 @@
     <div class="modal" id="confirmModal">
         <div class="modal-content">
             <span class="close-modal" onclick="closeModal()">&times;</span>
-            <h2>✅ Resultados Listos</h2>
-            <p>Se abrirá WhatsApp con tus resultados listos para enviar al Mtro. Jorge Israel Clemente Marié.</p>
+            <h2>✅ Resultados Enviados</h2>
+            <p style="margin-bottom: 15px;"><strong>📧 Tus resultados se han enviado automáticamente por email al instructor.</strong></p>
+            <p style="margin-bottom: 15px;">Además, se abrirá WhatsApp con tus resultados listos para enviar al Mtro. Jorge Israel Clemente Marié.</p>
             <p>Solo debes presionar el botón de enviar en WhatsApp.</p>
             <button class="btn" onclick="closeModal()">Entendido</button>
         </div>
     </div>
 
     <script>
+        // ═══════════════════════════════════════
+        // ⚙️ CONFIGURACIÓN DE EMAILJS
+        // ═══════════════════════════════════════
+        const EMAILJS_CONFIG = {
+            publicKey: 'jv0XSfQ9iDd3mL_zD',
+            serviceId: 'service_EmpLegalEdu',
+            templateId: 'template_y20twci'
+        };
+
+        // Inicializar EmailJS
+        emailjs.init(EMAILJS_CONFIG.publicKey);
+
         // Variables globales
         let startTime = Date.now();
         let answers = {};
@@ -1406,7 +1423,7 @@
             q9: 'warning',   // Penalización del 50% es cuestionable
             q10: 'matching',
             q11: 'c',
-            q12: 'c',
+            q12: 'b',
             q13: 'matching',
             q14: ['a', 'c', 'e', 'f'],
             q15: 'b'
@@ -1939,11 +1956,11 @@
         }
 
         // Enviar formulario
-        function submitForm() {
+        async function submitForm() {
             // Validar información del estudiante
             const studentName = document.getElementById('studentName').value;
             const studentEmail = document.getElementById('studentEmail').value;
-            
+
             if (!studentName || !studentEmail) {
                 alert('Por favor completa tu nombre y correo electrónico antes de enviar.');
                 return;
@@ -1999,18 +2016,62 @@
             // Guardar en localStorage como backup
             localStorage.setItem('courseResults_' + Date.now(), JSON.stringify(evaluationData));
 
-            // Simular procesamiento
+            try {
+                // ═══════════════════════════════════════
+                // 📧 ENVIAR POR EMAIL AUTOMÁTICAMENTE
+                // ═══════════════════════════════════════
+                console.log('📧 Enviando resultados por email...');
+
+                const emailParams = {
+                    to_email: 'enlilh@gmail.com',
+                    student_name: studentName,
+                    student_email: studentEmail,
+                    course_name: 'Derecho para No Abogados',
+                    submission_date: evaluationData.studentInfo.date,
+                    time_spent: evaluationData.studentInfo.timeSpent,
+                    score_percentage: evaluationData.exerciseScore.percentage + '%',
+                    score_detail: `${evaluationData.exerciseScore.correct}/${evaluationData.exerciseScore.total}`,
+                    preparedness: getScaleText(evaluationData.selfAssessment.preparedness),
+                    usefulness: getScaleText(evaluationData.selfAssessment.usefulness),
+                    most_valuable: evaluationData.selfAssessment.mostValuable,
+                    concrete_action: evaluationData.selfAssessment.concreteAction,
+                    deepen_topic: evaluationData.selfAssessment.deepenTopic,
+                    content_quality: getScaleText(evaluationData.courseEvaluation.contentQuality),
+                    teacher_clarity: getScaleText(evaluationData.courseEvaluation.teacherClarity),
+                    teacher_knowledge: getScaleText(evaluationData.courseEvaluation.teacherKnowledge),
+                    exercises_utility: getScaleText(evaluationData.courseEvaluation.exercisesUtility),
+                    would_recommend: getScaleText(evaluationData.courseEvaluation.wouldRecommend),
+                    improvements: evaluationData.courseEvaluation.improvements,
+                    additional_comments: evaluationData.courseEvaluation.additionalComments,
+                    message: whatsappMessage // Enviar el mensaje formateado también
+                };
+
+                const emailResponse = await emailjs.send(
+                    EMAILJS_CONFIG.serviceId,
+                    EMAILJS_CONFIG.templateId,
+                    emailParams
+                );
+
+                console.log('✅ Email enviado exitosamente:', emailResponse.status, emailResponse.text);
+
+            } catch (error) {
+                console.error('❌ Error al enviar email:', error);
+                // Continuar con WhatsApp aunque falle el email
+                alert('Nota: No se pudo enviar por email automáticamente, pero puedes enviar por WhatsApp.');
+            }
+
+            // Procesar envío por WhatsApp
             setTimeout(() => {
                 document.getElementById('loading').classList.remove('active');
-                
+
                 // Crear link de WhatsApp
                 const phoneNumber = '529982570828'; // Número sin el +
                 const encodedMessage = encodeURIComponent(whatsappMessage);
                 const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodedMessage}`;
-                
+
                 // Abrir WhatsApp
                 window.open(whatsappUrl, '_blank');
-                
+
                 // Mostrar modal de confirmación
                 document.getElementById('confirmModal').style.display = 'block';
             }, 2000);
