@@ -236,6 +236,47 @@
             border-color: #dc3545;
         }
 
+        .option.locked,
+        .clause-option.locked {
+            opacity: 0.5;
+            cursor: not-allowed !important;
+            pointer-events: none;
+        }
+
+        .exercise.locked {
+            opacity: 0.7;
+            position: relative;
+        }
+
+        .exercise.locked::after {
+            content: "🔒 BLOQUEADO - 2 intentos utilizados";
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: #dc3545;
+            color: white;
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-weight: bold;
+            font-size: 0.9em;
+        }
+
+        .attempts-indicator {
+            display: inline-block;
+            background: #fff3cd;
+            color: #856404;
+            padding: 5px 12px;
+            border-radius: 15px;
+            margin-left: 10px;
+            font-size: 0.85em;
+            font-weight: 600;
+        }
+
+        .attempts-indicator.warning {
+            background: #f8d7da;
+            color: #721c24;
+        }
+
         .matching-exercise {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -651,6 +692,35 @@
             <p>Plataforma de Ejercicios y Evaluación</p>
             <p style="font-size: 0.9em; opacity: 0.9; margin-top: 10px;">13 ejercicios para evaluar tu aprendizaje</p>
             <p style="font-size: 0.85em; opacity: 0.8; margin-top: 5px;">✅ Compatible con todos los dispositivos móviles</p>
+        </div>
+
+        <!-- INSTRUCCIONES -->
+        <div class="student-info" style="background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%);">
+            <h2>📋 Instrucciones Importantes</h2>
+            <div style="background: white; padding: 20px; border-radius: 10px; margin-bottom: 20px; border-left: 5px solid #2196f3;">
+                <h3 style="color: #1976d2; margin-bottom: 15px;">⚠️ Reglas de los Ejercicios</h3>
+                <ul style="line-height: 2; color: #424242; font-size: 1.05em;">
+                    <li><strong>Solo tienes 2 intentos</strong> para responder cada pregunta correctamente</li>
+                    <li>Después del <strong>segundo intento</strong>, la pregunta se bloqueará automáticamente</li>
+                    <li>Piensa bien tu respuesta antes de seleccionarla</li>
+                    <li>Una vez bloqueada, <strong>no podrás cambiar tu respuesta</strong></li>
+                </ul>
+            </div>
+
+            <div style="background: white; padding: 20px; border-radius: 10px; border-left: 5px solid #4caf50;">
+                <h3 style="color: #2e7d32; margin-bottom: 15px;">📱 Cómo Enviar tus Resultados por WhatsApp</h3>
+                <ol style="line-height: 2.2; color: #424242; font-size: 1.05em;">
+                    <li><strong>Completa todos los ejercicios</strong> - Responde las 15 preguntas del cuestionario</li>
+                    <li><strong>Llena la autoevaluación</strong> - Comparte tu experiencia de aprendizaje</li>
+                    <li><strong>Completa la evaluación del curso</strong> - Tu opinión es muy valiosa</li>
+                    <li><strong>Haz clic en el botón verde</strong> "ENVIAR RESULTADOS POR WHATSAPP"</li>
+                    <li><strong>Se abrirá WhatsApp automáticamente</strong> con tu calificación y evaluación pre-cargada</li>
+                    <li><strong>Solo presiona ENVIAR en WhatsApp</strong> - El mensaje ya está listo para enviar al instructor</li>
+                </ol>
+                <p style="background: #fff3e0; padding: 15px; border-radius: 8px; margin-top: 15px; color: #e65100; font-weight: 600;">
+                    ⚡ Importante: Asegúrate de tener WhatsApp instalado en tu dispositivo. El mensaje se enviará al Mtro. Jorge Israel Clemente Marié.
+                </p>
+            </div>
         </div>
 
         <div class="student-info">
@@ -1311,6 +1381,8 @@
         let answers = {};
         let score = 0;
         let totalQuestions = 15;
+        let attempts = {}; // Track de intentos por pregunta
+        const MAX_ATTEMPTS = 2;
 
         // Timer
         setInterval(() => {
@@ -1342,24 +1414,42 @@
 
         // Función para seleccionar cláusulas
         function selectClause(element, questionId, classification) {
+            const exerciseDiv = element.closest('.exercise');
+
+            // Verificar si está bloqueado
+            if (exerciseDiv.classList.contains('locked')) {
+                return;
+            }
+
+            // Inicializar intentos si no existe
+            if (!attempts[questionId]) {
+                attempts[questionId] = 0;
+            }
+
             // Limpiar selección anterior
             const parent = element.parentElement;
             parent.querySelectorAll('.clause-option').forEach(opt => {
                 opt.classList.remove('selected');
             });
-            
+
             // Marcar como seleccionada
             element.classList.add('selected');
-            
+
             // Verificar respuesta
-            const resultDiv = element.closest('.exercise').querySelector('.result');
+            const resultDiv = exerciseDiv.querySelector('.result');
             const isCorrect = classification === correctAnswers[questionId];
-            
+
+            // Incrementar intentos
+            attempts[questionId]++;
+
             if (isCorrect) {
                 resultDiv.className = 'result success';
                 resultDiv.textContent = '✅ ¡Correcto! Has identificado correctamente esta cláusula.';
-                answers[questionId] = { correct: true, value: classification };
+                answers[questionId] = { correct: true, value: classification, attempts: attempts[questionId] };
+                // Bloquear la pregunta al responder correctamente
+                lockQuestion(exerciseDiv, questionId, true);
             } else {
+                const attemptsLeft = MAX_ATTEMPTS - attempts[questionId];
                 resultDiv.className = 'result error';
                 let explanation = '';
                 switch(questionId) {
@@ -1382,10 +1472,28 @@
                         explanation = 'Una penalización del 50% puede ser excesiva y cuestionable, aunque no necesariamente ilegal.';
                         break;
                 }
-                resultDiv.textContent = `❌ Incorrecto. ${explanation}`;
-                answers[questionId] = { correct: false, value: classification };
+
+                if (attemptsLeft > 0) {
+                    resultDiv.textContent = `❌ Incorrecto. ${explanation}\n\n⚠️ Te quedan ${attemptsLeft} ${attemptsLeft === 1 ? 'intento' : 'intentos'}.`;
+                } else {
+                    resultDiv.textContent = `❌ Incorrecto. ${explanation}\n\n🔒 Has usado tus 2 intentos. La pregunta ha sido bloqueada.`;
+                    lockQuestion(exerciseDiv, questionId, false);
+                }
+
+                answers[questionId] = { correct: false, value: classification, attempts: attempts[questionId] };
             }
             resultDiv.style.display = 'block';
+        }
+
+        // Función para bloquear una pregunta
+        function lockQuestion(exerciseDiv, questionId, isCorrect) {
+            exerciseDiv.classList.add('locked');
+            exerciseDiv.querySelectorAll('.clause-option, .option, input').forEach(el => {
+                el.classList.add('locked');
+                if (el.tagName === 'INPUT') {
+                    el.disabled = true;
+                }
+            });
         }
 
         // Auto-calificación para preguntas de opción múltiple
@@ -1395,7 +1503,20 @@
                 const exerciseDiv = this.closest('.exercise');
                 const resultDiv = exerciseDiv.querySelector('.result');
                 const options = exerciseDiv.querySelectorAll('.option');
-                
+
+                // Verificar si está bloqueado
+                if (exerciseDiv.classList.contains('locked')) {
+                    return;
+                }
+
+                // Inicializar intentos si no existe
+                if (!attempts[questionName]) {
+                    attempts[questionName] = 0;
+                }
+
+                // Incrementar intentos
+                attempts[questionName]++;
+
                 // Limpiar clases anteriores
                 options.forEach(opt => {
                     opt.classList.remove('correct', 'incorrect');
@@ -1406,13 +1527,23 @@
                     resultDiv.className = 'result success';
                     resultDiv.textContent = '✅ ¡Correcto! Excelente respuesta.';
                     resultDiv.style.display = 'block';
-                    answers[questionName] = { correct: true, value: this.value };
+                    answers[questionName] = { correct: true, value: this.value, attempts: attempts[questionName] };
+                    // Bloquear la pregunta al responder correctamente
+                    lockQuestion(exerciseDiv, questionName, true);
                 } else {
+                    const attemptsLeft = MAX_ATTEMPTS - attempts[questionName];
                     this.parentElement.classList.add('incorrect');
                     resultDiv.className = 'result error';
-                    resultDiv.textContent = '❌ Incorrecto. Revisa el material del curso sobre este tema.';
+
+                    if (attemptsLeft > 0) {
+                        resultDiv.textContent = `❌ Incorrecto. Revisa el material del curso sobre este tema.\n\n⚠️ Te quedan ${attemptsLeft} ${attemptsLeft === 1 ? 'intento' : 'intentos'}.`;
+                    } else {
+                        resultDiv.textContent = '❌ Incorrecto. Revisa el material del curso sobre este tema.\n\n🔒 Has usado tus 2 intentos. La pregunta ha sido bloqueada.';
+                        lockQuestion(exerciseDiv, questionName, false);
+                    }
+
                     resultDiv.style.display = 'block';
-                    answers[questionName] = { correct: false, value: this.value };
+                    answers[questionName] = { correct: false, value: this.value, attempts: attempts[questionName] };
                 }
             });
         });
@@ -1430,32 +1561,69 @@
         function checkMultipleChoice(questionName) {
             const selected = [];
             const checkboxes = document.querySelectorAll(`input[name="${questionName}"]:checked`);
-            const exerciseDiv = checkboxes[0]?.closest('.exercise');
+            const allCheckboxes = document.querySelectorAll(`input[name="${questionName}"]`);
+            const exerciseDiv = allCheckboxes[0]?.closest('.exercise');
             if (!exerciseDiv) return;
-            
+
+            // Verificar si está bloqueado
+            if (exerciseDiv.classList.contains('locked')) {
+                return;
+            }
+
             const resultDiv = exerciseDiv.querySelector('.result');
             const options = exerciseDiv.querySelectorAll('.option');
-            
+
             checkboxes.forEach(cb => selected.push(cb.value));
-            
+
+            // Solo contar como intento si tiene al menos una selección
+            if (selected.length === 0) {
+                resultDiv.style.display = 'none';
+                return;
+            }
+
+            // Inicializar intentos si no existe
+            if (!attempts[questionName]) {
+                attempts[questionName] = 0;
+            }
+
+            // Incrementar intentos solo si es un intento nuevo (no si solo está des-seleccionando)
+            const previousAttempts = attempts[questionName];
+            const correct = correctAnswers[questionName];
+            const isCorrect = correct.length === selected.length &&
+                             correct.every(val => selected.includes(val));
+
+            // Solo incrementar si ya había hecho un intento previo incorrecto
+            if (!answers[questionName] || !answers[questionName].correct) {
+                if (selected.length === correct.length) {
+                    attempts[questionName]++;
+                }
+            }
+
             // Limpiar clases anteriores
             options.forEach(opt => {
                 opt.classList.remove('correct', 'incorrect');
             });
 
-            const correct = correctAnswers[questionName];
-            const isCorrect = correct.length === selected.length && 
-                             correct.every(val => selected.includes(val));
-
             if (isCorrect) {
                 checkboxes.forEach(cb => cb.parentElement.classList.add('correct'));
                 resultDiv.className = 'result success';
                 resultDiv.textContent = '✅ ¡Perfecto! Has seleccionado todas las opciones correctas.';
-                answers[questionName] = { correct: true, value: selected };
+                answers[questionName] = { correct: true, value: selected, attempts: attempts[questionName] };
+                lockQuestion(exerciseDiv, questionName, true);
             } else {
+                const attemptsLeft = MAX_ATTEMPTS - attempts[questionName];
                 resultDiv.className = 'result warning';
-                resultDiv.textContent = `⚠️ Revisa tu respuesta. Debes seleccionar ${correct.length} opciones.`;
-                answers[questionName] = { correct: false, value: selected };
+
+                if (attemptsLeft > 0 && selected.length === correct.length) {
+                    resultDiv.textContent = `⚠️ Revisa tu respuesta. Debes seleccionar ${correct.length} opciones correctas.\n\n⚠️ Te quedan ${attemptsLeft} ${attemptsLeft === 1 ? 'intento' : 'intentos'}.`;
+                } else if (attemptsLeft <= 0) {
+                    resultDiv.textContent = `⚠️ Revisa tu respuesta. Debes seleccionar ${correct.length} opciones correctas.\n\n🔒 Has usado tus 2 intentos. La pregunta ha sido bloqueada.`;
+                    lockQuestion(exerciseDiv, questionName, false);
+                } else {
+                    resultDiv.textContent = `⚠️ Debes seleccionar exactamente ${correct.length} opciones.`;
+                }
+
+                answers[questionName] = { correct: false, value: selected, attempts: attempts[questionName] };
             }
             resultDiv.style.display = 'block';
         }
@@ -1609,15 +1777,22 @@
 
         function checkMatching(exerciseContainer) {
             const exercise = exerciseContainer.closest('.exercise');
+
+            // Verificar si está bloqueado
+            if (exercise.classList.contains('locked')) {
+                return;
+            }
+
             const dropZones = exercise.querySelectorAll('.drop-zone');
             const resultDiv = exercise.querySelector('.result');
+            const questionId = exercise.querySelector('h3').textContent.includes('10') ? 'q10' : 'q13';
             let allCorrect = true;
             let allFilled = true;
 
             dropZones.forEach(zone => {
                 const item = zone.querySelector('.matching-item');
                 zone.classList.remove('correct', 'incorrect');
-                
+
                 if (item) {
                     if (item.dataset.answer === zone.dataset.correct) {
                         zone.classList.add('correct');
@@ -1631,16 +1806,31 @@
             });
 
             if (allFilled) {
+                // Inicializar intentos si no existe
+                if (!attempts[questionId]) {
+                    attempts[questionId] = 0;
+                }
+
+                // Incrementar intentos
+                attempts[questionId]++;
+
                 if (allCorrect) {
                     resultDiv.className = 'result success';
                     resultDiv.textContent = '✅ ¡Excelente! Todas las relaciones son correctas.';
-                    const questionId = exercise.querySelector('h3').textContent.includes('10') ? 'q10' : 'q13';
-                    answers[questionId] = { correct: true };
+                    answers[questionId] = { correct: true, attempts: attempts[questionId] };
+                    lockQuestion(exercise, questionId, true);
                 } else {
+                    const attemptsLeft = MAX_ATTEMPTS - attempts[questionId];
                     resultDiv.className = 'result error';
-                    resultDiv.textContent = '❌ Algunas relaciones son incorrectas. Intenta de nuevo.';
-                    const questionId = exercise.querySelector('h3').textContent.includes('10') ? 'q10' : 'q13';
-                    answers[questionId] = { correct: false };
+
+                    if (attemptsLeft > 0) {
+                        resultDiv.textContent = `❌ Algunas relaciones son incorrectas. Intenta de nuevo.\n\n⚠️ Te quedan ${attemptsLeft} ${attemptsLeft === 1 ? 'intento' : 'intentos'}.`;
+                    } else {
+                        resultDiv.textContent = '❌ Algunas relaciones son incorrectas.\n\n🔒 Has usado tus 2 intentos. La pregunta ha sido bloqueada.';
+                        lockQuestion(exercise, questionId, false);
+                    }
+
+                    answers[questionId] = { correct: false, attempts: attempts[questionId] };
                 }
                 resultDiv.style.display = 'block';
             } else {
