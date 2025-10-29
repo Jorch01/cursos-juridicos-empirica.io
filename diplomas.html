@@ -17,7 +17,9 @@
     <meta property="og:url" content="https://cursos-juridicos-empirica.io/diplomas.html">
     <meta property="og:title" content="Diplomas con Valor Curricular | Empírica Legal Lab">
     <meta property="og:description" content="Obtén tu diploma con firma electrónica SAT. Certificados con validez curricular por $200 MXN.">
-    <meta property="og:image" content="https://i.postimg.cc/tCVcj2Sw/logo.png">
+    <meta property="og:image" content="https://jorch01.github.io/cursos-juridicos-empirica.io/images/diploma-muestra.jpg">
+    <meta property="og:image:width" content="2020">
+    <meta property="og:image:height" content="1432">
     <meta property="og:locale" content="es_MX">
 
     <!-- Twitter Card -->
@@ -25,7 +27,7 @@
     <meta name="twitter:url" content="https://cursos-juridicos-empirica.io/diplomas.html">
     <meta name="twitter:title" content="Diplomas con Valor Curricular | Empírica Legal Lab">
     <meta name="twitter:description" content="Obtén tu diploma con firma electrónica SAT. Certificados con validez curricular por $200 MXN.">
-    <meta name="twitter:image" content="https://i.postimg.cc/tCVcj2Sw/logo.png">
+    <meta name="twitter:image" content="https://jorch01.github.io/cursos-juridicos-empirica.io/images/diploma-muestra.jpg">
 
     <link rel="stylesheet" href="css/styles.css">
 
@@ -128,18 +130,87 @@
             margin: 20px 0;
         }
         
+        .diploma-sample-section {
+            max-width: 1200px;
+            margin: 80px auto;
+            padding: 0 20px;
+        }
+
+        .diploma-sample-container {
+            background: white;
+            padding: 50px;
+            border-radius: 20px;
+            box-shadow: 0 8px 40px rgba(27, 44, 39, 0.15);
+        }
+
+        .diploma-sample-title {
+            text-align: center;
+            color: #1B2C27;
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+        }
+
+        .diploma-sample-subtitle {
+            text-align: center;
+            color: #6C757D;
+            font-size: 1.2rem;
+            margin-bottom: 40px;
+        }
+
+        .diploma-image-wrapper {
+            position: relative;
+            width: 100%;
+            max-width: 900px;
+            margin: 0 auto;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 10px 50px rgba(0, 0, 0, 0.2);
+            border: 3px solid #CFA892;
+        }
+
+        .diploma-image-wrapper img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        .diploma-badge {
+            display: inline-block;
+            background: linear-gradient(135deg, #CFA892, #d4b89e);
+            color: #1B2C27;
+            padding: 10px 25px;
+            border-radius: 25px;
+            font-weight: 600;
+            margin: 30px auto 0;
+            text-align: center;
+            display: block;
+            width: fit-content;
+        }
+
         @media (max-width: 768px) {
             .diplomas-hero h1 {
                 font-size: 2rem;
             }
-            
+
             .step-card {
                 grid-template-columns: 1fr;
                 text-align: center;
             }
-            
+
             .step-number {
                 margin: 0 auto;
+            }
+
+            .diploma-sample-container {
+                padding: 30px 20px;
+            }
+
+            .diploma-sample-title {
+                font-size: 2rem;
+            }
+
+            .diploma-sample-subtitle {
+                font-size: 1rem;
             }
         }
     </style>
@@ -196,6 +267,26 @@
             <p style="color: #6C757D;">PDF de alta calidad listo para imprimir o compartir</p>
         </div>
     </div>
+
+    <!-- MUESTRA DEL DIPLOMA -->
+    <section class="diploma-sample-section">
+        <div class="diploma-sample-container">
+            <h2 class="diploma-sample-title">Ejemplo de Diploma</h2>
+            <p class="diploma-sample-subtitle">
+                Este es el diseño profesional del diploma que recibirás al completar tu curso
+            </p>
+
+            <div class="diploma-image-wrapper">
+                <img src="images/diploma-muestra.jpg"
+                     alt="Ejemplo de Diploma Empírica Legal Lab con firma electrónica SAT"
+                     loading="lazy">
+            </div>
+
+            <div class="diploma-badge">
+                ✓ Diseño profesional con firma electrónica SAT
+            </div>
+        </div>
+    </section>
 
     <!-- PROCESO -->
     <section class="process-section">
