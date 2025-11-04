@@ -1,0 +1,844 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inglés Jurídico para Finanzas - BanBajío Cancún | Empírica Legal Lab</title>
+    <meta name="robots" content="noindex, nofollow">
+    <link rel="stylesheet" href="../../../css/styles.css">
+
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-L7ZSMV2JYL"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-L7ZSMV2JYL');
+    </script>
+
+    <style>
+        :root {
+            --banbajiom-blue: #003DA5;
+            --banbajiom-light: #0055D4;
+            --gold: #CFA892;
+            --dark-green: #1B2C27;
+            --gray: #6C757D;
+        }
+
+        .course-hero {
+            background: linear-gradient(135deg, var(--banbajiom-blue) 0%, var(--banbajiom-light) 100%);
+            color: white;
+            padding: 60px 20px;
+        }
+
+        .course-hero-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            align-items: center;
+        }
+
+        .course-info h1 {
+            font-size: 2.5rem;
+            color: white;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .course-badges {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+
+        .badge-item {
+            background: var(--gold);
+            color: var(--dark-green);
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-weight: 700;
+            font-size: 0.9rem;
+        }
+
+        .course-sidebar {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 8px 30px rgba(0,0,0,0.2);
+        }
+
+        .course-sidebar h3 {
+            color: var(--banbajiom-blue);
+            margin-bottom: 20px;
+            font-size: 1.3rem;
+        }
+
+        .sidebar-stats {
+            margin-bottom: 25px;
+        }
+
+        .stat-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 12px 0;
+            border-bottom: 1px solid #E1E8E5;
+        }
+
+        .stat-row:last-child {
+            border-bottom: none;
+        }
+
+        .stat-label {
+            color: var(--gray);
+        }
+
+        .stat-value {
+            font-weight: 700;
+            color: var(--banbajiom-blue);
+        }
+
+        .content-section {
+            max-width: 1200px;
+            margin: 60px auto;
+            padding: 0 20px;
+        }
+
+        .content-tabs {
+            display: flex;
+            gap: 0;
+            margin-bottom: 40px;
+            border-bottom: 3px solid #E1E8E5;
+            overflow-x: auto;
+        }
+
+        .tab-btn {
+            background: none;
+            border: none;
+            padding: 15px 30px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--gray);
+            cursor: pointer;
+            border-bottom: 3px solid transparent;
+            transition: all 0.3s;
+            white-space: nowrap;
+        }
+
+        .tab-btn:hover {
+            color: var(--banbajiom-blue);
+        }
+
+        .tab-btn.active {
+            color: var(--banbajiom-blue);
+            border-bottom-color: var(--gold);
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+            animation: fadeIn 0.5s;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .modules-grid {
+            display: grid;
+            gap: 25px;
+        }
+
+        .module-card {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 4px 20px rgba(0, 61, 165, 0.1);
+            border-left: 5px solid var(--banbajiom-blue);
+        }
+
+        .module-card h4 {
+            color: var(--banbajiom-blue);
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+        }
+
+        .module-topics {
+            list-style: none;
+        }
+
+        .module-topics li {
+            padding: 10px 0;
+            padding-left: 30px;
+            position: relative;
+            color: #2C3E50;
+        }
+
+        .module-topics li::before {
+            content: '▸';
+            position: absolute;
+            left: 0;
+            color: var(--gold);
+            font-weight: 700;
+        }
+
+        .instructor-section {
+            background: white;
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 4px 20px rgba(0, 61, 165, 0.1);
+            margin-bottom: 30px;
+        }
+
+        .instructor-header {
+            display: flex;
+            align-items: center;
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+
+        .instructor-photo {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            border: 5px solid var(--banbajiom-blue);
+            object-fit: cover;
+        }
+
+        .highlight-box {
+            background: linear-gradient(135deg, var(--banbajiom-blue), var(--banbajiom-light));
+            color: white;
+            padding: 30px;
+            border-radius: 15px;
+            margin: 30px 0;
+        }
+
+        .highlight-box h3 {
+            color: var(--gold);
+            margin-bottom: 15px;
+        }
+
+        .finance-icon {
+            font-size: 3rem;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        @media (max-width: 768px) {
+            .course-hero-container {
+                grid-template-columns: 1fr;
+            }
+
+            .content-tabs {
+                flex-wrap: nowrap;
+            }
+
+            .tab-btn {
+                font-size: 0.95rem;
+                padding: 12px 20px;
+            }
+
+            .instructor-header {
+                flex-direction: column;
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- HEADER -->
+    <header class="header">
+        <nav class="nav-container">
+            <div class="logo-container">
+                <img src="https://i.postimg.cc/tCVcj2Sw/Captura-de-pantalla-2025-10-04-a-la-s-2-33-47-p-m.png" alt="Empírica Legal Lab" class="logo-img">
+                <div class="logo-text">
+                    <h1>Empírica Legal Lab</h1>
+                    <p>Formación jurídica especializada</p>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- HERO DEL CURSO -->
+    <section class="course-hero">
+        <div class="course-hero-container">
+            <div class="course-info">
+                <h1>💼 INGLÉS JURÍDICO APLICADO AL SECTOR FINANCIERO</h1>
+                <h2 style="font-size: 1.8rem; margin-bottom: 20px; font-weight: 600;">Programa Especial BanBajío Cancún, Q. Roo</h2>
+                <div class="course-badges">
+                    <span class="badge-item">SECTOR FINANZAS</span>
+                    <span class="badge-item">DURACIÓN: 6+ MESES</span>
+                    <span class="badge-item">CASOS REALES</span>
+                    <span class="badge-item">CANCÚN, Q. ROO</span>
+                </div>
+                <p style="font-size: 1.2rem; margin-bottom: 30px; opacity: 0.95; line-height: 1.6;">
+                    Programa de inglés jurídico especializado para profesionales del sector financiero de BanBajío. Domina la terminología legal bancaria, contratos financieros, regulación internacional y comunicación profesional en inglés.
+                </p>
+                <div style="background: rgba(255,255,255,0.1); padding: 20px; border-radius: 10px; margin-top: 20px;">
+                    <p style="font-size: 1.1rem; font-weight: 600; margin-bottom: 10px;">🎯 Dirigido a:</p>
+                    <p style="font-size: 1rem;">Colaboradores del sector finanzas de BanBajío en Cancún, Quintana Roo</p>
+                </div>
+            </div>
+
+            <div class="course-sidebar">
+                <h3>Detalles del Programa</h3>
+                <div class="sidebar-stats">
+                    <div class="stat-row">
+                        <span class="stat-label">🏢 Institución</span>
+                        <span class="stat-value">BanBajío</span>
+                    </div>
+                    <div class="stat-row">
+                        <span class="stat-label">📍 Ubicación</span>
+                        <span class="stat-value">Cancún, Q. Roo</span>
+                    </div>
+                    <div class="stat-row">
+                        <span class="stat-label">⏱️ Duración</span>
+                        <span class="stat-value">6 meses mínimo*</span>
+                    </div>
+                    <div class="stat-row">
+                        <span class="stat-label">📚 Módulos</span>
+                        <span class="stat-value">15 módulos especializados</span>
+                    </div>
+                    <div class="stat-row">
+                        <span class="stat-label">📊 Nivel</span>
+                        <span class="stat-value">Intermedio-Avanzado</span>
+                    </div>
+                    <div class="stat-row">
+                        <span class="stat-label">💰 Inversión</span>
+                        <span class="stat-value">$2,000 MXN/mes</span>
+                    </div>
+                    <div class="stat-row">
+                        <span class="stat-label">🎓 Certificación</span>
+                        <span class="stat-value">Incluida</span>
+                    </div>
+                </div>
+                <p style="font-size: 0.85rem; color: var(--gray); margin-top: 10px;">
+                    *El programa puede extenderse según las necesidades del grupo
+                </p>
+                <a href="https://wa.me/529982570828?text=Hola,%20quiero%20información%20sobre%20el%20programa%20de%20Inglés%20Jurídico%20para%20BanBajío%20Cancún" class="btn btn-primary" style="width: 100%; margin-top: 20px;">📱 Solicitar Información</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- CONTENIDO DEL CURSO -->
+    <section class="content-section">
+        <div class="content-tabs">
+            <button class="tab-btn active" onclick="openTab(event, 'descripcion')">📖 Descripción</button>
+            <button class="tab-btn" onclick="openTab(event, 'instructor')">👨‍🏫 Instructor</button>
+            <button class="tab-btn" onclick="openTab(event, 'contenido')">📚 Contenido</button>
+            <button class="tab-btn" onclick="openTab(event, 'beneficios')">⭐ Beneficios</button>
+        </div>
+
+        <!-- TAB: DESCRIPCIÓN -->
+        <div id="descripcion" class="tab-content active">
+            <h2 style="color: var(--banbajiom-blue); margin-bottom: 30px; font-size: 2rem;">🎯 Programa Especializado en Inglés Jurídico Financiero</h2>
+
+            <div class="finance-icon">🏦💼⚖️</div>
+
+            <div style="background: white; padding: 40px; border-radius: 15px; box-shadow: 0 4px 20px rgba(0, 61, 165, 0.1);">
+                <p style="font-size: 1.2rem; line-height: 1.8; color: #2C3E50; margin-bottom: 30px; font-weight: 600;">
+                    Este programa ha sido diseñado específicamente para profesionales del sector financiero de BanBajío en Cancún, combinando inglés jurídico con terminología financiera especializada, regulación bancaria internacional y casos reales del sector.
+                </p>
+
+                <h3 style="color: var(--banbajiom-blue); margin: 30px 0 20px; font-size: 1.6rem;">✅ Lo que dominarás:</h3>
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 25px; margin-top: 30px;">
+                    <div style="padding: 20px; background: #F5F5F5; border-radius: 10px; border-left: 4px solid var(--banbajiom-blue);">
+                        <h4 style="color: var(--banbajiom-blue); margin-bottom: 10px;">💳 Contratos Financieros</h4>
+                        <p style="color: var(--gray);">Redacción y análisis de contratos de crédito, garantías, préstamos comerciales y documentos de financiamiento en inglés</p>
+                    </div>
+                    <div style="padding: 20px; background: #F5F5F5; border-radius: 10px; border-left: 4px solid var(--banbajiom-blue);">
+                        <h4 style="color: var(--banbajiom-blue); margin-bottom: 10px;">📊 Regulación Financiera</h4>
+                        <p style="color: var(--gray);">Comprensión de marcos regulatorios internacionales: SEC, FCA, Basel III, y normativa bancaria anglosajona</p>
+                    </div>
+                    <div style="padding: 20px; background: #F5F5F5; border-radius: 10px; border-left: 4px solid var(--banbajiom-blue);">
+                        <h4 style="color: var(--banbajiom-blue); margin-bottom: 10px;">🏛️ Derecho Corporativo</h4>
+                        <p style="color: var(--gray);">Estructuras corporativas, fusiones y adquisiciones, government corporativo en mercados internacionales</p>
+                    </div>
+                    <div style="padding: 20px; background: #F5F5F5; border-radius: 10px; border-left: 4px solid var(--banbajiom-blue);">
+                        <h4 style="color: var(--banbajiom-blue); margin-bottom: 10px;">💼 Comunicación Profesional</h4>
+                        <p style="color: var(--gray);">Redacción de memorandos legales, emails corporativos, presentaciones y reportes financieros en inglés</p>
+                    </div>
+                    <div style="padding: 20px; background: #F5F5F5; border-radius: 10px; border-left: 4px solid var(--banbajiom-blue);">
+                        <h4 style="color: var(--banbajiom-blue); margin-bottom: 10px;">🌐 Transacciones Internacionales</h4>
+                        <p style="color: var(--gray);">Operaciones transfronterizas, contratos internacionales, compliance y due diligence en inglés</p>
+                    </div>
+                    <div style="padding: 20px; background: #F5F5F5; border-radius: 10px; border-left: 4px solid var(--banbajiom-blue);">
+                        <h4 style="color: var(--banbajiom-blue); margin-bottom: 10px;">⚖️ Litigios Financieros</h4>
+                        <p style="color: var(--gray);">Análisis de casos bancarios, procedimientos de arbitraje y resolución de disputas comerciales</p>
+                    </div>
+                </div>
+
+                <div class="highlight-box">
+                    <h3>💡 Enfoque Práctico para el Sector Financiero</h3>
+                    <ul style="list-style: none; padding: 0;">
+                        <li style="padding: 8px 0;">✅ Casos reales del sector bancario y financiero 2023-2024</li>
+                        <li style="padding: 8px 0;">✅ Documentos auténticos: SEC, FCA, CFTC, Bank of England</li>
+                        <li style="padding: 8px 0;">✅ Terminología específica del sector financiero mexicano y anglosajón</li>
+                        <li style="padding: 8px 0;">✅ Ejercicios prácticos aplicables a tu trabajo diario en BanBajío</li>
+                        <li style="padding: 8px 0;">✅ Simulaciones de negociaciones y presentaciones financieras</li>
+                        <li style="padding: 8px 0;">✅ Metodología adaptada al ritmo del sector bancario</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- TAB: INSTRUCTOR -->
+        <div id="instructor" class="tab-content">
+            <h2 style="color: var(--banbajiom-blue); margin-bottom: 30px; font-size: 2rem;">👨‍🏫 Tu Instructor</h2>
+
+            <div class="instructor-section">
+                <div class="instructor-header">
+                    <div style="flex: 1;">
+                        <h3 style="color: var(--banbajiom-blue); font-size: 1.8rem; margin-bottom: 10px;">Mtro. Jorge Israel Clemente Marié</h3>
+                        <p style="font-size: 1.2rem; color: var(--gray); margin-bottom: 20px;">Especialista en Inglés Jurídico y Derecho Internacional</p>
+
+                        <div style="background: #F5F5F5; padding: 20px; border-radius: 10px; margin-top: 20px;">
+                            <h4 style="color: var(--banbajiom-blue); margin-bottom: 15px;">🎓 Credenciales Académicas</h4>
+                            <ul style="list-style: none; padding: 0;">
+                                <li style="padding: 8px 0; border-bottom: 1px solid #E1E8E5;">✓ Maestro en Amparo</li>
+                                <li style="padding: 8px 0; border-bottom: 1px solid #E1E8E5;">✓ Licenciado en Derecho</li>
+                                <li style="padding: 8px 0; border-bottom: 1px solid #E1E8E5;">✓ Certificación en Legal English</li>
+                                <li style="padding: 8px 0;">✓ Especialización en Sistemas Jurídicos Comparados</li>
+                            </ul>
+                        </div>
+
+                        <div style="background: linear-gradient(135deg, var(--banbajiom-blue), var(--banbajiom-light)); color: white; padding: 25px; border-radius: 10px; margin-top: 20px;">
+                            <h4 style="color: var(--gold); margin-bottom: 15px; font-size: 1.3rem;">⭐ Experiencia Destacada</h4>
+                            <p style="font-size: 1.1rem; font-weight: 600; margin-bottom: 15px;">
+                                Titular del Diplomado en Inglés Jurídico (2020-2024)
+                            </p>
+                            <ul style="list-style: none; padding: 0;">
+                                <li style="padding: 5px 0;">📚 Ha impartido el diplomado a 4 grupos desde 2020 hasta 2024</li>
+                                <li style="padding: 5px 0;">👥 Más de 120 profesionales capacitados</li>
+                                <li style="padding: 5px 0;">🏆 Calificación promedio: 4.8/5.0</li>
+                                <li style="padding: 5px 0;">💼 Experiencia con sector financiero y corporativo</li>
+                            </ul>
+                        </div>
+
+                        <div style="margin-top: 25px;">
+                            <h4 style="color: var(--banbajiom-blue); margin-bottom: 10px;">📱 Síguelo en redes:</h4>
+                            <div style="display: flex; gap: 15px; font-size: 2rem;">
+                                <a href="https://www.tiktok.com/@jorchcm0" target="_blank" title="TikTok">🎵</a>
+                                <a href="https://www.youtube.com/@klementeh" target="_blank" title="YouTube">▶️</a>
+                                <a href="https://www.linkedin.com/in/jorge-israel-c/" target="_blank" title="LinkedIn">💼</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div style="background: #F5F5F5; padding: 25px; border-radius: 10px; margin-top: 30px;">
+                    <h4 style="color: var(--banbajiom-blue); margin-bottom: 15px; font-size: 1.2rem;">💡 Metodología de Enseñanza</h4>
+                    <p style="color: #2C3E50; line-height: 1.8; margin-bottom: 15px;">
+                        El Mtro. Jorge Israel Clemente ha desarrollado una metodología única que combina:
+                    </p>
+                    <ul style="color: #2C3E50; line-height: 1.8;">
+                        <li><strong>Enfoque práctico:</strong> Casos reales del sector financiero y bancario</li>
+                        <li><strong>Aprendizaje activo:</strong> Ejercicios de redacción, análisis y presentación</li>
+                        <li><strong>Contextualización:</strong> Adaptación al entorno mexicano y anglosajón</li>
+                        <li><strong>Feedback personalizado:</strong> Seguimiento individual del progreso</li>
+                        <li><strong>Material actualizado:</strong> Casos y regulaciones 2023-2024</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- TAB: CONTENIDO -->
+        <div id="contenido" class="tab-content">
+            <h2 style="color: var(--banbajiom-blue); margin-bottom: 30px; font-size: 2rem;">📚 Contenido del Programa - 15 Módulos</h2>
+
+            <div style="background: linear-gradient(135deg, var(--banbajiom-blue), var(--banbajiom-light)); color: white; padding: 30px; border-radius: 15px; margin-bottom: 30px; text-align: center;">
+                <h3 style="font-size: 1.8rem; margin-bottom: 15px;">Programa Adaptado al Sector Financiero</h3>
+                <p style="font-size: 1.1rem;">Todos los módulos incluyen aplicaciones específicas para el sector bancario y financiero</p>
+            </div>
+
+            <div class="modules-grid">
+                <div class="module-card">
+                    <h4>📚 MÓDULO 1: Sistemas Judiciales y Regulación Financiera</h4>
+                    <p style="color: var(--gray); margin-bottom: 15px;"><strong>Fundamentos del sistema legal anglosajón aplicado a finanzas</strong></p>
+                    <ul class="module-topics">
+                        <li>Estructura judicial de EE.UU. y Reino Unido</li>
+                        <li>Organismos reguladores: SEC, FCA, CFTC, Bank of England</li>
+                        <li>Diferencias entre Common Law y Civil Law en finanzas</li>
+                        <li>Lectura de decisiones judiciales financieras</li>
+                        <li>Vocabulario jurídico-financiero esencial</li>
+                    </ul>
+                </div>
+
+                <div class="module-card">
+                    <h4>📚 MÓDULO 2: Contratos Financieros Fundamentales</h4>
+                    <p style="color: var(--gray); margin-bottom: 15px;"><strong>Contratos bancarios y de crédito en inglés</strong></p>
+                    <ul class="module-topics">
+                        <li>Loan agreements y credit facilities</li>
+                        <li>Cláusulas de garantías (collateral, security agreements)</li>
+                        <li>Covenants financieros y eventos de incumplimiento</li>
+                        <li>Redacción de términos y condiciones bancarias</li>
+                        <li>Casos reales de litigios contractuales financieros</li>
+                    </ul>
+                </div>
+
+                <div class="module-card">
+                    <h4>📚 MÓDULO 3: Derecho Laboral en el Sector Financiero</h4>
+                    <p style="color: var(--gray); margin-bottom: 15px;"><strong>Employment law para instituciones financieras</strong></p>
+                    <ul class="module-topics">
+                        <li>Contratos laborales en el sector bancario</li>
+                        <li>Non-compete y confidentiality agreements</li>
+                        <li>Compliance en contratación y despido</li>
+                        <li>Regulación de compensaciones y bonos</li>
+                        <li>Casos de disputas laborales en finanzas</li>
+                    </ul>
+                </div>
+
+                <div class="module-card">
+                    <h4>📚 MÓDULO 4: Estructuras Corporativas Financieras</h4>
+                    <p style="color: var(--gray); margin-bottom: 15px;"><strong>Company formation y corporate structures</strong></p>
+                    <ul class="module-topics">
+                        <li>Tipos de entidades financieras (Banks, Investment firms)</li>
+                        <li>Requisitos de capitalización y licenciamiento</li>
+                        <li>Subsidiarias y holding companies</li>
+                        <li>Due diligence en formación de instituciones financieras</li>
+                        <li>Documentación corporativa en inglés</li>
+                    </ul>
+                </div>
+
+                <div class="module-card">
+                    <h4>📚 MÓDULO 5: Gobierno Corporativo Bancario</h4>
+                    <p style="color: var(--gray); margin-bottom: 15px;"><strong>Corporate governance en instituciones financieras</strong></p>
+                    <ul class="module-topics">
+                        <li>Deberes fiduciarios de directores bancarios</li>
+                        <li>Board composition y committees (audit, risk, compliance)</li>
+                        <li>Regulación de conflictos de interés</li>
+                        <li>Shareholder rights en instituciones financieras</li>
+                        <li>Casos de governance failures</li>
+                    </ul>
+                </div>
+
+                <div class="module-card">
+                    <h4>📚 MÓDULO 6: Mercados de Valores y Regulación</h4>
+                    <p style="color: var(--gray); margin-bottom: 15px;"><strong>Securities law y capital markets</strong></p>
+                    <ul class="module-topics">
+                        <li>Securities Act 1933 y Exchange Act 1934</li>
+                        <li>Proceso de IPO y listing requirements</li>
+                        <li>Regulación de insider trading</li>
+                        <li>Disclosure obligations y reporting</li>
+                        <li>Casos SEC enforcement 2023-2024</li>
+                    </ul>
+                </div>
+
+                <div class="module-card">
+                    <h4>📚 MÓDULO 7: Propiedad Intelectual en Fintech</h4>
+                    <p style="color: var(--gray); margin-bottom: 15px;"><strong>IP protection en tecnología financiera</strong></p>
+                    <ul class="module-topics">
+                        <li>Patentes de software financiero</li>
+                        <li>Protección de marcas bancarias</li>
+                        <li>Trade secrets en algoritmos y modelos</li>
+                        <li>Licensing de tecnología financiera</li>
+                        <li>Casos de litigio IP en fintech</li>
+                    </ul>
+                </div>
+
+                <div class="module-card">
+                    <h4>📚 MÓDULO 8: Confidencialidad y Protección de Datos</h4>
+                    <p style="color: var(--gray); margin-bottom: 15px;"><strong>Data protection y banking secrecy</strong></p>
+                    <ul class="module-topics">
+                        <li>GDPR y datos financieros</li>
+                        <li>Bank secrecy laws (EE.UU. y Reino Unido)</li>
+                        <li>NDAs en transacciones financieras</li>
+                        <li>Cybersecurity regulations</li>
+                        <li>Casos de data breaches bancarios</li>
+                    </ul>
+                </div>
+
+                <div class="module-card">
+                    <h4>📚 MÓDULO 9: Procedimientos Legales en Finanzas</h4>
+                    <p style="color: var(--gray); margin-bottom: 15px;"><strong>Civil procedure en litigios financieros</strong></p>
+                    <ul class="module-topics">
+                        <li>Procedimientos de cobranza judicial</li>
+                        <li>Discovery en casos financieros</li>
+                        <li>Motions y pleadings en litigios bancarios</li>
+                        <li>Class actions contra instituciones financieras</li>
+                        <li>Lectura de sentencias en casos bancarios</li>
+                    </ul>
+                </div>
+
+                <div class="module-card">
+                    <h4>📚 MÓDULO 10: Derecho Constitucional y Regulación</h4>
+                    <p style="color: var(--gray); margin-bottom: 15px;"><strong>Constitutional law aplicado a finanzas</strong></p>
+                    <ul class="module-topics">
+                        <li>Poderes regulatorios de agencias financieras</li>
+                        <li>Judicial review de regulación bancaria</li>
+                        <li>Due process en enforcement actions</li>
+                        <li>Casos Chevron deference y Loper Bright 2024</li>
+                        <li>Impacto en regulación financiera</li>
+                    </ul>
+                </div>
+
+                <div class="module-card">
+                    <h4>📚 MÓDULO 11: Derecho Administrativo Financiero</h4>
+                    <p style="color: var(--gray); margin-bottom: 15px;"><strong>Administrative law en instituciones financieras</strong></p>
+                    <ul class="module-topics">
+                        <li>Rulemaking de agencias (SEC, FCA, CFTC)</li>
+                        <li>Administrative enforcement procedures</li>
+                        <li>Appeals de decisiones regulatorias</li>
+                        <li>Compliance con regulaciones administrativas</li>
+                        <li>Casos de disputes regulatorias 2023-2024</li>
+                    </ul>
+                </div>
+
+                <div class="module-card">
+                    <h4>📚 MÓDULO 12: Derecho Europeo y Regulación Financiera</h4>
+                    <p style="color: var(--gray); margin-bottom: 15px;"><strong>EU law aplicado al sector financiero</strong></p>
+                    <ul class="module-topics">
+                        <li>MiFID II y regulación de mercados</li>
+                        <li>European Banking Authority (EBA)</li>
+                        <li>Passporting y cross-border banking</li>
+                        <li>Brexit y su impacto en finanzas</li>
+                        <li>Casos CJEU en materia financiera</li>
+                    </ul>
+                </div>
+
+                <div class="module-card">
+                    <h4>📚 MÓDULO 13: Derecho de Competencia Financiera</h4>
+                    <p style="color: var(--gray); margin-bottom: 15px;"><strong>Antitrust y competition law en banca</strong></p>
+                    <ul class="module-topics">
+                        <li>Regulación de fusiones bancarias</li>
+                        <li>Cartels y price-fixing en servicios financieros</li>
+                        <li>Abuse of dominance por instituciones financieras</li>
+                        <li>Merger control y review procedures</li>
+                        <li>Casos de enforcement 2023-2024</li>
+                    </ul>
+                </div>
+
+                <div class="module-card">
+                    <h4>📚 MÓDULO 14: Cumplimiento y Prevención de Lavado</h4>
+                    <p style="color: var(--gray); margin-bottom: 15px;"><strong>AML/KYC y compliance frameworks</strong></p>
+                    <ul class="module-topics">
+                        <li>Bank Secrecy Act y USA PATRIOT Act</li>
+                        <li>Know Your Customer (KYC) procedures</li>
+                        <li>Suspicious Activity Reports (SARs)</li>
+                        <li>FATF recommendations y compliance</li>
+                        <li>Casos de enforcement AML/CFT</li>
+                    </ul>
+                </div>
+
+                <div class="module-card">
+                    <h4>📚 MÓDULO 15: Resolución de Disputas Financieras</h4>
+                    <p style="color: var(--gray); margin-bottom: 15px;"><strong>Arbitration y dispute resolution en finanzas</strong></p>
+                    <ul class="module-topics">
+                        <li>Arbitraje comercial internacional</li>
+                        <li>Cláusulas de arbitraje en contratos financieros</li>
+                        <li>FINRA arbitration y mediation</li>
+                        <li>Cross-border disputes resolution</li>
+                        <li>Casos de arbitraje financiero 2023-2024</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div style="background: white; padding: 40px; border-radius: 15px; box-shadow: 0 4px 20px rgba(0, 61, 165, 0.1); margin-top: 40px;">
+                <h3 style="color: var(--banbajiom-blue); margin-bottom: 20px;">🎯 Metodología Integrada</h3>
+                <p style="font-size: 1.1rem; margin-bottom: 20px;">Cada módulo incluye:</p>
+                <ul style="list-style: none; padding: 0;">
+                    <li style="padding: 10px 0; padding-left: 30px; position: relative;">
+                        <span style="position: absolute; left: 0; color: var(--gold); font-weight: 700;">✅</span>
+                        <strong>Lectura:</strong> Contratos, regulaciones, casos judiciales, reportes financieros
+                    </li>
+                    <li style="padding: 10px 0; padding-left: 30px; position: relative;">
+                        <span style="position: absolute; left: 0; color: var(--gold); font-weight: 700;">✅</span>
+                        <strong>Escritura:</strong> Memorandos, análisis, borradores de contratos, reportes
+                    </li>
+                    <li style="padding: 10px 0; padding-left: 30px; position: relative;">
+                        <span style="position: absolute; left: 0; color: var(--gold); font-weight: 700;">✅</span>
+                        <strong>Vocabulario:</strong> Terminología jurídica, financiera y bancaria especializada
+                    </li>
+                    <li style="padding: 10px 0; padding-left: 30px; position: relative;">
+                        <span style="position: absolute; left: 0; color: var(--gold); font-weight: 700;">✅</span>
+                        <strong>Casos prácticos:</strong> Simulaciones de situaciones reales del sector bancario
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- TAB: BENEFICIOS -->
+        <div id="beneficios" class="tab-content">
+            <h2 style="color: var(--banbajiom-blue); margin-bottom: 30px; font-size: 2rem;">⭐ Beneficios del Programa</h2>
+
+            <div style="background: linear-gradient(135deg, var(--banbajiom-blue), var(--banbajiom-light)); color: white; padding: 40px; border-radius: 15px; margin-bottom: 30px; text-align: center;">
+                <h3 style="font-size: 2rem; margin-bottom: 15px;">Inversión en tu Futuro Profesional</h3>
+                <p style="font-size: 1.2rem;">Este programa está diseñado específicamente para impulsar tu carrera en el sector financiero internacional</p>
+            </div>
+
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 25px; margin-bottom: 40px;">
+                <div style="background: white; padding: 30px; border-radius: 15px; box-shadow: 0 4px 20px rgba(0, 61, 165, 0.1);">
+                    <div style="font-size: 3rem; text-align: center; margin-bottom: 15px;">🎓</div>
+                    <h4 style="color: var(--banbajiom-blue); margin-bottom: 10px; text-align: center;">Certificación Oficial</h4>
+                    <p style="color: var(--gray); text-align: center;">Diploma con firma electrónica (FIEL SAT) y código QR de verificación incluido en el programa</p>
+                </div>
+
+                <div style="background: white; padding: 30px; border-radius: 15px; box-shadow: 0 4px 20px rgba(0, 61, 165, 0.1);">
+                    <div style="font-size: 3rem; text-align: center; margin-bottom: 15px;">⏰</div>
+                    <h4 style="color: var(--banbajiom-blue); margin-bottom: 10px; text-align: center;">Flexibilidad Total</h4>
+                    <p style="color: var(--gray); text-align: center;">Programa de 6 meses mínimo, extensible según las necesidades del grupo y objetivos de aprendizaje</p>
+                </div>
+
+                <div style="background: white; padding: 30px; border-radius: 15px; box-shadow: 0 4px 20px rgba(0, 61, 165, 0.1);">
+                    <div style="font-size: 3rem; text-align: center; margin-bottom: 15px;">👨‍🏫</div>
+                    <h4 style="color: var(--banbajiom-blue); margin-bottom: 10px; text-align: center;">Instructor Experto</h4>
+                    <p style="color: var(--gray); text-align: center;">Maestro con 4 años de experiencia impartiendo el diplomado y especialización en finanzas</p>
+                </div>
+
+                <div style="background: white; padding: 30px; border-radius: 15px; box-shadow: 0 4px 20px rgba(0, 61, 165, 0.1);">
+                    <div style="font-size: 3rem; text-align: center; margin-bottom: 15px;">📚</div>
+                    <h4 style="color: var(--banbajiom-blue); margin-bottom: 10px; text-align: center;">Material Actualizado</h4>
+                    <p style="color: var(--gray); text-align: center;">Casos reales y regulaciones 2023-2024 del sector financiero internacional</p>
+                </div>
+
+                <div style="background: white; padding: 30px; border-radius: 15px; box-shadow: 0 4px 20px rgba(0, 61, 165, 0.1);">
+                    <div style="font-size: 3rem; text-align: center; margin-bottom: 15px;">🎯</div>
+                    <h4 style="color: var(--banbajiom-blue); margin-bottom: 10px; text-align: center;">Enfoque Aplicado</h4>
+                    <p style="color: var(--gray); text-align: center;">Ejercicios prácticos directamente aplicables a tu trabajo en BanBajío</p>
+                </div>
+
+                <div style="background: white; padding: 30px; border-radius: 15px; box-shadow: 0 4px 20px rgba(0, 61, 165, 0.1);">
+                    <div style="font-size: 3rem; text-align: center; margin-bottom: 15px;">🌐</div>
+                    <h4 style="color: var(--banbajiom-blue); margin-bottom: 10px; text-align: center;">Visión Global</h4>
+                    <p style="color: var(--gray); text-align: center;">Comprensión de sistemas legales de EE.UU., Reino Unido y UE aplicados a finanzas</p>
+                </div>
+            </div>
+
+            <div style="background: white; padding: 40px; border-radius: 15px; box-shadow: 0 4px 20px rgba(0, 61, 165, 0.1);">
+                <h3 style="color: var(--banbajiom-blue); margin-bottom: 25px; font-size: 1.6rem;">🚀 Impacto en tu Carrera</h3>
+                <ul style="list-style: none; padding: 0;">
+                    <li style="padding: 12px 0; border-bottom: 1px solid #E1E8E5;">
+                        ✓ <strong>Comunicación efectiva</strong> con clientes y contrapartes internacionales
+                    </li>
+                    <li style="padding: 12px 0; border-bottom: 1px solid #E1E8E5;">
+                        ✓ <strong>Comprensión profunda</strong> de contratos y documentos financieros en inglés
+                    </li>
+                    <li style="padding: 12px 0; border-bottom: 1px solid #E1E8E5;">
+                        ✓ <strong>Ventaja competitiva</strong> en el mercado laboral financiero internacional
+                    </li>
+                    <li style="padding: 12px 0; border-bottom: 1px solid #E1E8E5;">
+                        ✓ <strong>Preparación</strong> para transacciones transfronterizas
+                    </li>
+                    <li style="padding: 12px 0; border-bottom: 1px solid #E1E8E5;">
+                        ✓ <strong>Capacidad</strong> para analizar regulación internacional
+                    </li>
+                    <li style="padding: 12px 0;">
+                        ✓ <strong>Credibilidad profesional</strong> con certificación reconocida
+                    </li>
+                </ul>
+            </div>
+
+            <div style="background: linear-gradient(135deg, var(--banbajiom-blue), var(--banbajiom-light)); color: white; padding: 40px; border-radius: 15px; margin-top: 40px; text-align: center;">
+                <h3 style="font-size: 1.8rem; margin-bottom: 20px; color: var(--gold);">📋 Información de Inversión</h3>
+                <div style="font-size: 2.5rem; font-weight: 700; margin: 20px 0;">
+                    $2,000 MXN/mes por alumno
+                </div>
+                <div style="background: rgba(255,255,255,0.1); padding: 25px; border-radius: 10px; margin: 25px auto; max-width: 600px;">
+                    <p style="font-size: 1.2rem; margin-bottom: 15px; font-weight: 600;">
+                        Duración del programa: 6 meses mínimo
+                    </p>
+                    <p style="font-size: 1.5rem; font-weight: 700; color: var(--gold);">
+                        Inversión total: $12,000 MXN por alumno
+                    </p>
+                    <p style="font-size: 0.95rem; margin-top: 10px; opacity: 0.9;">
+                        (Basado en duración mínima de 6 meses)
+                    </p>
+                </div>
+                <p style="font-size: 1.1rem; margin-bottom: 15px;">
+                    ✅ Certificación oficial incluida<br>
+                    ✅ Material didáctico incluido<br>
+                    ✅ Acceso a plataforma 24/7<br>
+                    ✅ Seguimiento personalizado
+                </p>
+                <p style="font-size: 0.95rem; opacity: 0.9; margin-top: 20px;">
+                    *El programa puede extenderse según necesidades del grupo.<br>
+                    Descuentos disponibles para grupos corporativos.
+                </p>
+                <a href="https://wa.me/529982570828?text=Hola,%20quiero%20información%20sobre%20el%20programa%20de%20Inglés%20Jurídico%20para%20BanBajío%20Cancún%20($2,000%20MXN/mes)" class="btn btn-secondary" style="margin-top: 25px; padding: 15px 40px; font-size: 1.1rem;">
+                    📱 Solicitar Información
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA FINAL -->
+    <section style="background: linear-gradient(135deg, var(--banbajiom-blue) 0%, var(--banbajiom-light) 100%); padding: 60px 20px; text-align: center; color: white; margin: 60px 0 0 0;">
+        <h2 style="font-size: 2.5rem; color: white; margin-bottom: 20px;">🚀 Impulsa tu Carrera en Finanzas Internacionales</h2>
+        <p style="font-size: 1.2rem; max-width: 700px; margin: 0 auto 30px;">
+            Únete al programa de Inglés Jurídico especializado para el sector financiero de BanBajío en Cancún.
+        </p>
+        <a href="https://wa.me/529982570828?text=Hola,%20quiero%20información%20sobre%20el%20programa%20de%20Inglés%20Jurídico%20para%20BanBajío%20Cancún" class="btn btn-secondary" style="padding: 15px 40px; font-size: 1.1rem; background: white; color: var(--banbajiom-blue);">
+            📱 Contactar Ahora
+        </a>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-section">
+                <img src="https://i.postimg.cc/tCVcj2Sw/Captura-de-pantalla-2025-10-04-a-la-s-2-33-47-p-m.png" alt="Logo" style="height: 60px; margin-bottom: 20px;">
+                <p>Formación jurídica especializada para profesionales.</p>
+                <p style="margin-top: 15px; opacity: 0.8;">
+                    © 2025 Empírica Legal Lab<br>
+                    Todos los derechos reservados
+                </p>
+            </div>
+
+            <div class="footer-section">
+                <h4>Contacto</h4>
+                <p>📱 WhatsApp: +52 998 257 0828</p>
+                <p>✉️ Email: jorge_clemente@empirica.mx</p>
+                <p style="margin-top: 15px;">
+                    <strong>Horario de Atención:</strong><br>
+                    Lunes a Viernes: 9:00 - 18:00 hrs<br>
+                    Sábados: 9:00 - 14:00 hrs
+                </p>
+            </div>
+
+            <div class="footer-section">
+                <h4>Síguenos</h4>
+                <div class="social-links" style="display: flex; gap: 15px; font-size: 2rem;">
+                    <a href="https://www.tiktok.com/@jorchcm0" target="_blank" title="TikTok">🎵</a>
+                    <a href="https://www.youtube.com/@klementeh" target="_blank" title="YouTube">▶️</a>
+                    <a href="https://www.linkedin.com/in/jorge-israel-c/" target="_blank" title="LinkedIn">💼</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <p>Programa especializado para BanBajío Cancún, Quintana Roo</p>
+        </div>
+    </footer>
+
+    <!-- BOTÓN FLOTANTE WHATSAPP -->
+    <a href="https://wa.me/529982570828?text=Hola,%20quiero%20información%20sobre%20el%20programa%20de%20Inglés%20Jurídico%20para%20BanBajío%20Cancún" class="whatsapp-float" target="_blank" title="Contáctanos por WhatsApp">
+        📱
+    </a>
+
+    <!-- SCRIPTS -->
+    <script>
+        function openTab(evt, tabName) {
+            const tabContents = document.getElementsByClassName('tab-content');
+            for (let i = 0; i < tabContents.length; i++) {
+                tabContents[i].classList.remove('active');
+            }
+
+            const tabButtons = document.getElementsByClassName('tab-btn');
+            for (let i = 0; i < tabButtons.length; i++) {
+                tabButtons[i].classList.remove('active');
+            }
+
+            document.getElementById(tabName).classList.add('active');
+            evt.currentTarget.classList.add('active');
+        }
+    </script>
+
+</body>
+</html>
