@@ -30,20 +30,16 @@ function setupSheet() {
   // 2. Crear hoja de Logs
   createLogsSheet(ss);
 
-  // 3. Mostrar mensaje de éxito
-  SpreadsheetApp.getUi().alert(
-    '✅ Configuración Completa',
-    'El Google Sheet ha sido configurado correctamente.\n\n' +
-    '✓ Hoja "Compradores" creada\n' +
-    '✓ Hoja "Logs" creada\n\n' +
-    'Ahora puedes:\n' +
-    '1. Agregar usuarios manualmente en "Compradores"\n' +
-    '2. O usar la función agregarUsuarioPrueba() para testing\n\n' +
-    'Ve a Extensiones > Apps Script > agregarUsuarioPrueba para agregar un usuario de prueba.',
-    SpreadsheetApp.getUi().ButtonSet.OK
-  );
-
+  // 3. Mensaje de éxito en consola
   console.log('✅ Configuración completada exitosamente');
+  console.log('');
+  console.log('📋 SIGUIENTE PASO:');
+  console.log('1. Cierra esta pestaña y vuelve a tu Google Sheet');
+  console.log('2. Recarga la página (F5 o Cmd+R)');
+  console.log('3. Verás un nuevo menú "🎓 Empírica Legal Lab"');
+  console.log('4. Desde ese menú puedes agregar usuarios de prueba');
+  console.log('');
+  console.log('O ejecuta la función: agregarUsuarioPrueba()');
 }
 
 /**
@@ -147,29 +143,20 @@ function createLogsSheet(ss) {
 }
 
 /**
- * 👤 AGREGAR USUARIO DE PRUEBA
- * Ejecuta esta función para agregar tu email con acceso a ambos cursos
+ * 👤 AGREGAR USUARIO DE PRUEBA - Versión Simple
+ * ⚠️ INSTRUCCIONES: Edita la línea que dice 'TU_EMAIL_AQUI' con tu email real
+ * Luego ejecuta esta función desde el editor
  */
 function agregarUsuarioPrueba() {
-  const ui = SpreadsheetApp.getUi();
-
-  // Pedir el email del usuario
-  const response = ui.prompt(
-    '👤 Agregar Usuario de Prueba',
-    'Ingresa tu email para tener acceso a ambos cursos:\n\n(Este email debe ser el mismo que usas en el sitio web)',
-    ui.ButtonSet.OK_CANCEL
-  );
-
-  // Verificar si el usuario canceló
-  if (response.getSelectedButton() !== ui.Button.OK) {
-    return;
-  }
-
-  const email = response.getResponseText().trim();
+  // ⬇️ EDITA ESTA LÍNEA CON TU EMAIL ⬇️
+  const email = 'TU_EMAIL_AQUI@ejemplo.com';
+  // ⬆️ EDITA ESTA LÍNEA CON TU EMAIL ⬆️
 
   // Validar email
-  if (!email || !email.includes('@')) {
-    ui.alert('❌ Error', 'Por favor ingresa un email válido.', ui.ButtonSet.OK);
+  if (email === 'TU_EMAIL_AQUI@ejemplo.com' || !email.includes('@')) {
+    console.error('❌ ERROR: Debes editar la función y poner tu email real');
+    console.error('Busca la línea que dice: const email = "TU_EMAIL_AQUI@ejemplo.com"');
+    console.error('Y cámbiala por tu email real, ejemplo: const email = "jorge@gmail.com"');
     return;
   }
 
@@ -178,7 +165,7 @@ function agregarUsuarioPrueba() {
   const sheet = ss.getSheetByName('Compradores');
 
   if (!sheet) {
-    ui.alert('❌ Error', 'Primero debes ejecutar la función setupSheet()', ui.ButtonSet.OK);
+    console.error('❌ ERROR: Primero debes ejecutar la función setupSheet()');
     return;
   }
 
@@ -204,22 +191,102 @@ function agregarUsuarioPrueba() {
     'activo'
   ]);
 
-  ui.alert(
-    '✅ Usuario Agregado',
-    'Se ha agregado acceso completo para:\n\n' +
-    '📧 Email: ' + email + '\n\n' +
-    '✓ Derecho para No Abogados\n' +
-    '✓ Legal English\n\n' +
-    '⚠️ IMPORTANTE:\n' +
-    'Asegúrate de usar este mismo email cuando te registres en el sitio web.\n\n' +
-    'Para configurarlo manualmente en el navegador:\n' +
-    '1. Abre la consola del navegador (F12)\n' +
-    '2. Ejecuta:\n' +
-    'localStorage.setItem(\'empirica_user_email\', \'' + email + '\')',
-    ui.ButtonSet.OK
-  );
+  console.log('✅ Usuario de prueba agregado exitosamente:');
+  console.log('');
+  console.log('📧 Email: ' + email);
+  console.log('✓ Derecho para No Abogados');
+  console.log('✓ Legal English');
+  console.log('');
+  console.log('⚠️ IMPORTANTE:');
+  console.log('Asegúrate de usar este mismo email en el sitio web.');
+  console.log('');
+  console.log('Para configurarlo en el navegador:');
+  console.log('1. Abre la consola del navegador (F12)');
+  console.log('2. Ejecuta este comando:');
+  console.log('   localStorage.setItem("empirica_user_email", "' + email + '")');
+  console.log('');
+  console.log('3. Recarga la página del curso');
+}
 
-  console.log('✅ Usuario de prueba agregado:', email);
+/**
+ * 👤 AGREGAR USUARIO DE PRUEBA - Versión con UI (solo desde menú)
+ * Esta versión solo funciona cuando se ejecuta desde el menú del Sheet
+ */
+function agregarUsuarioPruebaConUI() {
+  try {
+    const ui = SpreadsheetApp.getUi();
+
+    // Pedir el email del usuario
+    const response = ui.prompt(
+      '👤 Agregar Usuario de Prueba',
+      'Ingresa tu email para tener acceso a ambos cursos:\n\n(Este email debe ser el mismo que usas en el sitio web)',
+      ui.ButtonSet.OK_CANCEL
+    );
+
+    // Verificar si el usuario canceló
+    if (response.getSelectedButton() !== ui.Button.OK) {
+      return;
+    }
+
+    const email = response.getResponseText().trim();
+
+    // Validar email
+    if (!email || !email.includes('@')) {
+      ui.alert('❌ Error', 'Por favor ingresa un email válido.', ui.ButtonSet.OK);
+      return;
+    }
+
+    // Agregar acceso a ambos cursos
+    const ss = SpreadsheetApp.getActiveSpreadsheet();
+    const sheet = ss.getSheetByName('Compradores');
+
+    if (!sheet) {
+      ui.alert('❌ Error', 'Primero debes ejecutar la función setupSheet()', ui.ButtonSet.OK);
+      return;
+    }
+
+    const fecha = new Date();
+
+    // Agregar Derecho para No Abogados
+    sheet.appendRow([
+      email,
+      'derecho-no-abogados',
+      Utilities.formatDate(fecha, Session.getScriptTimeZone(), 'yyyy-MM-dd'),
+      0,
+      'TEST-MANUAL-' + fecha.getTime(),
+      'activo'
+    ]);
+
+    // Agregar Legal English
+    sheet.appendRow([
+      email,
+      'legal-english',
+      Utilities.formatDate(fecha, Session.getScriptTimeZone(), 'yyyy-MM-dd'),
+      0,
+      'TEST-MANUAL-' + fecha.getTime(),
+      'activo'
+    ]);
+
+    ui.alert(
+      '✅ Usuario Agregado',
+      'Se ha agregado acceso completo para:\n\n' +
+      '📧 Email: ' + email + '\n\n' +
+      '✓ Derecho para No Abogados\n' +
+      '✓ Legal English\n\n' +
+      '⚠️ IMPORTANTE:\n' +
+      'Asegúrate de usar este mismo email cuando te registres en el sitio web.\n\n' +
+      'Para configurarlo manualmente en el navegador:\n' +
+      '1. Abre la consola del navegador (F12)\n' +
+      '2. Ejecuta:\n' +
+      'localStorage.setItem(\'empirica_user_email\', \'' + email + '\')',
+      ui.ButtonSet.OK
+    );
+
+    console.log('✅ Usuario de prueba agregado:', email);
+  } catch (e) {
+    console.error('Esta función solo puede ejecutarse desde el menú del Google Sheet');
+    console.error('Usa la función agregarUsuarioPrueba() desde el editor en su lugar');
+  }
 }
 
 /**
@@ -273,7 +340,7 @@ function onOpen() {
   ui.createMenu('🎓 Empírica Legal Lab')
     .addItem('⚙️ Configurar Sheet', 'setupSheet')
     .addSeparator()
-    .addItem('👤 Agregar Usuario de Prueba', 'agregarUsuarioPrueba')
+    .addItem('👤 Agregar Usuario de Prueba', 'agregarUsuarioPruebaConUI')
     .addSeparator()
     .addItem('🗑️ Resetear Todo', 'resetearTodo')
     .addToUi();
