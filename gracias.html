@@ -237,9 +237,19 @@
     </div>
 
     <script>
-        // Detectar curso desde URL
+        // Detectar curso y email desde URL
         const urlParams = new URLSearchParams(window.location.search);
         const curso = urlParams.get('curso');
+        const customerEmail = urlParams.get('email') || urlParams.get('customer_email');
+
+        // 🔐 GUARDAR EMAIL AUTOMÁTICAMENTE DESPUÉS DEL PAGO
+        if (customerEmail) {
+            localStorage.setItem('empirica_user_email', customerEmail);
+            localStorage.setItem('empirica_has_access_' + curso, 'true');
+            localStorage.setItem('empirica_last_check_' + curso, Date.now());
+            console.log('✅ Email guardado automáticamente:', customerEmail);
+            console.log('✅ Acceso concedido para:', curso);
+        }
 
         let cursoNombre = 'tu curso';
         let cursoPrecio = '';
