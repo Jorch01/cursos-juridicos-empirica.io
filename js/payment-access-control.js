@@ -15,10 +15,10 @@
         // URL del Google Apps Script Web App (lo obtendrás después de desplegarlo)
         GOOGLE_SCRIPT_URL: 'TU_URL_DE_GOOGLE_APPS_SCRIPT_AQUI',
 
-        // Links de pago de Stripe (los crearás en Stripe)
+        // Links de pago de Stripe
         STRIPE_LINKS: {
-            'derecho-no-abogados': 'https://buy.stripe.com/TU_LINK_DERECHO',
-            'legal-english': 'https://buy.stripe.com/TU_LINK_LEGAL_ENGLISH'
+            'derecho-no-abogados': 'https://buy.stripe.com/00wfZi0mj12v18L02k7EQ00',
+            'legal-english': 'https://buy.stripe.com/14AeVe3yvbH95p18yQ7EQ01'
         },
 
         // Identificador del curso actual (se detecta automáticamente)
