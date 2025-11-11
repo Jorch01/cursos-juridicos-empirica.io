@@ -161,11 +161,12 @@
             return true;
         }
 
-        // Obtener email del usuario registrado
+        // Obtener email del usuario (guardado después del pago)
         const userEmail = localStorage.getItem(CONFIG.STORAGE_KEYS.email);
 
+        // Si no hay email, el usuario no ha pagado
         if (!userEmail) {
-            console.log('Usuario no registrado');
+            console.log('Sin email guardado - Usuario debe pagar');
             return false;
         }
 
