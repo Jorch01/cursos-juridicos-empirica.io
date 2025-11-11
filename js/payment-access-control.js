@@ -1,0 +1,341 @@
+/**
+ * ============================================
+ * SISTEMA DE CONTROL DE ACCESO Y PAGOS
+ * Empírica Legal Lab - Stripe + Google Sheets
+ * ============================================
+ */
+
+(function() {
+    'use strict';
+
+    // ═══════════════════════════════════════
+    // ⚙️ CONFIGURACIÓN
+    // ═══════════════════════════════════════
+    const CONFIG = {
+        // URL del Google Apps Script Web App (lo obtendrás después de desplegarlo)
+        GOOGLE_SCRIPT_URL: 'TU_URL_DE_GOOGLE_APPS_SCRIPT_AQUI',
+
+        // Links de pago de Stripe (los crearás en Stripe)
+        STRIPE_LINKS: {
+            'derecho-no-abogados': 'https://buy.stripe.com/TU_LINK_DERECHO',
+            'legal-english': 'https://buy.stripe.com/TU_LINK_LEGAL_ENGLISH'
+        },
+
+        // Identificador del curso actual (se detecta automáticamente)
+        currentCourse: null,
+
+        // Storage keys
+        STORAGE_KEYS: {
+            email: 'empirica_user_email',
+            hasAccess: 'empirica_has_access_',
+            lastCheck: 'empirica_last_check_'
+        }
+    };
+
+    // ═══════════════════════════════════════
+    // 🔍 DETECTAR CURSO ACTUAL
+    // ═══════════════════════════════════════
+    function detectCurrentCourse() {
+        const path = window.location.pathname;
+
+        if (path.includes('derecho-no-abogados')) {
+            return 'derecho-no-abogados';
+        } else if (path.includes('legal-english')) {
+            return 'legal-english';
+        }
+        return null;
+    }
+
+    // ═══════════════════════════════════════
+    // 📧 VERIFICAR ACCESO EN GOOGLE SHEETS
+    // ═══════════════════════════════════════
+    async function checkAccessInDatabase(email, course) {
+        try {
+            const url = `${CONFIG.GOOGLE_SCRIPT_URL}?action=checkAccess&email=${encodeURIComponent(email)}&course=${course}`;
+
+            const response = await fetch(url);
+            const data = await response.json();
+
+            return data.hasAccess || false;
+        } catch (error) {
+            console.error('Error verificando acceso:', error);
+            return false;
+        }
+    }
+
+    // ═══════════════════════════════════════
+    // 💾 GUARDAR ESTADO DE ACCESO LOCAL
+    // ═══════════════════════════════════════
+    function saveAccessState(course, hasAccess) {
+        localStorage.setItem(CONFIG.STORAGE_KEYS.hasAccess + course, hasAccess);
+        localStorage.setItem(CONFIG.STORAGE_KEYS.lastCheck + course, Date.now());
+    }
+
+    // ═══════════════════════════════════════
+    // ⏰ VERIFICAR SI NECESITA REVALIDAR
+    // ═══════════════════════════════════════
+    function needsRevalidation(course) {
+        const lastCheck = localStorage.getItem(CONFIG.STORAGE_KEYS.lastCheck + course);
+        if (!lastCheck) return true;
+
+        // Revalidar cada 24 horas
+        const ONE_DAY = 24 * 60 * 60 * 1000;
+        return (Date.now() - parseInt(lastCheck)) > ONE_DAY;
+    }
+
+    // ═══════════════════════════════════════
+    // 🔐 VERIFICAR ACCESO PRINCIPAL
+    // ═══════════════════════════════════════
+    async function verifyAccess() {
+        const course = detectCurrentCourse();
+
+        // Si no es una página de curso, no hacer nada
+        if (!course) {
+            console.log('No es una página de curso, acceso libre');
+            return true;
+        }
+
+        CONFIG.currentCourse = course;
+
+        // Obtener email del usuario registrado
+        const userEmail = localStorage.getItem(CONFIG.STORAGE_KEYS.email);
+
+        if (!userEmail) {
+            console.log('Usuario no registrado');
+            return false;
+        }
+
+        // Verificar si tenemos un estado de acceso válido en cache
+        const cachedAccess = localStorage.getItem(CONFIG.STORAGE_KEYS.hasAccess + course);
+
+        if (cachedAccess === 'true' && !needsRevalidation(course)) {
+            console.log('Acceso verificado desde cache');
+            return true;
+        }
+
+        // Verificar en la base de datos
+        console.log('Verificando acceso en base de datos...');
+        const hasAccess = await checkAccessInDatabase(userEmail, course);
+
+        // Guardar resultado
+        saveAccessState(course, hasAccess);
+
+        return hasAccess;
+    }
+
+    // ═══════════════════════════════════════
+    // 💳 MOSTRAR MODAL DE PAGO
+    // ═══════════════════════════════════════
+    function showPaymentModal() {
+        const course = CONFIG.currentCourse;
+        const stripeLink = CONFIG.STRIPE_LINKS[course];
+
+        const courseName = course === 'derecho-no-abogados'
+            ? 'Derecho para No Abogados'
+            : 'Legal English: Anglo-American Law in Action';
+
+        const price = course === 'derecho-no-abogados' ? '$500 MXN' : '$5,000 MXN';
+
+        const modalHTML = `
+            <div id="paymentModal" style="
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background: rgba(27, 44, 39, 0.95);
+                backdrop-filter: blur(10px);
+                z-index: 999999;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                animation: fadeIn 0.3s ease;
+            ">
+                <div style="
+                    background: white;
+                    border-radius: 24px;
+                    max-width: 600px;
+                    width: 90%;
+                    max-height: 90vh;
+                    overflow-y: auto;
+                    box-shadow: 0 25px 50px rgba(0, 0, 0, 0.5);
+                    animation: slideUp 0.4s ease;
+                ">
+                    <!-- Header -->
+                    <div style="
+                        background: linear-gradient(135deg, #1B2C27 0%, #2D4A3E 100%);
+                        color: white;
+                        padding: 40px 30px;
+                        text-align: center;
+                        border-radius: 24px 24px 0 0;
+                    ">
+                        <div style="font-size: 4rem; margin-bottom: 15px;">🔒</div>
+                        <h2 style="font-size: 2rem; margin: 0 0 10px 0; font-weight: 700;">
+                            Acceso Restringido
+                        </h2>
+                        <p style="margin: 0; opacity: 0.9; font-size: 1.1rem;">
+                            Este contenido está disponible solo para estudiantes inscritos
+                        </p>
+                    </div>
+
+                    <!-- Contenido -->
+                    <div style="padding: 40px 35px;">
+                        <div style="
+                            background: #F0FDF4;
+                            border-left: 4px solid #10B981;
+                            padding: 20px;
+                            border-radius: 10px;
+                            margin-bottom: 30px;
+                        ">
+                            <h3 style="color: #1B2C27; margin: 0 0 15px 0; font-size: 1.4rem;">
+                                📚 ${courseName}
+                            </h3>
+                            <p style="margin: 0 0 10px 0; color: #2C3E50; font-size: 1.1rem;">
+                                <strong>Inversión:</strong> ${price}
+                            </p>
+                            <p style="margin: 0; color: #6C757D; font-size: 0.95rem;">
+                                Incluye certificado oficial con firma electrónica SAT
+                            </p>
+                        </div>
+
+                        <div style="margin-bottom: 30px;">
+                            <h4 style="color: #1B2C27; margin-bottom: 15px; font-size: 1.2rem;">
+                                ✨ Al inscribirte obtendrás:
+                            </h4>
+                            <ul style="list-style: none; padding: 0; margin: 0;">
+                                <li style="padding: 8px 0; padding-left: 30px; position: relative; color: #2C3E50;">
+                                    <span style="position: absolute; left: 0; color: #10B981;">✓</span>
+                                    Acceso completo e ilimitado al curso
+                                </li>
+                                <li style="padding: 8px 0; padding-left: 30px; position: relative; color: #2C3E50;">
+                                    <span style="position: absolute; left: 0; color: #10B981;">✓</span>
+                                    Todos los videos, ejercicios y materiales
+                                </li>
+                                <li style="padding: 8px 0; padding-left: 30px; position: relative; color: #2C3E50;">
+                                    <span style="position: absolute; left: 0; color: #10B981;">✓</span>
+                                    Certificado/Diploma oficial incluido
+                                </li>
+                                <li style="padding: 8px 0; padding-left: 30px; position: relative; color: #2C3E50;">
+                                    <span style="position: absolute; left: 0; color: #10B981;">✓</span>
+                                    Soporte por WhatsApp
+                                </li>
+                            </ul>
+                        </div>
+
+                        <!-- Botón de pago -->
+                        <a href="${stripeLink}" target="_blank" style="
+                            display: block;
+                            width: 100%;
+                            padding: 18px;
+                            background: linear-gradient(135deg, #10B981 0%, #059669 100%);
+                            color: white;
+                            border: none;
+                            border-radius: 12px;
+                            font-size: 1.2rem;
+                            font-weight: 700;
+                            text-decoration: none;
+                            text-align: center;
+                            cursor: pointer;
+                            transition: all 0.3s ease;
+                            margin-bottom: 15px;
+                        " onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 8px 25px rgba(16, 185, 129, 0.3)'"
+                           onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='none'">
+                            💳 Inscribirme Ahora - ${price}
+                        </a>
+
+                        <!-- Botón de WhatsApp -->
+                        <a href="https://wa.me/529982570828?text=Hola,%20tengo%20preguntas%20sobre%20el%20curso%20de%20${encodeURIComponent(courseName)}"
+                           target="_blank" style="
+                            display: block;
+                            width: 100%;
+                            padding: 15px;
+                            background: white;
+                            color: #1B2C27;
+                            border: 2px solid #E1E8E5;
+                            border-radius: 12px;
+                            font-size: 1rem;
+                            font-weight: 600;
+                            text-decoration: none;
+                            text-align: center;
+                            cursor: pointer;
+                            transition: all 0.3s ease;
+                        " onmouseover="this.style.borderColor='#10B981'; this.style.color='#10B981'"
+                           onmouseout="this.style.borderColor='#E1E8E5'; this.style.color='#1B2C27'">
+                            📱 Contactar por WhatsApp
+                        </a>
+
+                        <p style="text-align: center; margin-top: 20px; font-size: 0.9rem; color: #6C757D;">
+                            🔒 Pago seguro procesado por Stripe
+                        </p>
+                    </div>
+                </div>
+            </div>
+        `;
+
+        document.body.insertAdjacentHTML('beforeend', modalHTML);
+        document.body.style.overflow = 'hidden';
+    }
+
+    // ═══════════════════════════════════════
+    // 🚫 BLOQUEAR CONTENIDO PREMIUM
+    // ═══════════════════════════════════════
+    function blockPremiumContent() {
+        // Bloquear videos
+        const videos = document.querySelectorAll('iframe, video');
+        videos.forEach(video => {
+            video.style.filter = 'blur(10px)';
+            video.style.pointerEvents = 'none';
+        });
+
+        // Bloquear enlaces a ejercicios y materiales
+        const restrictedLinks = document.querySelectorAll('a[href*="video.html"], a[href*="ejercicios.html"], a[href*="presentacion.html"]');
+        restrictedLinks.forEach(link => {
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+                showPaymentModal();
+            });
+        });
+
+        // Mostrar modal automáticamente
+        setTimeout(() => {
+            showPaymentModal();
+        }, 2000);
+    }
+
+    // ═══════════════════════════════════════
+    // 🎬 INICIALIZACIÓN
+    // ═══════════════════════════════════════
+    async function init() {
+        console.log('🔐 Iniciando sistema de control de acceso...');
+
+        const hasAccess = await verifyAccess();
+
+        if (!hasAccess && CONFIG.currentCourse) {
+            console.log('❌ Acceso denegado - Bloqueando contenido premium');
+            blockPremiumContent();
+        } else {
+            console.log('✅ Acceso concedido');
+        }
+    }
+
+    // ═══════════════════════════════════════
+    // 🚀 EJECUTAR AL CARGAR LA PÁGINA
+    // ═══════════════════════════════════════
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', init);
+    } else {
+        init();
+    }
+
+    // Exponer función para forzar verificación (útil para debugging)
+    window.EmpricaAccess = {
+        recheck: init,
+        clearCache: function(course) {
+            if (!course) course = CONFIG.currentCourse;
+            localStorage.removeItem(CONFIG.STORAGE_KEYS.hasAccess + course);
+            localStorage.removeItem(CONFIG.STORAGE_KEYS.lastCheck + course);
+            console.log('Cache limpiado para:', course);
+        }
+    };
+
+})();

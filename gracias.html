@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>¡Gracias por tu inscripción! | Empírica Legal Lab</title>
+    <meta name="description" content="Gracias por inscribirte a nuestros cursos profesionales de derecho">
+    <meta name="robots" content="noindex, nofollow">
+    <link rel="stylesheet" href="css/styles.css">
+
+    <style>
+        body {
+            background: linear-gradient(135deg, #F0FDF4 0%, #DCFCE7 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .thank-you-container {
+            max-width: 800px;
+            width: 100%;
+            padding: 60px 40px;
+            text-align: center;
+            background: white;
+            border-radius: 24px;
+            box-shadow: 0 20px 60px rgba(27, 44, 39, 0.15);
+        }
+
+        .thank-you-icon {
+            font-size: 6rem;
+            margin-bottom: 20px;
+            animation: bounce 1s ease infinite;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
+        }
+
+        .thank-you-title {
+            color: #1B2C27;
+            font-size: 2.8rem;
+            margin-bottom: 20px;
+            font-weight: 700;
+        }
+
+        .thank-you-message {
+            color: #6C757D;
+            font-size: 1.3rem;
+            line-height: 1.8;
+            margin-bottom: 40px;
+        }
+
+        .course-badge {
+            display: inline-block;
+            background: linear-gradient(135deg, #10B981, #059669);
+            color: white;
+            padding: 15px 30px;
+            border-radius: 50px;
+            font-size: 1.2rem;
+            font-weight: 700;
+            margin: 20px 0;
+        }
+
+        .next-steps {
+            background: linear-gradient(135deg, #F0FDF4, #DCFCE7);
+            padding: 35px;
+            border-radius: 20px;
+            border-left: 6px solid #10B981;
+            text-align: left;
+            margin: 40px 0;
+        }
+
+        .next-steps h3 {
+            color: #1B2C27;
+            margin-bottom: 25px;
+            font-size: 1.6rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .next-steps ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .next-steps li {
+            padding: 15px 0;
+            padding-left: 40px;
+            position: relative;
+            color: #2C3E50;
+            font-size: 1.1rem;
+        }
+
+        .next-steps li:before {
+            content: '✓';
+            position: absolute;
+            left: 0;
+            color: #10B981;
+            font-weight: bold;
+            font-size: 1.5rem;
+            width: 30px;
+            height: 30px;
+            background: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 2px 8px rgba(16, 185, 129, 0.3);
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            margin-top: 40px;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 16px 35px;
+            font-size: 1.1rem;
+            border-radius: 12px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #1B2C27 0%, #2D4A3E 100%);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(27, 44, 39, 0.3);
+        }
+
+        .btn-secondary {
+            background: white;
+            color: #1B2C27;
+            border: 2px solid #E1E8E5;
+        }
+
+        .btn-secondary:hover {
+            border-color: #10B981;
+            color: #10B981;
+            transform: translateY(-3px);
+        }
+
+        .support-note {
+            margin-top: 50px;
+            padding-top: 30px;
+            border-top: 2px solid #E1E8E5;
+            color: #6C757D;
+            font-size: 1rem;
+            line-height: 1.6;
+        }
+
+        .support-note strong {
+            color: #1B2C27;
+        }
+
+        @media (max-width: 768px) {
+            .thank-you-container {
+                padding: 40px 25px;
+            }
+
+            .thank-you-title {
+                font-size: 2rem;
+            }
+
+            .thank-you-message {
+                font-size: 1.1rem;
+            }
+
+            .action-buttons {
+                flex-direction: column;
+            }
+
+            .btn {
+                width: 100%;
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="thank-you-container">
+        <div class="thank-you-icon">🎉</div>
+        <h1 class="thank-you-title">¡Gracias por tu inscripción!</h1>
+
+        <div id="courseInfo"></div>
+
+        <p class="thank-you-message">
+            Tu pago ha sido procesado exitosamente. En los próximos minutos recibirás un email de confirmación con todos los detalles de acceso a tu curso.
+        </p>
+
+        <div class="next-steps">
+            <h3>📋 Próximos Pasos</h3>
+            <ul>
+                <li><strong>Revisa tu email</strong> para confirmar la inscripción y obtener información adicional</li>
+                <li><strong>Ya tienes acceso completo</strong> al curso con el email que usaste al registrarte</li>
+                <li><strong>Guarda tu email</strong> de registro - lo necesitarás para acceder al curso</li>
+                <li><strong>Explora el contenido</strong> a tu propio ritmo desde cualquier dispositivo</li>
+                <li><strong>Contacta soporte</strong> si tienes alguna duda o necesitas ayuda</li>
+            </ul>
+        </div>
+
+        <div class="action-buttons">
+            <a href="index.html" class="btn btn-secondary">
+                <span>🏠</span>
+                <span>Volver al Inicio</span>
+            </a>
+            <a id="courseLink" href="index.html" class="btn btn-primary">
+                <span>🎓</span>
+                <span>Ir a Mi Curso</span>
+            </a>
+        </div>
+
+        <div class="support-note">
+            <p>
+                <strong>¿No recibiste el email de confirmación?</strong><br>
+                Revisa tu carpeta de spam o correo no deseado. Si aún no lo encuentras en los próximos 10 minutos, contáctanos por WhatsApp y te ayudaremos de inmediato.
+            </p>
+            <p style="margin-top: 15px;">
+                📱 <strong>WhatsApp:</strong> <a href="https://wa.me/529982570828?text=Hola,%20acabo%20de%20inscribirme%20pero%20no%20recibí%20el%20email%20de%20confirmación" style="color: #10B981; text-decoration: underline;">+52 998 257 0828</a><br>
+                ✉️ <strong>Email:</strong> <a href="mailto:jorge_clemente@empirica.mx" style="color: #10B981; text-decoration: underline;">jorge_clemente@empirica.mx</a>
+            </p>
+        </div>
+    </div>
+
+    <script>
+        // Detectar curso desde URL
+        const urlParams = new URLSearchParams(window.location.search);
+        const curso = urlParams.get('curso');
+
+        let cursoNombre = 'tu curso';
+        let cursoPrecio = '';
+        let cursoUrl = 'index.html';
+
+        // Configurar según el curso
+        if (curso === 'derecho-no-abogados') {
+            cursoNombre = 'Derecho para No Abogados';
+            cursoPrecio = '$500 MXN';
+            cursoUrl = 'cursos/derecho-no-abogados/index.html';
+
+            document.getElementById('courseInfo').innerHTML = `
+                <div class="course-badge">
+                    ⚖️ ${cursoNombre}
+                </div>
+                <p style="color: #059669; font-size: 1.2rem; font-weight: 600; margin: 20px 0;">
+                    Inversión: ${cursoPrecio} (incluye certificado oficial SAT)
+                </p>
+            `;
+
+        } else if (curso === 'legal-english') {
+            cursoNombre = 'Legal English: Anglo-American Law in Action';
+            cursoPrecio = '$5,000 MXN';
+            cursoUrl = 'cursos/legal-english/index.html';
+
+            document.getElementById('courseInfo').innerHTML = `
+                <div class="course-badge">
+                    📘 ${cursoNombre}
+                </div>
+                <p style="color: #059669; font-size: 1.2rem; font-weight: 600; margin: 20px 0;">
+                    Inversión: ${cursoPrecio} (incluye diploma oficial SAT)
+                </p>
+            `;
+        } else {
+            // Curso no especificado
+            document.getElementById('courseInfo').innerHTML = `
+                <div class="course-badge">
+                    🎓 Curso de Empírica Legal Lab
+                </div>
+            `;
+        }
+
+        // Actualizar link del botón
+        document.getElementById('courseLink').href = cursoUrl;
+
+        // Google Analytics event (si está configurado)
+        if (typeof gtag === 'function') {
+            gtag('event', 'purchase', {
+                'transaction_id': new Date().getTime(),
+                'value': cursoPrecio,
+                'currency': 'MXN',
+                'items': [{
+                    'item_name': cursoNombre,
+                    'price': cursoPrecio
+                }]
+            });
+        }
+    </script>
+
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-L7ZSMV2JYL"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-L7ZSMV2JYL');
+    </script>
+</body>
+</html>
