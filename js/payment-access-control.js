@@ -13,7 +13,7 @@
     // ═══════════════════════════════════════
     const CONFIG = {
         // URL del Google Apps Script Web App (lo obtendrás después de desplegarlo)
-        GOOGLE_SCRIPT_URL: 'TU_URL_DE_GOOGLE_APPS_SCRIPT_AQUI',
+        GOOGLE_SCRIPT_URL: 'https://script.google.com/macros/s/AKfycby0Uyt7YGHXGSGamRSVLsK-_T2j9EcbO3eNJRey9hGS4ryc-wakAnFBPYL76owK6HuX/exec',
 
         // Links de pago de Stripe
         STRIPE_LINKS: {
