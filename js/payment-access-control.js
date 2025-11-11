@@ -28,7 +28,79 @@
         STORAGE_KEYS: {
             email: 'empirica_user_email',
             hasAccess: 'empirica_has_access_',
-            lastCheck: 'empirica_last_check_'
+            lastCheck: 'empirica_last_check_',
+            masterKey: 'empirica_admin_access'
+        },
+
+        // Hash del código maestro (no modificar)
+        MASTER_HASH: 'e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855'
+    };
+
+    // ═══════════════════════════════════════
+    // 🔑 SISTEMA DE ACCESO MAESTRO (ADMIN)
+    // ═══════════════════════════════════════
+
+    /**
+     * Generar hash simple del código
+     */
+    function simpleHash(str) {
+        let hash = 0;
+        for (let i = 0; i < str.length; i++) {
+            const char = str.charCodeAt(i);
+            hash = ((hash << 5) - hash) + char;
+            hash = hash & hash;
+        }
+        return Math.abs(hash).toString(16);
+    }
+
+    /**
+     * Verificar si hay acceso maestro activo
+     */
+    function checkMasterAccess() {
+        const stored = localStorage.getItem(CONFIG.STORAGE_KEYS.masterKey);
+        return stored === 'granted';
+    }
+
+    /**
+     * Activar acceso maestro con código
+     */
+    function activateMasterAccess(code) {
+        const hash = simpleHash(code);
+        // El código es: empirica2025
+        const validHash = 'c89a142b';
+
+        if (hash === validHash) {
+            localStorage.setItem(CONFIG.STORAGE_KEYS.masterKey, 'granted');
+            console.log('✅ Acceso maestro activado');
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * Verificar URL por código maestro
+     */
+    function checkURLForMasterCode() {
+        const urlParams = new URLSearchParams(window.location.search);
+        const code = urlParams.get('master') || urlParams.get('admin') || urlParams.get('key');
+
+        if (code && activateMasterAccess(code)) {
+            // Limpiar URL sin recargar
+            const cleanUrl = window.location.pathname;
+            window.history.replaceState({}, document.title, cleanUrl);
+            return true;
+        }
+        return false;
+    }
+
+    // Exponer función para activación manual desde consola
+    window.empiricaAdmin = function(code) {
+        if (activateMasterAccess(code)) {
+            alert('✅ Acceso maestro activado\n\nRecarga la página para acceder sin restricciones.');
+            return true;
+        } else {
+            console.error('❌ Código incorrecto');
+            return false;
         }
     };
 
@@ -96,6 +168,12 @@
         }
 
         CONFIG.currentCourse = course;
+
+        // 🔑 Verificar acceso maestro primero
+        if (checkMasterAccess()) {
+            console.log('🔓 Acceso maestro activo - Acceso concedido');
+            return true;
+        }
 
         // Obtener email del usuario registrado
         const userEmail = localStorage.getItem(CONFIG.STORAGE_KEYS.email);
@@ -307,6 +385,9 @@
     // ═══════════════════════════════════════
     async function init() {
         console.log('🔐 Iniciando sistema de control de acceso...');
+
+        // Verificar si hay código maestro en URL
+        checkURLForMasterCode();
 
         const hasAccess = await verifyAccess();
 
