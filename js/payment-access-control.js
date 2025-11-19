@@ -527,9 +527,6 @@
     async function init() {
         console.log('🔐 Iniciando sistema de control de acceso...');
 
-        // Verificar si hay código maestro en URL
-        checkURLForMasterCode();
-
         const hasAccess = await verifyAccess();
 
         if (!hasAccess && CONFIG.currentCourse) {
