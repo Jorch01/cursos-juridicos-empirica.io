@@ -15,7 +15,7 @@ const SHEET_NAMES = {
 
 // ⚠️ CONFIGURACIÓN DE ALERTAS
 const ALERT_CONFIG = {
-  adminEmail: 'jorge_clemente@empirica.mx',  // Tu email
+  adminEmail: 'enlilh@gmail.com',  // Tu email
   enabledAlerts: true,  // Cambiar a false para desactivar alertas
 
   // Umbrales de detección
