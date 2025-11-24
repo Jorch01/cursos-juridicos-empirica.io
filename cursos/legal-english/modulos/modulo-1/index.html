@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Módulo 1: Introduction to Common Law | Legal English</title>
-    <meta name="description" content="Módulo 1 del curso Legal English - Introduction to Common Law Systems">
+    <title>Module 1: US & UK Court Systems | Legal English</title>
+    <meta name="description" content="Module 1 - Understanding court systems in the United States and United Kingdom">
     <link rel="stylesheet" href="../../../../css/styles.css">
     <style>
         /* ============================================
@@ -53,6 +53,8 @@
             color: var(--white);
             flex-direction: column;
             gap: 20px;
+            padding: 40px;
+            text-align: center;
         }
 
         .video-placeholder .icon {
@@ -112,11 +114,6 @@
             background: rgba(207, 168, 146, 0.3);
         }
 
-        .time-marker.completed {
-            background: rgba(40, 167, 69, 0.3);
-            border-color: #28a745;
-        }
-
         /* Content Section */
         .content-section {
             background: var(--light-bg);
@@ -145,6 +142,7 @@
             gap: 20px;
             color: var(--text-light);
             font-size: 0.9rem;
+            flex-wrap: wrap;
         }
 
         .module-meta span {
@@ -188,7 +186,7 @@
             margin-bottom: 15px;
         }
 
-        .content-block ul, .content-block ol {
+        .content-block ul {
             margin-left: 20px;
             margin-bottom: 15px;
         }
@@ -196,6 +194,10 @@
         .content-block li {
             margin-bottom: 8px;
             line-height: 1.6;
+        }
+
+        .content-block strong {
+            color: var(--primary);
         }
 
         .pause-indicator {
@@ -226,10 +228,7 @@
         .pause-indicator .text strong {
             display: block;
             margin-bottom: 3px;
-        }
-
-        .pause-indicator .text small {
-            opacity: 0.9;
+            color: white;
         }
 
         /* Exercise Blocks */
@@ -261,6 +260,7 @@
             justify-content: center;
             font-weight: 700;
             font-size: 1.2rem;
+            flex-shrink: 0;
         }
 
         .exercise-title {
@@ -281,7 +281,7 @@
             margin-bottom: 20px;
         }
 
-        /* Multiple Choice */
+        /* Options List */
         .options-list {
             list-style: none;
             padding: 0;
@@ -332,6 +332,7 @@
             justify-content: center;
             font-weight: 600;
             font-size: 0.9rem;
+            flex-shrink: 0;
         }
 
         .option-item.correct .option-letter {
@@ -358,42 +359,14 @@
             box-shadow: 0 0 0 3px rgba(27, 44, 39, 0.1);
         }
 
-        /* Matching Exercise */
-        .matching-container {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 20px;
-        }
-
-        .matching-column h4 {
-            color: var(--primary);
-            margin-bottom: 15px;
-            padding-bottom: 10px;
-            border-bottom: 2px solid var(--secondary);
-        }
-
-        .matching-item {
-            background: var(--light-bg);
-            padding: 12px 15px;
-            border-radius: 8px;
-            margin-bottom: 10px;
-            cursor: pointer;
-            transition: all 0.3s;
-            border: 2px solid transparent;
-        }
-
-        .matching-item:hover {
-            border-color: var(--secondary);
-        }
-
-        .matching-item.selected {
-            border-color: var(--primary);
-            background: rgba(27, 44, 39, 0.1);
-        }
-
-        .matching-item.matched {
+        .fill-blank-input.correct {
             border-color: #28a745;
             background: rgba(40, 167, 69, 0.1);
+        }
+
+        .fill-blank-input.incorrect {
+            border-color: #dc3545;
+            background: rgba(220, 53, 69, 0.1);
         }
 
         /* Exercise Actions */
@@ -401,6 +374,7 @@
             display: flex;
             gap: 10px;
             margin-top: 20px;
+            flex-wrap: wrap;
         }
 
         .btn-check {
@@ -480,7 +454,7 @@
 
         .vocab-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
             gap: 15px;
         }
 
@@ -495,14 +469,84 @@
             font-weight: 700;
             color: var(--primary);
             margin-bottom: 5px;
+            font-size: 1.1rem;
         }
 
         .vocab-item .definition {
             font-size: 0.9rem;
-            color: var(--text-light);
+            color: var(--text-dark);
+            line-height: 1.5;
         }
 
-        /* Progress Indicator */
+        .vocab-item .spanish {
+            font-size: 0.85rem;
+            color: var(--text-light);
+            font-style: italic;
+            margin-top: 5px;
+        }
+
+        /* Comparison Table */
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            background: var(--white);
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+        }
+
+        .comparison-table th {
+            background: var(--primary);
+            color: var(--white);
+            padding: 15px;
+            text-align: left;
+            font-weight: 600;
+        }
+
+        .comparison-table td {
+            padding: 12px 15px;
+            border-bottom: 1px solid var(--light-bg);
+        }
+
+        .comparison-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        .comparison-table tr:hover {
+            background: rgba(207, 168, 146, 0.05);
+        }
+
+        /* Document Display */
+        .document-display {
+            background: var(--white);
+            border: 2px solid var(--primary);
+            border-radius: 10px;
+            padding: 30px;
+            margin: 20px 0;
+            font-family: 'Courier New', monospace;
+            font-size: 0.95rem;
+            line-height: 1.8;
+        }
+
+        .document-display .doc-header {
+            text-align: center;
+            font-weight: 700;
+            font-size: 1.1rem;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid var(--primary);
+        }
+
+        .document-display .doc-to {
+            margin: 15px 0;
+        }
+
+        .document-display .doc-section {
+            margin: 15px 0;
+        }
+
+        /* Progress Bar */
         .progress-bar {
             background: var(--light-bg);
             height: 8px;
@@ -525,6 +569,7 @@
             padding: 20px 0;
             margin-top: 30px;
             border-top: 2px solid var(--light-bg);
+            gap: 10px;
         }
 
         .nav-btn {
@@ -586,12 +631,21 @@
                 gap: 10px;
             }
 
-            .matching-container {
+            .vocab-grid {
                 grid-template-columns: 1fr;
             }
 
             .exercise-actions {
                 flex-direction: column;
+            }
+
+            .comparison-table {
+                font-size: 0.85rem;
+            }
+
+            .comparison-table th,
+            .comparison-table td {
+                padding: 10px;
             }
         }
     </style>
@@ -626,9 +680,9 @@
                 <!-- Placeholder - Replace with actual video embed -->
                 <div class="video-placeholder" id="videoPlaceholder">
                     <span class="icon">🎬</span>
-                    <h2>Video de la Clase</h2>
-                    <p>El video se cargará aquí</p>
-                    <small>Configura el ID del video en el código</small>
+                    <h2>Video Lecture</h2>
+                    <p>Duration: 45-60 minutes</p>
+                    <small>Configure your video ID in the code or contact jorge_clemente@empirica.mx</small>
                 </div>
                 <!-- YouTube Embed Example (uncomment and add video ID):
                 <iframe
@@ -640,12 +694,14 @@
                 -->
             </div>
             <div class="video-controls">
-                <button class="btn-control" onclick="playPause()">⏯ Play/Pausa</button>
+                <button class="btn-control" onclick="playPause()">⏯ Play/Pause</button>
                 <div class="time-markers">
                     <span class="time-marker" data-time="0" onclick="seekTo(0)">00:00 - Intro</span>
-                    <span class="time-marker" data-time="300" onclick="seekTo(300)">05:00 - Contenido</span>
-                    <span class="time-marker" data-time="600" onclick="seekTo(600)">10:00 - Ejercicio 1</span>
-                    <span class="time-marker" data-time="900" onclick="seekTo(900)">15:00 - Ejercicio 2</span>
+                    <span class="time-marker" data-time="120" onclick="seekTo(120)">02:00 - Vocabulary</span>
+                    <span class="time-marker" data-time="240" onclick="seekTo(240)">04:00 - Exercise 1</span>
+                    <span class="time-marker" data-time="720" onclick="seekTo(720)">12:00 - Reading</span>
+                    <span class="time-marker" data-time="1620" onclick="seekTo(1620)">27:00 - Listening</span>
+                    <span class="time-marker" data-time="2520" onclick="seekTo(2520)">42:00 - Application</span>
                 </div>
             </div>
         </section>
@@ -659,11 +715,12 @@
 
             <!-- Module Header -->
             <div class="module-header">
-                <h1>Module 1: Introduction to Common Law</h1>
+                <h1>Module 1: US & UK Court Systems</h1>
                 <div class="module-meta">
                     <span>📚 Part 1 of 15</span>
-                    <span>⏱ ~45 min</span>
-                    <span>📝 4 exercises</span>
+                    <span>⏱ 45-60 min</span>
+                    <span>📝 11 exercises</span>
+                    <span>🎯 Level: B2</span>
                 </div>
             </div>
 
@@ -672,272 +729,789 @@
                 <h2>🎯 Learning Objectives</h2>
                 <p>By the end of this module, you will be able to:</p>
                 <ul>
-                    <li>Understand the historical origins of Common Law</li>
-                    <li>Differentiate between Common Law and Civil Law systems</li>
-                    <li>Identify key characteristics of Anglo-American legal traditions</li>
-                    <li>Use essential legal vocabulary in context</li>
+                    <li>Explain the difference between federal and state courts in the US</li>
+                    <li>Understand how Magistrates' Courts work in the UK</li>
+                    <li>Read and analyze real court documents in English</li>
+                    <li>Use essential legal vocabulary with confidence</li>
+                    <li>Recognize key differences between common law and civil law systems</li>
                 </ul>
             </div>
 
-            <!-- Content Section 1 -->
-            <div class="content-block">
-                <h2>📖 What is Common Law?</h2>
-                <p>
-                    Common Law is a legal system that originated in England during the Middle Ages.
-                    Unlike Civil Law systems, which rely primarily on written codes and statutes,
-                    Common Law is characterized by its reliance on <strong>judicial precedent</strong>
-                    (also known as <em>stare decisis</em>).
-                </p>
-                <p>
-                    The doctrine of stare decisis means "to stand by things decided." Courts are
-                    bound to follow the legal principles established in previous decisions made by
-                    higher courts in the same jurisdiction.
-                </p>
-            </div>
-
-            <!-- Pause Indicator -->
-            <div class="pause-indicator" onclick="seekTo(300)">
-                <span class="icon">⏸</span>
-                <div class="text">
-                    <strong>Pause the video here</strong>
-                    <small>Complete Exercise 1 before continuing (05:00)</small>
+            <!-- KEY VOCABULARY -->
+            <div class="vocabulary-box">
+                <h4>📚 Key Vocabulary - Study These Terms</h4>
+                <div class="vocab-grid">
+                    <div class="vocab-item">
+                        <div class="term">court</div>
+                        <div class="definition">a place where legal cases are heard and decided</div>
+                        <div class="spanish">tribunal, corte</div>
+                    </div>
+                    <div class="vocab-item">
+                        <div class="term">judge</div>
+                        <div class="definition">a person who makes decisions in a court of law</div>
+                        <div class="spanish">juez</div>
+                    </div>
+                    <div class="vocab-item">
+                        <div class="term">jurisdiction</div>
+                        <div class="definition">the official power to make legal decisions</div>
+                        <div class="spanish">jurisdicción, competencia</div>
+                    </div>
+                    <div class="vocab-item">
+                        <div class="term">appeal</div>
+                        <div class="definition">to ask a higher court to change a decision</div>
+                        <div class="spanish">apelación, apelar</div>
+                    </div>
+                    <div class="vocab-item">
+                        <div class="term">magistrate</div>
+                        <div class="definition">a judge in a lower court (UK)</div>
+                        <div class="spanish">magistrado (juez menor)</div>
+                    </div>
+                    <div class="vocab-item">
+                        <div class="term">trial</div>
+                        <div class="definition">a formal examination of evidence in court</div>
+                        <div class="spanish">juicio</div>
+                    </div>
+                    <div class="vocab-item">
+                        <div class="term">jury</div>
+                        <div class="definition">a group of citizens who decide facts in a trial</div>
+                        <div class="spanish">jurado</div>
+                    </div>
+                    <div class="vocab-item">
+                        <div class="term">defendant</div>
+                        <div class="definition">a person accused of a crime or sued in court</div>
+                        <div class="spanish">demandado, acusado</div>
+                    </div>
+                    <div class="vocab-item">
+                        <div class="term">federal</div>
+                        <div class="definition">relating to the national government (US)</div>
+                        <div class="spanish">federal</div>
+                    </div>
+                    <div class="vocab-item">
+                        <div class="term">state court</div>
+                        <div class="definition">a court that deals with state laws (US)</div>
+                        <div class="spanish">tribunal estatal</div>
+                    </div>
+                    <div class="vocab-item">
+                        <div class="term">Supreme Court</div>
+                        <div class="definition">the highest court in a legal system</div>
+                        <div class="spanish">Corte Suprema</div>
+                    </div>
+                    <div class="vocab-item">
+                        <div class="term">civil case</div>
+                        <div class="definition">a legal dispute between individuals or companies</div>
+                        <div class="spanish">caso civil</div>
+                    </div>
                 </div>
             </div>
 
-            <!-- Exercise 1: Multiple Choice -->
+            <!-- PART 1: VOCABULARY EXERCISES -->
+
+            <!-- Pause Indicator -->
+            <div class="pause-indicator" onclick="seekTo(240)">
+                <span class="icon">⏸</span>
+                <div class="text">
+                    <strong>Pause the video here</strong>
+                    <small>Complete Exercise 1 before continuing (04:00)</small>
+                </div>
+            </div>
+
+            <!-- Exercise 1: Matching -->
             <div class="exercise-block" id="exercise1">
                 <div class="exercise-header">
                     <div class="exercise-number">1</div>
                     <div class="exercise-title">
-                        <h3>Multiple Choice</h3>
-                        <span>Understanding Common Law Basics</span>
+                        <h3>Matching Exercise</h3>
+                        <span>Match the terms (1-10) with their definitions (a-j)</span>
                     </div>
                 </div>
                 <div class="exercise-content">
-                    <p><strong>What does "stare decisis" mean?</strong></p>
-                    <ul class="options-list">
-                        <li class="option-item" data-correct="false" onclick="selectOption(this, 'exercise1')">
-                            <span class="option-letter">A</span>
-                            <span>To write new laws</span>
-                        </li>
-                        <li class="option-item" data-correct="true" onclick="selectOption(this, 'exercise1')">
-                            <span class="option-letter">B</span>
-                            <span>To stand by things decided</span>
-                        </li>
-                        <li class="option-item" data-correct="false" onclick="selectOption(this, 'exercise1')">
-                            <span class="option-letter">C</span>
-                            <span>To appeal a decision</span>
-                        </li>
-                        <li class="option-item" data-correct="false" onclick="selectOption(this, 'exercise1')">
-                            <span class="option-letter">D</span>
-                            <span>To create a constitution</span>
-                        </li>
-                    </ul>
+                    <p><strong>Click on pairs to match them:</strong></p>
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-top: 20px;">
+                        <div>
+                            <h4 style="color: var(--primary); margin-bottom: 10px;">Terms</h4>
+                            <div class="option-item" data-match="d" onclick="selectMatch(this, 'exercise1')">
+                                <span class="option-letter">1</span>
+                                <span>jurisdiction</span>
+                            </div>
+                            <div class="option-item" data-match="g" onclick="selectMatch(this, 'exercise1')">
+                                <span class="option-letter">2</span>
+                                <span>appeal</span>
+                            </div>
+                            <div class="option-item" data-match="h" onclick="selectMatch(this, 'exercise1')">
+                                <span class="option-letter">3</span>
+                                <span>magistrate</span>
+                            </div>
+                            <div class="option-item" data-match="f" onclick="selectMatch(this, 'exercise1')">
+                                <span class="option-letter">4</span>
+                                <span>trial</span>
+                            </div>
+                            <div class="option-item" data-match="a" onclick="selectMatch(this, 'exercise1')">
+                                <span class="option-letter">5</span>
+                                <span>jury</span>
+                            </div>
+                            <div class="option-item" data-match="c" onclick="selectMatch(this, 'exercise1')">
+                                <span class="option-letter">6</span>
+                                <span>judge</span>
+                            </div>
+                            <div class="option-item" data-match="e" onclick="selectMatch(this, 'exercise1')">
+                                <span class="option-letter">7</span>
+                                <span>federal</span>
+                            </div>
+                            <div class="option-item" data-match="b" onclick="selectMatch(this, 'exercise1')">
+                                <span class="option-letter">8</span>
+                                <span>Supreme Court</span>
+                            </div>
+                            <div class="option-item" data-match="j" onclick="selectMatch(this, 'exercise1')">
+                                <span class="option-letter">9</span>
+                                <span>defendant</span>
+                            </div>
+                            <div class="option-item" data-match="i" onclick="selectMatch(this, 'exercise1')">
+                                <span class="option-letter">10</span>
+                                <span>civil case</span>
+                            </div>
+                        </div>
+                        <div>
+                            <h4 style="color: var(--primary); margin-bottom: 10px;">Definitions</h4>
+                            <div class="option-item" data-match="a" onclick="selectMatch(this, 'exercise1')">
+                                <span class="option-letter">a</span>
+                                <span>a group of people who decide if someone is guilty</span>
+                            </div>
+                            <div class="option-item" data-match="b" onclick="selectMatch(this, 'exercise1')">
+                                <span class="option-letter">b</span>
+                                <span>the highest court in the legal system</span>
+                            </div>
+                            <div class="option-item" data-match="c" onclick="selectMatch(this, 'exercise1')">
+                                <span class="option-letter">c</span>
+                                <span>a person who decides legal cases</span>
+                            </div>
+                            <div class="option-item" data-match="d" onclick="selectMatch(this, 'exercise1')">
+                                <span class="option-letter">d</span>
+                                <span>the power to make legal decisions</span>
+                            </div>
+                            <div class="option-item" data-match="e" onclick="selectMatch(this, 'exercise1')">
+                                <span class="option-letter">e</span>
+                                <span>relating to national government</span>
+                            </div>
+                            <div class="option-item" data-match="f" onclick="selectMatch(this, 'exercise1')">
+                                <span class="option-letter">f</span>
+                                <span>a formal court hearing with evidence</span>
+                            </div>
+                            <div class="option-item" data-match="g" onclick="selectMatch(this, 'exercise1')">
+                                <span class="option-letter">g</span>
+                                <span>to ask a higher court to review a decision</span>
+                            </div>
+                            <div class="option-item" data-match="h" onclick="selectMatch(this, 'exercise1')">
+                                <span class="option-letter">h</span>
+                                <span>a lower-level judge in the UK</span>
+                            </div>
+                            <div class="option-item" data-match="i" onclick="selectMatch(this, 'exercise1')">
+                                <span class="option-letter">i</span>
+                                <span>a dispute about rights, not crimes</span>
+                            </div>
+                            <div class="option-item" data-match="j" onclick="selectMatch(this, 'exercise1')">
+                                <span class="option-letter">j</span>
+                                <span>a person accused or sued in court</span>
+                            </div>
+                        </div>
+                    </div>
                 </div>
                 <div class="exercise-actions">
-                    <button class="btn-check" onclick="checkAnswer('exercise1')">Check Answer</button>
-                    <button class="btn-hint" onclick="showHint('exercise1')">Show Hint</button>
+                    <button class="btn-check" onclick="checkMatching('exercise1')">Check Answers</button>
                 </div>
                 <div class="feedback-message" id="feedback-exercise1"></div>
             </div>
 
-            <!-- Vocabulary Box -->
-            <div class="vocabulary-box">
-                <h4>📚 Key Vocabulary</h4>
-                <div class="vocab-grid">
-                    <div class="vocab-item">
-                        <div class="term">Precedent</div>
-                        <div class="definition">A previous court decision that guides future cases</div>
-                    </div>
-                    <div class="vocab-item">
-                        <div class="term">Jurisdiction</div>
-                        <div class="definition">The authority of a court to hear a case</div>
-                    </div>
-                    <div class="vocab-item">
-                        <div class="term">Statute</div>
-                        <div class="definition">A written law passed by a legislative body</div>
-                    </div>
-                    <div class="vocab-item">
-                        <div class="term">Case Law</div>
-                        <div class="definition">Law established by judicial decisions</div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Content Section 2 -->
-            <div class="content-block">
-                <h2>📖 Common Law vs Civil Law</h2>
-                <p>
-                    The world's legal systems can be broadly categorized into two families:
-                    <strong>Common Law</strong> and <strong>Civil Law</strong>.
-                </p>
-
-                <h3>Common Law Systems</h3>
-                <ul>
-                    <li>Found in: UK, USA, Canada, Australia, India</li>
-                    <li>Based on judicial precedent</li>
-                    <li>Adversarial court proceedings</li>
-                    <li>Jury trials common in criminal and civil cases</li>
-                </ul>
-
-                <h3>Civil Law Systems</h3>
-                <ul>
-                    <li>Found in: Mexico, France, Germany, Japan, Brazil</li>
-                    <li>Based on comprehensive legal codes</li>
-                    <li>Inquisitorial court proceedings</li>
-                    <li>Judges play a more active role in fact-finding</li>
-                </ul>
-            </div>
-
             <!-- Pause Indicator -->
-            <div class="pause-indicator" onclick="seekTo(600)">
+            <div class="pause-indicator" onclick="seekTo(420)">
                 <span class="icon">⏸</span>
                 <div class="text">
                     <strong>Pause the video here</strong>
-                    <small>Complete Exercise 2 before continuing (10:00)</small>
+                    <small>Complete Exercise 2 before continuing (07:00)</small>
                 </div>
             </div>
 
-            <!-- Exercise 2: Matching -->
+            <!-- Exercise 2: Gap-fill -->
             <div class="exercise-block" id="exercise2">
                 <div class="exercise-header">
                     <div class="exercise-number">2</div>
                     <div class="exercise-title">
-                        <h3>Matching Exercise</h3>
-                        <span>Match the characteristics with the correct legal system</span>
+                        <h3>Complete the Sentences</h3>
+                        <span>Use words from the box to fill in the blanks</span>
                     </div>
                 </div>
                 <div class="exercise-content">
-                    <div class="matching-container">
-                        <div class="matching-column">
-                            <h4>Characteristics</h4>
-                            <div class="matching-item" data-match="common" onclick="selectMatching(this, 'left')">
-                                Adversarial proceedings
-                            </div>
-                            <div class="matching-item" data-match="civil" onclick="selectMatching(this, 'left')">
-                                Comprehensive legal codes
-                            </div>
-                            <div class="matching-item" data-match="common" onclick="selectMatching(this, 'left')">
-                                Jury trials common
-                            </div>
-                            <div class="matching-item" data-match="civil" onclick="selectMatching(this, 'left')">
-                                Inquisitorial system
-                            </div>
-                        </div>
-                        <div class="matching-column">
-                            <h4>Legal System</h4>
-                            <div class="matching-item" data-system="common" onclick="selectMatching(this, 'right')">
-                                Common Law
-                            </div>
-                            <div class="matching-item" data-system="civil" onclick="selectMatching(this, 'right')">
-                                Civil Law
-                            </div>
-                        </div>
+                    <p><strong>Word Box:</strong> <em>court, appeal, jurisdiction, trial, federal, judge, magistrate</em></p>
+
+                    <div style="line-height: 2.5; margin-top: 20px;">
+                        <p>1. In the United States, there are both <input type="text" class="fill-blank-input" data-answer="federal" id="blank2-1" style="width: 120px;"> courts and state courts.</p>
+
+                        <p>2. If you disagree with a decision, you can file an <input type="text" class="fill-blank-input" data-answer="appeal" id="blank2-2" style="width: 120px;"> to a higher court.</p>
+
+                        <p>3. A <input type="text" class="fill-blank-input" data-answer="judge" id="blank2-3" style="width: 120px;"> is a person who presides over a court and makes legal decisions.</p>
+
+                        <p>4. The <input type="text" class="fill-blank-input" data-answer="trial" id="blank2-4" style="width: 120px;"> lasted three weeks before the jury reached a verdict.</p>
+
+                        <p>5. Minor criminal cases in England are heard by a <input type="text" class="fill-blank-input" data-answer="magistrate" id="blank2-5" style="width: 120px;"> in a Magistrates' Court.</p>
+
+                        <p>6. Federal courts have <input type="text" class="fill-blank-input" data-answer="jurisdiction" id="blank2-6" style="width: 120px;"> over cases involving federal law.</p>
+
+                        <p>7. The case will be heard in <input type="text" class="fill-blank-input" data-answer="court" id="blank2-7" style="width: 120px;"> next month.</p>
                     </div>
                 </div>
                 <div class="exercise-actions">
-                    <button class="btn-check" onclick="checkMatching('exercise2')">Check Answers</button>
-                    <button class="btn-hint" onclick="showHint('exercise2')">Show Hint</button>
+                    <button class="btn-check" onclick="checkFillBlanks('exercise2', 7)">Check Answers</button>
                 </div>
                 <div class="feedback-message" id="feedback-exercise2"></div>
             </div>
 
-            <!-- Content Section 3 -->
+            <!-- PART 2: READING -->
             <div class="content-block">
-                <h2>📖 The Role of Judges</h2>
+                <h2>📖 Understanding Common Law Court Systems</h2>
                 <p>
-                    In Common Law systems, judges play a crucial role in <strong>interpreting
-                    and developing the law</strong>. Their decisions create binding precedents
-                    that must be followed by lower courts.
+                    The United States and the United Kingdom both use <strong>common law systems</strong>, but their court structures are different. In the <strong>United States</strong>, there are two separate court systems: <strong>federal courts</strong> and <strong>state courts</strong>. Federal courts deal with cases involving federal law, disputes between states, and cases involving foreign governments. The <strong>Supreme Court of the United States (SCOTUS)</strong> is the highest court in the country. State courts handle most criminal and civil cases, including family law, contracts, and property disputes.
                 </p>
                 <p>
-                    This is in contrast to Civil Law systems, where judges primarily apply
-                    the law as written in codes, with less emphasis on previous judicial decisions.
+                    In the <strong>United Kingdom</strong>, the court system is unified but divided by the type of case. <strong>Criminal cases</strong> in England and Wales start in <strong>Magistrates' Courts</strong> for minor offenses or in the <strong>Crown Court</strong> for serious crimes. <strong>Civil cases</strong> begin in <strong>County Courts</strong> or the <strong>High Court</strong> depending on their complexity. The <strong>UK Supreme Court (UKSC)</strong>, established in 2009, is the final court of appeal for the entire UK.
                 </p>
+                <p>
+                    <strong>Mexico</strong> uses a <strong>civil law system</strong>, which is different from common law. However, Mexico has federal and state courts similar to the US. The <strong>Supreme Court of Justice (SCJN)</strong> is the highest court. Understanding Anglo-American court systems helps Mexican lawyers work with international clients and understand case precedents from the US and UK.
+                </p>
+                <p>
+                    <strong>Key difference:</strong> In common law countries, judges' decisions create legal precedents that future courts must follow. In civil law countries like Mexico, written codes are more important than precedents.
+                </p>
+            </div>
+
+            <!-- Comparative Table -->
+            <div class="content-block">
+                <h2>📊 Comparative Table</h2>
+                <table class="comparison-table">
+                    <thead>
+                        <tr>
+                            <th>Feature</th>
+                            <th>United States</th>
+                            <th>United Kingdom</th>
+                            <th>Mexico</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Legal System</strong></td>
+                            <td>Common Law</td>
+                            <td>Common Law</td>
+                            <td>Civil Law</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Highest Court</strong></td>
+                            <td>Supreme Court (SCOTUS)</td>
+                            <td>UK Supreme Court (UKSC)</td>
+                            <td>Supreme Court (SCJN)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Court Structure</strong></td>
+                            <td>Federal + State</td>
+                            <td>Unified (by case type)</td>
+                            <td>Federal + State</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Criminal Trial Court</strong></td>
+                            <td>District Court / State Court</td>
+                            <td>Crown Court</td>
+                            <td>Federal/State Courts</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Minor Criminal Cases</strong></td>
+                            <td>State Courts</td>
+                            <td>Magistrates' Court</td>
+                            <td>Minor Offenses Courts</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Role of Precedent</strong></td>
+                            <td>Very important</td>
+                            <td>Very important</td>
+                            <td>Less important</td>
+                        </tr>
+                    </tbody>
+                </table>
             </div>
 
             <!-- Pause Indicator -->
-            <div class="pause-indicator" onclick="seekTo(900)">
+            <div class="pause-indicator" onclick="seekTo(1080)">
                 <span class="icon">⏸</span>
                 <div class="text">
                     <strong>Pause the video here</strong>
-                    <small>Complete Exercise 3 before continuing (15:00)</small>
+                    <small>Complete Exercise 3 before continuing (18:00)</small>
                 </div>
             </div>
 
-            <!-- Exercise 3: Fill in the Blanks -->
+            <!-- Exercise 3: True or False -->
             <div class="exercise-block" id="exercise3">
                 <div class="exercise-header">
                     <div class="exercise-number">3</div>
                     <div class="exercise-title">
-                        <h3>Fill in the Blanks</h3>
-                        <span>Complete the sentences with the correct terms</span>
+                        <h3>True or False</h3>
+                        <span>Determine if the statements are correct. If false, correct them.</span>
                     </div>
                 </div>
                 <div class="exercise-content">
-                    <p style="line-height: 2.5;">
-                        1. The doctrine of
-                        <input type="text" class="fill-blank-input" data-answer="stare decisis" id="blank1">
-                        requires courts to follow previous decisions.
-                    </p>
-                    <p style="line-height: 2.5;">
-                        2. A
-                        <input type="text" class="fill-blank-input" data-answer="precedent" id="blank2">
-                        is a previous court decision that guides future cases.
-                    </p>
-                    <p style="line-height: 2.5;">
-                        3. Common Law originated in
-                        <input type="text" class="fill-blank-input" data-answer="england" id="blank3">.
-                    </p>
+                    <div style="margin-bottom: 20px;">
+                        <p><strong>1. The US has only one court system for the entire country.</strong></p>
+                        <ul class="options-list">
+                            <li class="option-item" data-correct="false" onclick="selectOption(this, 'tf3-1')">
+                                <span class="option-letter">T</span>
+                                <span>True</span>
+                            </li>
+                            <li class="option-item" data-correct="true" onclick="selectOption(this, 'tf3-1')">
+                                <span class="option-letter">F</span>
+                                <span>False</span>
+                            </li>
+                        </ul>
+                        <p style="font-size: 0.9rem; color: var(--text-light); margin-top: 10px;"><em>Correction: The US has two court systems: federal courts and state courts.</em></p>
+                    </div>
+
+                    <div style="margin-bottom: 20px;">
+                        <p><strong>2. The UK Supreme Court was established in 2009.</strong></p>
+                        <ul class="options-list">
+                            <li class="option-item" data-correct="true" onclick="selectOption(this, 'tf3-2')">
+                                <span class="option-letter">T</span>
+                                <span>True</span>
+                            </li>
+                            <li class="option-item" data-correct="false" onclick="selectOption(this, 'tf3-2')">
+                                <span class="option-letter">F</span>
+                                <span>False</span>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div style="margin-bottom: 20px;">
+                        <p><strong>3. Mexico uses a common law system like the US and UK.</strong></p>
+                        <ul class="options-list">
+                            <li class="option-item" data-correct="false" onclick="selectOption(this, 'tf3-3')">
+                                <span class="option-letter">T</span>
+                                <span>True</span>
+                            </li>
+                            <li class="option-item" data-correct="true" onclick="selectOption(this, 'tf3-3')">
+                                <span class="option-letter">F</span>
+                                <span>False</span>
+                            </li>
+                        </ul>
+                        <p style="font-size: 0.9rem; color: var(--text-light); margin-top: 10px;"><em>Correction: Mexico uses a civil law system, not common law.</em></p>
+                    </div>
+
+                    <div style="margin-bottom: 20px;">
+                        <p><strong>4. Federal courts in the US deal with cases involving federal law.</strong></p>
+                        <ul class="options-list">
+                            <li class="option-item" data-correct="true" onclick="selectOption(this, 'tf3-4')">
+                                <span class="option-letter">T</span>
+                                <span>True</span>
+                            </li>
+                            <li class="option-item" data-correct="false" onclick="selectOption(this, 'tf3-4')">
+                                <span class="option-letter">F</span>
+                                <span>False</span>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div style="margin-bottom: 20px;">
+                        <p><strong>5. Magistrates' Courts in the UK handle serious criminal cases.</strong></p>
+                        <ul class="options-list">
+                            <li class="option-item" data-correct="false" onclick="selectOption(this, 'tf3-5')">
+                                <span class="option-letter">T</span>
+                                <span>True</span>
+                            </li>
+                            <li class="option-item" data-correct="true" onclick="selectOption(this, 'tf3-5')">
+                                <span class="option-letter">F</span>
+                                <span>False</span>
+                            </li>
+                        </ul>
+                        <p style="font-size: 0.9rem; color: var(--text-light); margin-top: 10px;"><em>Correction: Magistrates' Courts handle minor criminal cases. Serious cases go to Crown Court.</em></p>
+                    </div>
+
+                    <div style="margin-bottom: 20px;">
+                        <p><strong>6. In common law, judges' decisions create precedents.</strong></p>
+                        <ul class="options-list">
+                            <li class="option-item" data-correct="true" onclick="selectOption(this, 'tf3-6')">
+                                <span class="option-letter">T</span>
+                                <span>True</span>
+                            </li>
+                            <li class="option-item" data-correct="false" onclick="selectOption(this, 'tf3-6')">
+                                <span class="option-letter">F</span>
+                                <span>False</span>
+                            </li>
+                        </ul>
+                    </div>
                 </div>
                 <div class="exercise-actions">
-                    <button class="btn-check" onclick="checkFillBlanks('exercise3')">Check Answers</button>
-                    <button class="btn-hint" onclick="showHint('exercise3')">Show Hint</button>
+                    <button class="btn-check" onclick="checkTrueFalse('exercise3', 6)">Check Answers</button>
                 </div>
                 <div class="feedback-message" id="feedback-exercise3"></div>
             </div>
 
-            <!-- Exercise 4: True/False -->
-            <div class="exercise-block" id="exercise4">
+            <!-- PART 3: LISTENING -->
+            <div class="content-block">
+                <h2>🎧 A Day in Westminster Magistrates' Court</h2>
+                <p><strong>Context:</strong> You will hear Sarah Chen, a court clerk, describing a typical day at a Magistrates' Court in London.</p>
+                <p style="background: var(--light-bg); padding: 15px; border-radius: 10px; margin: 15px 0;">
+                    <strong>Note:</strong> The audio is embedded in the video lecture at timestamp 27:00. Pause the video when instructed to complete the listening exercises below.
+                </p>
+            </div>
+
+            <!-- Pause Indicator -->
+            <div class="pause-indicator" onclick="seekTo(1710)">
+                <span class="icon">⏸</span>
+                <div class="text">
+                    <strong>Pause the video here</strong>
+                    <small>Complete Exercise 6 after listening (28:30)</small>
+                </div>
+            </div>
+
+            <!-- Exercise 6: Listening Comprehension -->
+            <div class="exercise-block" id="exercise6">
                 <div class="exercise-header">
-                    <div class="exercise-number">4</div>
+                    <div class="exercise-number">6</div>
                     <div class="exercise-title">
-                        <h3>True or False</h3>
-                        <span>Determine if the following statements are correct</span>
+                        <h3>Listening Comprehension</h3>
+                        <span>Tick (✓) the information you hear in the audio</span>
                     </div>
                 </div>
                 <div class="exercise-content">
-                    <div style="margin-bottom: 15px;">
-                        <p><strong>1. Mexico uses a Common Law system.</strong></p>
-                        <ul class="options-list">
-                            <li class="option-item" data-correct="false" onclick="selectOption(this, 'tf1')">
-                                <span class="option-letter">T</span>
-                                <span>True</span>
-                            </li>
-                            <li class="option-item" data-correct="true" onclick="selectOption(this, 'tf1')">
-                                <span class="option-letter">F</span>
-                                <span>False</span>
-                            </li>
-                        </ul>
+                    <p><strong>Listen carefully and select ONLY what Sarah Chen mentions:</strong></p>
+                    <ul class="options-list" style="margin-top: 15px;">
+                        <li class="option-item" data-correct="true" onclick="toggleCheckbox(this)">
+                            <span class="option-letter">□</span>
+                            <span>The court opens at 9:00 AM</span>
+                        </li>
+                        <li class="option-item" data-correct="false" onclick="toggleCheckbox(this)">
+                            <span class="option-letter">□</span>
+                            <span>Magistrates are professional judges</span>
+                        </li>
+                        <li class="option-item" data-correct="true" onclick="toggleCheckbox(this)">
+                            <span class="option-letter">□</span>
+                            <span>Most cases last less than 30 minutes</span>
+                        </li>
+                        <li class="option-item" data-correct="false" onclick="toggleCheckbox(this)">
+                            <span class="option-letter">□</span>
+                            <span>The court handles divorce cases</span>
+                        </li>
+                        <li class="option-item" data-correct="true" onclick="toggleCheckbox(this)">
+                            <span class="option-letter">□</span>
+                            <span>Defendants can have a lawyer present</span>
+                        </li>
+                        <li class="option-item" data-correct="false" onclick="toggleCheckbox(this)">
+                            <span class="option-letter">□</span>
+                            <span>All cases go to trial with a jury</span>
+                        </li>
+                        <li class="option-item" data-correct="true" onclick="toggleCheckbox(this)">
+                            <span class="option-letter">□</span>
+                            <span>The court deals with traffic offenses</span>
+                        </li>
+                        <li class="option-item" data-correct="true" onclick="toggleCheckbox(this)">
+                            <span class="option-letter">□</span>
+                            <span>Cases can be adjourned to another date</span>
+                        </li>
+                    </ul>
+                </div>
+                <div class="exercise-actions">
+                    <button class="btn-check" onclick="checkListening('exercise6')">Check Answers</button>
+                </div>
+                <div class="feedback-message" id="feedback-exercise6"></div>
+            </div>
+
+            <!-- Exercise 7: Listening Gap-fill -->
+            <div class="exercise-block" id="exercise7">
+                <div class="exercise-header">
+                    <div class="exercise-number">7</div>
+                    <div class="exercise-title">
+                        <h3>Listen and Complete</h3>
+                        <span>Fill in the missing words from the audio</span>
                     </div>
-                    <div style="margin-bottom: 15px;">
-                        <p><strong>2. Jury trials are common in Common Law systems.</strong></p>
-                        <ul class="options-list">
-                            <li class="option-item" data-correct="true" onclick="selectOption(this, 'tf2')">
-                                <span class="option-letter">T</span>
-                                <span>True</span>
-                            </li>
-                            <li class="option-item" data-correct="false" onclick="selectOption(this, 'tf2')">
-                                <span class="option-letter">F</span>
-                                <span>False</span>
-                            </li>
-                        </ul>
+                </div>
+                <div class="exercise-content">
+                    <div style="line-height: 2.2;">
+                        <p>"Good morning, I'm Sarah Chen, and I work as a court clerk at Westminster Magistrates' Court. A typical day starts at <input type="text" class="fill-blank-input" data-answer="9:00 am|nine o'clock|9 am|9:00|nine" id="blank7-1" style="width: 120px;"> when we open the court. Most people don't realise that magistrates are not <input type="text" class="fill-blank-input" data-answer="professional" id="blank7-2" style="width: 140px;"> judges – they are trained volunteers from the local <input type="text" class="fill-blank-input" data-answer="community" id="blank7-3" style="width: 140px;">.</p>
+
+                        <p>We handle minor criminal cases, like <input type="text" class="fill-blank-input" data-answer="traffic" id="blank7-4" style="width: 120px;"> offenses, shoplifting, and minor assaults. Each case usually takes about <input type="text" class="fill-blank-input" data-answer="20|twenty|20 minutes|twenty minutes" id="blank7-5" style="width: 120px;"> minutes. The defendant can represent themselves or have a <input type="text" class="fill-blank-input" data-answer="lawyer|solicitor" id="blank7-6" style="width: 120px;"> present. If the case is more serious, the magistrates can send it to the <input type="text" class="fill-blank-input" data-answer="crown" id="blank7-7" style="width: 120px;"> Court. We also deal with <input type="text" class="fill-blank-input" data-answer="warrant" id="blank7-8" style="width: 120px;"> applications and bail hearings."</p>
                     </div>
                 </div>
                 <div class="exercise-actions">
-                    <button class="btn-check" onclick="checkTrueFalse('exercise4')">Check Answers</button>
+                    <button class="btn-check" onclick="checkFillBlanks('exercise7', 8)">Check Answers</button>
                 </div>
-                <div class="feedback-message" id="feedback-exercise4"></div>
+                <div class="feedback-message" id="feedback-exercise7"></div>
+            </div>
+
+            <!-- Pause Indicator -->
+            <div class="pause-indicator" onclick="seekTo(2340)">
+                <span class="icon">⏸</span>
+                <div class="text">
+                    <strong>Pause the video here</strong>
+                    <small>Complete Exercise 8 before continuing (39:00)</small>
+                </div>
+            </div>
+
+            <!-- Exercise 8: Match Roles -->
+            <div class="exercise-block" id="exercise8">
+                <div class="exercise-header">
+                    <div class="exercise-number">8</div>
+                    <div class="exercise-title">
+                        <h3>Court Roles</h3>
+                        <span>Match each role with its responsibility</span>
+                    </div>
+                </div>
+                <div class="exercise-content">
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+                        <div>
+                            <h4 style="color: var(--primary); margin-bottom: 10px;">Roles</h4>
+                            <div class="option-item" data-match="c" onclick="selectMatch(this, 'exercise8')">
+                                <span class="option-letter">1</span>
+                                <span>Court Clerk</span>
+                            </div>
+                            <div class="option-item" data-match="a" onclick="selectMatch(this, 'exercise8')">
+                                <span class="option-letter">2</span>
+                                <span>Magistrate</span>
+                            </div>
+                            <div class="option-item" data-match="d" onclick="selectMatch(this, 'exercise8')">
+                                <span class="option-letter">3</span>
+                                <span>Defense Lawyer</span>
+                            </div>
+                            <div class="option-item" data-match="b" onclick="selectMatch(this, 'exercise8')">
+                                <span class="option-letter">4</span>
+                                <span>Prosecutor</span>
+                            </div>
+                            <div class="option-item" data-match="e" onclick="selectMatch(this, 'exercise8')">
+                                <span class="option-letter">5</span>
+                                <span>Defendant</span>
+                            </div>
+                        </div>
+                        <div>
+                            <h4 style="color: var(--primary); margin-bottom: 10px;">Responsibilities</h4>
+                            <div class="option-item" data-match="a" onclick="selectMatch(this, 'exercise8')">
+                                <span class="option-letter">a</span>
+                                <span>Decides if defendant is guilty or not guilty</span>
+                            </div>
+                            <div class="option-item" data-match="b" onclick="selectMatch(this, 'exercise8')">
+                                <span class="option-letter">b</span>
+                                <span>Represents the government in criminal cases</span>
+                            </div>
+                            <div class="option-item" data-match="c" onclick="selectMatch(this, 'exercise8')">
+                                <span class="option-letter">c</span>
+                                <span>Manages court administration and records</span>
+                            </div>
+                            <div class="option-item" data-match="d" onclick="selectMatch(this, 'exercise8')">
+                                <span class="option-letter">d</span>
+                                <span>Represents the defendant</span>
+                            </div>
+                            <div class="option-item" data-match="e" onclick="selectMatch(this, 'exercise8')">
+                                <span class="option-letter">e</span>
+                                <span>The person accused of a crime</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="exercise-actions">
+                    <button class="btn-check" onclick="checkMatching('exercise8')">Check Answers</button>
+                </div>
+                <div class="feedback-message" id="feedback-exercise8"></div>
+            </div>
+
+            <!-- PART 4: PRACTICAL APPLICATION -->
+            <div class="content-block">
+                <h2>📄 Document Analysis: Court Summons</h2>
+                <p>Read this extract from a real UK Magistrates' Court summons:</p>
+            </div>
+
+            <div class="document-display">
+                <div class="doc-header">
+                    WESTMINSTER MAGISTRATES' COURT<br>
+                    Marylebone Road, London NW1 5TR<br><br>
+                    SUMMONS TO ATTEND COURT
+                </div>
+
+                <div class="doc-to">
+                    To: James Robert Thompson<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;15 Victoria Street, London SW1
+                </div>
+
+                <div class="doc-section">
+                    You are summoned to appear before Westminster Magistrates' Court<br>
+                    on <strong>Monday, 4th December 2024 at 10:00 AM</strong>
+                </div>
+
+                <div class="doc-section">
+                    <strong>Offense:</strong> Driving without due care and attention<br>
+                    <strong>Date of Offense:</strong> 15th September 2024<br>
+                    <strong>Location:</strong> Oxford Street, London W1
+                </div>
+
+                <div class="doc-section">
+                    You must attend court on the date shown above. If you fail to attend,<br>
+                    a warrant may be issued for your arrest. You may be represented by<br>
+                    a solicitor or legal representative.
+                </div>
+
+                <div class="doc-section" style="margin-top: 20px;">
+                    <strong>Issued by:</strong> Court Administration Office<br>
+                    <strong>Date:</strong> 15th November 2024
+                </div>
+            </div>
+
+            <!-- Pause Indicator -->
+            <div class="pause-indicator" onclick="seekTo(2760)">
+                <span class="icon">⏸</span>
+                <div class="text">
+                    <strong>Pause the video here</strong>
+                    <small>Complete Exercises 9-10 before continuing (46:00)</small>
+                </div>
+            </div>
+
+            <!-- Exercise 9-10: Document Analysis -->
+            <div class="exercise-block" id="exercise9">
+                <div class="exercise-header">
+                    <div class="exercise-number">9-10</div>
+                    <div class="exercise-title">
+                        <h3>Document Analysis</h3>
+                        <span>Answer questions about the court summons</span>
+                    </div>
+                </div>
+                <div class="exercise-content">
+                    <div style="line-height: 2.2;">
+                        <p><strong>1.</strong> The name of the court:
+                        <input type="text" class="fill-blank-input" data-answer="westminster magistrates' court|westminster magistrates court" id="blank9-1" style="width: 300px;"></p>
+
+                        <p><strong>2.</strong> The date of the hearing:
+                        <input type="text" class="fill-blank-input" data-answer="monday, 4th december 2024|4th december 2024|monday 4th december 2024|december 4, 2024" id="blank9-2" style="width: 300px;"></p>
+
+                        <p><strong>3.</strong> The offense charged:
+                        <input type="text" class="fill-blank-input" data-answer="driving without due care and attention|driving without due care" id="blank9-3" style="width: 350px;"></p>
+
+                        <p><strong>4.</strong> The defendant's name:
+                        <input type="text" class="fill-blank-input" data-answer="james robert thompson|james thompson" id="blank9-4" style="width: 300px;"></p>
+
+                        <p><strong>5.</strong> What happens if the defendant doesn't attend:
+                        <input type="text" class="fill-blank-input" data-answer="a warrant may be issued|warrant for arrest|a warrant may be issued for his arrest" id="blank9-5" style="width: 400px;"></p>
+
+                        <p><strong>6.</strong> Can the defendant have a lawyer?
+                        <select class="fill-blank-input" data-answer="yes" id="blank9-6" style="width: 100px; padding: 8px;">
+                            <option value="">Select...</option>
+                            <option value="yes">YES</option>
+                            <option value="no">NO</option>
+                        </select>
+                        </p>
+                    </div>
+                </div>
+                <div class="exercise-actions">
+                    <button class="btn-check" onclick="checkFillBlanks('exercise9', 6)">Check Answers</button>
+                </div>
+                <div class="feedback-message" id="feedback-exercise9"></div>
+            </div>
+
+            <!-- LATIN TERMS -->
+            <div class="vocabulary-box">
+                <h4>⚖️ Legal Latin Terms</h4>
+                <p style="margin-bottom: 15px;">Common Latin phrases used in Anglo-American courts:</p>
+                <div class="vocab-grid">
+                    <div class="vocab-item">
+                        <div class="term">mens rea</div>
+                        <div class="definition">guilty mind (criminal intent)</div>
+                        <div class="spanish">intención criminal</div>
+                    </div>
+                    <div class="vocab-item">
+                        <div class="term">actus reus</div>
+                        <div class="definition">guilty act (criminal action)</div>
+                        <div class="spanish">acto criminal</div>
+                    </div>
+                    <div class="vocab-item">
+                        <div class="term">habeas corpus</div>
+                        <div class="definition">you must have the body (right to trial)</div>
+                        <div class="spanish">derecho a comparecer ante juez</div>
+                    </div>
+                    <div class="vocab-item">
+                        <div class="term">in camera</div>
+                        <div class="definition">in private (closed court session)</div>
+                        <div class="spanish">en privado, sesión cerrada</div>
+                    </div>
+                    <div class="vocab-item">
+                        <div class="term">pro bono</div>
+                        <div class="definition">for the public good (free legal work)</div>
+                        <div class="spanish">servicio legal gratuito</div>
+                    </div>
+                    <div class="vocab-item">
+                        <div class="term">de facto</div>
+                        <div class="definition">in fact (in reality)</div>
+                        <div class="spanish">de hecho, en la práctica</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Exercise 11: Latin Terms -->
+            <div class="exercise-block" id="exercise11">
+                <div class="exercise-header">
+                    <div class="exercise-number">11</div>
+                    <div class="exercise-title">
+                        <h3>Latin Legal Terms</h3>
+                        <span>Match the Latin terms with their English meanings</span>
+                    </div>
+                </div>
+                <div class="exercise-content">
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+                        <div>
+                            <h4 style="color: var(--primary); margin-bottom: 10px;">Latin Terms</h4>
+                            <div class="option-item" data-match="b" onclick="selectMatch(this, 'exercise11')">
+                                <span class="option-letter">1</span>
+                                <span>mens rea</span>
+                            </div>
+                            <div class="option-item" data-match="e" onclick="selectMatch(this, 'exercise11')">
+                                <span class="option-letter">2</span>
+                                <span>actus reus</span>
+                            </div>
+                            <div class="option-item" data-match="d" onclick="selectMatch(this, 'exercise11')">
+                                <span class="option-letter">3</span>
+                                <span>habeas corpus</span>
+                            </div>
+                            <div class="option-item" data-match="f" onclick="selectMatch(this, 'exercise11')">
+                                <span class="option-letter">4</span>
+                                <span>in camera</span>
+                            </div>
+                            <div class="option-item" data-match="a" onclick="selectMatch(this, 'exercise11')">
+                                <span class="option-letter">5</span>
+                                <span>pro bono</span>
+                            </div>
+                            <div class="option-item" data-match="c" onclick="selectMatch(this, 'exercise11')">
+                                <span class="option-letter">6</span>
+                                <span>de facto</span>
+                            </div>
+                        </div>
+                        <div>
+                            <h4 style="color: var(--primary); margin-bottom: 10px;">English Meanings</h4>
+                            <div class="option-item" data-match="a" onclick="selectMatch(this, 'exercise11')">
+                                <span class="option-letter">a</span>
+                                <span>free legal services</span>
+                            </div>
+                            <div class="option-item" data-match="b" onclick="selectMatch(this, 'exercise11')">
+                                <span class="option-letter">b</span>
+                                <span>criminal intent</span>
+                            </div>
+                            <div class="option-item" data-match="c" onclick="selectMatch(this, 'exercise11')">
+                                <span class="option-letter">c</span>
+                                <span>in reality</span>
+                            </div>
+                            <div class="option-item" data-match="d" onclick="selectMatch(this, 'exercise11')">
+                                <span class="option-letter">d</span>
+                                <span>right to appear before a judge</span>
+                            </div>
+                            <div class="option-item" data-match="e" onclick="selectMatch(this, 'exercise11')">
+                                <span class="option-letter">e</span>
+                                <span>criminal action</span>
+                            </div>
+                            <div class="option-item" data-match="f" onclick="selectMatch(this, 'exercise11')">
+                                <span class="option-letter">f</span>
+                                <span>in private court session</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="exercise-actions">
+                    <button class="btn-check" onclick="checkMatching('exercise11')">Check Answers</button>
+                </div>
+                <div class="feedback-message" id="feedback-exercise11"></div>
             </div>
 
             <!-- Summary -->
@@ -945,17 +1519,22 @@
                 <h2>📋 Module Summary</h2>
                 <p>In this module, you learned:</p>
                 <ul>
-                    <li>Common Law originated in medieval England</li>
-                    <li>The doctrine of <em>stare decisis</em> is fundamental to Common Law</li>
-                    <li>Common Law differs from Civil Law in its reliance on precedent</li>
-                    <li>Judges in Common Law systems create binding precedents</li>
+                    <li>The US has two court systems: federal courts and state courts</li>
+                    <li>The UK Supreme Court was established in 2009</li>
+                    <li>Magistrates in the UK are trained volunteers from the community</li>
+                    <li>Common law systems rely on precedents; civil law systems rely on codes</li>
+                    <li>How to read and analyze authentic court documents</li>
+                    <li>Essential legal vocabulary and Latin terms used in Anglo-American courts</li>
                 </ul>
+                <p style="margin-top: 15px; padding: 15px; background: rgba(207, 168, 146, 0.1); border-left: 4px solid var(--secondary); border-radius: 5px;">
+                    <strong>📧 Submit Your Work:</strong> Email your completed exercises and reflection questions to <strong>jorge_clemente@empirica.mx</strong> for personalized feedback!
+                </p>
             </div>
 
             <!-- Module Navigation -->
             <div class="module-navigation">
-                <a href="../index.html" class="nav-btn disabled">
-                    ← Previous Module
+                <a href="../index.html" class="nav-btn">
+                    ← Back to Modules
                 </a>
                 <a href="../modulo-2/index.html" class="nav-btn">
                     Next Module →
@@ -976,26 +1555,6 @@
         // ============================================
 
         let player;
-        let currentTime = 0;
-
-        // Initialize YouTube API (if using YouTube)
-        function onYouTubeIframeAPIReady() {
-            player = new YT.Player('videoPlayer', {
-                events: {
-                    'onStateChange': onPlayerStateChange,
-                    'onReady': onPlayerReady
-                }
-            });
-        }
-
-        function onPlayerReady(event) {
-            // Update time markers based on video duration
-            setInterval(updateProgress, 1000);
-        }
-
-        function onPlayerStateChange(event) {
-            // Handle video state changes
-        }
 
         function playPause() {
             if (player && player.getPlayerState) {
@@ -1006,7 +1565,7 @@
                     player.playVideo();
                 }
             } else {
-                alert('Configure el video para habilitar los controles');
+                alert('Configure your video player to enable controls');
             }
         }
 
@@ -1037,46 +1596,17 @@
         // EXERCISE FUNCTIONS
         // ============================================
 
-        // Multiple Choice
-        function selectOption(element, exerciseId) {
-            const container = element.closest('.options-list') || element.closest('.exercise-content');
-            container.querySelectorAll('.option-item').forEach(item => {
-                item.classList.remove('selected');
-            });
-            element.classList.add('selected');
-        }
-
-        function checkAnswer(exerciseId) {
-            const exercise = document.getElementById(exerciseId);
-            const selected = exercise.querySelector('.option-item.selected');
-            const feedback = document.getElementById('feedback-' + exerciseId);
-
-            if (!selected) {
-                feedback.className = 'feedback-message error';
-                feedback.textContent = 'Please select an answer first.';
-                return;
-            }
-
-            const isCorrect = selected.dataset.correct === 'true';
-
-            if (isCorrect) {
-                selected.classList.add('correct');
-                feedback.className = 'feedback-message success';
-                feedback.textContent = '✓ Correct! Well done!';
-                updateExerciseProgress();
-            } else {
-                selected.classList.add('incorrect');
-                feedback.className = 'feedback-message error';
-                feedback.textContent = '✗ Incorrect. Try again or check the hint.';
-            }
-        }
-
         // Matching Exercise
         let selectedLeft = null;
         let selectedRight = null;
+        let matchedPairs = {};
 
-        function selectMatching(element, side) {
-            if (side === 'left') {
+        function selectMatch(element, exerciseId) {
+            const isLeft = element.parentElement.parentElement.querySelector('h4').textContent.includes('Terms') ||
+                          element.parentElement.parentElement.querySelector('h4').textContent.includes('Roles') ||
+                          element.parentElement.parentElement.querySelector('h4').textContent.includes('Latin');
+
+            if (isLeft) {
                 if (selectedLeft) selectedLeft.classList.remove('selected');
                 selectedLeft = element;
                 element.classList.add('selected');
@@ -1086,99 +1616,83 @@
                 element.classList.add('selected');
             }
 
-            // Check if match is complete
             if (selectedLeft && selectedRight) {
-                const match = selectedLeft.dataset.match;
-                const system = selectedRight.dataset.system;
+                const matchLeft = selectedLeft.dataset.match;
+                const matchRight = selectedRight.dataset.match;
 
-                if (match === system) {
-                    selectedLeft.classList.add('matched');
+                if (matchLeft === matchRight) {
+                    selectedLeft.classList.add('correct');
+                    selectedRight.classList.add('correct');
                     selectedLeft.classList.remove('selected');
-                    selectedRight = null;
+                    selectedRight.classList.remove('selected');
+
+                    if (!matchedPairs[exerciseId]) matchedPairs[exerciseId] = [];
+                    matchedPairs[exerciseId].push(matchLeft);
+
                     selectedLeft = null;
+                    selectedRight = null;
+                } else {
+                    setTimeout(() => {
+                        selectedLeft.classList.remove('selected');
+                        selectedRight.classList.remove('selected');
+                        selectedLeft = null;
+                        selectedRight = null;
+                    }, 500);
                 }
             }
         }
 
         function checkMatching(exerciseId) {
             const exercise = document.getElementById(exerciseId);
-            const items = exercise.querySelectorAll('.matching-item[data-match]');
+            const leftItems = exercise.querySelectorAll('[data-match]');
             const feedback = document.getElementById('feedback-' + exerciseId);
 
-            let allMatched = true;
-            items.forEach(item => {
-                if (!item.classList.contains('matched')) {
-                    allMatched = false;
-                }
-            });
+            const totalPairs = leftItems.length / 2;
+            const matchedCount = matchedPairs[exerciseId] ? matchedPairs[exerciseId].length : 0;
 
-            if (allMatched) {
+            if (matchedCount === totalPairs) {
                 feedback.className = 'feedback-message success';
                 feedback.textContent = '✓ All matches are correct! Excellent work!';
                 updateExerciseProgress();
             } else {
                 feedback.className = 'feedback-message error';
-                feedback.textContent = 'Some matches are still pending. Keep trying!';
+                feedback.textContent = `You have matched ${matchedCount} out of ${totalPairs} pairs correctly. Keep trying!`;
             }
         }
 
-        // Fill in the Blanks
-        function checkFillBlanks(exerciseId) {
-            const exercise = document.getElementById(exerciseId);
-            const inputs = exercise.querySelectorAll('.fill-blank-input');
-            const feedback = document.getElementById('feedback-' + exerciseId);
-
-            let allCorrect = true;
-            let correctCount = 0;
-
-            inputs.forEach(input => {
-                const answer = input.dataset.answer.toLowerCase();
-                const userAnswer = input.value.trim().toLowerCase();
-
-                if (userAnswer === answer) {
-                    input.style.borderColor = '#28a745';
-                    input.style.backgroundColor = 'rgba(40, 167, 69, 0.1)';
-                    correctCount++;
-                } else {
-                    input.style.borderColor = '#dc3545';
-                    input.style.backgroundColor = 'rgba(220, 53, 69, 0.1)';
-                    allCorrect = false;
-                }
+        // Multiple Choice / True-False
+        function selectOption(element, groupId) {
+            const container = element.closest('.options-list') || element.parentElement;
+            container.querySelectorAll('.option-item').forEach(item => {
+                item.classList.remove('selected');
             });
-
-            if (allCorrect) {
-                feedback.className = 'feedback-message success';
-                feedback.textContent = '✓ All answers are correct! Great job!';
-                updateExerciseProgress();
-            } else {
-                feedback.className = 'feedback-message error';
-                feedback.textContent = `${correctCount}/${inputs.length} correct. Check the highlighted fields.`;
-            }
+            element.classList.add('selected');
+            element.dataset.group = groupId;
         }
 
-        // True/False
-        function checkTrueFalse(exerciseId) {
+        function checkTrueFalse(exerciseId, totalQuestions) {
             const exercise = document.getElementById(exerciseId);
             const feedback = document.getElementById('feedback-' + exerciseId);
 
             let allCorrect = true;
             let answeredAll = true;
+            let correctCount = 0;
 
-            // Check tf1 and tf2
-            ['tf1', 'tf2'].forEach(tfId => {
-                const selected = exercise.querySelector(`[onclick*="${tfId}"].selected`);
+            for (let i = 1; i <= totalQuestions; i++) {
+                const selected = exercise.querySelector(`[data-group="tf${exerciseId.slice(-1)}-${i}"].selected`);
                 if (!selected) {
                     answeredAll = false;
                 } else {
                     const isCorrect = selected.dataset.correct === 'true';
                     if (isCorrect) {
                         selected.classList.add('correct');
+                        correctCount++;
                     } else {
                         selected.classList.add('incorrect');
                         allCorrect = false;
                     }
                 }
-            });
+            }
 
             if (!answeredAll) {
                 feedback.className = 'feedback-message error';
@@ -1188,41 +1702,112 @@
 
             if (allCorrect) {
                 feedback.className = 'feedback-message success';
-                feedback.textContent = '✓ All answers are correct!';
+                feedback.textContent = `✓ All answers are correct! (${correctCount}/${totalQuestions})`;
                 updateExerciseProgress();
             } else {
                 feedback.className = 'feedback-message error';
-                feedback.textContent = '✗ Some answers are incorrect. Review the content and try again.';
+                feedback.textContent = `${correctCount}/${totalQuestions} correct. Review the incorrect answers.`;
             }
         }
 
-        // Hints
-        function showHint(exerciseId) {
+        // Fill in the Blanks
+        function checkFillBlanks(exerciseId, totalBlanks) {
+            const exercise = document.getElementById(exerciseId);
             const feedback = document.getElementById('feedback-' + exerciseId);
-            const hints = {
-                'exercise1': 'Hint: The term comes from Latin and relates to following previous decisions.',
-                'exercise2': 'Hint: Think about which system uses codes vs. precedent, and jury vs. judge-led proceedings.',
-                'exercise3': 'Hint: Review the Key Vocabulary section and the first content block.'
-            };
 
-            feedback.className = 'feedback-message hint';
-            feedback.textContent = hints[exerciseId] || 'No hint available for this exercise.';
+            let allCorrect = true;
+            let correctCount = 0;
+
+            for (let i = 1; i <= totalBlanks; i++) {
+                const input = document.getElementById(`blank${exerciseId.slice(-1)}-${i}`);
+                if (!input) continue;
+
+                const answer = input.dataset.answer.toLowerCase();
+                const userAnswer = input.value.trim().toLowerCase();
+
+                // Handle multiple correct answers separated by |
+                const correctAnswers = answer.split('|');
+                const isCorrect = correctAnswers.some(ans => userAnswer === ans);
+
+                if (isCorrect) {
+                    input.classList.remove('incorrect');
+                    input.classList.add('correct');
+                    correctCount++;
+                } else {
+                    input.classList.remove('correct');
+                    input.classList.add('incorrect');
+                    allCorrect = false;
+                }
+            }
+
+            if (allCorrect) {
+                feedback.className = 'feedback-message success';
+                feedback.textContent = `✓ All answers are correct! (${correctCount}/${totalBlanks})`;
+                updateExerciseProgress();
+            } else {
+                feedback.className = 'feedback-message error';
+                feedback.textContent = `${correctCount}/${totalBlanks} correct. Check the highlighted fields.`;
+            }
+        }
+
+        // Listening Checkbox Exercise
+        function toggleCheckbox(element) {
+            element.classList.toggle('selected');
+            const letter = element.querySelector('.option-letter');
+            if (element.classList.contains('selected')) {
+                letter.textContent = '✓';
+            } else {
+                letter.textContent = '□';
+            }
+        }
+
+        function checkListening(exerciseId) {
+            const exercise = document.getElementById(exerciseId);
+            const items = exercise.querySelectorAll('.option-item');
+            const feedback = document.getElementById('feedback-' + exerciseId);
+
+            let allCorrect = true;
+            let correctCount = 0;
+            let totalCorrect = 0;
+
+            items.forEach(item => {
+                const shouldBeSelected = item.dataset.correct === 'true';
+                const isSelected = item.classList.contains('selected');
+
+                if (shouldBeSelected) totalCorrect++;
+
+                if (shouldBeSelected === isSelected) {
+                    item.classList.remove('incorrect');
+                    item.classList.add('correct');
+                    if (shouldBeSelected) correctCount++;
+                } else {
+                    item.classList.remove('correct');
+                    item.classList.add('incorrect');
+                    allCorrect = false;
+                }
+            });
+
+            if (allCorrect) {
+                feedback.className = 'feedback-message success';
+                feedback.textContent = `✓ Perfect! You identified all ${totalCorrect} correct items!`;
+                updateExerciseProgress();
+            } else {
+                feedback.className = 'feedback-message error';
+                feedback.textContent = `${correctCount}/${totalCorrect} correct items identified. Review your selections.`;
+            }
         }
 
         // Progress tracking
         let completedExercises = 0;
-        const totalExercises = 4;
+        const totalExercises = 11;
 
         function updateExerciseProgress() {
             completedExercises++;
             const progress = (completedExercises / totalExercises) * 100;
             document.getElementById('progressFill').style.width = progress + '%';
-
-            // Save progress to localStorage
             localStorage.setItem('module1_progress', completedExercises);
         }
 
-        // Load saved progress
         function loadProgress() {
             const saved = localStorage.getItem('module1_progress');
             if (saved) {
@@ -1240,6 +1825,7 @@
         // Initialize
         document.addEventListener('DOMContentLoaded', function() {
             loadProgress();
+            // If using YouTube API, initialize it here
         });
     </script>
 </body>
