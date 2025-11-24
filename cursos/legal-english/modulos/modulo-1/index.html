@@ -2143,6 +2143,13 @@
         // RESPONSE TRACKING SYSTEM
         // ============================================
 
+        // ⚙️ BACKEND CONFIGURATION
+        // TODO: Replace with your Google Apps Script Web App URL
+        // Get it from: Apps Script > Deploy > Manage deployments > Web app URL
+        // Format: https://script.google.com/macros/s/AKfycbxXXXXXXXXXXXXXX/exec
+        // Guide: cursos/legal-english/google-apps-script/GUIA-CONFIGURACION.md
+        const BACKEND_URL = 'https://script.google.com/macros/s/YOUR_SCRIPT_ID/exec';
+
         // Save exercise response
         function saveExerciseResponse(exerciseId, exerciseType, userAnswers, isCorrect, score) {
             const userEmail = localStorage.getItem('empirica_user_email') || 'anonymous';
@@ -2170,13 +2177,16 @@
 
         // Send data to backend (Google Sheets or custom endpoint)
         function sendToBackend(data) {
-            const BACKEND_URL = 'https://script.google.com/macros/s/YOUR_SCRIPT_ID/exec';
-
             // Check if backend is configured
             if (BACKEND_URL.includes('YOUR_SCRIPT_ID')) {
-                console.log('Backend not configured. Data saved locally only:', data);
+                console.warn('⚠️ BACKEND NOT CONFIGURED');
+                console.warn('📝 Data saved locally only (localStorage)');
+                console.warn('📚 To configure backend, see: cursos/legal-english/google-apps-script/GUIA-CONFIGURACION.md');
+                console.log('💾 Data that would be sent:', data);
                 return;
             }
+
+            console.log('📤 Sending data to backend...', data);
 
             fetch(BACKEND_URL, {
                 method: 'POST',
@@ -2185,8 +2195,13 @@
                     'Content-Type': 'application/json',
                 },
                 body: JSON.stringify(data)
-            }).catch(error => {
-                console.error('Error sending to backend:', error);
+            })
+            .then(() => {
+                console.log('✅ Data sent to backend successfully');
+            })
+            .catch(error => {
+                console.error('❌ Error sending to backend:', error);
+                console.log('💾 Data is still saved locally in localStorage');
             });
         }
 
