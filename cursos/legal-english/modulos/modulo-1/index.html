@@ -1,0 +1,1246 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Módulo 1: Introduction to Common Law | Legal English</title>
+    <meta name="description" content="Módulo 1 del curso Legal English - Introduction to Common Law Systems">
+    <link rel="stylesheet" href="../../../../css/styles.css">
+    <style>
+        /* ============================================
+           ESTILOS DEL MÓDULO INTERACTIVO
+           ============================================ */
+
+        .module-layout {
+            display: grid;
+            grid-template-columns: 1fr 400px;
+            gap: 0;
+            min-height: calc(100vh - 80px);
+            max-width: 1600px;
+            margin: 0 auto;
+        }
+
+        /* Video Section */
+        .video-section {
+            background: #000;
+            position: sticky;
+            top: 80px;
+            height: calc(100vh - 80px);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .video-container {
+            flex: 1;
+            position: relative;
+            background: #000;
+        }
+
+        .video-container iframe,
+        .video-container video {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+
+        .video-placeholder {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, var(--primary) 0%, #2d4942 100%);
+            color: var(--white);
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .video-placeholder .icon {
+            font-size: 5rem;
+            opacity: 0.5;
+        }
+
+        .video-controls {
+            background: var(--primary);
+            padding: 15px 20px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            border-top: 2px solid var(--secondary);
+        }
+
+        .video-controls .btn-control {
+            background: var(--secondary);
+            color: var(--primary);
+            border: none;
+            padding: 8px 16px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+
+        .video-controls .btn-control:hover {
+            transform: scale(1.05);
+        }
+
+        .time-markers {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+            flex: 1;
+        }
+
+        .time-marker {
+            background: rgba(255, 255, 255, 0.1);
+            color: var(--white);
+            padding: 5px 10px;
+            border-radius: 15px;
+            font-size: 0.8rem;
+            cursor: pointer;
+            transition: all 0.3s;
+            border: 1px solid transparent;
+        }
+
+        .time-marker:hover {
+            background: var(--secondary);
+            color: var(--primary);
+        }
+
+        .time-marker.active {
+            border-color: var(--secondary);
+            background: rgba(207, 168, 146, 0.3);
+        }
+
+        .time-marker.completed {
+            background: rgba(40, 167, 69, 0.3);
+            border-color: #28a745;
+        }
+
+        /* Content Section */
+        .content-section {
+            background: var(--light-bg);
+            overflow-y: auto;
+            height: calc(100vh - 80px);
+            padding: 30px;
+        }
+
+        .module-header {
+            background: var(--white);
+            padding: 25px;
+            border-radius: 15px;
+            margin-bottom: 25px;
+            box-shadow: var(--shadow);
+            border-left: 5px solid var(--secondary);
+        }
+
+        .module-header h1 {
+            color: var(--primary);
+            font-size: 1.8rem;
+            margin-bottom: 10px;
+        }
+
+        .module-meta {
+            display: flex;
+            gap: 20px;
+            color: var(--text-light);
+            font-size: 0.9rem;
+        }
+
+        .module-meta span {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        /* Content Blocks */
+        .content-block {
+            background: var(--white);
+            padding: 25px;
+            border-radius: 15px;
+            margin-bottom: 20px;
+            box-shadow: var(--shadow);
+            transition: all 0.3s;
+        }
+
+        .content-block.highlight {
+            border-left: 5px solid var(--secondary);
+        }
+
+        .content-block h2 {
+            color: var(--primary);
+            font-size: 1.4rem;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .content-block h3 {
+            color: var(--primary);
+            font-size: 1.2rem;
+            margin: 20px 0 10px;
+        }
+
+        .content-block p {
+            color: var(--text-dark);
+            line-height: 1.8;
+            margin-bottom: 15px;
+        }
+
+        .content-block ul, .content-block ol {
+            margin-left: 20px;
+            margin-bottom: 15px;
+        }
+
+        .content-block li {
+            margin-bottom: 8px;
+            line-height: 1.6;
+        }
+
+        .pause-indicator {
+            background: linear-gradient(135deg, #ff6b6b, #ee5a5a);
+            color: white;
+            padding: 15px 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .pause-indicator:hover {
+            transform: scale(1.02);
+        }
+
+        .pause-indicator .icon {
+            font-size: 1.5rem;
+        }
+
+        .pause-indicator .text {
+            flex: 1;
+        }
+
+        .pause-indicator .text strong {
+            display: block;
+            margin-bottom: 3px;
+        }
+
+        .pause-indicator .text small {
+            opacity: 0.9;
+        }
+
+        /* Exercise Blocks */
+        .exercise-block {
+            background: var(--white);
+            border: 2px solid var(--secondary);
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 20px;
+        }
+
+        .exercise-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid var(--light-bg);
+        }
+
+        .exercise-number {
+            background: var(--secondary);
+            color: var(--primary);
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 1.2rem;
+        }
+
+        .exercise-title {
+            flex: 1;
+        }
+
+        .exercise-title h3 {
+            color: var(--primary);
+            margin: 0 0 5px;
+        }
+
+        .exercise-title span {
+            color: var(--text-light);
+            font-size: 0.85rem;
+        }
+
+        .exercise-content {
+            margin-bottom: 20px;
+        }
+
+        /* Multiple Choice */
+        .options-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .option-item {
+            background: var(--light-bg);
+            border: 2px solid transparent;
+            border-radius: 10px;
+            padding: 15px 20px;
+            margin-bottom: 10px;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .option-item:hover {
+            border-color: var(--secondary);
+            transform: translateX(5px);
+        }
+
+        .option-item.selected {
+            border-color: var(--primary);
+            background: rgba(27, 44, 39, 0.05);
+        }
+
+        .option-item.correct {
+            border-color: #28a745;
+            background: rgba(40, 167, 69, 0.1);
+        }
+
+        .option-item.incorrect {
+            border-color: #dc3545;
+            background: rgba(220, 53, 69, 0.1);
+        }
+
+        .option-letter {
+            background: var(--primary);
+            color: var(--white);
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+
+        .option-item.correct .option-letter {
+            background: #28a745;
+        }
+
+        .option-item.incorrect .option-letter {
+            background: #dc3545;
+        }
+
+        /* Fill in the blank */
+        .fill-blank-input {
+            border: 2px solid var(--secondary);
+            border-radius: 5px;
+            padding: 8px 15px;
+            font-size: 1rem;
+            min-width: 150px;
+            transition: all 0.3s;
+        }
+
+        .fill-blank-input:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(27, 44, 39, 0.1);
+        }
+
+        /* Matching Exercise */
+        .matching-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        .matching-column h4 {
+            color: var(--primary);
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid var(--secondary);
+        }
+
+        .matching-item {
+            background: var(--light-bg);
+            padding: 12px 15px;
+            border-radius: 8px;
+            margin-bottom: 10px;
+            cursor: pointer;
+            transition: all 0.3s;
+            border: 2px solid transparent;
+        }
+
+        .matching-item:hover {
+            border-color: var(--secondary);
+        }
+
+        .matching-item.selected {
+            border-color: var(--primary);
+            background: rgba(27, 44, 39, 0.1);
+        }
+
+        .matching-item.matched {
+            border-color: #28a745;
+            background: rgba(40, 167, 69, 0.1);
+        }
+
+        /* Exercise Actions */
+        .exercise-actions {
+            display: flex;
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        .btn-check {
+            background: var(--primary);
+            color: var(--white);
+            border: none;
+            padding: 12px 25px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+
+        .btn-check:hover {
+            background: #2d4942;
+            transform: translateY(-2px);
+        }
+
+        .btn-hint {
+            background: transparent;
+            color: var(--primary);
+            border: 2px solid var(--primary);
+            padding: 12px 25px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+
+        .btn-hint:hover {
+            background: var(--light-bg);
+        }
+
+        .feedback-message {
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 15px;
+            display: none;
+        }
+
+        .feedback-message.success {
+            background: rgba(40, 167, 69, 0.1);
+            border: 1px solid #28a745;
+            color: #155724;
+            display: block;
+        }
+
+        .feedback-message.error {
+            background: rgba(220, 53, 69, 0.1);
+            border: 1px solid #dc3545;
+            color: #721c24;
+            display: block;
+        }
+
+        .feedback-message.hint {
+            background: rgba(255, 193, 7, 0.1);
+            border: 1px solid #ffc107;
+            color: #856404;
+            display: block;
+        }
+
+        /* Vocabulary Box */
+        .vocabulary-box {
+            background: linear-gradient(135deg, var(--light-bg), #e8e8e8);
+            border-radius: 15px;
+            padding: 25px;
+            margin: 20px 0;
+        }
+
+        .vocabulary-box h4 {
+            color: var(--primary);
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .vocab-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+        }
+
+        .vocab-item {
+            background: var(--white);
+            padding: 15px;
+            border-radius: 10px;
+            border-left: 4px solid var(--secondary);
+        }
+
+        .vocab-item .term {
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 5px;
+        }
+
+        .vocab-item .definition {
+            font-size: 0.9rem;
+            color: var(--text-light);
+        }
+
+        /* Progress Indicator */
+        .progress-bar {
+            background: var(--light-bg);
+            height: 8px;
+            border-radius: 4px;
+            margin-bottom: 20px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            background: linear-gradient(90deg, var(--secondary), var(--primary));
+            height: 100%;
+            border-radius: 4px;
+            transition: width 0.5s ease;
+        }
+
+        /* Module Navigation */
+        .module-navigation {
+            display: flex;
+            justify-content: space-between;
+            padding: 20px 0;
+            margin-top: 30px;
+            border-top: 2px solid var(--light-bg);
+        }
+
+        .nav-btn {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 15px 25px;
+            background: var(--white);
+            border: 2px solid var(--primary);
+            border-radius: 10px;
+            text-decoration: none;
+            color: var(--primary);
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+
+        .nav-btn:hover {
+            background: var(--primary);
+            color: var(--white);
+        }
+
+        .nav-btn.disabled {
+            opacity: 0.5;
+            pointer-events: none;
+        }
+
+        /* Responsive */
+        @media (max-width: 1200px) {
+            .module-layout {
+                grid-template-columns: 1fr;
+            }
+
+            .video-section {
+                position: relative;
+                height: 50vh;
+                top: 0;
+            }
+
+            .content-section {
+                height: auto;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .video-section {
+                height: 40vh;
+            }
+
+            .content-section {
+                padding: 20px;
+            }
+
+            .module-header h1 {
+                font-size: 1.4rem;
+            }
+
+            .module-meta {
+                flex-direction: column;
+                gap: 10px;
+            }
+
+            .matching-container {
+                grid-template-columns: 1fr;
+            }
+
+            .exercise-actions {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="nav-container">
+            <div class="logo-container">
+                <a href="../../../../index.html">
+                    <img src="../../../../images/logo.png" alt="Cursos Jurídicos Empírica" class="logo-img" onerror="this.style.display='none'">
+                </a>
+                <div class="logo-text">
+                    <h1>Legal English</h1>
+                    <p>Anglo-American Law in Action</p>
+                </div>
+            </div>
+            <button class="mobile-menu-toggle" onclick="toggleMenu()">☰</button>
+            <ul class="nav-menu" id="navMenu">
+                <li><a href="../../index.html">Curso</a></li>
+                <li><a href="../index.html">Módulos</a></li>
+                <li><a href="../../../../contacto.html">Contacto</a></li>
+            </ul>
+        </div>
+    </header>
+
+    <!-- Main Layout -->
+    <main class="module-layout">
+        <!-- Video Section -->
+        <section class="video-section">
+            <div class="video-container">
+                <!-- Placeholder - Replace with actual video embed -->
+                <div class="video-placeholder" id="videoPlaceholder">
+                    <span class="icon">🎬</span>
+                    <h2>Video de la Clase</h2>
+                    <p>El video se cargará aquí</p>
+                    <small>Configura el ID del video en el código</small>
+                </div>
+                <!-- YouTube Embed Example (uncomment and add video ID):
+                <iframe
+                    id="videoPlayer"
+                    src="https://www.youtube.com/embed/VIDEO_ID?enablejsapi=1"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowfullscreen>
+                </iframe>
+                -->
+            </div>
+            <div class="video-controls">
+                <button class="btn-control" onclick="playPause()">⏯ Play/Pausa</button>
+                <div class="time-markers">
+                    <span class="time-marker" data-time="0" onclick="seekTo(0)">00:00 - Intro</span>
+                    <span class="time-marker" data-time="300" onclick="seekTo(300)">05:00 - Contenido</span>
+                    <span class="time-marker" data-time="600" onclick="seekTo(600)">10:00 - Ejercicio 1</span>
+                    <span class="time-marker" data-time="900" onclick="seekTo(900)">15:00 - Ejercicio 2</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Content Section -->
+        <section class="content-section">
+            <!-- Progress Bar -->
+            <div class="progress-bar">
+                <div class="progress-fill" id="progressFill" style="width: 0%"></div>
+            </div>
+
+            <!-- Module Header -->
+            <div class="module-header">
+                <h1>Module 1: Introduction to Common Law</h1>
+                <div class="module-meta">
+                    <span>📚 Part 1 of 15</span>
+                    <span>⏱ ~45 min</span>
+                    <span>📝 4 exercises</span>
+                </div>
+            </div>
+
+            <!-- Learning Objectives -->
+            <div class="content-block highlight">
+                <h2>🎯 Learning Objectives</h2>
+                <p>By the end of this module, you will be able to:</p>
+                <ul>
+                    <li>Understand the historical origins of Common Law</li>
+                    <li>Differentiate between Common Law and Civil Law systems</li>
+                    <li>Identify key characteristics of Anglo-American legal traditions</li>
+                    <li>Use essential legal vocabulary in context</li>
+                </ul>
+            </div>
+
+            <!-- Content Section 1 -->
+            <div class="content-block">
+                <h2>📖 What is Common Law?</h2>
+                <p>
+                    Common Law is a legal system that originated in England during the Middle Ages.
+                    Unlike Civil Law systems, which rely primarily on written codes and statutes,
+                    Common Law is characterized by its reliance on <strong>judicial precedent</strong>
+                    (also known as <em>stare decisis</em>).
+                </p>
+                <p>
+                    The doctrine of stare decisis means "to stand by things decided." Courts are
+                    bound to follow the legal principles established in previous decisions made by
+                    higher courts in the same jurisdiction.
+                </p>
+            </div>
+
+            <!-- Pause Indicator -->
+            <div class="pause-indicator" onclick="seekTo(300)">
+                <span class="icon">⏸</span>
+                <div class="text">
+                    <strong>Pause the video here</strong>
+                    <small>Complete Exercise 1 before continuing (05:00)</small>
+                </div>
+            </div>
+
+            <!-- Exercise 1: Multiple Choice -->
+            <div class="exercise-block" id="exercise1">
+                <div class="exercise-header">
+                    <div class="exercise-number">1</div>
+                    <div class="exercise-title">
+                        <h3>Multiple Choice</h3>
+                        <span>Understanding Common Law Basics</span>
+                    </div>
+                </div>
+                <div class="exercise-content">
+                    <p><strong>What does "stare decisis" mean?</strong></p>
+                    <ul class="options-list">
+                        <li class="option-item" data-correct="false" onclick="selectOption(this, 'exercise1')">
+                            <span class="option-letter">A</span>
+                            <span>To write new laws</span>
+                        </li>
+                        <li class="option-item" data-correct="true" onclick="selectOption(this, 'exercise1')">
+                            <span class="option-letter">B</span>
+                            <span>To stand by things decided</span>
+                        </li>
+                        <li class="option-item" data-correct="false" onclick="selectOption(this, 'exercise1')">
+                            <span class="option-letter">C</span>
+                            <span>To appeal a decision</span>
+                        </li>
+                        <li class="option-item" data-correct="false" onclick="selectOption(this, 'exercise1')">
+                            <span class="option-letter">D</span>
+                            <span>To create a constitution</span>
+                        </li>
+                    </ul>
+                </div>
+                <div class="exercise-actions">
+                    <button class="btn-check" onclick="checkAnswer('exercise1')">Check Answer</button>
+                    <button class="btn-hint" onclick="showHint('exercise1')">Show Hint</button>
+                </div>
+                <div class="feedback-message" id="feedback-exercise1"></div>
+            </div>
+
+            <!-- Vocabulary Box -->
+            <div class="vocabulary-box">
+                <h4>📚 Key Vocabulary</h4>
+                <div class="vocab-grid">
+                    <div class="vocab-item">
+                        <div class="term">Precedent</div>
+                        <div class="definition">A previous court decision that guides future cases</div>
+                    </div>
+                    <div class="vocab-item">
+                        <div class="term">Jurisdiction</div>
+                        <div class="definition">The authority of a court to hear a case</div>
+                    </div>
+                    <div class="vocab-item">
+                        <div class="term">Statute</div>
+                        <div class="definition">A written law passed by a legislative body</div>
+                    </div>
+                    <div class="vocab-item">
+                        <div class="term">Case Law</div>
+                        <div class="definition">Law established by judicial decisions</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Content Section 2 -->
+            <div class="content-block">
+                <h2>📖 Common Law vs Civil Law</h2>
+                <p>
+                    The world's legal systems can be broadly categorized into two families:
+                    <strong>Common Law</strong> and <strong>Civil Law</strong>.
+                </p>
+
+                <h3>Common Law Systems</h3>
+                <ul>
+                    <li>Found in: UK, USA, Canada, Australia, India</li>
+                    <li>Based on judicial precedent</li>
+                    <li>Adversarial court proceedings</li>
+                    <li>Jury trials common in criminal and civil cases</li>
+                </ul>
+
+                <h3>Civil Law Systems</h3>
+                <ul>
+                    <li>Found in: Mexico, France, Germany, Japan, Brazil</li>
+                    <li>Based on comprehensive legal codes</li>
+                    <li>Inquisitorial court proceedings</li>
+                    <li>Judges play a more active role in fact-finding</li>
+                </ul>
+            </div>
+
+            <!-- Pause Indicator -->
+            <div class="pause-indicator" onclick="seekTo(600)">
+                <span class="icon">⏸</span>
+                <div class="text">
+                    <strong>Pause the video here</strong>
+                    <small>Complete Exercise 2 before continuing (10:00)</small>
+                </div>
+            </div>
+
+            <!-- Exercise 2: Matching -->
+            <div class="exercise-block" id="exercise2">
+                <div class="exercise-header">
+                    <div class="exercise-number">2</div>
+                    <div class="exercise-title">
+                        <h3>Matching Exercise</h3>
+                        <span>Match the characteristics with the correct legal system</span>
+                    </div>
+                </div>
+                <div class="exercise-content">
+                    <div class="matching-container">
+                        <div class="matching-column">
+                            <h4>Characteristics</h4>
+                            <div class="matching-item" data-match="common" onclick="selectMatching(this, 'left')">
+                                Adversarial proceedings
+                            </div>
+                            <div class="matching-item" data-match="civil" onclick="selectMatching(this, 'left')">
+                                Comprehensive legal codes
+                            </div>
+                            <div class="matching-item" data-match="common" onclick="selectMatching(this, 'left')">
+                                Jury trials common
+                            </div>
+                            <div class="matching-item" data-match="civil" onclick="selectMatching(this, 'left')">
+                                Inquisitorial system
+                            </div>
+                        </div>
+                        <div class="matching-column">
+                            <h4>Legal System</h4>
+                            <div class="matching-item" data-system="common" onclick="selectMatching(this, 'right')">
+                                Common Law
+                            </div>
+                            <div class="matching-item" data-system="civil" onclick="selectMatching(this, 'right')">
+                                Civil Law
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="exercise-actions">
+                    <button class="btn-check" onclick="checkMatching('exercise2')">Check Answers</button>
+                    <button class="btn-hint" onclick="showHint('exercise2')">Show Hint</button>
+                </div>
+                <div class="feedback-message" id="feedback-exercise2"></div>
+            </div>
+
+            <!-- Content Section 3 -->
+            <div class="content-block">
+                <h2>📖 The Role of Judges</h2>
+                <p>
+                    In Common Law systems, judges play a crucial role in <strong>interpreting
+                    and developing the law</strong>. Their decisions create binding precedents
+                    that must be followed by lower courts.
+                </p>
+                <p>
+                    This is in contrast to Civil Law systems, where judges primarily apply
+                    the law as written in codes, with less emphasis on previous judicial decisions.
+                </p>
+            </div>
+
+            <!-- Pause Indicator -->
+            <div class="pause-indicator" onclick="seekTo(900)">
+                <span class="icon">⏸</span>
+                <div class="text">
+                    <strong>Pause the video here</strong>
+                    <small>Complete Exercise 3 before continuing (15:00)</small>
+                </div>
+            </div>
+
+            <!-- Exercise 3: Fill in the Blanks -->
+            <div class="exercise-block" id="exercise3">
+                <div class="exercise-header">
+                    <div class="exercise-number">3</div>
+                    <div class="exercise-title">
+                        <h3>Fill in the Blanks</h3>
+                        <span>Complete the sentences with the correct terms</span>
+                    </div>
+                </div>
+                <div class="exercise-content">
+                    <p style="line-height: 2.5;">
+                        1. The doctrine of
+                        <input type="text" class="fill-blank-input" data-answer="stare decisis" id="blank1">
+                        requires courts to follow previous decisions.
+                    </p>
+                    <p style="line-height: 2.5;">
+                        2. A
+                        <input type="text" class="fill-blank-input" data-answer="precedent" id="blank2">
+                        is a previous court decision that guides future cases.
+                    </p>
+                    <p style="line-height: 2.5;">
+                        3. Common Law originated in
+                        <input type="text" class="fill-blank-input" data-answer="england" id="blank3">.
+                    </p>
+                </div>
+                <div class="exercise-actions">
+                    <button class="btn-check" onclick="checkFillBlanks('exercise3')">Check Answers</button>
+                    <button class="btn-hint" onclick="showHint('exercise3')">Show Hint</button>
+                </div>
+                <div class="feedback-message" id="feedback-exercise3"></div>
+            </div>
+
+            <!-- Exercise 4: True/False -->
+            <div class="exercise-block" id="exercise4">
+                <div class="exercise-header">
+                    <div class="exercise-number">4</div>
+                    <div class="exercise-title">
+                        <h3>True or False</h3>
+                        <span>Determine if the following statements are correct</span>
+                    </div>
+                </div>
+                <div class="exercise-content">
+                    <div style="margin-bottom: 15px;">
+                        <p><strong>1. Mexico uses a Common Law system.</strong></p>
+                        <ul class="options-list">
+                            <li class="option-item" data-correct="false" onclick="selectOption(this, 'tf1')">
+                                <span class="option-letter">T</span>
+                                <span>True</span>
+                            </li>
+                            <li class="option-item" data-correct="true" onclick="selectOption(this, 'tf1')">
+                                <span class="option-letter">F</span>
+                                <span>False</span>
+                            </li>
+                        </ul>
+                    </div>
+                    <div style="margin-bottom: 15px;">
+                        <p><strong>2. Jury trials are common in Common Law systems.</strong></p>
+                        <ul class="options-list">
+                            <li class="option-item" data-correct="true" onclick="selectOption(this, 'tf2')">
+                                <span class="option-letter">T</span>
+                                <span>True</span>
+                            </li>
+                            <li class="option-item" data-correct="false" onclick="selectOption(this, 'tf2')">
+                                <span class="option-letter">F</span>
+                                <span>False</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="exercise-actions">
+                    <button class="btn-check" onclick="checkTrueFalse('exercise4')">Check Answers</button>
+                </div>
+                <div class="feedback-message" id="feedback-exercise4"></div>
+            </div>
+
+            <!-- Summary -->
+            <div class="content-block highlight">
+                <h2>📋 Module Summary</h2>
+                <p>In this module, you learned:</p>
+                <ul>
+                    <li>Common Law originated in medieval England</li>
+                    <li>The doctrine of <em>stare decisis</em> is fundamental to Common Law</li>
+                    <li>Common Law differs from Civil Law in its reliance on precedent</li>
+                    <li>Judges in Common Law systems create binding precedents</li>
+                </ul>
+            </div>
+
+            <!-- Module Navigation -->
+            <div class="module-navigation">
+                <a href="../index.html" class="nav-btn disabled">
+                    ← Previous Module
+                </a>
+                <a href="../modulo-2/index.html" class="nav-btn">
+                    Next Module →
+                </a>
+            </div>
+        </section>
+    </main>
+
+    <!-- WhatsApp Float -->
+    <a href="https://wa.me/529982136760?text=Hola,%20tengo%20una%20pregunta%20sobre%20el%20Módulo%201%20de%20Legal%20English"
+       class="whatsapp-float" target="_blank" title="¿Dudas? Contáctanos">
+        💬
+    </a>
+
+    <script>
+        // ============================================
+        // VIDEO CONTROL FUNCTIONS
+        // ============================================
+
+        let player;
+        let currentTime = 0;
+
+        // Initialize YouTube API (if using YouTube)
+        function onYouTubeIframeAPIReady() {
+            player = new YT.Player('videoPlayer', {
+                events: {
+                    'onStateChange': onPlayerStateChange,
+                    'onReady': onPlayerReady
+                }
+            });
+        }
+
+        function onPlayerReady(event) {
+            // Update time markers based on video duration
+            setInterval(updateProgress, 1000);
+        }
+
+        function onPlayerStateChange(event) {
+            // Handle video state changes
+        }
+
+        function playPause() {
+            if (player && player.getPlayerState) {
+                const state = player.getPlayerState();
+                if (state === 1) {
+                    player.pauseVideo();
+                } else {
+                    player.playVideo();
+                }
+            } else {
+                alert('Configure el video para habilitar los controles');
+            }
+        }
+
+        function seekTo(seconds) {
+            if (player && player.seekTo) {
+                player.seekTo(seconds, true);
+                player.playVideo();
+            }
+            // Highlight the active time marker
+            document.querySelectorAll('.time-marker').forEach(marker => {
+                marker.classList.remove('active');
+                if (parseInt(marker.dataset.time) === seconds) {
+                    marker.classList.add('active');
+                }
+            });
+        }
+
+        function updateProgress() {
+            if (player && player.getCurrentTime && player.getDuration) {
+                const current = player.getCurrentTime();
+                const duration = player.getDuration();
+                const progress = (current / duration) * 100;
+                document.getElementById('progressFill').style.width = progress + '%';
+            }
+        }
+
+        // ============================================
+        // EXERCISE FUNCTIONS
+        // ============================================
+
+        // Multiple Choice
+        function selectOption(element, exerciseId) {
+            const container = element.closest('.options-list') || element.closest('.exercise-content');
+            container.querySelectorAll('.option-item').forEach(item => {
+                item.classList.remove('selected');
+            });
+            element.classList.add('selected');
+        }
+
+        function checkAnswer(exerciseId) {
+            const exercise = document.getElementById(exerciseId);
+            const selected = exercise.querySelector('.option-item.selected');
+            const feedback = document.getElementById('feedback-' + exerciseId);
+
+            if (!selected) {
+                feedback.className = 'feedback-message error';
+                feedback.textContent = 'Please select an answer first.';
+                return;
+            }
+
+            const isCorrect = selected.dataset.correct === 'true';
+
+            if (isCorrect) {
+                selected.classList.add('correct');
+                feedback.className = 'feedback-message success';
+                feedback.textContent = '✓ Correct! Well done!';
+                updateExerciseProgress();
+            } else {
+                selected.classList.add('incorrect');
+                feedback.className = 'feedback-message error';
+                feedback.textContent = '✗ Incorrect. Try again or check the hint.';
+            }
+        }
+
+        // Matching Exercise
+        let selectedLeft = null;
+        let selectedRight = null;
+
+        function selectMatching(element, side) {
+            if (side === 'left') {
+                if (selectedLeft) selectedLeft.classList.remove('selected');
+                selectedLeft = element;
+                element.classList.add('selected');
+            } else {
+                if (selectedRight) selectedRight.classList.remove('selected');
+                selectedRight = element;
+                element.classList.add('selected');
+            }
+
+            // Check if match is complete
+            if (selectedLeft && selectedRight) {
+                const match = selectedLeft.dataset.match;
+                const system = selectedRight.dataset.system;
+
+                if (match === system) {
+                    selectedLeft.classList.add('matched');
+                    selectedLeft.classList.remove('selected');
+                    selectedRight = null;
+                    selectedLeft = null;
+                }
+            }
+        }
+
+        function checkMatching(exerciseId) {
+            const exercise = document.getElementById(exerciseId);
+            const items = exercise.querySelectorAll('.matching-item[data-match]');
+            const feedback = document.getElementById('feedback-' + exerciseId);
+
+            let allMatched = true;
+            items.forEach(item => {
+                if (!item.classList.contains('matched')) {
+                    allMatched = false;
+                }
+            });
+
+            if (allMatched) {
+                feedback.className = 'feedback-message success';
+                feedback.textContent = '✓ All matches are correct! Excellent work!';
+                updateExerciseProgress();
+            } else {
+                feedback.className = 'feedback-message error';
+                feedback.textContent = 'Some matches are still pending. Keep trying!';
+            }
+        }
+
+        // Fill in the Blanks
+        function checkFillBlanks(exerciseId) {
+            const exercise = document.getElementById(exerciseId);
+            const inputs = exercise.querySelectorAll('.fill-blank-input');
+            const feedback = document.getElementById('feedback-' + exerciseId);
+
+            let allCorrect = true;
+            let correctCount = 0;
+
+            inputs.forEach(input => {
+                const answer = input.dataset.answer.toLowerCase();
+                const userAnswer = input.value.trim().toLowerCase();
+
+                if (userAnswer === answer) {
+                    input.style.borderColor = '#28a745';
+                    input.style.backgroundColor = 'rgba(40, 167, 69, 0.1)';
+                    correctCount++;
+                } else {
+                    input.style.borderColor = '#dc3545';
+                    input.style.backgroundColor = 'rgba(220, 53, 69, 0.1)';
+                    allCorrect = false;
+                }
+            });
+
+            if (allCorrect) {
+                feedback.className = 'feedback-message success';
+                feedback.textContent = '✓ All answers are correct! Great job!';
+                updateExerciseProgress();
+            } else {
+                feedback.className = 'feedback-message error';
+                feedback.textContent = `${correctCount}/${inputs.length} correct. Check the highlighted fields.`;
+            }
+        }
+
+        // True/False
+        function checkTrueFalse(exerciseId) {
+            const exercise = document.getElementById(exerciseId);
+            const feedback = document.getElementById('feedback-' + exerciseId);
+
+            let allCorrect = true;
+            let answeredAll = true;
+
+            // Check tf1 and tf2
+            ['tf1', 'tf2'].forEach(tfId => {
+                const selected = exercise.querySelector(`[onclick*="${tfId}"].selected`);
+                if (!selected) {
+                    answeredAll = false;
+                } else {
+                    const isCorrect = selected.dataset.correct === 'true';
+                    if (isCorrect) {
+                        selected.classList.add('correct');
+                    } else {
+                        selected.classList.add('incorrect');
+                        allCorrect = false;
+                    }
+                }
+            });
+
+            if (!answeredAll) {
+                feedback.className = 'feedback-message error';
+                feedback.textContent = 'Please answer all questions.';
+                return;
+            }
+
+            if (allCorrect) {
+                feedback.className = 'feedback-message success';
+                feedback.textContent = '✓ All answers are correct!';
+                updateExerciseProgress();
+            } else {
+                feedback.className = 'feedback-message error';
+                feedback.textContent = '✗ Some answers are incorrect. Review the content and try again.';
+            }
+        }
+
+        // Hints
+        function showHint(exerciseId) {
+            const feedback = document.getElementById('feedback-' + exerciseId);
+            const hints = {
+                'exercise1': 'Hint: The term comes from Latin and relates to following previous decisions.',
+                'exercise2': 'Hint: Think about which system uses codes vs. precedent, and jury vs. judge-led proceedings.',
+                'exercise3': 'Hint: Review the Key Vocabulary section and the first content block.'
+            };
+
+            feedback.className = 'feedback-message hint';
+            feedback.textContent = hints[exerciseId] || 'No hint available for this exercise.';
+        }
+
+        // Progress tracking
+        let completedExercises = 0;
+        const totalExercises = 4;
+
+        function updateExerciseProgress() {
+            completedExercises++;
+            const progress = (completedExercises / totalExercises) * 100;
+            document.getElementById('progressFill').style.width = progress + '%';
+
+            // Save progress to localStorage
+            localStorage.setItem('module1_progress', completedExercises);
+        }
+
+        // Load saved progress
+        function loadProgress() {
+            const saved = localStorage.getItem('module1_progress');
+            if (saved) {
+                completedExercises = parseInt(saved);
+                const progress = (completedExercises / totalExercises) * 100;
+                document.getElementById('progressFill').style.width = progress + '%';
+            }
+        }
+
+        // Mobile menu toggle
+        function toggleMenu() {
+            document.getElementById('navMenu').classList.toggle('active');
+        }
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', function() {
+            loadProgress();
+        });
+    </script>
+</body>
+</html>
