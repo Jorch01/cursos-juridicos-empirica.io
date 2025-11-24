@@ -69,26 +69,29 @@ function handleExerciseResponse(data) {
 
   // Preparar datos para insertar
   const timestamp = new Date();
+  const studentName = data.studentName || 'Anonymous';
+  const studentEmail = data.studentEmail || data.userEmail || 'not provided';
+
   const row = [
     timestamp,                                    // A: Timestamp
-    data.userEmail || 'anonymous',                // B: Email
-    data.module || 'unknown',                     // C: Module
-    data.exerciseId || 'unknown',                 // D: Exercise ID
-    data.exerciseType || 'unknown',               // E: Exercise Type
-    JSON.stringify(data.userAnswers),             // F: User Answers (JSON)
-    data.isCorrect ? 'YES' : 'NO',               // G: All Correct?
-    data.score || 0,                              // H: Score (%)
-    getSessionInfo(data.userEmail)                // I: Session Info
+    studentName,                                  // B: Student Name
+    studentEmail,                                 // C: Student Email
+    data.module || 'unknown',                     // D: Module
+    data.exerciseId || 'unknown',                 // E: Exercise ID
+    data.exerciseType || 'unknown',               // F: Exercise Type
+    JSON.stringify(data.userAnswers),             // G: User Answers (JSON)
+    data.isCorrect ? 'YES' : 'NO',               // H: All Correct?
+    data.score || 0                               // I: Score (%)
   ];
 
   // Insertar fila
   sheet.appendRow(row);
 
   // Actualizar resumen
-  updateSummary(data.userEmail, data.module, data.score);
+  updateSummary(studentName, studentEmail, data.module, data.score);
 
   // Log de éxito
-  logActivity('Exercise Response Saved', `${data.userEmail} - ${data.exerciseId}`);
+  logActivity('Exercise Response Saved', `${studentName} (${studentEmail}) - ${data.exerciseId}`);
 
   return ContentService
     .createTextOutput(JSON.stringify({
@@ -114,22 +117,26 @@ function handleSurvey(data) {
 
   // Preparar datos para insertar
   const timestamp = new Date();
+  const studentName = data.studentName || 'Anonymous';
+  const studentEmail = data.studentEmail || data.userEmail || 'not provided';
+
   const row = [
     timestamp,                                    // A: Timestamp
-    data.userEmail || 'anonymous',                // B: Email
-    data.module || 'unknown',                     // C: Module
-    data.difficulty || '',                        // D: Difficulty
-    data.quality || '',                           // E: Quality (1-5)
-    data.most_useful || '',                       // F: Most Useful
-    data.suggestions || '',                       // G: Suggestions
-    data.time_spent || ''                         // H: Time Spent
+    studentName,                                  // B: Student Name
+    studentEmail,                                 // C: Student Email
+    data.module || 'unknown',                     // D: Module
+    data.difficulty || '',                        // E: Difficulty
+    data.quality || '',                           // F: Quality (1-5)
+    data.most_useful || '',                       // G: Most Useful
+    data.suggestions || '',                       // H: Suggestions
+    data.time_spent || ''                         // I: Time Spent
   ];
 
   // Insertar fila
   sheet.appendRow(row);
 
   // Log de éxito
-  logActivity('Survey Saved', `${data.userEmail} - ${data.module}`);
+  logActivity('Survey Saved', `${studentName} (${studentEmail}) - ${data.module}`);
 
   return ContentService
     .createTextOutput(JSON.stringify({
@@ -150,14 +157,14 @@ function createResponsesSheet(ss) {
   // Headers
   const headers = [
     'Timestamp',
+    'Student Name',
     'Email',
     'Module',
     'Exercise ID',
     'Exercise Type',
     'User Answers (JSON)',
     'All Correct?',
-    'Score (%)',
-    'Session Info'
+    'Score (%)'
   ];
 
   // Configurar headers
@@ -184,6 +191,7 @@ function createSurveysSheet(ss) {
   // Headers
   const headers = [
     'Timestamp',
+    'Student Name',
     'Email',
     'Module',
     'Difficulty',
@@ -216,6 +224,7 @@ function createSummarySheet(ss) {
 
   // Headers
   const headers = [
+    'Student Name',
     'Email',
     'Module',
     'Exercises Completed',
@@ -290,7 +299,7 @@ function getSessionInfo(email) {
   }
 }
 
-function updateSummary(email, module, score) {
+function updateSummary(studentName, studentEmail, module, score) {
   try {
     const ss = getSpreadsheet();
     let sheet = ss.getSheetByName(CONFIG.SHEETS.SUMMARY);
@@ -304,7 +313,7 @@ function updateSummary(email, module, score) {
     let rowIndex = -1;
 
     for (let i = 1; i < data.length; i++) {
-      if (data[i][0] === email && data[i][1] === module) {
+      if (data[i][0] === studentName && data[i][2] === module) {
         rowIndex = i + 1;
         break;
       }
@@ -313,7 +322,8 @@ function updateSummary(email, module, score) {
     if (rowIndex === -1) {
       // Nueva entrada
       sheet.appendRow([
-        email,
+        studentName,
+        studentEmail,
         module,
         1,                    // Exercises completed
         score,                // Average score
@@ -322,13 +332,13 @@ function updateSummary(email, module, score) {
       ]);
     } else {
       // Actualizar existente
-      const exercisesCompleted = data[rowIndex - 1][2] + 1;
-      const oldAvgScore = data[rowIndex - 1][3];
+      const exercisesCompleted = data[rowIndex - 1][3] + 1;
+      const oldAvgScore = data[rowIndex - 1][4];
       const newAvgScore = ((oldAvgScore * (exercisesCompleted - 1)) + score) / exercisesCompleted;
 
-      sheet.getRange(rowIndex, 3).setValue(exercisesCompleted);
-      sheet.getRange(rowIndex, 4).setValue(Math.round(newAvgScore * 100) / 100);
-      sheet.getRange(rowIndex, 5).setValue(new Date());
+      sheet.getRange(rowIndex, 4).setValue(exercisesCompleted);
+      sheet.getRange(rowIndex, 5).setValue(Math.round(newAvgScore * 100) / 100);
+      sheet.getRange(rowIndex, 6).setValue(new Date());
     }
   } catch (error) {
     logActivity('ERROR in updateSummary', error.toString());
