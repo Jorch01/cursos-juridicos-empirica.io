@@ -1,0 +1,869 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Módulos del Curso | Legal English</title>
+    <meta name="description" content="Accede a los 15 módulos del curso Legal English: Anglo-American Law in Action">
+    <link rel="stylesheet" href="../../../css/styles.css">
+    <style>
+        /* ============================================
+           ESTILOS DE LA PÁGINA DE MÓDULOS
+           ============================================ */
+
+        .modules-hero {
+            background: linear-gradient(135deg, var(--primary) 0%, #2d4942 100%);
+            color: var(--white);
+            padding: 60px 20px;
+            text-align: center;
+        }
+
+        .modules-hero h1 {
+            font-size: 2.5rem;
+            color: var(--secondary);
+            margin-bottom: 15px;
+        }
+
+        .modules-hero p {
+            font-size: 1.1rem;
+            max-width: 700px;
+            margin: 0 auto;
+            opacity: 0.9;
+        }
+
+        .modules-container {
+            max-width: 1200px;
+            margin: 50px auto;
+            padding: 0 20px;
+        }
+
+        .progress-overview {
+            background: var(--white);
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 40px;
+            box-shadow: var(--shadow);
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+        }
+
+        .progress-stat {
+            text-align: center;
+            padding: 15px;
+        }
+
+        .progress-stat .number {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--primary);
+        }
+
+        .progress-stat .label {
+            color: var(--text-light);
+            font-size: 0.9rem;
+        }
+
+        .progress-bar-container {
+            grid-column: 1 / -1;
+            padding-top: 20px;
+            border-top: 1px solid var(--light-bg);
+        }
+
+        .progress-bar-label {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+            font-size: 0.9rem;
+            color: var(--text-light);
+        }
+
+        .progress-bar-large {
+            background: var(--light-bg);
+            height: 12px;
+            border-radius: 6px;
+            overflow: hidden;
+        }
+
+        .progress-fill-large {
+            background: linear-gradient(90deg, var(--secondary), var(--primary));
+            height: 100%;
+            border-radius: 6px;
+            transition: width 0.5s ease;
+        }
+
+        .modules-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 25px;
+        }
+
+        .module-card {
+            background: var(--white);
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: all 0.3s;
+            border: 2px solid transparent;
+            position: relative;
+        }
+
+        .module-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-hover);
+            border-color: var(--secondary);
+        }
+
+        .module-card.locked {
+            opacity: 0.6;
+            pointer-events: none;
+        }
+
+        .module-card.locked::after {
+            content: '🔒';
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            font-size: 1.5rem;
+        }
+
+        .module-card.completed {
+            border-color: #28a745;
+        }
+
+        .module-card.completed::after {
+            content: '✓';
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: #28a745;
+            color: white;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+        }
+
+        .module-card.in-progress {
+            border-color: var(--secondary);
+        }
+
+        .module-card.in-progress::after {
+            content: '▶';
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: var(--secondary);
+            color: var(--primary);
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.8rem;
+        }
+
+        .module-number {
+            background: linear-gradient(135deg, var(--primary), #2d4942);
+            color: var(--secondary);
+            padding: 20px;
+            font-size: 0.9rem;
+            font-weight: 600;
+        }
+
+        .module-number span {
+            font-size: 2rem;
+            display: block;
+            color: var(--white);
+        }
+
+        .module-content {
+            padding: 25px;
+        }
+
+        .module-content h3 {
+            color: var(--primary);
+            font-size: 1.2rem;
+            margin-bottom: 10px;
+        }
+
+        .module-content p {
+            color: var(--text-light);
+            font-size: 0.95rem;
+            margin-bottom: 15px;
+            line-height: 1.6;
+        }
+
+        .module-meta {
+            display: flex;
+            gap: 15px;
+            font-size: 0.85rem;
+            color: var(--text-light);
+            margin-bottom: 15px;
+        }
+
+        .module-meta span {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .module-topics {
+            list-style: none;
+            padding: 0;
+            margin: 0 0 20px;
+            font-size: 0.85rem;
+        }
+
+        .module-topics li {
+            padding: 5px 0 5px 20px;
+            position: relative;
+            color: var(--text-dark);
+        }
+
+        .module-topics li::before {
+            content: '•';
+            position: absolute;
+            left: 0;
+            color: var(--secondary);
+            font-weight: bold;
+        }
+
+        .module-actions {
+            display: flex;
+            gap: 10px;
+        }
+
+        .btn-start {
+            flex: 1;
+            background: var(--primary);
+            color: var(--white);
+            text-decoration: none;
+            padding: 12px 20px;
+            border-radius: 8px;
+            text-align: center;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+
+        .btn-start:hover {
+            background: #2d4942;
+            transform: translateY(-2px);
+        }
+
+        .btn-continue {
+            background: var(--secondary);
+            color: var(--primary);
+        }
+
+        .btn-continue:hover {
+            background: #b8957f;
+        }
+
+        .btn-review {
+            background: transparent;
+            border: 2px solid var(--primary);
+            color: var(--primary);
+        }
+
+        .btn-review:hover {
+            background: var(--primary);
+            color: var(--white);
+        }
+
+        /* Coming Soon Indicator */
+        .coming-soon-section {
+            background: var(--light-bg);
+            padding: 40px 20px;
+            text-align: center;
+            margin-top: 40px;
+            border-radius: 15px;
+        }
+
+        .coming-soon-section h3 {
+            color: var(--primary);
+            margin-bottom: 15px;
+        }
+
+        .coming-soon-section p {
+            color: var(--text-light);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .modules-hero h1 {
+                font-size: 1.8rem;
+            }
+
+            .modules-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .progress-overview {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .progress-overview {
+                grid-template-columns: 1fr;
+            }
+
+            .module-meta {
+                flex-direction: column;
+                gap: 5px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="nav-container">
+            <div class="logo-container">
+                <a href="../../../index.html">
+                    <img src="../../../images/logo.png" alt="Cursos Jurídicos Empírica" class="logo-img" onerror="this.style.display='none'">
+                </a>
+                <div class="logo-text">
+                    <h1>Legal English</h1>
+                    <p>Anglo-American Law in Action</p>
+                </div>
+            </div>
+            <button class="mobile-menu-toggle" onclick="toggleMenu()">☰</button>
+            <ul class="nav-menu" id="navMenu">
+                <li><a href="../index.html">Curso</a></li>
+                <li><a href="index.html" style="color: var(--secondary);">Módulos</a></li>
+                <li><a href="../../../contacto.html">Contacto</a></li>
+            </ul>
+        </div>
+    </header>
+
+    <!-- Hero -->
+    <section class="modules-hero">
+        <h1>Módulos del Curso</h1>
+        <p>Explora los 15 módulos de Legal English. Cada módulo incluye video de clase, ejercicios interactivos y vocabulario especializado.</p>
+    </section>
+
+    <!-- Main Content -->
+    <main class="modules-container">
+        <!-- Progress Overview -->
+        <div class="progress-overview">
+            <div class="progress-stat">
+                <div class="number" id="completedModules">0</div>
+                <div class="label">Módulos Completados</div>
+            </div>
+            <div class="progress-stat">
+                <div class="number" id="totalExercises">0</div>
+                <div class="label">Ejercicios Resueltos</div>
+            </div>
+            <div class="progress-stat">
+                <div class="number" id="studyTime">0h</div>
+                <div class="label">Tiempo de Estudio</div>
+            </div>
+            <div class="progress-bar-container">
+                <div class="progress-bar-label">
+                    <span>Progreso General</span>
+                    <span id="progressPercent">0%</span>
+                </div>
+                <div class="progress-bar-large">
+                    <div class="progress-fill-large" id="progressFill" style="width: 0%"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Modules Grid -->
+        <div class="modules-grid">
+            <!-- Module 1 -->
+            <div class="module-card" id="module-1">
+                <div class="module-number">
+                    Module <span>01</span>
+                </div>
+                <div class="module-content">
+                    <h3>Introduction to Common Law</h3>
+                    <p>Fundamentos del sistema Common Law, sus orígenes en Inglaterra y diferencias con el sistema Civil Law.</p>
+                    <div class="module-meta">
+                        <span>⏱ 45 min</span>
+                        <span>📝 4 ejercicios</span>
+                    </div>
+                    <ul class="module-topics">
+                        <li>Origins of Common Law</li>
+                        <li>Stare Decisis doctrine</li>
+                        <li>Common Law vs Civil Law</li>
+                        <li>Role of judges and precedent</li>
+                    </ul>
+                    <div class="module-actions">
+                        <a href="modulo-1/index.html" class="btn-start">Comenzar</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Module 2 -->
+            <div class="module-card locked" id="module-2">
+                <div class="module-number">
+                    Module <span>02</span>
+                </div>
+                <div class="module-content">
+                    <h3>Sources of Law</h3>
+                    <p>Fuentes del derecho en sistemas Common Law: constituciones, estatutos, case law y regulaciones.</p>
+                    <div class="module-meta">
+                        <span>⏱ 50 min</span>
+                        <span>📝 5 ejercicios</span>
+                    </div>
+                    <ul class="module-topics">
+                        <li>Constitutional Law</li>
+                        <li>Statutory interpretation</li>
+                        <li>Case Law and precedent</li>
+                        <li>Administrative regulations</li>
+                    </ul>
+                    <div class="module-actions">
+                        <a href="modulo-2/index.html" class="btn-start">Comenzar</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Module 3 -->
+            <div class="module-card locked" id="module-3">
+                <div class="module-number">
+                    Module <span>03</span>
+                </div>
+                <div class="module-content">
+                    <h3>Court Systems</h3>
+                    <p>Estructura de los sistemas judiciales en EE.UU. y Reino Unido: jurisdicción federal y estatal.</p>
+                    <div class="module-meta">
+                        <span>⏱ 55 min</span>
+                        <span>📝 5 ejercicios</span>
+                    </div>
+                    <ul class="module-topics">
+                        <li>US Federal Courts</li>
+                        <li>US State Courts</li>
+                        <li>UK Court hierarchy</li>
+                        <li>Jurisdiction types</li>
+                    </ul>
+                    <div class="module-actions">
+                        <a href="modulo-3/index.html" class="btn-start">Comenzar</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Module 4 -->
+            <div class="module-card locked" id="module-4">
+                <div class="module-number">
+                    Module <span>04</span>
+                </div>
+                <div class="module-content">
+                    <h3>Legal Professionals</h3>
+                    <p>Roles y responsabilidades de abogados, jueces y otros profesionales del derecho.</p>
+                    <div class="module-meta">
+                        <span>⏱ 45 min</span>
+                        <span>📝 4 ejercicios</span>
+                    </div>
+                    <ul class="module-topics">
+                        <li>Attorneys and Solicitors</li>
+                        <li>Barristers vs Solicitors</li>
+                        <li>Judges and Magistrates</li>
+                        <li>Legal ethics</li>
+                    </ul>
+                    <div class="module-actions">
+                        <a href="modulo-4/index.html" class="btn-start">Comenzar</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Module 5 -->
+            <div class="module-card locked" id="module-5">
+                <div class="module-number">
+                    Module <span>05</span>
+                </div>
+                <div class="module-content">
+                    <h3>Contract Law</h3>
+                    <p>Principios fundamentales del derecho contractual: formación, elementos y remedios.</p>
+                    <div class="module-meta">
+                        <span>⏱ 60 min</span>
+                        <span>📝 6 ejercicios</span>
+                    </div>
+                    <ul class="module-topics">
+                        <li>Contract formation</li>
+                        <li>Offer and acceptance</li>
+                        <li>Consideration</li>
+                        <li>Breach and remedies</li>
+                    </ul>
+                    <div class="module-actions">
+                        <a href="modulo-5/index.html" class="btn-start">Comenzar</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Module 6 -->
+            <div class="module-card locked" id="module-6">
+                <div class="module-number">
+                    Module <span>06</span>
+                </div>
+                <div class="module-content">
+                    <h3>Tort Law</h3>
+                    <p>Responsabilidad civil extracontractual: negligencia, responsabilidad estricta e intencional.</p>
+                    <div class="module-meta">
+                        <span>⏱ 55 min</span>
+                        <span>📝 5 ejercicios</span>
+                    </div>
+                    <ul class="module-topics">
+                        <li>Negligence elements</li>
+                        <li>Intentional torts</li>
+                        <li>Strict liability</li>
+                        <li>Damages calculation</li>
+                    </ul>
+                    <div class="module-actions">
+                        <a href="modulo-6/index.html" class="btn-start">Comenzar</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Module 7 -->
+            <div class="module-card locked" id="module-7">
+                <div class="module-number">
+                    Module <span>07</span>
+                </div>
+                <div class="module-content">
+                    <h3>Criminal Law</h3>
+                    <p>Principios del derecho penal: elementos del delito, defensas y procedimiento.</p>
+                    <div class="module-meta">
+                        <span>⏱ 60 min</span>
+                        <span>📝 6 ejercicios</span>
+                    </div>
+                    <ul class="module-topics">
+                        <li>Actus reus and mens rea</li>
+                        <li>Criminal defenses</li>
+                        <li>Due process rights</li>
+                        <li>Sentencing guidelines</li>
+                    </ul>
+                    <div class="module-actions">
+                        <a href="modulo-7/index.html" class="btn-start">Comenzar</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Module 8 -->
+            <div class="module-card locked" id="module-8">
+                <div class="module-number">
+                    Module <span>08</span>
+                </div>
+                <div class="module-content">
+                    <h3>Civil Procedure</h3>
+                    <p>Proceso civil desde la demanda hasta el juicio: pleadings, discovery y trial.</p>
+                    <div class="module-meta">
+                        <span>⏱ 55 min</span>
+                        <span>📝 5 ejercicios</span>
+                    </div>
+                    <ul class="module-topics">
+                        <li>Complaint and Answer</li>
+                        <li>Discovery process</li>
+                        <li>Motions practice</li>
+                        <li>Trial procedures</li>
+                    </ul>
+                    <div class="module-actions">
+                        <a href="modulo-8/index.html" class="btn-start">Comenzar</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Module 9 -->
+            <div class="module-card locked" id="module-9">
+                <div class="module-number">
+                    Module <span>09</span>
+                </div>
+                <div class="module-content">
+                    <h3>Constitutional Law</h3>
+                    <p>Principios constitucionales de EE.UU.: separación de poderes y derechos fundamentales.</p>
+                    <div class="module-meta">
+                        <span>⏱ 60 min</span>
+                        <span>📝 6 ejercicios</span>
+                    </div>
+                    <ul class="module-topics">
+                        <li>Separation of powers</li>
+                        <li>Bill of Rights</li>
+                        <li>Judicial review</li>
+                        <li>Federalism</li>
+                    </ul>
+                    <div class="module-actions">
+                        <a href="modulo-9/index.html" class="btn-start">Comenzar</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Module 10 -->
+            <div class="module-card locked" id="module-10">
+                <div class="module-number">
+                    Module <span>10</span>
+                </div>
+                <div class="module-content">
+                    <h3>Corporate Law</h3>
+                    <p>Derecho societario: formación de empresas, gobierno corporativo y responsabilidad.</p>
+                    <div class="module-meta">
+                        <span>⏱ 55 min</span>
+                        <span>📝 5 ejercicios</span>
+                    </div>
+                    <ul class="module-topics">
+                        <li>Business entities</li>
+                        <li>Corporate governance</li>
+                        <li>Fiduciary duties</li>
+                        <li>Shareholder rights</li>
+                    </ul>
+                    <div class="module-actions">
+                        <a href="modulo-10/index.html" class="btn-start">Comenzar</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Module 11 -->
+            <div class="module-card locked" id="module-11">
+                <div class="module-number">
+                    Module <span>11</span>
+                </div>
+                <div class="module-content">
+                    <h3>Property Law</h3>
+                    <p>Derecho de propiedad: bienes raíces, derechos reales y transferencias.</p>
+                    <div class="module-meta">
+                        <span>⏱ 50 min</span>
+                        <span>📝 5 ejercicios</span>
+                    </div>
+                    <ul class="module-topics">
+                        <li>Real property concepts</li>
+                        <li>Estates and interests</li>
+                        <li>Land transactions</li>
+                        <li>Landlord-tenant law</li>
+                    </ul>
+                    <div class="module-actions">
+                        <a href="modulo-11/index.html" class="btn-start">Comenzar</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Module 12 -->
+            <div class="module-card locked" id="module-12">
+                <div class="module-number">
+                    Module <span>12</span>
+                </div>
+                <div class="module-content">
+                    <h3>Intellectual Property</h3>
+                    <p>Propiedad intelectual: patentes, marcas, derechos de autor y secretos comerciales.</p>
+                    <div class="module-meta">
+                        <span>⏱ 50 min</span>
+                        <span>📝 5 ejercicios</span>
+                    </div>
+                    <ul class="module-topics">
+                        <li>Patents and inventions</li>
+                        <li>Trademarks and brands</li>
+                        <li>Copyrights</li>
+                        <li>Trade secrets</li>
+                    </ul>
+                    <div class="module-actions">
+                        <a href="modulo-12/index.html" class="btn-start">Comenzar</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Module 13 -->
+            <div class="module-card locked" id="module-13">
+                <div class="module-number">
+                    Module <span>13</span>
+                </div>
+                <div class="module-content">
+                    <h3>International Law</h3>
+                    <p>Derecho internacional público y privado: tratados, organizaciones y comercio.</p>
+                    <div class="module-meta">
+                        <span>⏱ 55 min</span>
+                        <span>📝 5 ejercicios</span>
+                    </div>
+                    <ul class="module-topics">
+                        <li>Public international law</li>
+                        <li>Treaties and conventions</li>
+                        <li>International organizations</li>
+                        <li>Conflict of laws</li>
+                    </ul>
+                    <div class="module-actions">
+                        <a href="modulo-13/index.html" class="btn-start">Comenzar</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Module 14 -->
+            <div class="module-card locked" id="module-14">
+                <div class="module-number">
+                    Module <span>14</span>
+                </div>
+                <div class="module-content">
+                    <h3>Legal Writing</h3>
+                    <p>Redacción jurídica en inglés: memorandos, contratos y correspondencia legal.</p>
+                    <div class="module-meta">
+                        <span>⏱ 60 min</span>
+                        <span>📝 6 ejercicios</span>
+                    </div>
+                    <ul class="module-topics">
+                        <li>Legal memoranda</li>
+                        <li>Contract drafting</li>
+                        <li>Client correspondence</li>
+                        <li>Plain language principles</li>
+                    </ul>
+                    <div class="module-actions">
+                        <a href="modulo-14/index.html" class="btn-start">Comenzar</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Module 15 -->
+            <div class="module-card locked" id="module-15">
+                <div class="module-number">
+                    Module <span>15</span>
+                </div>
+                <div class="module-content">
+                    <h3>Case Studies</h3>
+                    <p>Análisis de casos reales: Trump v. US, Loper Bright y otros casos relevantes de 2023-2024.</p>
+                    <div class="module-meta">
+                        <span>⏱ 65 min</span>
+                        <span>📝 6 ejercicios</span>
+                    </div>
+                    <ul class="module-topics">
+                        <li>Trump v. United States</li>
+                        <li>Loper Bright v. Raimondo</li>
+                        <li>Recent UK cases</li>
+                        <li>Case briefing skills</li>
+                    </ul>
+                    <div class="module-actions">
+                        <a href="modulo-15/index.html" class="btn-start">Comenzar</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Coming Soon Notice -->
+        <div class="coming-soon-section">
+            <h3>Contenido en Desarrollo</h3>
+            <p>Los módulos se irán desbloqueando conforme avances en el curso. Completa cada módulo para acceder al siguiente.</p>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-section">
+                <h4>Legal English</h4>
+                <p>Anglo-American Law in Action</p>
+                <p style="margin-top: 10px;">Un curso de Cursos Jurídicos Empírica</p>
+            </div>
+            <div class="footer-section">
+                <h4>Enlaces</h4>
+                <ul>
+                    <li><a href="../index.html">Información del Curso</a></li>
+                    <li><a href="../../../contacto.html">Contacto</a></li>
+                    <li><a href="../../../diplomas.html">Diplomas</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h4>Contacto</h4>
+                <ul>
+                    <li>info@cursosjuridicosempirica.com</li>
+                    <li>+52 998 213 6760</li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2024 Cursos Jurídicos Empírica. Todos los derechos reservados.</p>
+        </div>
+    </footer>
+
+    <!-- WhatsApp Float -->
+    <a href="https://wa.me/529982136760?text=Hola,%20tengo%20una%20pregunta%20sobre%20Legal%20English"
+       class="whatsapp-float" target="_blank" title="¿Dudas? Contáctanos">
+        💬
+    </a>
+
+    <script>
+        // Mobile menu toggle
+        function toggleMenu() {
+            document.getElementById('navMenu').classList.toggle('active');
+        }
+
+        // Load and display progress
+        function loadProgress() {
+            let completedModules = 0;
+            let totalExercises = 0;
+
+            // Check each module's progress in localStorage
+            for (let i = 1; i <= 15; i++) {
+                const moduleProgress = localStorage.getItem(`module${i}_progress`);
+                const moduleCard = document.getElementById(`module-${i}`);
+
+                if (moduleProgress) {
+                    const exercises = parseInt(moduleProgress);
+                    totalExercises += exercises;
+
+                    // Determine module status based on exercises completed
+                    // Assuming each module has ~5 exercises on average
+                    const expectedExercises = getExpectedExercises(i);
+
+                    if (exercises >= expectedExercises) {
+                        completedModules++;
+                        if (moduleCard) {
+                            moduleCard.classList.remove('locked', 'in-progress');
+                            moduleCard.classList.add('completed');
+                            moduleCard.querySelector('.btn-start').textContent = 'Revisar';
+                            moduleCard.querySelector('.btn-start').classList.add('btn-review');
+                        }
+                        // Unlock next module
+                        const nextModule = document.getElementById(`module-${i + 1}`);
+                        if (nextModule) {
+                            nextModule.classList.remove('locked');
+                        }
+                    } else if (exercises > 0) {
+                        if (moduleCard) {
+                            moduleCard.classList.remove('locked');
+                            moduleCard.classList.add('in-progress');
+                            moduleCard.querySelector('.btn-start').textContent = 'Continuar';
+                            moduleCard.querySelector('.btn-start').classList.add('btn-continue');
+                        }
+                    }
+                }
+            }
+
+            // Update stats
+            document.getElementById('completedModules').textContent = completedModules;
+            document.getElementById('totalExercises').textContent = totalExercises;
+
+            // Calculate study time (rough estimate: 10 min per exercise)
+            const studyMinutes = totalExercises * 10;
+            const studyHours = Math.floor(studyMinutes / 60);
+            const remainingMinutes = studyMinutes % 60;
+            document.getElementById('studyTime').textContent =
+                studyHours > 0 ? `${studyHours}h ${remainingMinutes}m` : `${remainingMinutes}m`;
+
+            // Update progress bar
+            const progressPercent = Math.round((completedModules / 15) * 100);
+            document.getElementById('progressPercent').textContent = progressPercent + '%';
+            document.getElementById('progressFill').style.width = progressPercent + '%';
+        }
+
+        function getExpectedExercises(moduleNumber) {
+            // Return expected exercises per module
+            const exercises = {
+                1: 4, 2: 5, 3: 5, 4: 4, 5: 6, 6: 5, 7: 6, 8: 5,
+                9: 6, 10: 5, 11: 5, 12: 5, 13: 5, 14: 6, 15: 6
+            };
+            return exercises[moduleNumber] || 5;
+        }
+
+        // Initialize on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            loadProgress();
+
+            // Always unlock module 1
+            const module1 = document.getElementById('module-1');
+            if (module1) {
+                module1.classList.remove('locked');
+            }
+        });
+    </script>
+</body>
+</html>
