@@ -1680,10 +1680,10 @@
         </section>
     </main>
 
-    <!-- WhatsApp Float -->
-    <a href="https://wa.me/529982136760?text=Hola,%20tengo%20una%20pregunta%20sobre%20el%20Módulo%201%20de%20Legal%20English"
-       class="whatsapp-float" target="_blank" title="¿Dudas? Contáctanos">
-        💬
+    <!-- Email Contact Float -->
+    <a href="mailto:jorge_clemente@empirica.mx?subject=Consulta sobre Módulo 1 - Legal English&body=Hola, tengo una pregunta sobre el Módulo 1 de Legal English:%0D%0A%0D%0A"
+       class="whatsapp-float" target="_blank" title="¿Dudas? Contáctanos por email">
+        📧
     </a>
 
     <script>
@@ -2287,22 +2287,54 @@
                 return;
             }
 
-            console.log('📤 Sending data to backend...', data);
+            console.log('📤 Attempting to send data to backend...');
+            console.log('🔗 Backend URL:', BACKEND_URL);
+            console.log('📦 Data:', JSON.stringify(data, null, 2));
 
+            // Try with regular fetch first to get response
             fetch(BACKEND_URL, {
                 method: 'POST',
-                mode: 'no-cors',
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify(data)
+                body: JSON.stringify(data),
+                redirect: 'follow'
             })
-            .then(() => {
-                console.log('✅ Data sent to backend successfully');
+            .then(response => {
+                console.log('📨 Response received:', response);
+                console.log('📊 Response status:', response.status);
+                console.log('✅ Data sent successfully!');
+                return response.text();
+            })
+            .then(text => {
+                console.log('📄 Response text:', text);
             })
             .catch(error => {
-                console.error('❌ Error sending to backend:', error);
-                console.log('💾 Data is still saved locally in localStorage');
+                console.warn('⚠️ Regular fetch failed (CORS), trying no-cors mode...');
+                console.warn('Error:', error);
+
+                // Fallback to no-cors mode
+                return fetch(BACKEND_URL, {
+                    method: 'POST',
+                    mode: 'no-cors',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(data)
+                })
+                .then(() => {
+                    console.log('✅ Data sent with no-cors mode (response not readable)');
+                    console.log('ℹ️ Check your Google Sheet to verify data was received');
+                })
+                .catch(error2 => {
+                    console.error('❌ Both fetch attempts failed:', error2);
+                    console.log('💾 Data is still saved locally in localStorage');
+                    console.log('🔍 Troubleshooting:');
+                    console.log('  1. Verify Web App URL is correct');
+                    console.log('  2. Check Web App is deployed with "Execute as: Me"');
+                    console.log('  3. Check "Who has access: Anyone"');
+                    console.log('  4. Check Activity_Log sheet in your Google Spreadsheet');
+                });
             });
         }
 
@@ -2367,5 +2399,8 @@
             // If using YouTube API, initialize it here
         });
     </script>
+
+    <!-- Payment & Access Control System -->
+    <script src="../../../js/payment-access-control.js"></script>
 </body>
 </html>
