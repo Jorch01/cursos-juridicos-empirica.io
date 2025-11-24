@@ -13,7 +13,7 @@
 
         .module-layout {
             display: grid;
-            grid-template-columns: 1fr 400px;
+            grid-template-columns: 350px 1fr;
             gap: 0;
             min-height: calc(100vh - 80px);
             max-width: 1600px;
@@ -1531,6 +1531,103 @@
                 </p>
             </div>
 
+            <!-- Module Evaluation Survey -->
+            <div class="exercise-block" id="moduleSurvey" style="background: linear-gradient(135deg, #f8f9fa, #e9ecef); border: 2px solid var(--primary);">
+                <div class="exercise-header">
+                    <div class="exercise-number">📊</div>
+                    <div class="exercise-title">
+                        <h3>Module Evaluation / Evaluación del Módulo</h3>
+                        <span>Help us improve this course by sharing your feedback</span>
+                    </div>
+                </div>
+                <div class="exercise-content">
+                    <form id="surveyForm" style="display: flex; flex-direction: column; gap: 20px;">
+                        <!-- Question 1: Difficulty -->
+                        <div style="padding: 15px; background: white; border-radius: 10px;">
+                            <label style="font-weight: 600; color: var(--primary); display: block; margin-bottom: 10px;">
+                                1. How would you rate the difficulty level of this module?<br>
+                                <span style="font-size: 0.9rem; color: var(--text-light);">¿Cómo calificarías el nivel de dificultad de este módulo?</span>
+                            </label>
+                            <div style="display: flex; flex-direction: column; gap: 8px; margin-top: 10px;">
+                                <label style="display: flex; align-items: center; gap: 10px; cursor: pointer;">
+                                    <input type="radio" name="difficulty" value="too_easy" required>
+                                    <span>Too easy / Muy fácil</span>
+                                </label>
+                                <label style="display: flex; align-items: center; gap: 10px; cursor: pointer;">
+                                    <input type="radio" name="difficulty" value="appropriate" required>
+                                    <span>Appropriate / Apropiado</span>
+                                </label>
+                                <label style="display: flex; align-items: center; gap: 10px; cursor: pointer;">
+                                    <input type="radio" name="difficulty" value="challenging" required>
+                                    <span>Challenging but manageable / Desafiante pero manejable</span>
+                                </label>
+                                <label style="display: flex; align-items: center; gap: 10px; cursor: pointer;">
+                                    <input type="radio" name="difficulty" value="too_hard" required>
+                                    <span>Too difficult / Muy difícil</span>
+                                </label>
+                            </div>
+                        </div>
+
+                        <!-- Question 2: Content Quality -->
+                        <div style="padding: 15px; background: white; border-radius: 10px;">
+                            <label style="font-weight: 600; color: var(--primary); display: block; margin-bottom: 10px;">
+                                2. Rate the quality of the content (1-5 stars)<br>
+                                <span style="font-size: 0.9rem; color: var(--text-light);">Califica la calidad del contenido (1-5 estrellas)</span>
+                            </label>
+                            <div style="display: flex; gap: 10px; margin-top: 10px;">
+                                <label style="cursor: pointer;"><input type="radio" name="quality" value="1" required> 1⭐</label>
+                                <label style="cursor: pointer;"><input type="radio" name="quality" value="2" required> 2⭐</label>
+                                <label style="cursor: pointer;"><input type="radio" name="quality" value="3" required> 3⭐</label>
+                                <label style="cursor: pointer;"><input type="radio" name="quality" value="4" required> 4⭐</label>
+                                <label style="cursor: pointer;"><input type="radio" name="quality" value="5" required> 5⭐</label>
+                            </div>
+                        </div>
+
+                        <!-- Question 3: Most Useful -->
+                        <div style="padding: 15px; background: white; border-radius: 10px;">
+                            <label style="font-weight: 600; color: var(--primary); display: block; margin-bottom: 10px;">
+                                3. What was the most useful part of this module?<br>
+                                <span style="font-size: 0.9rem; color: var(--text-light);">¿Cuál fue la parte más útil de este módulo?</span>
+                            </label>
+                            <textarea name="most_useful" rows="3" style="width: 100%; padding: 10px; border: 2px solid var(--light-bg); border-radius: 8px; font-family: inherit; font-size: 0.95rem;" placeholder="Your answer / Tu respuesta..."></textarea>
+                        </div>
+
+                        <!-- Question 4: Suggestions -->
+                        <div style="padding: 15px; background: white; border-radius: 10px;">
+                            <label style="font-weight: 600; color: var(--primary); display: block; margin-bottom: 10px;">
+                                4. Any suggestions for improvement?<br>
+                                <span style="font-size: 0.9rem; color: var(--text-light);">¿Alguna sugerencia de mejora?</span>
+                            </label>
+                            <textarea name="suggestions" rows="3" style="width: 100%; padding: 10px; border: 2px solid var(--light-bg); border-radius: 8px; font-family: inherit; font-size: 0.95rem;" placeholder="Your suggestions / Tus sugerencias..."></textarea>
+                        </div>
+
+                        <!-- Question 5: Time Spent -->
+                        <div style="padding: 15px; background: white; border-radius: 10px;">
+                            <label style="font-weight: 600; color: var(--primary); display: block; margin-bottom: 10px;">
+                                5. How long did it take you to complete this module?<br>
+                                <span style="font-size: 0.9rem; color: var(--text-light);">¿Cuánto tiempo te tomó completar este módulo?</span>
+                            </label>
+                            <select name="time_spent" required style="width: 100%; padding: 10px; border: 2px solid var(--light-bg); border-radius: 8px; font-size: 0.95rem;">
+                                <option value="">Select... / Selecciona...</option>
+                                <option value="less_30">Less than 30 minutes / Menos de 30 minutos</option>
+                                <option value="30_45">30-45 minutes / 30-45 minutos</option>
+                                <option value="45_60">45-60 minutes / 45-60 minutos</option>
+                                <option value="60_90">60-90 minutes / 60-90 minutos</option>
+                                <option value="more_90">More than 90 minutes / Más de 90 minutos</option>
+                            </select>
+                        </div>
+
+                        <!-- Submit Button -->
+                        <div style="display: flex; gap: 10px;">
+                            <button type="submit" class="btn-check" style="flex: 1;">
+                                Submit Survey / Enviar Encuesta
+                            </button>
+                        </div>
+                    </form>
+                    <div class="feedback-message" id="feedback-survey"></div>
+                </div>
+            </div>
+
             <!-- Module Navigation -->
             <div class="module-navigation">
                 <a href="../index.html" class="nav-btn">
@@ -1643,12 +1740,36 @@
         }
 
         function checkMatching(exerciseId) {
+            // Check if already attempted
+            if (exerciseAttempts[exerciseId]) {
+                const feedback = document.getElementById('feedback-' + exerciseId);
+                feedback.className = 'feedback-message error';
+                feedback.textContent = '⚠ Solo se permite un intento por ejercicio. Ya has usado tu intento.';
+                return;
+            }
+
             const exercise = document.getElementById(exerciseId);
             const leftItems = exercise.querySelectorAll('[data-match]');
             const feedback = document.getElementById('feedback-' + exerciseId);
+            const button = exercise.querySelector('.btn-check');
 
             const totalPairs = leftItems.length / 2;
             const matchedCount = matchedPairs[exerciseId] ? matchedPairs[exerciseId].length : 0;
+
+            // Mark as attempted
+            exerciseAttempts[exerciseId] = true;
+
+            // Disable button and all interactions
+            if (button) {
+                button.disabled = true;
+                button.style.opacity = '0.5';
+                button.style.cursor = 'not-allowed';
+            }
+
+            // Disable further matching
+            exercise.querySelectorAll('.option-item').forEach(item => {
+                item.style.pointerEvents = 'none';
+            });
 
             if (matchedCount === totalPairs) {
                 feedback.className = 'feedback-message success';
@@ -1656,8 +1777,17 @@
                 updateExerciseProgress();
             } else {
                 feedback.className = 'feedback-message error';
-                feedback.textContent = `You have matched ${matchedCount} out of ${totalPairs} pairs correctly. Keep trying!`;
+                feedback.textContent = `You matched ${matchedCount} out of ${totalPairs} pairs correctly. (Solo se permite un intento)`;
             }
+
+            // Save response
+            saveExerciseResponse(
+                exerciseId,
+                'matching',
+                matchedPairs[exerciseId] || [],
+                matchedCount === totalPairs,
+                (matchedCount / totalPairs) * 100
+            );
         }
 
         // Multiple Choice / True-False
@@ -1671,8 +1801,17 @@
         }
 
         function checkTrueFalse(exerciseId, totalQuestions) {
+            // Check if already attempted
+            if (exerciseAttempts[exerciseId]) {
+                const feedback = document.getElementById('feedback-' + exerciseId);
+                feedback.className = 'feedback-message error';
+                feedback.textContent = '⚠ Solo se permite un intento por ejercicio. Ya has usado tu intento.';
+                return;
+            }
+
             const exercise = document.getElementById(exerciseId);
             const feedback = document.getElementById('feedback-' + exerciseId);
+            const button = exercise.querySelector('.btn-check');
 
             let allCorrect = true;
             let answeredAll = true;
@@ -1700,20 +1839,105 @@
                 return;
             }
 
+            // Mark as attempted
+            exerciseAttempts[exerciseId] = true;
+
+            // Disable button and all interactions
+            if (button) {
+                button.disabled = true;
+                button.style.opacity = '0.5';
+                button.style.cursor = 'not-allowed';
+            }
+
+            // Disable further selection
+            exercise.querySelectorAll('.option-item').forEach(item => {
+                item.style.pointerEvents = 'none';
+            });
+
             if (allCorrect) {
                 feedback.className = 'feedback-message success';
                 feedback.textContent = `✓ All answers are correct! (${correctCount}/${totalQuestions})`;
                 updateExerciseProgress();
             } else {
                 feedback.className = 'feedback-message error';
-                feedback.textContent = `${correctCount}/${totalQuestions} correct. Review the incorrect answers.`;
+                feedback.textContent = `${correctCount}/${totalQuestions} correct. (Solo se permite un intento)`;
             }
+
+            // Save response - collect user answers
+            const userAnswers = [];
+            for (let i = 1; i <= totalQuestions; i++) {
+                const selected = exercise.querySelector(`[data-group="tf${exerciseId.slice(-1)}-${i}"].selected`);
+                if (selected) {
+                    userAnswers.push({
+                        question: i,
+                        answer: selected.textContent.trim(),
+                        correct: selected.dataset.correct === 'true'
+                    });
+                }
+            }
+            saveExerciseResponse(
+                exerciseId,
+                'true-false',
+                userAnswers,
+                allCorrect,
+                (correctCount / totalQuestions) * 100
+            );
+        }
+
+        // Levenshtein distance for spell tolerance
+        function levenshteinDistance(str1, str2) {
+            const len1 = str1.length;
+            const len2 = str2.length;
+            const matrix = [];
+
+            if (len1 === 0) return len2;
+            if (len2 === 0) return len1;
+
+            for (let i = 0; i <= len2; i++) {
+                matrix[i] = [i];
+            }
+
+            for (let j = 0; j <= len1; j++) {
+                matrix[0][j] = j;
+            }
+
+            for (let i = 1; i <= len2; i++) {
+                for (let j = 1; j <= len1; j++) {
+                    if (str2.charAt(i - 1) === str1.charAt(j - 1)) {
+                        matrix[i][j] = matrix[i - 1][j - 1];
+                    } else {
+                        matrix[i][j] = Math.min(
+                            matrix[i - 1][j - 1] + 1,
+                            matrix[i][j - 1] + 1,
+                            matrix[i - 1][j] + 1
+                        );
+                    }
+                }
+            }
+
+            return matrix[len2][len1];
+        }
+
+        // Check if answer is close enough (tolerates 1-2 character errors)
+        function isSpellingClose(userAnswer, correctAnswer) {
+            const distance = levenshteinDistance(userAnswer, correctAnswer);
+            const maxDistance = correctAnswer.length <= 4 ? 1 : 2;
+            return distance <= maxDistance;
         }
 
         // Fill in the Blanks
         function checkFillBlanks(exerciseId, totalBlanks) {
+            // Check if already attempted
+            if (exerciseAttempts[exerciseId]) {
+                const feedback = document.getElementById('feedback-' + exerciseId);
+                feedback.className = 'feedback-message error';
+                feedback.textContent = '⚠ Solo se permite un intento por ejercicio. Ya has usado tu intento.';
+                return;
+            }
+
             const exercise = document.getElementById(exerciseId);
             const feedback = document.getElementById('feedback-' + exerciseId);
+            const button = exercise.querySelector('.btn-check');
 
             let allCorrect = true;
             let correctCount = 0;
@@ -1727,7 +1951,11 @@
 
                 // Handle multiple correct answers separated by |
                 const correctAnswers = answer.split('|');
-                const isCorrect = correctAnswers.some(ans => userAnswer === ans);
+
+                // Check exact match or close spelling
+                const isCorrect = correctAnswers.some(ans =>
+                    userAnswer === ans || isSpellingClose(userAnswer, ans)
+                );
 
                 if (isCorrect) {
                     input.classList.remove('incorrect');
@@ -1740,14 +1968,57 @@
                 }
             }
 
+            // Mark as attempted
+            exerciseAttempts[exerciseId] = true;
+
+            // Disable button and all inputs
+            if (button) {
+                button.disabled = true;
+                button.style.opacity = '0.5';
+                button.style.cursor = 'not-allowed';
+            }
+
+            // Disable further editing
+            exercise.querySelectorAll('.fill-blank-input').forEach(input => {
+                input.disabled = true;
+                input.style.cursor = 'not-allowed';
+            });
+
             if (allCorrect) {
                 feedback.className = 'feedback-message success';
                 feedback.textContent = `✓ All answers are correct! (${correctCount}/${totalBlanks})`;
                 updateExerciseProgress();
             } else {
                 feedback.className = 'feedback-message error';
-                feedback.textContent = `${correctCount}/${totalBlanks} correct. Check the highlighted fields.`;
+                feedback.textContent = `${correctCount}/${totalBlanks} correct. (Solo se permite un intento)`;
             }
+
+            // Save response - collect user answers
+            const userAnswers = [];
+            for (let i = 1; i <= totalBlanks; i++) {
+                const input = document.getElementById(`blank${exerciseId.slice(-1)}-${i}`);
+                if (input) {
+                    const correctAnswers = input.dataset.answer.split('|');
+                    const userAnswer = input.value.trim();
+                    const isCorrect = correctAnswers.some(ans =>
+                        userAnswer.toLowerCase() === ans.toLowerCase() ||
+                        isSpellingClose(userAnswer.toLowerCase(), ans.toLowerCase())
+                    );
+                    userAnswers.push({
+                        blank: i,
+                        answer: userAnswer,
+                        correct: isCorrect,
+                        expected: correctAnswers[0]
+                    });
+                }
+            }
+            saveExerciseResponse(
+                exerciseId,
+                'fill-blanks',
+                userAnswers,
+                allCorrect,
+                (correctCount / totalBlanks) * 100
+            );
         }
 
         // Listening Checkbox Exercise
@@ -1762,9 +2033,18 @@
         }
 
         function checkListening(exerciseId) {
+            // Check if already attempted
+            if (exerciseAttempts[exerciseId]) {
+                const feedback = document.getElementById('feedback-' + exerciseId);
+                feedback.className = 'feedback-message error';
+                feedback.textContent = '⚠ Solo se permite un intento por ejercicio. Ya has usado tu intento.';
+                return;
+            }
+
             const exercise = document.getElementById(exerciseId);
             const items = exercise.querySelectorAll('.option-item');
             const feedback = document.getElementById('feedback-' + exerciseId);
+            const button = exercise.querySelector('.btn-check');
 
             let allCorrect = true;
             let correctCount = 0;
@@ -1787,19 +2067,56 @@
                 }
             });
 
+            // Mark as attempted
+            exerciseAttempts[exerciseId] = true;
+
+            // Disable button and all interactions
+            if (button) {
+                button.disabled = true;
+                button.style.opacity = '0.5';
+                button.style.cursor = 'not-allowed';
+            }
+
+            // Disable further clicking
+            exercise.querySelectorAll('.option-item').forEach(item => {
+                item.style.pointerEvents = 'none';
+            });
+
             if (allCorrect) {
                 feedback.className = 'feedback-message success';
                 feedback.textContent = `✓ Perfect! You identified all ${totalCorrect} correct items!`;
                 updateExerciseProgress();
             } else {
                 feedback.className = 'feedback-message error';
-                feedback.textContent = `${correctCount}/${totalCorrect} correct items identified. Review your selections.`;
+                feedback.textContent = `${correctCount}/${totalCorrect} correct items identified. (Solo se permite un intento)`;
             }
+
+            // Save response - collect user selections
+            const userAnswers = [];
+            items.forEach((item, index) => {
+                userAnswers.push({
+                    item: index + 1,
+                    text: item.textContent.trim(),
+                    selected: item.classList.contains('selected'),
+                    shouldBeSelected: item.dataset.correct === 'true',
+                    correct: (item.classList.contains('selected') === (item.dataset.correct === 'true'))
+                });
+            });
+            saveExerciseResponse(
+                exerciseId,
+                'listening-checkbox',
+                userAnswers,
+                allCorrect,
+                (correctCount / totalCorrect) * 100
+            );
         }
 
         // Progress tracking
         let completedExercises = 0;
         const totalExercises = 11;
+
+        // Attempt tracking - only one correction allowed per exercise
+        let exerciseAttempts = {};
 
         function updateExerciseProgress() {
             completedExercises++;
@@ -1822,9 +2139,113 @@
             document.getElementById('navMenu').classList.toggle('active');
         }
 
-        // Initialize
+        // ============================================
+        // RESPONSE TRACKING SYSTEM
+        // ============================================
+
+        // Save exercise response
+        function saveExerciseResponse(exerciseId, exerciseType, userAnswers, isCorrect, score) {
+            const userEmail = localStorage.getItem('empirica_user_email') || 'anonymous';
+            const timestamp = new Date().toISOString();
+
+            const response = {
+                module: 'module-1',
+                exerciseId: exerciseId,
+                exerciseType: exerciseType,
+                userEmail: userEmail,
+                timestamp: timestamp,
+                userAnswers: userAnswers,
+                isCorrect: isCorrect,
+                score: score
+            };
+
+            // Get existing responses
+            let responses = JSON.parse(localStorage.getItem('module1_responses') || '[]');
+            responses.push(response);
+            localStorage.setItem('module1_responses', JSON.stringify(responses));
+
+            // Also send to backend if configured
+            sendToBackend(response);
+        }
+
+        // Send data to backend (Google Sheets or custom endpoint)
+        function sendToBackend(data) {
+            const BACKEND_URL = 'https://script.google.com/macros/s/YOUR_SCRIPT_ID/exec';
+
+            // Check if backend is configured
+            if (BACKEND_URL.includes('YOUR_SCRIPT_ID')) {
+                console.log('Backend not configured. Data saved locally only:', data);
+                return;
+            }
+
+            fetch(BACKEND_URL, {
+                method: 'POST',
+                mode: 'no-cors',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(data)
+            }).catch(error => {
+                console.error('Error sending to backend:', error);
+            });
+        }
+
+        // Export responses to JSON file
+        function exportResponses() {
+            const responses = localStorage.getItem('module1_responses') || '[]';
+            const blob = new Blob([responses], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `module1_responses_${new Date().toISOString()}.json`;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+        }
+
+        // Survey form handler
         document.addEventListener('DOMContentLoaded', function() {
             loadProgress();
+
+            const surveyForm = document.getElementById('surveyForm');
+            if (surveyForm) {
+                surveyForm.addEventListener('submit', function(e) {
+                    e.preventDefault();
+
+                    const formData = new FormData(surveyForm);
+                    const surveyData = {
+                        module: 'module-1',
+                        userEmail: localStorage.getItem('empirica_user_email') || 'anonymous',
+                        timestamp: new Date().toISOString(),
+                        difficulty: formData.get('difficulty'),
+                        quality: formData.get('quality'),
+                        most_useful: formData.get('most_useful'),
+                        suggestions: formData.get('suggestions'),
+                        time_spent: formData.get('time_spent')
+                    };
+
+                    // Save survey to localStorage
+                    let surveys = JSON.parse(localStorage.getItem('module_surveys') || '[]');
+                    surveys.push(surveyData);
+                    localStorage.setItem('module_surveys', JSON.stringify(surveys));
+
+                    // Send to backend
+                    sendToBackend({ type: 'survey', data: surveyData });
+
+                    // Show success message
+                    const feedback = document.getElementById('feedback-survey');
+                    feedback.className = 'feedback-message success';
+                    feedback.textContent = '✓ Thank you for your feedback! / ¡Gracias por tu retroalimentación!';
+
+                    // Disable form
+                    surveyForm.querySelectorAll('input, textarea, select, button').forEach(el => {
+                        el.disabled = true;
+                    });
+                    surveyForm.style.opacity = '0.6';
+                });
+            }
+
             // If using YouTube API, initialize it here
         });
     </script>
