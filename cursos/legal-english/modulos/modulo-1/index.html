@@ -1745,8 +1745,9 @@
                 return;
             }
 
-            // Check if element is already paired
+            // If element is already paired, UNPAIR it (allow changing before check)
             if (element.classList.contains('paired')) {
+                unpairMatch(element, exerciseId);
                 return;
             }
 
@@ -1778,11 +1779,15 @@
                 selectedLeft.classList.remove('selected');
                 selectedRight.classList.remove('selected');
 
-                // Change to neutral paired color
+                // Change to neutral paired color with hover effect hint
                 selectedLeft.style.backgroundColor = '#e9ecef';
                 selectedRight.style.backgroundColor = '#e9ecef';
                 selectedLeft.style.border = '2px solid #6c757d';
                 selectedRight.style.border = '2px solid #6c757d';
+                selectedLeft.style.cursor = 'pointer';
+                selectedRight.style.cursor = 'pointer';
+                selectedLeft.title = '🔄 Click to unpair / Click para deshacer';
+                selectedRight.title = '🔄 Click to unpair / Click para deshacer';
 
                 // Store the match
                 if (!userMatches[exerciseId]) userMatches[exerciseId] = [];
@@ -1795,8 +1800,40 @@
                     rightText: selectedRight.textContent.trim()
                 });
 
+                console.log(`✓ Paired: "${selectedLeft.textContent.trim()}" ↔ "${selectedRight.textContent.trim()}"`);
+
                 selectedLeft = null;
                 selectedRight = null;
+            }
+        }
+
+        function unpairMatch(element, exerciseId) {
+            // Find the pair that contains this element
+            if (!userMatches[exerciseId]) return;
+
+            const pairIndex = userMatches[exerciseId].findIndex(match =>
+                match.leftElement === element || match.rightElement === element
+            );
+
+            if (pairIndex !== -1) {
+                const match = userMatches[exerciseId][pairIndex];
+
+                // Reset visual state of both elements
+                match.leftElement.classList.remove('paired', 'selected');
+                match.rightElement.classList.remove('paired', 'selected');
+                match.leftElement.style.backgroundColor = '';
+                match.rightElement.style.backgroundColor = '';
+                match.leftElement.style.border = '';
+                match.rightElement.style.border = '';
+                match.leftElement.style.cursor = '';
+                match.rightElement.style.cursor = '';
+                match.leftElement.title = '';
+                match.rightElement.title = '';
+
+                // Remove from userMatches array
+                userMatches[exerciseId].splice(pairIndex, 1);
+
+                console.log(`♻️ Unpaired: "${match.leftText}" ↔ "${match.rightText}"`);
             }
         }
 
