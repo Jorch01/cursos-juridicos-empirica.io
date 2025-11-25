@@ -1971,47 +1971,25 @@
                 (correctCount / totalQuestions) * 100
             );
 
-            // Check if 2 attempts reached
-            if (attemptNumber >= 2) {
-                if (button) {
-                    button.disabled = true;
-                    button.style.opacity = '0.5';
-                    button.style.cursor = 'not-allowed';
-                }
-
-                exercise.querySelectorAll('.option-item').forEach(item => {
-                    item.style.pointerEvents = 'none';
-                });
-
-                if (allCorrect) {
-                    feedback.className = 'feedback-message success';
-                    feedback.textContent = `✓ All correct! (${correctCount}/${totalQuestions}) - Intento ${attemptNumber}/2`;
-                    updateExerciseProgress();
-                } else {
-                    feedback.className = 'feedback-message error';
-                    feedback.textContent = `${correctCount}/${totalQuestions} correctas. Has usado tus 2 intentos.`;
-                }
+            // TRUE/FALSE: Solo 1 intento permitido
+            if (allCorrect) {
+                feedback.className = 'feedback-message success';
+                feedback.textContent = `✓ All answers are correct! (${correctCount}/${totalQuestions})`;
+                updateExerciseProgress();
             } else {
-                // First attempt
-                if (allCorrect) {
-                    feedback.className = 'feedback-message success';
-                    feedback.textContent = `✓ All answers are correct! (${correctCount}/${totalQuestions})`;
-                    updateExerciseProgress();
-
-                    // Disable since correct
-                    if (button) {
-                        button.disabled = true;
-                        button.style.opacity = '0.5';
-                        button.style.cursor = 'not-allowed';
-                    }
-                    exercise.querySelectorAll('.option-item').forEach(item => {
-                        item.style.pointerEvents = 'none';
-                    });
-                } else {
-                    feedback.className = 'feedback-message error';
-                    feedback.textContent = `${correctCount}/${totalQuestions} correctas. Tienes 1 intento más.`;
-                }
+                feedback.className = 'feedback-message error';
+                feedback.textContent = `${correctCount}/${totalQuestions} correctas. Solo se permite 1 intento.`;
             }
+
+            // Bloquear después del primer intento (correcto o incorrecto)
+            if (button) {
+                button.disabled = true;
+                button.style.opacity = '0.5';
+                button.style.cursor = 'not-allowed';
+            }
+            exercise.querySelectorAll('.option-item').forEach(item => {
+                item.style.pointerEvents = 'none';
+            });
         }
 
         // Levenshtein distance for spell tolerance
