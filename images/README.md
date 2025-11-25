@@ -51,7 +51,7 @@ Esta carpeta contiene las imágenes utilizadas en el sitio web de Empírica Lega
 
 6. **Verificación**:
    Una vez subida la imagen, visita:
-   - https://jorch01.github.io/cursos-juridicos-empirica.io/diplomas.html
+   - https://cursos.empirica.mx/diplomas.html
    - Verifica que la imagen del diploma se muestre correctamente en la sección "Ejemplo de Diploma"
 
 ## Notas adicionales

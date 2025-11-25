@@ -9,7 +9,7 @@
       "calificacion": 100,
       "firma_sat": "contenida en el documento",
       "diploma_url": "diplomas/EMPJUR-2025-001.pdf",
-      "qr_code": "https://jorch01.github.io/cursos-juridicos-empirica.io/verificar.html?id=EMPJUR-2025-001"
+      "qr_code": "https://cursos.empirica.mx/verificar.html?id=EMPJUR-2025-001"
     },
     {
       "id": "EMPJUR-2025-002",
@@ -20,7 +20,7 @@
       "calificacion": 92,
       "firma_sat": "DEF456UVW012",
       "diploma_url": "diplomas/EMPJUR-2025-002.pdf",
-      "qr_code": "https://jorch01.github.io/cursos-juridicos-empirica/verificar.html?id=EMPJUR-2025-002"
+      "qr_code": "https://cursos.empirica.mx/verificar.html?id=EMPJUR-2025-002"
     }
   ]
 }

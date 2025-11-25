@@ -46,7 +46,7 @@ https://TU-DOMINIO.com/gracias.html?curso=derecho-no-abogados&email={CUSTOMER_EM
 
 **Ejemplo completo:**
 ```
-https://jorch01.github.io/cursos-juridicos-empirica.io/gracias.html?curso=derecho-no-abogados&email={CUSTOMER_EMAIL}
+https://jorch01.github.io/cursos.empirica.mx/gracias.html?curso=derecho-no-abogados&email={CUSTOMER_EMAIL}
 ```
 
 6. Haz clic en **"Save"** (Guardar)
@@ -63,7 +63,7 @@ https://TU-DOMINIO.com/gracias.html?curso=legal-english&email={CUSTOMER_EMAIL}
 
 **Ejemplo completo:**
 ```
-https://jorch01.github.io/cursos-juridicos-empirica.io/gracias.html?curso=legal-english&email={CUSTOMER_EMAIL}
+https://jorch01.github.io/cursos.empirica.mx/gracias.html?curso=legal-english&email={CUSTOMER_EMAIL}
 ```
 
 ---

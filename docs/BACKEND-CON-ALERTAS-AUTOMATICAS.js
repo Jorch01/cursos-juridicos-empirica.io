@@ -166,7 +166,7 @@ function sendWelcomeEmail(email, course) {
       ? 'Derecho para No Abogados'
       : 'Legal English: Anglo-American Law in Action';
 
-    const courseUrl = `https://cursos-juridicos-empirica.io/cursos/${course}/`;
+    const courseUrl = `https://cursos.empirica.mx/cursos/${course}/`;
 
     const subject = `✅ Bienvenido a ${courseName} - Empírica Legal Lab`;
 

@@ -1,7 +1,7 @@
-# Robots.txt para cursos-juridicos-empirica.io
+# Robots.txt para cursos.empirica.mx
 
 User-agent: *
 Allow: /
 
 # Sitemap
-Sitemap: https://cursos-juridicos-empirica.io/sitemap.xml
+Sitemap: https://cursos.empirica.mx/sitemap.xml
