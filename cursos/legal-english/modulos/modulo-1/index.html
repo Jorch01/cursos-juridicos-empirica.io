@@ -1792,14 +1792,6 @@
         }
 
         function checkMatching(exerciseId) {
-            // Check if already attempted
-            if (exerciseAttempts[exerciseId]) {
-                const feedback = document.getElementById('feedback-' + exerciseId);
-                feedback.className = 'feedback-message error';
-                feedback.textContent = '⚠ Solo se permite un intento por ejercicio. Ya has usado tu intento.';
-                return;
-            }
-
             const exercise = document.getElementById(exerciseId);
             const leftItems = exercise.querySelectorAll('[data-match]');
             const feedback = document.getElementById('feedback-' + exerciseId);
@@ -1807,39 +1799,89 @@
 
             const totalPairs = leftItems.length / 2;
             const matchedCount = matchedPairs[exerciseId] ? matchedPairs[exerciseId].length : 0;
+            const isCorrect = matchedCount === totalPairs;
 
-            // Mark as attempted
-            exerciseAttempts[exerciseId] = true;
-
-            // Disable button and all interactions
-            if (button) {
-                button.disabled = true;
-                button.style.opacity = '0.5';
-                button.style.cursor = 'not-allowed';
+            // Initialize attempt tracking for this exercise
+            if (!exerciseAttempts[exerciseId]) {
+                exerciseAttempts[exerciseId] = { count: 0, attempts: [] };
             }
 
-            // Disable further matching
-            exercise.querySelectorAll('.option-item').forEach(item => {
-                item.style.pointerEvents = 'none';
-            });
+            // Increment attempt count
+            exerciseAttempts[exerciseId].count++;
+            const attemptNumber = exerciseAttempts[exerciseId].count;
 
-            if (matchedCount === totalPairs) {
-                feedback.className = 'feedback-message success';
-                feedback.textContent = '✓ All matches are correct! Excellent work!';
-                updateExerciseProgress();
-            } else {
-                feedback.className = 'feedback-message error';
-                feedback.textContent = `You matched ${matchedCount} out of ${totalPairs} pairs correctly. (Solo se permite un intento)`;
-            }
+            // Save this attempt
+            const attemptData = {
+                attemptNumber: attemptNumber,
+                matchedCount: matchedCount,
+                totalPairs: totalPairs,
+                isCorrect: isCorrect,
+                score: (matchedCount / totalPairs) * 100,
+                timestamp: new Date().toISOString()
+            };
+            exerciseAttempts[exerciseId].attempts.push(attemptData);
 
-            // Save response
+            // Save to backend (each attempt is saved)
             saveExerciseResponse(
                 exerciseId,
                 'matching',
-                matchedPairs[exerciseId] || [],
-                matchedCount === totalPairs,
+                {
+                    attemptNumber: attemptNumber,
+                    matchedPairs: matchedPairs[exerciseId] || [],
+                    allAttempts: exerciseAttempts[exerciseId].attempts
+                },
+                isCorrect,
                 (matchedCount / totalPairs) * 100
             );
+
+            // Check if this is the second attempt
+            if (attemptNumber >= 2) {
+                // Disable button and all interactions after 2nd attempt
+                if (button) {
+                    button.disabled = true;
+                    button.style.opacity = '0.5';
+                    button.style.cursor = 'not-allowed';
+                }
+
+                exercise.querySelectorAll('.option-item').forEach(item => {
+                    item.style.pointerEvents = 'none';
+                });
+
+                if (isCorrect) {
+                    feedback.className = 'feedback-message success';
+                    feedback.textContent = `✓ All matches are correct! (Intento ${attemptNumber}/2)`;
+                    updateExerciseProgress();
+                } else {
+                    feedback.className = 'feedback-message error';
+                    feedback.textContent = `${matchedCount}/${totalPairs} pares correctos. Has usado tus 2 intentos permitidos.`;
+                }
+            } else {
+                // First attempt
+                if (isCorrect) {
+                    feedback.className = 'feedback-message success';
+                    feedback.textContent = `✓ All matches are correct! Excellent work!`;
+                    updateExerciseProgress();
+
+                    // Disable since it's correct
+                    if (button) {
+                        button.disabled = true;
+                        button.style.opacity = '0.5';
+                        button.style.cursor = 'not-allowed';
+                    }
+                    exercise.querySelectorAll('.option-item').forEach(item => {
+                        item.style.pointerEvents = 'none';
+                    });
+                } else {
+                    feedback.className = 'feedback-message error';
+                    feedback.textContent = `${matchedCount}/${totalPairs} pares correctos. Tienes 1 intento más. Revisa los pares incorrectos.`;
+
+                    // Mark incorrect pairs as wrong but allow retry
+                    exercise.querySelectorAll('.option-item:not(.correct)').forEach(item => {
+                        item.classList.add('incorrect-attempt');
+                        item.style.backgroundColor = '#ffe6e6';
+                    });
+                }
+            }
         }
 
         // Multiple Choice / True-False
@@ -1853,14 +1895,6 @@
         }
 
         function checkTrueFalse(exerciseId, totalQuestions) {
-            // Check if already attempted
-            if (exerciseAttempts[exerciseId]) {
-                const feedback = document.getElementById('feedback-' + exerciseId);
-                feedback.className = 'feedback-message error';
-                feedback.textContent = '⚠ Solo se permite un intento por ejercicio. Ya has usado tu intento.';
-                return;
-            }
-
             const exercise = document.getElementById(exerciseId);
             const feedback = document.getElementById('feedback-' + exerciseId);
             const button = exercise.querySelector('.btn-check');
@@ -1869,6 +1903,7 @@
             let answeredAll = true;
             let correctCount = 0;
 
+            // Check answers
             for (let i = 1; i <= totalQuestions; i++) {
                 const selected = exercise.querySelector(`[data-group="tf${exerciseId.slice(-1)}-${i}"].selected`);
                 if (!selected) {
@@ -1891,31 +1926,26 @@
                 return;
             }
 
-            // Mark as attempted
-            exerciseAttempts[exerciseId] = true;
-
-            // Disable button and all interactions
-            if (button) {
-                button.disabled = true;
-                button.style.opacity = '0.5';
-                button.style.cursor = 'not-allowed';
+            // Initialize attempt tracking
+            if (!exerciseAttempts[exerciseId]) {
+                exerciseAttempts[exerciseId] = { count: 0, attempts: [] };
             }
 
-            // Disable further selection
-            exercise.querySelectorAll('.option-item').forEach(item => {
-                item.style.pointerEvents = 'none';
-            });
+            exerciseAttempts[exerciseId].count++;
+            const attemptNumber = exerciseAttempts[exerciseId].count;
 
-            if (allCorrect) {
-                feedback.className = 'feedback-message success';
-                feedback.textContent = `✓ All answers are correct! (${correctCount}/${totalQuestions})`;
-                updateExerciseProgress();
-            } else {
-                feedback.className = 'feedback-message error';
-                feedback.textContent = `${correctCount}/${totalQuestions} correct. (Solo se permite un intento)`;
-            }
+            // Save attempt data
+            const attemptData = {
+                attemptNumber: attemptNumber,
+                correctCount: correctCount,
+                totalQuestions: totalQuestions,
+                isCorrect: allCorrect,
+                score: (correctCount / totalQuestions) * 100,
+                timestamp: new Date().toISOString()
+            };
+            exerciseAttempts[exerciseId].attempts.push(attemptData);
 
-            // Save response - collect user answers
+            // Collect user answers
             const userAnswers = [];
             for (let i = 1; i <= totalQuestions; i++) {
                 const selected = exercise.querySelector(`[data-group="tf${exerciseId.slice(-1)}-${i}"].selected`);
@@ -1927,13 +1957,61 @@
                     });
                 }
             }
+
+            // Save response
             saveExerciseResponse(
                 exerciseId,
                 'true-false',
-                userAnswers,
+                {
+                    attemptNumber: attemptNumber,
+                    answers: userAnswers,
+                    allAttempts: exerciseAttempts[exerciseId].attempts
+                },
                 allCorrect,
                 (correctCount / totalQuestions) * 100
             );
+
+            // Check if 2 attempts reached
+            if (attemptNumber >= 2) {
+                if (button) {
+                    button.disabled = true;
+                    button.style.opacity = '0.5';
+                    button.style.cursor = 'not-allowed';
+                }
+
+                exercise.querySelectorAll('.option-item').forEach(item => {
+                    item.style.pointerEvents = 'none';
+                });
+
+                if (allCorrect) {
+                    feedback.className = 'feedback-message success';
+                    feedback.textContent = `✓ All correct! (${correctCount}/${totalQuestions}) - Intento ${attemptNumber}/2`;
+                    updateExerciseProgress();
+                } else {
+                    feedback.className = 'feedback-message error';
+                    feedback.textContent = `${correctCount}/${totalQuestions} correctas. Has usado tus 2 intentos.`;
+                }
+            } else {
+                // First attempt
+                if (allCorrect) {
+                    feedback.className = 'feedback-message success';
+                    feedback.textContent = `✓ All answers are correct! (${correctCount}/${totalQuestions})`;
+                    updateExerciseProgress();
+
+                    // Disable since correct
+                    if (button) {
+                        button.disabled = true;
+                        button.style.opacity = '0.5';
+                        button.style.cursor = 'not-allowed';
+                    }
+                    exercise.querySelectorAll('.option-item').forEach(item => {
+                        item.style.pointerEvents = 'none';
+                    });
+                } else {
+                    feedback.className = 'feedback-message error';
+                    feedback.textContent = `${correctCount}/${totalQuestions} correctas. Tienes 1 intento más.`;
+                }
+            }
         }
 
         // Levenshtein distance for spell tolerance
@@ -2167,8 +2245,8 @@
         let completedExercises = 0;
         const totalExercises = 11;
 
-        // Attempt tracking - only one correction allowed per exercise
-        let exerciseAttempts = {};
+        // Attempt tracking - track number of attempts and results
+        let exerciseAttempts = {}; // { exerciseId: { count: 0, attempts: [] } }
 
         function updateExerciseProgress() {
             completedExercises++;
@@ -2401,6 +2479,6 @@
     </script>
 
     <!-- Payment & Access Control System -->
-    <script src="../../../js/payment-access-control.js"></script>
+    <script src="../../../../js/payment-access-control.js"></script>
 </body>
 </html>
