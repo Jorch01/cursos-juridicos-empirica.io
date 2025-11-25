@@ -1,0 +1,16 @@
+{
+  "name": "Empírica Legal Lab - Cursos Jurídicos",
+  "short_name": "Empírica",
+  "description": "Plataforma de cursos jurídicos profesionales con certificación oficial",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#1B2C27",
+  "theme_color": "#1B2C27",
+  "icons": [
+    {
+      "src": "https://i.postimg.cc/tCVcj2Sw/logo.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    }
+  ]
+}
