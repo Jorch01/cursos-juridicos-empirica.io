@@ -1733,14 +1733,20 @@
         // EXERCISE FUNCTIONS
         // ============================================
 
-        // Matching Exercise
+        // Matching Exercise - Nuevo sistema: 1 intento, revelación al final
         let selectedLeft = null;
         let selectedRight = null;
-        let matchedPairs = {};
+        let userMatches = {}; // Stores user's pair selections { exerciseId: [{ left: elem, right: elem, leftMatch: 'a', rightMatch: 'b' }] }
 
         function selectMatch(element, exerciseId) {
-            // Check if element is already matched or disabled
-            if (element.classList.contains('correct') || element.style.pointerEvents === 'none') {
+            // Don't allow selection if exercise is already checked
+            const savedState = loadExerciseState(exerciseId);
+            if (savedState && savedState.completed) {
+                return;
+            }
+
+            // Check if element is already paired
+            if (element.classList.contains('paired')) {
                 return;
             }
 
@@ -1761,146 +1767,178 @@
                 element.classList.add('selected');
             }
 
+            // When both are selected, pair them visually (but don't reveal correctness)
             if (selectedLeft && selectedRight) {
                 const matchLeft = selectedLeft.dataset.match;
                 const matchRight = selectedRight.dataset.match;
 
-                if (matchLeft === matchRight) {
-                    selectedLeft.classList.add('correct');
-                    selectedRight.classList.add('correct');
-                    selectedLeft.classList.remove('selected');
-                    selectedRight.classList.remove('selected');
+                // Mark as paired (neutral color)
+                selectedLeft.classList.add('paired');
+                selectedRight.classList.add('paired');
+                selectedLeft.classList.remove('selected');
+                selectedRight.classList.remove('selected');
 
-                    // Disable matched items
-                    selectedLeft.style.pointerEvents = 'none';
-                    selectedRight.style.pointerEvents = 'none';
+                // Change to neutral paired color
+                selectedLeft.style.backgroundColor = '#e9ecef';
+                selectedRight.style.backgroundColor = '#e9ecef';
+                selectedLeft.style.border = '2px solid #6c757d';
+                selectedRight.style.border = '2px solid #6c757d';
 
-                    if (!matchedPairs[exerciseId]) matchedPairs[exerciseId] = [];
-                    matchedPairs[exerciseId].push(matchLeft);
+                // Store the match
+                if (!userMatches[exerciseId]) userMatches[exerciseId] = [];
+                userMatches[exerciseId].push({
+                    leftElement: selectedLeft,
+                    rightElement: selectedRight,
+                    leftMatch: matchLeft,
+                    rightMatch: matchRight,
+                    leftText: selectedLeft.textContent.trim(),
+                    rightText: selectedRight.textContent.trim()
+                });
 
-                    selectedLeft = null;
-                    selectedRight = null;
-                } else {
-                    setTimeout(() => {
-                        if (selectedLeft) selectedLeft.classList.remove('selected');
-                        if (selectedRight) selectedRight.classList.remove('selected');
-                        selectedLeft = null;
-                        selectedRight = null;
-                    }, 500);
-                }
+                selectedLeft = null;
+                selectedRight = null;
             }
         }
 
         function checkMatching(exerciseId) {
             const exercise = document.getElementById(exerciseId);
-            const leftItems = exercise.querySelectorAll('[data-match]');
             const feedback = document.getElementById('feedback-' + exerciseId);
             const button = exercise.querySelector('.btn-check');
 
-            const totalPairs = leftItems.length / 2;
-            const matchedCount = matchedPairs[exerciseId] ? matchedPairs[exerciseId].length : 0;
-            const isCorrect = matchedCount === totalPairs;
+            // Get all items to calculate total pairs
+            const allItems = exercise.querySelectorAll('[data-match]');
+            const totalPairs = allItems.length / 2;
 
-            // Initialize attempt tracking for this exercise
+            // Get user's matches for this exercise
+            const matches = userMatches[exerciseId] || [];
+
+            // Check if user has made all pairs
+            if (matches.length < totalPairs) {
+                feedback.className = 'feedback-message error';
+                feedback.textContent = `⚠️ Por favor completa todos los pares. Tienes ${matches.length}/${totalPairs} pares.`;
+                feedback.style.display = 'block';
+                return;
+            }
+
+            // NOW REVEAL ALL RESULTS AT ONCE
+            let correctCount = 0;
+            const results = [];
+
+            matches.forEach(match => {
+                const isCorrect = match.leftMatch === match.rightMatch;
+                if (isCorrect) {
+                    correctCount++;
+                }
+
+                // Mark as correct or incorrect
+                if (isCorrect) {
+                    match.leftElement.classList.add('correct');
+                    match.rightElement.classList.add('correct');
+                    match.leftElement.classList.remove('paired');
+                    match.rightElement.classList.remove('paired');
+                    match.leftElement.style.backgroundColor = '#d4edda';
+                    match.rightElement.style.backgroundColor = '#d4edda';
+                    match.leftElement.style.border = '2px solid #28a745';
+                    match.rightElement.style.border = '2px solid #28a745';
+                } else {
+                    match.leftElement.classList.add('incorrect');
+                    match.rightElement.classList.add('incorrect');
+                    match.leftElement.classList.remove('paired');
+                    match.rightElement.classList.remove('paired');
+                    match.leftElement.style.backgroundColor = '#f8d7da';
+                    match.rightElement.style.backgroundColor = '#f8d7da';
+                    match.leftElement.style.border = '2px solid #dc3545';
+                    match.rightElement.style.border = '2px solid #dc3545';
+                }
+
+                // Disable all items (no more attempts)
+                match.leftElement.style.pointerEvents = 'none';
+                match.rightElement.style.pointerEvents = 'none';
+
+                results.push({
+                    left: match.leftText,
+                    right: match.rightText,
+                    correct: isCorrect
+                });
+            });
+
+            const allCorrect = correctCount === totalPairs;
+            const score = (correctCount / totalPairs) * 100;
+
+            // Initialize attempt tracking
             if (!exerciseAttempts[exerciseId]) {
                 exerciseAttempts[exerciseId] = { count: 0, attempts: [] };
             }
 
-            // Increment attempt count
             exerciseAttempts[exerciseId].count++;
-            const attemptNumber = exerciseAttempts[exerciseId].count;
 
-            // Save this attempt
+            // Save attempt data
             const attemptData = {
-                attemptNumber: attemptNumber,
-                matchedCount: matchedCount,
+                attemptNumber: 1, // Always 1 since only one attempt allowed
+                correctCount: correctCount,
                 totalPairs: totalPairs,
-                isCorrect: isCorrect,
-                score: (matchedCount / totalPairs) * 100,
-                timestamp: new Date().toISOString()
+                isCorrect: allCorrect,
+                score: score,
+                timestamp: new Date().toISOString(),
+                results: results
             };
             exerciseAttempts[exerciseId].attempts.push(attemptData);
 
-            // Save to backend (each attempt is saved)
+            // Save to backend
             saveExerciseResponse(
                 exerciseId,
                 'matching',
                 {
-                    attemptNumber: attemptNumber,
-                    matchedPairs: matchedPairs[exerciseId] || [],
+                    attemptNumber: 1,
+                    matches: results,
                     allAttempts: exerciseAttempts[exerciseId].attempts
                 },
-                isCorrect,
-                (matchedCount / totalPairs) * 100
+                allCorrect,
+                score
             );
 
+            // Show feedback
             let feedbackText = '';
-            let completed = false;
-
-            // Check if this is the second attempt
-            if (attemptNumber >= 2) {
-                completed = true;
-
-                // Disable button and all interactions after 2nd attempt
-                if (button) {
-                    button.disabled = true;
-                    button.style.opacity = '0.5';
-                    button.style.cursor = 'not-allowed';
-                }
-
-                exercise.querySelectorAll('.option-item').forEach(item => {
-                    item.style.pointerEvents = 'none';
-                });
-
-                if (isCorrect) {
-                    feedback.className = 'feedback-message success';
-                    feedbackText = `✓ All matches are correct! (Intento ${attemptNumber}/2)`;
-                    feedback.textContent = feedbackText;
-                    updateExerciseProgress();
-                } else {
-                    feedback.className = 'feedback-message error';
-                    feedbackText = `${matchedCount}/${totalPairs} pares correctos. Has usado tus 2 intentos permitidos.`;
-                    feedback.textContent = feedbackText;
-                }
+            if (allCorrect) {
+                feedback.className = 'feedback-message success';
+                feedbackText = `✓ ¡Perfecto! Todos los pares son correctos (${correctCount}/${totalPairs})`;
+                updateExerciseProgress();
             } else {
-                // First attempt
-                if (isCorrect) {
-                    completed = true;
-                    feedback.className = 'feedback-message success';
-                    feedbackText = `✓ All matches are correct! Excellent work!`;
-                    feedback.textContent = feedbackText;
-                    updateExerciseProgress();
+                feedback.className = 'feedback-message error';
+                feedbackText = `${correctCount}/${totalPairs} pares correctos. Solo se permite 1 intento.`;
+            }
+            feedback.textContent = feedbackText;
+            feedback.style.display = 'block';
 
-                    // Disable since it's correct
-                    if (button) {
-                        button.disabled = true;
-                        button.style.opacity = '0.5';
-                        button.style.cursor = 'not-allowed';
-                    }
-                    exercise.querySelectorAll('.option-item').forEach(item => {
-                        item.style.pointerEvents = 'none';
-                    });
-                } else {
-                    feedback.className = 'feedback-message error';
-                    feedbackText = `${matchedCount}/${totalPairs} pares correctos. Tienes 1 intento más. Revisa los pares incorrectos.`;
-                    feedback.textContent = feedbackText;
-
-                    // Mark incorrect pairs as wrong but allow retry
-                    exercise.querySelectorAll('.option-item:not(.correct)').forEach(item => {
-                        item.classList.add('incorrect-attempt');
-                        item.style.backgroundColor = '#ffe6e6';
-                    });
-                }
+            // Disable button (only 1 attempt allowed)
+            if (button) {
+                button.disabled = true;
+                button.style.opacity = '0.5';
+                button.style.cursor = 'not-allowed';
             }
 
+            // Disable all items
+            exercise.querySelectorAll('.option-item').forEach(item => {
+                item.style.pointerEvents = 'none';
+            });
+
             // Save exercise state to localStorage
+            const matchData = matches.map(m => ({
+                left: m.leftText,
+                right: m.rightText,
+                leftMatch: m.leftMatch,
+                rightMatch: m.rightMatch
+            }));
+
             saveExerciseState(exerciseId, {
                 type: 'matching',
-                matchedPairs: matchedPairs[exerciseId] || [],
+                userMatches: matchData,
                 attempts: exerciseAttempts[exerciseId],
-                isCorrect: isCorrect,
-                completed: completed,
-                feedbackText: feedbackText
+                isCorrect: allCorrect,
+                completed: true,
+                feedbackText: feedbackText,
+                correctCount: correctCount,
+                totalPairs: totalPairs
             });
         }
 
@@ -2294,12 +2332,20 @@
 
         // Student Information Functions
         function saveStudentInfo() {
+            console.log('🟦 saveStudentInfo() called');
+
             const nameInput = document.getElementById('studentName');
             const emailInput = document.getElementById('studentEmail');
             const feedback = document.getElementById('student-info-feedback');
 
+            console.log('🟦 Name input element:', nameInput);
+            console.log('🟦 Email input element:', emailInput);
+
             const name = nameInput.value.trim();
             const email = emailInput.value.trim();
+
+            console.log('🟦 Name value:', name);
+            console.log('🟦 Email value:', email);
 
             if (!name) {
                 feedback.style.display = 'block';
@@ -2307,22 +2353,33 @@
                 feedback.style.border = '1px solid #dc3545';
                 feedback.style.color = '#721c24';
                 feedback.textContent = '⚠️ Please enter your name / Por favor ingresa tu nombre';
+                console.log('❌ Name is empty, aborting save');
                 return;
             }
 
             // Save to localStorage
+            console.log('🟦 Saving to localStorage...');
             localStorage.setItem('student_name', name);
+            console.log('🟦 Saved student_name:', localStorage.getItem('student_name'));
+
             if (email) {
                 localStorage.setItem('student_email', email);
                 localStorage.setItem('empirica_user_email', email); // For compatibility
+                console.log('🟦 Saved student_email:', localStorage.getItem('student_email'));
             }
+
+            // VERIFY IT WAS SAVED
+            const verifyName = localStorage.getItem('student_name');
+            const verifyEmail = localStorage.getItem('student_email');
+            console.log('✅ VERIFICATION - Name in localStorage:', verifyName);
+            console.log('✅ VERIFICATION - Email in localStorage:', verifyEmail);
 
             // Show success message
             feedback.style.display = 'block';
             feedback.style.background = 'rgba(40, 167, 69, 0.1)';
             feedback.style.border = '1px solid #28a745';
             feedback.style.color = '#155724';
-            feedback.textContent = '✓ Information saved! You can now start the module. / ¡Información guardada! Ahora puedes iniciar el módulo.';
+            feedback.textContent = '✓ Saved! Name: ' + verifyName + ' | Email: ' + verifyEmail;
 
             // Disable inputs
             nameInput.disabled = true;
@@ -2330,7 +2387,10 @@
             document.querySelector('button[onclick="saveStudentInfo()"]').disabled = true;
             document.querySelector('button[onclick="saveStudentInfo()"]').style.opacity = '0.5';
 
-            console.log('✅ Student info saved:', { name, email });
+            console.log('✅ Student info saved and verified!');
+
+            // Alert to make it super obvious
+            alert('✅ GUARDADO!\n\nNombre: ' + verifyName + '\nEmail: ' + verifyEmail + '\n\nAhora puedes hacer los ejercicios.');
         }
 
         function loadStudentInfo() {
@@ -2368,15 +2428,29 @@
         }
 
         function getStudentInfo() {
+            console.log('🔍 getStudentInfo() called');
+            console.log('🔍 ALL localStorage keys:', Object.keys(localStorage));
+
             const name = localStorage.getItem('student_name');
             const email = localStorage.getItem('student_email') || localStorage.getItem('empirica_user_email');
 
-            console.log('📋 Getting student info:', { name, email });
+            console.log('🔍 student_name from localStorage:', name);
+            console.log('🔍 student_email from localStorage:', email);
 
-            return {
+            const result = {
                 name: name || 'Anonymous',
                 email: email || 'not provided'
             };
+
+            console.log('📋 Returning student info:', result);
+
+            // CRITICAL WARNING if name is missing
+            if (!name) {
+                console.error('❌❌❌ WARNING: No student_name in localStorage! Will send as "Anonymous"');
+                console.error('❌ Please fill out the Student Information form at the top of the page!');
+            }
+
+            return result;
         }
 
         // Save exercise response
@@ -2459,19 +2533,46 @@
         }
 
         function restoreMatchingExercise(exerciseId, state, exercise, feedback, button) {
-            // Restore matched pairs
-            if (state.matchedPairs) {
-                matchedPairs[exerciseId] = state.matchedPairs;
+            // Restore user matches
+            if (state.userMatches && state.completed) {
+                // Find elements and restore their visual state
+                state.userMatches.forEach(match => {
+                    // Find elements by their data-match attribute and text content
+                    const allItems = exercise.querySelectorAll('[data-match]');
+                    let leftElem = null;
+                    let rightElem = null;
 
-                // Mark items as matched
-                state.matchedPairs.forEach(match => {
-                    const items = exercise.querySelectorAll(`[data-match="${match}"]`);
-                    items.forEach(item => {
-                        item.classList.add('correct');
-                        item.style.pointerEvents = 'none';
-                        item.style.backgroundColor = '#d4edda';
-                        item.style.border = '2px solid #28a745';
+                    allItems.forEach(item => {
+                        if (item.dataset.match === match.leftMatch && item.textContent.trim() === match.left) {
+                            leftElem = item;
+                        }
+                        if (item.dataset.match === match.rightMatch && item.textContent.trim() === match.right) {
+                            rightElem = item;
+                        }
                     });
+
+                    if (leftElem && rightElem) {
+                        const isCorrect = match.leftMatch === match.rightMatch;
+
+                        if (isCorrect) {
+                            leftElem.classList.add('correct');
+                            rightElem.classList.add('correct');
+                            leftElem.style.backgroundColor = '#d4edda';
+                            rightElem.style.backgroundColor = '#d4edda';
+                            leftElem.style.border = '2px solid #28a745';
+                            rightElem.style.border = '2px solid #28a745';
+                        } else {
+                            leftElem.classList.add('incorrect');
+                            rightElem.classList.add('incorrect');
+                            leftElem.style.backgroundColor = '#f8d7da';
+                            rightElem.style.backgroundColor = '#f8d7da';
+                            leftElem.style.border = '2px solid #dc3545';
+                            rightElem.style.border = '2px solid #dc3545';
+                        }
+
+                        leftElem.style.pointerEvents = 'none';
+                        rightElem.style.pointerEvents = 'none';
+                    }
                 });
             }
 
@@ -2481,7 +2582,7 @@
             }
 
             // Restore feedback and button state
-            if (state.completed || state.attempts.count >= 2) {
+            if (state.completed) {
                 if (feedback) {
                     feedback.className = state.isCorrect ? 'feedback-message success' : 'feedback-message error';
                     feedback.textContent = state.feedbackText || '';
