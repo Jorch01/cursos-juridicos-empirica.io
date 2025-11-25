@@ -1834,8 +1834,13 @@
                 (matchedCount / totalPairs) * 100
             );
 
+            let feedbackText = '';
+            let completed = false;
+
             // Check if this is the second attempt
             if (attemptNumber >= 2) {
+                completed = true;
+
                 // Disable button and all interactions after 2nd attempt
                 if (button) {
                     button.disabled = true;
@@ -1849,17 +1854,21 @@
 
                 if (isCorrect) {
                     feedback.className = 'feedback-message success';
-                    feedback.textContent = `✓ All matches are correct! (Intento ${attemptNumber}/2)`;
+                    feedbackText = `✓ All matches are correct! (Intento ${attemptNumber}/2)`;
+                    feedback.textContent = feedbackText;
                     updateExerciseProgress();
                 } else {
                     feedback.className = 'feedback-message error';
-                    feedback.textContent = `${matchedCount}/${totalPairs} pares correctos. Has usado tus 2 intentos permitidos.`;
+                    feedbackText = `${matchedCount}/${totalPairs} pares correctos. Has usado tus 2 intentos permitidos.`;
+                    feedback.textContent = feedbackText;
                 }
             } else {
                 // First attempt
                 if (isCorrect) {
+                    completed = true;
                     feedback.className = 'feedback-message success';
-                    feedback.textContent = `✓ All matches are correct! Excellent work!`;
+                    feedbackText = `✓ All matches are correct! Excellent work!`;
+                    feedback.textContent = feedbackText;
                     updateExerciseProgress();
 
                     // Disable since it's correct
@@ -1873,7 +1882,8 @@
                     });
                 } else {
                     feedback.className = 'feedback-message error';
-                    feedback.textContent = `${matchedCount}/${totalPairs} pares correctos. Tienes 1 intento más. Revisa los pares incorrectos.`;
+                    feedbackText = `${matchedCount}/${totalPairs} pares correctos. Tienes 1 intento más. Revisa los pares incorrectos.`;
+                    feedback.textContent = feedbackText;
 
                     // Mark incorrect pairs as wrong but allow retry
                     exercise.querySelectorAll('.option-item:not(.correct)').forEach(item => {
@@ -1882,6 +1892,16 @@
                     });
                 }
             }
+
+            // Save exercise state to localStorage
+            saveExerciseState(exerciseId, {
+                type: 'matching',
+                matchedPairs: matchedPairs[exerciseId] || [],
+                attempts: exerciseAttempts[exerciseId],
+                isCorrect: isCorrect,
+                completed: completed,
+                feedbackText: feedbackText
+            });
         }
 
         // Multiple Choice / True-False
@@ -1971,14 +1991,18 @@
                 (correctCount / totalQuestions) * 100
             );
 
+            let feedbackText = '';
+
             // TRUE/FALSE: Solo 1 intento permitido
             if (allCorrect) {
                 feedback.className = 'feedback-message success';
-                feedback.textContent = `✓ All answers are correct! (${correctCount}/${totalQuestions})`;
+                feedbackText = `✓ All answers are correct! (${correctCount}/${totalQuestions})`;
+                feedback.textContent = feedbackText;
                 updateExerciseProgress();
             } else {
                 feedback.className = 'feedback-message error';
-                feedback.textContent = `${correctCount}/${totalQuestions} correctas. Solo se permite 1 intento.`;
+                feedbackText = `${correctCount}/${totalQuestions} correctas. Solo se permite 1 intento.`;
+                feedback.textContent = feedbackText;
             }
 
             // Bloquear después del primer intento (correcto o incorrecto)
@@ -1989,6 +2013,16 @@
             }
             exercise.querySelectorAll('.option-item').forEach(item => {
                 item.style.pointerEvents = 'none';
+            });
+
+            // Save exercise state to localStorage
+            saveExerciseState(exerciseId, {
+                type: 'true-false',
+                userAnswers: userAnswers,
+                attempts: exerciseAttempts[exerciseId],
+                isCorrect: allCorrect,
+                completed: true, // Always completed after first attempt
+                feedbackText: feedbackText
             });
         }
 
@@ -2299,10 +2333,49 @@
             console.log('✅ Student info saved:', { name, email });
         }
 
+        function loadStudentInfo() {
+            const name = localStorage.getItem('student_name');
+            const email = localStorage.getItem('student_email') || localStorage.getItem('empirica_user_email');
+
+            if (name) {
+                const nameInput = document.getElementById('studentName');
+                const emailInput = document.getElementById('studentEmail');
+                const feedback = document.getElementById('student-info-feedback');
+                const button = document.querySelector('button[onclick="saveStudentInfo()"]');
+
+                if (nameInput) nameInput.value = name;
+                if (emailInput && email) emailInput.value = email;
+
+                // Show that info is already saved
+                if (feedback) {
+                    feedback.style.display = 'block';
+                    feedback.style.background = 'rgba(40, 167, 69, 0.1)';
+                    feedback.style.border = '1px solid #28a745';
+                    feedback.style.color = '#155724';
+                    feedback.textContent = '✓ Welcome back, ' + name + '! / ¡Bienvenido de nuevo, ' + name + '!';
+                }
+
+                // Disable inputs since already saved
+                if (nameInput) nameInput.disabled = true;
+                if (emailInput) emailInput.disabled = true;
+                if (button) {
+                    button.disabled = true;
+                    button.style.opacity = '0.5';
+                }
+
+                console.log('✅ Student info loaded from localStorage:', { name, email });
+            }
+        }
+
         function getStudentInfo() {
+            const name = localStorage.getItem('student_name');
+            const email = localStorage.getItem('student_email') || localStorage.getItem('empirica_user_email');
+
+            console.log('📋 Getting student info:', { name, email });
+
             return {
-                name: localStorage.getItem('student_name') || 'Anonymous',
-                email: localStorage.getItem('student_email') || localStorage.getItem('empirica_user_email') || 'not provided'
+                name: name || 'Anonymous',
+                email: email || 'not provided'
             };
         }
 
@@ -2323,6 +2396,8 @@
                 score: score
             };
 
+            console.log('💾 Saving exercise response:', response);
+
             // Get existing responses
             let responses = JSON.parse(localStorage.getItem('module1_responses') || '[]');
             responses.push(response);
@@ -2330,6 +2405,211 @@
 
             // Also send to backend if configured
             sendToBackend(response);
+        }
+
+        // ============================================
+        // EXERCISE STATE PERSISTENCE
+        // ============================================
+
+        function saveExerciseState(exerciseId, state) {
+            const key = 'exercise_state_' + exerciseId;
+            localStorage.setItem(key, JSON.stringify(state));
+            console.log('💾 Saved exercise state for ' + exerciseId, state);
+        }
+
+        function loadExerciseState(exerciseId) {
+            const key = 'exercise_state_' + exerciseId;
+            const saved = localStorage.getItem(key);
+            if (saved) {
+                console.log('📂 Loaded exercise state for ' + exerciseId);
+                return JSON.parse(saved);
+            }
+            return null;
+        }
+
+        function restoreAllExercises() {
+            console.log('🔄 Restoring all exercise states from localStorage...');
+
+            // Get all exercise state keys
+            const exerciseKeys = Object.keys(localStorage).filter(key => key.startsWith('exercise_state_'));
+
+            exerciseKeys.forEach(key => {
+                const exerciseId = key.replace('exercise_state_', '');
+                const state = JSON.parse(localStorage.getItem(key));
+
+                console.log('🔄 Restoring ' + exerciseId, state);
+
+                const exercise = document.getElementById(exerciseId);
+                if (!exercise) return;
+
+                const feedback = document.getElementById('feedback-' + exerciseId);
+                const button = exercise.querySelector('.btn-check');
+
+                // Restore based on exercise type
+                if (state.type === 'matching') {
+                    restoreMatchingExercise(exerciseId, state, exercise, feedback, button);
+                } else if (state.type === 'true-false') {
+                    restoreTrueFalseExercise(exerciseId, state, exercise, feedback, button);
+                } else if (state.type === 'fill-blanks') {
+                    restoreFillBlanksExercise(exerciseId, state, exercise, feedback, button);
+                } else if (state.type === 'listening') {
+                    restoreListeningExercise(exerciseId, state, exercise, feedback, button);
+                }
+            });
+        }
+
+        function restoreMatchingExercise(exerciseId, state, exercise, feedback, button) {
+            // Restore matched pairs
+            if (state.matchedPairs) {
+                matchedPairs[exerciseId] = state.matchedPairs;
+
+                // Mark items as matched
+                state.matchedPairs.forEach(match => {
+                    const items = exercise.querySelectorAll(`[data-match="${match}"]`);
+                    items.forEach(item => {
+                        item.classList.add('correct');
+                        item.style.pointerEvents = 'none';
+                        item.style.backgroundColor = '#d4edda';
+                        item.style.border = '2px solid #28a745';
+                    });
+                });
+            }
+
+            // Restore attempt tracking
+            if (state.attempts) {
+                exerciseAttempts[exerciseId] = state.attempts;
+            }
+
+            // Restore feedback and button state
+            if (state.completed || state.attempts.count >= 2) {
+                if (feedback) {
+                    feedback.className = state.isCorrect ? 'feedback-message success' : 'feedback-message error';
+                    feedback.textContent = state.feedbackText || '';
+                    feedback.style.display = 'block';
+                }
+
+                if (button) {
+                    button.disabled = true;
+                    button.style.opacity = '0.5';
+                    button.style.cursor = 'not-allowed';
+                }
+
+                exercise.querySelectorAll('.option-item').forEach(item => {
+                    item.style.pointerEvents = 'none';
+                });
+            }
+        }
+
+        function restoreTrueFalseExercise(exerciseId, state, exercise, feedback, button) {
+            // Restore selections
+            if (state.userAnswers) {
+                state.userAnswers.forEach(answer => {
+                    const selector = `[data-group="tf${exerciseId.slice(-1)}-${answer.question}"]`;
+                    const options = exercise.querySelectorAll(selector);
+
+                    options.forEach(option => {
+                        if (option.textContent.trim() === answer.answer) {
+                            option.classList.add('selected');
+                            if (answer.correct) {
+                                option.classList.add('correct');
+                            } else {
+                                option.classList.add('incorrect');
+                            }
+                        }
+                    });
+                });
+            }
+
+            // Restore attempt tracking
+            if (state.attempts) {
+                exerciseAttempts[exerciseId] = state.attempts;
+            }
+
+            // Restore feedback and disable if completed
+            if (state.completed) {
+                if (feedback) {
+                    feedback.className = state.isCorrect ? 'feedback-message success' : 'feedback-message error';
+                    feedback.textContent = state.feedbackText || '';
+                    feedback.style.display = 'block';
+                }
+
+                if (button) {
+                    button.disabled = true;
+                    button.style.opacity = '0.5';
+                    button.style.cursor = 'not-allowed';
+                }
+
+                exercise.querySelectorAll('.option-item').forEach(item => {
+                    item.style.pointerEvents = 'none';
+                });
+            }
+        }
+
+        function restoreFillBlanksExercise(exerciseId, state, exercise, feedback, button) {
+            // Restore input values
+            if (state.userAnswers) {
+                state.userAnswers.forEach(answer => {
+                    const input = exercise.querySelector(`input[data-answer="${answer.correctAnswer}"]`);
+                    if (input) {
+                        input.value = answer.userAnswer;
+                        if (state.completed) {
+                            input.disabled = true;
+                            if (answer.correct) {
+                                input.style.borderColor = '#28a745';
+                                input.style.backgroundColor = '#d4edda';
+                            } else {
+                                input.style.borderColor = '#dc3545';
+                                input.style.backgroundColor = '#f8d7da';
+                            }
+                        }
+                    }
+                });
+            }
+
+            // Restore feedback and disable if completed
+            if (state.completed) {
+                if (feedback) {
+                    feedback.className = state.isCorrect ? 'feedback-message success' : 'feedback-message error';
+                    feedback.textContent = state.feedbackText || '';
+                    feedback.style.display = 'block';
+                }
+
+                if (button) {
+                    button.disabled = true;
+                    button.style.opacity = '0.5';
+                    button.style.cursor = 'not-allowed';
+                }
+            }
+        }
+
+        function restoreListeningExercise(exerciseId, state, exercise, feedback, button) {
+            // Restore checkbox selections
+            if (state.userAnswers) {
+                state.userAnswers.forEach(answer => {
+                    const checkbox = exercise.querySelector(`input[value="${answer.option}"]`);
+                    if (checkbox) {
+                        checkbox.checked = answer.checked;
+                        if (state.completed) {
+                            checkbox.disabled = true;
+                        }
+                    }
+                });
+            }
+
+            // Restore feedback and disable if completed
+            if (state.completed) {
+                if (feedback) {
+                    feedback.className = state.isCorrect ? 'feedback-message success' : 'feedback-message error';
+                    feedback.textContent = state.feedbackText || '';
+                    feedback.style.display = 'block';
+                }
+
+                if (button) {
+                    button.disabled = true;
+                    button.style.opacity = '0.5';
+                    button.style.cursor = 'not-allowed';
+                }
+            }
         }
 
         // Send data to backend (Google Sheets or custom endpoint)
@@ -2410,6 +2690,15 @@
 
         // Survey form handler
         document.addEventListener('DOMContentLoaded', function() {
+            console.log('🚀 Page loaded - initializing...');
+
+            // Load student information
+            loadStudentInfo();
+
+            // Restore all exercise states
+            restoreAllExercises();
+
+            // Load progress
             loadProgress();
 
             const surveyForm = document.getElementById('surveyForm');
