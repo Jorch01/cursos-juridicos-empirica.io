@@ -165,7 +165,7 @@ Hola,
 ¡Gracias por tu compra! Ya tienes acceso completo al curso.
 
 🎓 ¿Cómo acceder?
-1. Ve a: https://cursos-juridicos-empirica.io/cursos/derecho-no-abogados/
+1. Ve a: https://cursos.empirica.mx/cursos/derecho-no-abogados/
 2. Si te pide verificación, usa este email: comprador@ejemplo.com
 
 📱 ¿Necesitas ayuda?

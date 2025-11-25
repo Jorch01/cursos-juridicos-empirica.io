@@ -60,7 +60,7 @@ Tipo: Pago único
    - Recopilar número de teléfono: ✅ (opcional)
 
 5. En "After payment":
-   - Redirect: `https://cursos-juridicos-empirica.io/gracias.html?curso=derecho-no-abogados`
+   - Redirect: `https://cursos.empirica.mx/gracias.html?curso=derecho-no-abogados`
 
 6. En "Metadata" (importante):
    ```

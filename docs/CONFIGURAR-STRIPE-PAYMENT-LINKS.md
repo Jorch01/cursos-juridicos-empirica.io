@@ -67,7 +67,7 @@ https://TU-DOMINIO.com/gracias.html?curso=derecho-no-abogados&email={CUSTOMER_EM
 **⚠️ IMPORTANTE: Reemplaza `TU-DOMINIO.com` con tu dominio real:**
 
 **Ejemplos:**
-- Si usas GitHub Pages: `https://jorch01.github.io/cursos-juridicos-empirica.io/gracias.html?curso=derecho-no-abogados&email={CUSTOMER_EMAIL}`
+- Si usas GitHub Pages: `https://jorch01.github.io/cursos.empirica.mx/gracias.html?curso=derecho-no-abogados&email={CUSTOMER_EMAIL}`
 - Si tienes dominio propio: `https://empirica-legal.com/gracias.html?curso=derecho-no-abogados&email={CUSTOMER_EMAIL}`
 
 ### 3.3. Entender el Parámetro {CUSTOMER_EMAIL}

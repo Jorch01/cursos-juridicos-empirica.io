@@ -2,7 +2,7 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <!-- Página principal -->
   <url>
-    <loc>https://cursos-juridicos-empirica.io/</loc>
+    <loc>https://cursos.empirica.mx/</loc>
     <lastmod>2025-01-21</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
@@ -10,14 +10,14 @@
 
   <!-- Páginas de cursos principales -->
   <url>
-    <loc>https://cursos-juridicos-empirica.io/cursos/derecho-no-abogados/</loc>
+    <loc>https://cursos.empirica.mx/cursos/derecho-no-abogados/</loc>
     <lastmod>2025-01-21</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
 
   <url>
-    <loc>https://cursos-juridicos-empirica.io/cursos/legal-english/</loc>
+    <loc>https://cursos.empirica.mx/cursos/legal-english/</loc>
     <lastmod>2025-01-21</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
@@ -25,14 +25,14 @@
 
   <!-- Páginas informativas -->
   <url>
-    <loc>https://cursos-juridicos-empirica.io/contacto.html</loc>
+    <loc>https://cursos.empirica.mx/contacto.html</loc>
     <lastmod>2025-01-21</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
 
   <url>
-    <loc>https://cursos-juridicos-empirica.io/diplomas.html</loc>
+    <loc>https://cursos.empirica.mx/diplomas.html</loc>
     <lastmod>2025-01-21</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
@@ -40,14 +40,14 @@
 
   <!-- Páginas de contenido de cursos -->
   <url>
-    <loc>https://cursos-juridicos-empirica.io/cursos/derecho-no-abogados/presentacion.html</loc>
+    <loc>https://cursos.empirica.mx/cursos/derecho-no-abogados/presentacion.html</loc>
     <lastmod>2025-01-21</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
 
   <url>
-    <loc>https://cursos-juridicos-empirica.io/cursos/legal-english/coming-soon.html</loc>
+    <loc>https://cursos.empirica.mx/cursos/legal-english/coming-soon.html</loc>
     <lastmod>2025-01-21</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
