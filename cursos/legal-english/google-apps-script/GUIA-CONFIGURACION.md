@@ -56,7 +56,7 @@ Configurar un sistema backend gratuito que recolecte automáticamente:
 
    📁 El archivo está en:
    ```
-   cursos-juridicos-empirica.io/
+   cursos.empirica.mx/
    └── cursos/
        └── legal-english/
            └── google-apps-script/
