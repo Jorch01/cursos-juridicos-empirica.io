@@ -55,6 +55,51 @@ function doPost(e) {
 }
 
 // ============================================
+// FUNCIÓN PRINCIPAL - Maneja GET requests (recuperación de progreso)
+// ============================================
+
+function doGet(e) {
+  try {
+    // Log de la actividad
+    logActivity('GET Request Received', JSON.stringify(e.parameter));
+
+    // Verificar que se proporcionó el email
+    if (!e.parameter.email) {
+      return ContentService
+        .createTextOutput(JSON.stringify({
+          'status': 'error',
+          'message': 'Email parameter is required'
+        }))
+        .setMimeType(ContentService.MimeType.JSON);
+    }
+
+    const email = e.parameter.email.toLowerCase().trim();
+
+    // Recuperar el progreso del estudiante
+    const progress = getStudentProgress(email);
+
+    logActivity('Progress Retrieved', `Email: ${email}, Responses: ${progress.responses.length}`);
+
+    return ContentService
+      .createTextOutput(JSON.stringify({
+        'status': 'success',
+        'email': email,
+        'progress': progress
+      }))
+      .setMimeType(ContentService.MimeType.JSON);
+
+  } catch (error) {
+    logActivity('ERROR in doGet', error.toString());
+    return ContentService
+      .createTextOutput(JSON.stringify({
+        'status': 'error',
+        'message': error.toString()
+      }))
+      .setMimeType(ContentService.MimeType.JSON);
+  }
+}
+
+// ============================================
 // MANEJO DE RESPUESTAS DE EJERCICIOS
 // ============================================
 
@@ -269,6 +314,106 @@ function getSpreadsheet() {
     return SpreadsheetApp.openById(CONFIG.SPREADSHEET_ID);
   }
   return SpreadsheetApp.getActiveSpreadsheet();
+}
+
+function getStudentProgress(email) {
+  const ss = getSpreadsheet();
+  const responsesSheet = ss.getSheetByName(CONFIG.SHEETS.RESPONSES);
+  const surveysSheet = ss.getSheetByName(CONFIG.SHEETS.SURVEYS);
+
+  const progress = {
+    responses: [],
+    surveys: [],
+    moduleProgress: {},
+    summary: {
+      totalExercises: 0,
+      completedModules: [],
+      lastActivity: null
+    }
+  };
+
+  // Si no hay hojas todavía, retornar progreso vacío
+  if (!responsesSheet) {
+    return progress;
+  }
+
+  // Obtener todas las respuestas
+  const responsesData = responsesSheet.getDataRange().getValues();
+
+  // Buscar respuestas del estudiante (empezar desde la fila 2 para saltar headers)
+  for (let i = 1; i < responsesData.length; i++) {
+    const row = responsesData[i];
+    const rowEmail = String(row[2]).toLowerCase().trim(); // Columna C: Email
+
+    if (rowEmail === email) {
+      const response = {
+        timestamp: row[0],           // A: Timestamp
+        studentName: row[1],         // B: Student Name
+        module: row[3],              // D: Module
+        exerciseId: row[4],          // E: Exercise ID
+        exerciseType: row[5],        // F: Exercise Type
+        userAnswers: row[6],         // G: User Answers (JSON string)
+        isCorrect: row[7] === 'YES', // H: All Correct?
+        score: row[8]                // I: Score (%)
+      };
+
+      progress.responses.push(response);
+
+      // Actualizar progreso por módulo
+      if (!progress.moduleProgress[response.module]) {
+        progress.moduleProgress[response.module] = {
+          completedExercises: 0,
+          exerciseIds: [],
+          averageScore: 0,
+          totalScore: 0
+        };
+      }
+
+      const moduleData = progress.moduleProgress[response.module];
+
+      // Solo contar ejercicios únicos
+      if (!moduleData.exerciseIds.includes(response.exerciseId)) {
+        moduleData.exerciseIds.push(response.exerciseId);
+        moduleData.completedExercises++;
+        moduleData.totalScore += response.score;
+        moduleData.averageScore = moduleData.totalScore / moduleData.completedExercises;
+      }
+    }
+  }
+
+  // Obtener encuestas si existen
+  if (surveysSheet) {
+    const surveysData = surveysSheet.getDataRange().getValues();
+
+    for (let i = 1; i < surveysData.length; i++) {
+      const row = surveysData[i];
+      const rowEmail = String(row[2]).toLowerCase().trim();
+
+      if (rowEmail === email) {
+        progress.surveys.push({
+          timestamp: row[0],
+          module: row[3],
+          difficulty: row[4],
+          quality: row[5],
+          mostUseful: row[6],
+          suggestions: row[7],
+          timeSpent: row[8]
+        });
+      }
+    }
+  }
+
+  // Calcular resumen
+  progress.summary.totalExercises = progress.responses.length;
+  progress.summary.completedModules = Object.keys(progress.moduleProgress);
+
+  if (progress.responses.length > 0) {
+    // Encontrar la actividad más reciente
+    const timestamps = progress.responses.map(r => new Date(r.timestamp));
+    progress.summary.lastActivity = new Date(Math.max(...timestamps));
+  }
+
+  return progress;
 }
 
 function logActivity(event, details) {
