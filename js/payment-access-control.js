@@ -47,6 +47,15 @@
     }
 
     // ═══════════════════════════════════════
+    // 🆓 DETECTAR SI ES MÓDULO GRATUITO
+    // ═══════════════════════════════════════
+    function isFreeModule() {
+        const path = window.location.pathname;
+        // Módulo 1 de Legal English es gratuito
+        return path.includes('legal-english/modulos/modulo-1');
+    }
+
+    // ═══════════════════════════════════════
     // 📧 VERIFICAR ACCESO EN GOOGLE SHEETS
     // ═══════════════════════════════════════
     async function checkAccessInDatabase(email, course) {
@@ -96,6 +105,17 @@
         }
 
         CONFIG.currentCourse = course;
+
+        // Si es módulo gratuito, verificar acceso gratuito
+        if (isFreeModule()) {
+            const hasFreeAccess = localStorage.getItem('empirica_free_module_1');
+            if (hasFreeAccess === 'true') {
+                console.log('✅ Acceso gratuito al Módulo 1 concedido');
+                return true;
+            }
+            console.log('🆓 Módulo gratuito - Se requiere email');
+            return false;
+        }
 
         // Obtener email del usuario (guardado después del pago)
         const userEmail = localStorage.getItem(CONFIG.STORAGE_KEYS.email);
@@ -391,6 +411,218 @@
     }
 
     // ═══════════════════════════════════════
+    // 🆓 MODAL GRATUITO (SOLO EMAIL)
+    // ═══════════════════════════════════════
+    function showFreeAccessModal() {
+        const modalHTML = `
+            <div id="freeAccessModal" style="
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background: rgba(27, 44, 39, 0.95);
+                backdrop-filter: blur(10px);
+                z-index: 999999;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                animation: fadeIn 0.3s ease;
+            ">
+                <div style="
+                    background: white;
+                    border-radius: 24px;
+                    max-width: 550px;
+                    width: 90%;
+                    max-height: 90vh;
+                    overflow-y: auto;
+                    box-shadow: 0 25px 50px rgba(0, 0, 0, 0.5);
+                    animation: slideUp 0.4s ease;
+                ">
+                    <!-- Header -->
+                    <div style="
+                        background: linear-gradient(135deg, #10B981 0%, #059669 100%);
+                        color: white;
+                        padding: 40px 30px;
+                        text-align: center;
+                        border-radius: 24px 24px 0 0;
+                    ">
+                        <div style="font-size: 4rem; margin-bottom: 15px;">🎁</div>
+                        <h2 style="font-size: 2rem; margin: 0 0 10px 0; font-weight: 700;">
+                            ¡Módulo 1 GRATIS!
+                        </h2>
+                        <p style="margin: 0; opacity: 0.9; font-size: 1.1rem;">
+                            Accede al primer módulo sin costo
+                        </p>
+                    </div>
+
+                    <!-- Contenido -->
+                    <div style="padding: 40px 35px;">
+                        <div style="
+                            background: #F0FDF4;
+                            border-left: 4px solid #10B981;
+                            padding: 20px;
+                            border-radius: 10px;
+                            margin-bottom: 25px;
+                        ">
+                            <h3 style="color: #1B2C27; margin: 0 0 10px 0; font-size: 1.3rem;">
+                                📚 Legal English: Anglo-American Law in Action
+                            </h3>
+                            <p style="margin: 0; color: #2C3E50; font-size: 1rem;">
+                                Prueba el <strong>Módulo 1 completamente gratis</strong> antes de inscribirte al curso completo
+                            </p>
+                        </div>
+
+                        <div style="margin-bottom: 25px;">
+                            <h4 style="color: #1B2C27; margin-bottom: 15px; font-size: 1.1rem;">
+                                ✨ En este módulo aprenderás:
+                            </h4>
+                            <ul style="list-style: none; padding: 0; margin: 0;">
+                                <li style="padding: 8px 0; padding-left: 30px; position: relative; color: #2C3E50;">
+                                    <span style="position: absolute; left: 0; color: #10B981;">✓</span>
+                                    Fundamentos de los sistemas judiciales US/UK
+                                </li>
+                                <li style="padding: 8px 0; padding-left: 30px; position: relative; color: #2C3E50;">
+                                    <span style="position: absolute; left: 0; color: #10B981;">✓</span>
+                                    Vocabulario legal esencial en inglés
+                                </li>
+                                <li style="padding: 8px 0; padding-left: 30px; position: relative; color: #2C3E50;">
+                                    <span style="position: absolute; left: 0; color: #10B981;">✓</span>
+                                    Ejercicios interactivos y actividades
+                                </li>
+                            </ul>
+                        </div>
+
+                        <form id="freeAccessForm" onsubmit="submitFreeAccess(event); return false;">
+                            <div style="margin-bottom: 20px;">
+                                <label style="
+                                    display: block;
+                                    color: #1B2C27;
+                                    font-weight: 600;
+                                    margin-bottom: 8px;
+                                    font-size: 1rem;
+                                ">
+                                    Ingresa tu email para acceder
+                                </label>
+                                <input
+                                    type="email"
+                                    id="freeAccessEmail"
+                                    placeholder="tu-email@ejemplo.com"
+                                    required
+                                    style="
+                                        width: 100%;
+                                        padding: 15px;
+                                        border: 2px solid #E1E8E5;
+                                        border-radius: 8px;
+                                        font-size: 1rem;
+                                        box-sizing: border-box;
+                                        transition: all 0.3s ease;
+                                    "
+                                    onfocus="this.style.borderColor='#10B981'"
+                                    onblur="this.style.borderColor='#E1E8E5'"
+                                >
+                            </div>
+
+                            <button type="submit" id="freeAccessBtn" style="
+                                display: block;
+                                width: 100%;
+                                padding: 18px;
+                                background: linear-gradient(135deg, #10B981 0%, #059669 100%);
+                                color: white;
+                                border: none;
+                                border-radius: 12px;
+                                font-size: 1.2rem;
+                                font-weight: 700;
+                                cursor: pointer;
+                                transition: all 0.3s ease;
+                            " onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 8px 25px rgba(16, 185, 129, 0.3)'"
+                               onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='none'">
+                                🎁 Acceder Gratis al Módulo 1
+                            </button>
+
+                            <div id="freeAccessMessage" style="
+                                margin-top: 15px;
+                                padding: 15px;
+                                border-radius: 8px;
+                                display: none;
+                                text-align: center;
+                                font-weight: 600;
+                            "></div>
+                        </form>
+
+                        <p style="text-align: center; margin-top: 20px; font-size: 0.85rem; color: #6C757D;">
+                            🔒 Tu email solo se usará para enviarte información del curso
+                        </p>
+                    </div>
+                </div>
+            </div>
+        `;
+
+        document.body.insertAdjacentHTML('beforeend', modalHTML);
+        document.body.style.overflow = 'hidden';
+    }
+
+    // ═══════════════════════════════════════
+    // 📧 PROCESAR ACCESO GRATUITO
+    // ═══════════════════════════════════════
+    window.submitFreeAccess = async function(event) {
+        event.preventDefault();
+
+        const emailInput = document.getElementById('freeAccessEmail');
+        const submitBtn = document.getElementById('freeAccessBtn');
+        const message = document.getElementById('freeAccessMessage');
+        const email = emailInput.value.trim();
+
+        if (!email) {
+            return;
+        }
+
+        // Deshabilitar botón y mostrar estado de carga
+        submitBtn.disabled = true;
+        submitBtn.innerHTML = '⏳ Procesando...';
+        message.style.display = 'none';
+
+        try {
+            // Guardar email en Google Sheets para seguimiento
+            const course = CONFIG.currentCourse;
+            const registerUrl = `${CONFIG.GOOGLE_SCRIPT_URL}?action=registerFreeAccess&email=${encodeURIComponent(email)}&course=${course}&module=modulo-1`;
+
+            await fetch(registerUrl);
+
+            // Guardar email y otorgar acceso localmente
+            localStorage.setItem(CONFIG.STORAGE_KEYS.email, email);
+            localStorage.setItem('empirica_free_module_1', 'true');
+
+            message.style.display = 'block';
+            message.style.background = '#D1FAE5';
+            message.style.color = '#065F46';
+            message.innerHTML = '✅ ¡Acceso concedido!<br>Disfrutando del Módulo 1...';
+
+            // Disparar evento
+            window.dispatchEvent(new CustomEvent('empiricaFreeAccessGranted', {
+                detail: { email: email, module: 'modulo-1' }
+            }));
+
+            // Ocultar modal y permitir acceso
+            setTimeout(() => {
+                document.getElementById('freeAccessModal').remove();
+                document.body.style.overflow = '';
+            }, 1500);
+
+        } catch (error) {
+            console.error('Error procesando acceso gratuito:', error);
+
+            message.style.display = 'block';
+            message.style.background = '#FEF3C7';
+            message.style.color = '#92400E';
+            message.innerHTML = '⚠️ Error de conexión. Reintenta o contacta por WhatsApp.';
+
+            submitBtn.disabled = false;
+            submitBtn.innerHTML = '🎁 Acceder Gratis al Módulo 1';
+        }
+    };
+
+    // ═══════════════════════════════════════
     // 🔄 CAMBIAR ENTRE TABS DEL MODAL
     // ═══════════════════════════════════════
     window.switchAccessTab = function(tab) {
@@ -516,13 +748,22 @@
         restrictedLinks.forEach(link => {
             link.addEventListener('click', (e) => {
                 e.preventDefault();
-                showPaymentModal();
+                // Mostrar modal apropiado según el tipo de módulo
+                if (isFreeModule()) {
+                    showFreeAccessModal();
+                } else {
+                    showPaymentModal();
+                }
             });
         });
 
         // Mostrar modal automáticamente
         setTimeout(() => {
-            showPaymentModal();
+            if (isFreeModule()) {
+                showFreeAccessModal();
+            } else {
+                showPaymentModal();
+            }
         }, 2000);
     }
 
