@@ -829,108 +829,6 @@
             }
         }
 
-        // Solicitar email al usuario
-        function promptForEmail() {
-            return new Promise((resolve) => {
-                // Crear modal para solicitar email
-                const modal = document.createElement('div');
-                modal.style.cssText = `
-                    position: fixed;
-                    top: 0;
-                    left: 0;
-                    width: 100%;
-                    height: 100%;
-                    background: rgba(0, 0, 0, 0.7);
-                    display: flex;
-                    align-items: center;
-                    justify-content: center;
-                    z-index: 10000;
-                `;
-
-                modal.innerHTML = `
-                    <div style="
-                        background: white;
-                        padding: 40px;
-                        border-radius: 15px;
-                        max-width: 500px;
-                        width: 90%;
-                        box-shadow: 0 10px 40px rgba(0,0,0,0.3);
-                    ">
-                        <h2 style="color: #1B2C27; margin-bottom: 20px; text-align: center;">
-                            Recuperar Progreso
-                        </h2>
-                        <p style="color: #666; margin-bottom: 25px; text-align: center;">
-                            Ingresa tu email para recuperar tu progreso anterior o comenzar un nuevo registro.
-                        </p>
-                        <input
-                            type="email"
-                            id="userEmailInput"
-                            placeholder="tu@email.com"
-                            style="
-                                width: 100%;
-                                padding: 15px;
-                                border: 2px solid #CFA892;
-                                border-radius: 8px;
-                                font-size: 16px;
-                                margin-bottom: 20px;
-                                box-sizing: border-box;
-                            "
-                        />
-                        <button
-                            id="submitEmailBtn"
-                            style="
-                                width: 100%;
-                                padding: 15px;
-                                background: #CFA892;
-                                color: white;
-                                border: none;
-                                border-radius: 8px;
-                                font-size: 16px;
-                                font-weight: bold;
-                                cursor: pointer;
-                                transition: background 0.3s;
-                            "
-                            onmouseover="this.style.background='#b89680'"
-                            onmouseout="this.style.background='#CFA892'"
-                        >
-                            Continuar
-                        </button>
-                        <p style="
-                            color: #999;
-                            font-size: 12px;
-                            margin-top: 15px;
-                            text-align: center;
-                        ">
-                            Tu progreso se guardará automáticamente
-                        </p>
-                    </div>
-                `;
-
-                document.body.appendChild(modal);
-
-                const input = document.getElementById('userEmailInput');
-                const button = document.getElementById('submitEmailBtn');
-
-                input.focus();
-
-                const handleSubmit = () => {
-                    const email = input.value.trim();
-                    if (email && email.includes('@')) {
-                        document.body.removeChild(modal);
-                        resolve(email);
-                    } else {
-                        input.style.borderColor = 'red';
-                        input.placeholder = 'Por favor ingresa un email válido';
-                    }
-                };
-
-                button.addEventListener('click', handleSubmit);
-                input.addEventListener('keypress', (e) => {
-                    if (e.key === 'Enter') handleSubmit();
-                });
-            });
-        }
-
         // Load and display progress
         async function loadProgress() {
             let completedModules = 0;
@@ -999,12 +897,10 @@
             return exercises[moduleNumber] || 5;
         }
 
-        // Initialize on page load
-        document.addEventListener('DOMContentLoaded', async function() {
-            // Intentar recuperar progreso desde el servidor si es necesario
-            let hasLocalProgress = false;
-
+        // Función para intentar recuperar progreso
+        async function tryLoadProgressFromServer() {
             // Verificar si hay algún progreso local
+            let hasLocalProgress = false;
             for (let i = 1; i <= 15; i++) {
                 if (localStorage.getItem(`module${i}_progress`)) {
                     hasLocalProgress = true;
@@ -1016,22 +912,37 @@
             if (!hasLocalProgress) {
                 console.log('ℹ️ No se encontró progreso local. Intentando recuperar desde el servidor...');
 
-                // Verificar si hay un email guardado
+                // Verificar si hay un email guardado (del sistema de acceso)
                 let email = localStorage.getItem('empirica_user_email') ||
                            localStorage.getItem('student_email');
 
-                // Si no hay email guardado, solicitarlo al usuario
-                if (!email) {
-                    email = await promptForEmail();
-                }
-
-                // Intentar recuperar progreso desde el servidor
+                // Solo recuperar si hay email guardado
                 if (email) {
+                    console.log('📧 Email encontrado, recuperando progreso...');
                     await loadProgressFromServer(email);
+                    // Recargar la visualización del progreso
+                    loadProgress();
+                } else {
+                    console.log('⚠️ No hay email guardado todavía.');
                 }
             } else {
                 console.log('✅ Progreso local encontrado');
             }
+        }
+
+        // Escuchar evento de acceso concedido
+        window.addEventListener('empiricaAccessGranted', async function(event) {
+            console.log('🎉 Acceso concedido, recuperando progreso para:', event.detail.email);
+            await tryLoadProgressFromServer();
+        });
+
+        // Initialize on page load
+        document.addEventListener('DOMContentLoaded', async function() {
+            // Esperar un momento para que el sistema de acceso se inicialice primero
+            await new Promise(resolve => setTimeout(resolve, 1000));
+
+            // Intentar recuperar progreso
+            await tryLoadProgressFromServer();
 
             // Cargar y mostrar el progreso
             loadProgress();
