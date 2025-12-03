@@ -13,7 +13,7 @@
     // ═══════════════════════════════════════
     const CONFIG = {
         // URL del Google Apps Script Web App
-        GOOGLE_SCRIPT_URL: 'https://script.google.com/macros/s/AKfycbw1sBsOVp6lnpyvc9IvLk4xgpjEZus0IOmLOrcDgep7aI-xYcOMgtXrofkseaeS4x8mZw/exec',
+        GOOGLE_SCRIPT_URL: 'https://script.google.com/macros/s/AKfycbwoB76CQ6v9xVPL4ryywRmJdIobmHy9Fe3eSAKpZoYrEVgtOttxVWOIpPo-pe6PydbY/exec',
 
         // Links de pago de Stripe
         STRIPE_LINKS: {
