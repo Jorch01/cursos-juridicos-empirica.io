@@ -464,6 +464,11 @@
                 verifyMessage.style.color = '#065F46';
                 verifyMessage.innerHTML = '✅ Acceso verificado correctamente!<br>Recargando la página...';
 
+                // Disparar evento para que el sistema de progreso pueda escucharlo
+                window.dispatchEvent(new CustomEvent('empiricaAccessGranted', {
+                    detail: { email: email, course: course }
+                }));
+
                 // Recargar la página después de 1.5 segundos
                 setTimeout(() => {
                     location.reload();
