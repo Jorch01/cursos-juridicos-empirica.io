@@ -1190,8 +1190,81 @@
             <div class="content-block">
                 <h2>🎧 A Day in Westminster Magistrates' Court</h2>
                 <p><strong>Context:</strong> You will hear Sarah Chen, a court clerk, describing a typical day at a Magistrates' Court in London.</p>
+
+                <!-- Audio Player -->
+                <div style="background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%); padding: 25px; border-radius: 15px; margin: 20px 0; border: 2px solid var(--secondary); box-shadow: 0 4px 15px rgba(0,0,0,0.1);">
+                    <div style="display: flex; align-items: center; gap: 15px; margin-bottom: 15px;">
+                        <span style="font-size: 2rem;">🎧</span>
+                        <div style="flex: 1;">
+                            <h4 style="margin: 0 0 5px 0; color: var(--primary); font-size: 1.1rem;">Audio: A Day at Westminster Magistrates' Court</h4>
+                            <p style="margin: 0; color: #6c757d; font-size: 0.9rem;">Sarah Chen - Court Clerk</p>
+                        </div>
+                    </div>
+
+                    <audio controls controlsList="nodownload" style="width: 100%; height: 40px; border-radius: 25px; outline: none;">
+                        <source src="audio/magistrates-court-sarah-chen.mp3" type="audio/mpeg">
+                        <source src="audio/magistrates-court-sarah-chen.ogg" type="audio/ogg">
+                        Your browser does not support the audio element.
+                    </audio>
+
+                    <div style="display: flex; gap: 10px; margin-top: 15px; flex-wrap: wrap;">
+                        <button onclick="document.querySelector('audio').currentTime = 0" style="
+                            padding: 8px 15px;
+                            background: var(--secondary);
+                            color: var(--primary);
+                            border: none;
+                            border-radius: 8px;
+                            cursor: pointer;
+                            font-weight: 600;
+                            font-size: 0.9rem;
+                            transition: all 0.3s;
+                        " onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform='translateY(0)'">
+                            ⏮️ Reiniciar
+                        </button>
+                        <button onclick="document.querySelector('audio').playbackRate = 0.75" style="
+                            padding: 8px 15px;
+                            background: white;
+                            color: var(--primary);
+                            border: 2px solid var(--secondary);
+                            border-radius: 8px;
+                            cursor: pointer;
+                            font-weight: 600;
+                            font-size: 0.9rem;
+                            transition: all 0.3s;
+                        " onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform='translateY(0)'">
+                            🐢 0.75x
+                        </button>
+                        <button onclick="document.querySelector('audio').playbackRate = 1" style="
+                            padding: 8px 15px;
+                            background: white;
+                            color: var(--primary);
+                            border: 2px solid var(--secondary);
+                            border-radius: 8px;
+                            cursor: pointer;
+                            font-weight: 600;
+                            font-size: 0.9rem;
+                            transition: all 0.3s;
+                        " onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform='translateY(0)'">
+                            ▶️ 1x
+                        </button>
+                        <button onclick="document.querySelector('audio').playbackRate = 1.25" style="
+                            padding: 8px 15px;
+                            background: white;
+                            color: var(--primary);
+                            border: 2px solid var(--secondary);
+                            border-radius: 8px;
+                            cursor: pointer;
+                            font-weight: 600;
+                            font-size: 0.9rem;
+                            transition: all 0.3s;
+                        " onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform='translateY(0)'">
+                            🐇 1.25x
+                        </button>
+                    </div>
+                </div>
+
                 <p style="background: var(--light-bg); padding: 15px; border-radius: 10px; margin: 15px 0;">
-                    <strong>Note:</strong> The audio is embedded in the video lecture at timestamp 27:00. Pause the video when instructed to complete the listening exercises below.
+                    <strong>Note:</strong> The audio is also embedded in the video lecture at timestamp 27:00. You can use either the audio player above or the video.
                 </p>
 
                 <!-- Transcript Box (Collapsible) -->
