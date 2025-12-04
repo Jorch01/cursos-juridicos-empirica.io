@@ -3368,8 +3368,35 @@
                 });
             }
 
-            // If using YouTube API, initialize it here
+            // Load YouTube IFrame API
+            const tag = document.createElement('script');
+            tag.src = "https://www.youtube.com/iframe_api";
+            const firstScriptTag = document.getElementsByTagName('script')[0];
+            firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
         });
+
+        // YouTube API Ready Callback
+        function onYouTubeIframeAPIReady() {
+            player = new YT.Player('videoPlayer', {
+                events: {
+                    'onReady': onPlayerReady,
+                    'onStateChange': onPlayerStateChange
+                }
+            });
+        }
+
+        function onPlayerReady(event) {
+            console.log('YouTube player is ready');
+            // Update progress every second
+            setInterval(updateProgress, 1000);
+        }
+
+        function onPlayerStateChange(event) {
+            // Optional: handle state changes
+            if (event.data == YT.PlayerState.PLAYING) {
+                console.log('Video is playing');
+            }
+        }
     </script>
 
     <!-- Payment & Access Control System -->
