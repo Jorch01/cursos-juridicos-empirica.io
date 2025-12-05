@@ -603,9 +603,10 @@
             }
 
             .video-section {
-                position: relative;
+                position: sticky;
                 height: 50vh;
-                top: 0;
+                top: 80px;
+                z-index: 100;
             }
 
             .content-section {
@@ -615,7 +616,25 @@
 
         @media (max-width: 768px) {
             .video-section {
-                height: 40vh;
+                position: sticky;
+                height: 35vh;
+                top: 60px;
+                z-index: 100;
+            }
+
+            /* Ajustar controles de video para móvil */
+            .video-controls {
+                padding: 10px 15px;
+                flex-wrap: wrap;
+            }
+
+            .time-markers {
+                gap: 5px;
+            }
+
+            .time-marker {
+                font-size: 0.75rem;
+                padding: 4px 8px;
             }
 
             .content-section {
