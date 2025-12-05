@@ -20,7 +20,8 @@ const CONFIG = {
     RESPONSES: 'Exercise_Responses',
     SURVEYS: 'Module_Surveys',
     SUMMARY: 'Summary',
-    LOG: 'Activity_Log'
+    LOG: 'Activity_Log',
+    ACTIVE_USERS: 'Usuarios_Activos' // Nueva hoja para control de acceso
   }
 };
 
@@ -63,30 +64,43 @@ function doGet(e) {
     // Log de la actividad
     logActivity('GET Request Received', JSON.stringify(e.parameter));
 
-    // Verificar que se proporcionó el email
-    if (!e.parameter.email) {
-      return ContentService
-        .createTextOutput(JSON.stringify({
-          'status': 'error',
-          'message': 'Email parameter is required'
-        }))
-        .setMimeType(ContentService.MimeType.JSON);
+    const action = e.parameter.action || 'getProgress';
+
+    // Manejar diferentes acciones
+    switch(action) {
+      case 'checkAccess':
+        return handleCheckAccess(e.parameter);
+
+      case 'registerFreeAccess':
+        return handleRegisterFreeAccess(e.parameter);
+
+      case 'getProgress':
+      default:
+        // Verificar que se proporcionó el email
+        if (!e.parameter.email) {
+          return ContentService
+            .createTextOutput(JSON.stringify({
+              'status': 'error',
+              'message': 'Email parameter is required'
+            }))
+            .setMimeType(ContentService.MimeType.JSON);
+        }
+
+        const email = e.parameter.email.toLowerCase().trim();
+
+        // Recuperar el progreso del estudiante
+        const progress = getStudentProgress(email);
+
+        logActivity('Progress Retrieved', `Email: ${email}, Responses: ${progress.responses.length}`);
+
+        return ContentService
+          .createTextOutput(JSON.stringify({
+            'status': 'success',
+            'email': email,
+            'progress': progress
+          }))
+          .setMimeType(ContentService.MimeType.JSON);
     }
-
-    const email = e.parameter.email.toLowerCase().trim();
-
-    // Recuperar el progreso del estudiante
-    const progress = getStudentProgress(email);
-
-    logActivity('Progress Retrieved', `Email: ${email}, Responses: ${progress.responses.length}`);
-
-    return ContentService
-      .createTextOutput(JSON.stringify({
-        'status': 'success',
-        'email': email,
-        'progress': progress
-      }))
-      .setMimeType(ContentService.MimeType.JSON);
 
   } catch (error) {
     logActivity('ERROR in doGet', error.toString());
@@ -491,6 +505,185 @@ function updateSummary(studentName, studentEmail, module, score) {
 }
 
 // ============================================
+// CONTROL DE ACCESO
+// ============================================
+
+/**
+ * Verifica si un usuario tiene acceso a un curso específico
+ * Busca en la hoja de "Usuarios_Activos"
+ */
+function handleCheckAccess(params) {
+  try {
+    const email = params.email ? params.email.toLowerCase().trim() : '';
+    const course = params.course || '';
+
+    if (!email) {
+      return ContentService
+        .createTextOutput(JSON.stringify({
+          'status': 'error',
+          'message': 'Email is required',
+          'hasAccess': false
+        }))
+        .setMimeType(ContentService.MimeType.JSON);
+    }
+
+    const ss = getSpreadsheet();
+    const usersSheet = ss.getSheetByName(CONFIG.SHEETS.ACTIVE_USERS);
+
+    // Si no existe la hoja de usuarios activos, denegar acceso
+    if (!usersSheet) {
+      logActivity('CHECK ACCESS - Sheet not found', `Email: ${email}, Course: ${course}`);
+      return ContentService
+        .createTextOutput(JSON.stringify({
+          'status': 'success',
+          'hasAccess': false,
+          'message': 'Active users sheet not configured'
+        }))
+        .setMimeType(ContentService.MimeType.JSON);
+    }
+
+    // Obtener todos los datos de la hoja
+    const data = usersSheet.getDataRange().getValues();
+
+    // Buscar el email en la hoja (empezar desde fila 2 para saltar headers)
+    let hasAccess = false;
+
+    for (let i = 1; i < data.length; i++) {
+      const row = data[i];
+      // Asumiendo que el email está en la primera columna
+      // Ajusta el índice según tu estructura real
+      const rowEmail = String(row[0]).toLowerCase().trim();
+      const rowCourse = String(row[1]).toLowerCase().trim();
+      const rowStatus = String(row[2]).toLowerCase().trim();
+
+      // Verificar si el email coincide y tiene acceso activo
+      if (rowEmail === email) {
+        // Si hay una columna de curso específico, verificar que coincida
+        if (course && rowCourse && rowCourse !== course) {
+          continue;
+        }
+
+        // Verificar que el status sea "activo" o similar
+        if (rowStatus === 'activo' || rowStatus === 'active' || rowStatus === 'si' || rowStatus === 'yes' || rowStatus === '1') {
+          hasAccess = true;
+          break;
+        }
+      }
+    }
+
+    logActivity('CHECK ACCESS', `Email: ${email}, Course: ${course}, Access: ${hasAccess}`);
+
+    return ContentService
+      .createTextOutput(JSON.stringify({
+        'status': 'success',
+        'hasAccess': hasAccess,
+        'email': email,
+        'course': course
+      }))
+      .setMimeType(ContentService.MimeType.JSON);
+
+  } catch (error) {
+    logActivity('ERROR in handleCheckAccess', error.toString());
+    return ContentService
+      .createTextOutput(JSON.stringify({
+        'status': 'error',
+        'message': error.toString(),
+        'hasAccess': false
+      }))
+      .setMimeType(ContentService.MimeType.JSON);
+  }
+}
+
+/**
+ * Registra acceso gratuito a un módulo
+ */
+function handleRegisterFreeAccess(params) {
+  try {
+    const email = params.email ? params.email.toLowerCase().trim() : '';
+    const course = params.course || '';
+    const module = params.module || '';
+
+    if (!email) {
+      return ContentService
+        .createTextOutput(JSON.stringify({
+          'status': 'error',
+          'message': 'Email is required'
+        }))
+        .setMimeType(ContentService.MimeType.JSON);
+    }
+
+    const ss = getSpreadsheet();
+    let usersSheet = ss.getSheetByName(CONFIG.SHEETS.ACTIVE_USERS);
+
+    // Si no existe la hoja, crearla
+    if (!usersSheet) {
+      usersSheet = createActiveUsersSheet(ss);
+    }
+
+    // Registrar el acceso gratuito
+    const timestamp = new Date();
+    usersSheet.appendRow([
+      email,
+      course,
+      'activo',
+      'free-module-1',
+      timestamp,
+      module
+    ]);
+
+    logActivity('FREE ACCESS REGISTERED', `Email: ${email}, Course: ${course}, Module: ${module}`);
+
+    return ContentService
+      .createTextOutput(JSON.stringify({
+        'status': 'success',
+        'message': 'Free access registered successfully'
+      }))
+      .setMimeType(ContentService.MimeType.JSON);
+
+  } catch (error) {
+    logActivity('ERROR in handleRegisterFreeAccess', error.toString());
+    return ContentService
+      .createTextOutput(JSON.stringify({
+        'status': 'error',
+        'message': error.toString()
+      }))
+      .setMimeType(ContentService.MimeType.JSON);
+  }
+}
+
+/**
+ * Crea la hoja de usuarios activos si no existe
+ */
+function createActiveUsersSheet(ss) {
+  const sheet = ss.insertSheet(CONFIG.SHEETS.ACTIVE_USERS);
+
+  const headers = [
+    'Email',
+    'Curso',
+    'Status',
+    'Tipo de Acceso',
+    'Fecha de Registro',
+    'Notas'
+  ];
+
+  const headerRange = sheet.getRange(1, 1, 1, headers.length);
+  headerRange.setValues([headers]);
+  headerRange.setFontWeight('bold');
+  headerRange.setBackground('#10B981');
+  headerRange.setFontColor('#FFFFFF');
+
+  sheet.setFrozenRows(1);
+
+  for (let i = 1; i <= headers.length; i++) {
+    sheet.autoResizeColumn(i);
+  }
+
+  logActivity('SHEET CREATED', 'Active Users sheet created');
+
+  return sheet;
+}
+
+// ============================================
 // FUNCIONES DE INICIALIZACIÓN
 // ============================================
 
@@ -512,6 +705,10 @@ function setupSpreadsheet() {
 
   if (!ss.getSheetByName(CONFIG.SHEETS.LOG)) {
     createLogSheet(ss);
+  }
+
+  if (!ss.getSheetByName(CONFIG.SHEETS.ACTIVE_USERS)) {
+    createActiveUsersSheet(ss);
   }
 
   logActivity('SETUP', 'Spreadsheet configured successfully');
