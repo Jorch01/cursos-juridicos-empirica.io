@@ -626,10 +626,34 @@
             .video-controls {
                 padding: 10px 15px;
                 flex-wrap: wrap;
+                transition: all 0.3s ease;
+                max-height: 200px;
+                overflow: hidden;
+                cursor: pointer;
+            }
+
+            /* Estado colapsado de controles en móvil */
+            .video-controls.collapsed {
+                max-height: 45px;
+                padding: 8px 15px;
+            }
+
+            .video-controls.collapsed .time-markers {
+                display: none;
+            }
+
+            .video-controls.collapsed::after {
+                content: "📍 Tap para ver capítulos";
+                display: block;
+                font-size: 0.7rem;
+                color: rgba(255, 255, 255, 0.7);
+                margin-left: auto;
+                white-space: nowrap;
             }
 
             .time-markers {
                 gap: 5px;
+                transition: opacity 0.3s ease;
             }
 
             .time-marker {
@@ -2160,6 +2184,100 @@
                 document.getElementById('progressFill').style.width = progress + '%';
             }
         }
+
+        // ============================================
+        // MOBILE VIDEO CONTROLS COLLAPSE/EXPAND
+        // ============================================
+
+        let lastScrollY = 0;
+        let scrollTimeout;
+        let isExpanded = true;
+
+        function isMobileDevice() {
+            return window.innerWidth <= 768;
+        }
+
+        function collapseVideoControls() {
+            const videoControls = document.querySelector('.video-controls');
+            if (videoControls && isMobileDevice()) {
+                videoControls.classList.add('collapsed');
+                isExpanded = false;
+            }
+        }
+
+        function expandVideoControls() {
+            const videoControls = document.querySelector('.video-controls');
+            if (videoControls && isMobileDevice()) {
+                videoControls.classList.remove('collapsed');
+                isExpanded = true;
+            }
+        }
+
+        function toggleVideoControls(event) {
+            // Only allow toggle on mobile
+            if (!isMobileDevice()) return;
+
+            // Don't toggle if clicking on a button or time marker
+            if (event.target.classList.contains('btn-control') ||
+                event.target.classList.contains('time-marker')) {
+                return;
+            }
+
+            if (isExpanded) {
+                collapseVideoControls();
+            } else {
+                expandVideoControls();
+            }
+        }
+
+        // Detect scroll and collapse controls on mobile
+        function handleScroll() {
+            if (!isMobileDevice()) return;
+
+            const currentScrollY = window.scrollY || window.pageYOffset;
+
+            // If scrolling down and controls are expanded, collapse them
+            if (currentScrollY > lastScrollY && isExpanded && currentScrollY > 100) {
+                collapseVideoControls();
+            }
+
+            lastScrollY = currentScrollY;
+
+            // Clear any existing timeout
+            clearTimeout(scrollTimeout);
+
+            // If user stops scrolling and controls are expanded, wait a bit before allowing collapse again
+            scrollTimeout = setTimeout(() => {
+                // This ensures the collapse state persists after scrolling stops
+            }, 150);
+        }
+
+        // Initialize mobile controls behavior
+        window.addEventListener('DOMContentLoaded', function() {
+            const videoControls = document.querySelector('.video-controls');
+
+            if (videoControls) {
+                // Add touch/click handler to toggle controls
+                videoControls.addEventListener('click', toggleVideoControls);
+
+                // Add scroll listener for mobile
+                window.addEventListener('scroll', handleScroll, { passive: true });
+
+                // Collapse controls initially on mobile after a short delay
+                if (isMobileDevice()) {
+                    setTimeout(() => {
+                        collapseVideoControls();
+                    }, 3000); // Collapse after 3 seconds
+                }
+            }
+
+            // Re-check on window resize
+            window.addEventListener('resize', function() {
+                if (!isMobileDevice() && !isExpanded) {
+                    expandVideoControls();
+                }
+            });
+        });
 
         // ============================================
         // EXERCISE FUNCTIONS
