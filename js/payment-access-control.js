@@ -117,31 +117,54 @@
             return false;
         }
 
-        // Obtener email del usuario (guardado después del pago)
+        // MÓDULOS DE PAGO - Verificación estricta
+        console.log('🔒 Verificando acceso a módulo de pago...');
+
+        // Obtener email del usuario
         const userEmail = localStorage.getItem(CONFIG.STORAGE_KEYS.email);
 
-        // Si no hay email, el usuario no ha pagado
+        // Si no hay email, bloquear acceso inmediatamente
         if (!userEmail) {
-            console.log('Sin email guardado - Usuario debe pagar');
+            console.log('❌ Sin email guardado - Usuario debe pagar');
             return false;
         }
 
-        // Verificar si tenemos un estado de acceso válido en cache
+        // Verificar si tenemos un estado de acceso válido en cache para ESTE curso específico
         const cachedAccess = localStorage.getItem(CONFIG.STORAGE_KEYS.hasAccess + course);
+        const lastCheck = localStorage.getItem(CONFIG.STORAGE_KEYS.lastCheck + course);
 
-        if (cachedAccess === 'true' && !needsRevalidation(course)) {
-            console.log('Acceso verificado desde cache');
+        // Solo confiar en el cache si existe, es verdadero y no necesita revalidación
+        if (cachedAccess === 'true' && lastCheck && !needsRevalidation(course)) {
+            console.log('✅ Acceso verificado desde cache válido para ' + course);
             return true;
         }
 
+        // Si hay cache pero es falso, bloquear inmediatamente
+        if (cachedAccess === 'false') {
+            console.log('❌ Cache indica sin acceso para ' + course);
+            return false;
+        }
+
         // Verificar en la base de datos
-        console.log('Verificando acceso en base de datos...');
-        const hasAccess = await checkAccessInDatabase(userEmail, course);
+        console.log('🔍 Verificando acceso en Google Sheets para ' + course + '...');
+        try {
+            const hasAccess = await checkAccessInDatabase(userEmail, course);
 
-        // Guardar resultado
-        saveAccessState(course, hasAccess);
+            // Guardar resultado
+            saveAccessState(course, hasAccess);
 
-        return hasAccess;
+            if (hasAccess) {
+                console.log('✅ Acceso concedido desde base de datos');
+            } else {
+                console.log('❌ Acceso denegado - Usuario no encontrado en base de datos');
+            }
+
+            return hasAccess;
+        } catch (error) {
+            console.error('⚠️ Error verificando acceso:', error);
+            // En caso de error, denegar acceso por seguridad
+            return false;
+        }
     }
 
     // ═══════════════════════════════════════
@@ -736,11 +759,34 @@
     // 🚫 BLOQUEAR CONTENIDO PREMIUM
     // ═══════════════════════════════════════
     function blockPremiumContent() {
+        console.log('🚫 Bloqueando contenido premium...');
+
+        // Bloquear TODO el contenido principal inmediatamente
+        const mainContent = document.querySelector('.content-section, main, .module-content');
+        if (mainContent) {
+            mainContent.style.filter = 'blur(8px)';
+            mainContent.style.pointerEvents = 'none';
+            mainContent.style.userSelect = 'none';
+        }
+
         // Bloquear videos
         const videos = document.querySelectorAll('iframe, video');
         videos.forEach(video => {
             video.style.filter = 'blur(10px)';
             video.style.pointerEvents = 'none';
+        });
+
+        // Bloquear ejercicios
+        const exercises = document.querySelectorAll('.exercise-block, .exercise-content');
+        exercises.forEach(exercise => {
+            exercise.style.filter = 'blur(8px)';
+            exercise.style.pointerEvents = 'none';
+        });
+
+        // Bloquear inputs y botones
+        const inputs = document.querySelectorAll('input, button, textarea, select');
+        inputs.forEach(input => {
+            input.disabled = true;
         });
 
         // Bloquear enlaces a ejercicios y materiales
@@ -757,14 +803,15 @@
             });
         });
 
-        // Mostrar modal automáticamente
+        // Mostrar modal INMEDIATAMENTE (sin espera)
+        // Dar solo 500ms para que el DOM termine de cargar
         setTimeout(() => {
             if (isFreeModule()) {
                 showFreeAccessModal();
             } else {
                 showPaymentModal();
             }
-        }, 2000);
+        }, 500);
     }
 
     // ═══════════════════════════════════════
