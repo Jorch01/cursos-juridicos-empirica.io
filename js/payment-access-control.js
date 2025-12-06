@@ -27,6 +27,7 @@
         // Storage keys
         STORAGE_KEYS: {
             email: 'empirica_user_email',
+            freeEmail: 'empirica_free_email',  // Email solo para módulos gratuitos
             hasAccess: 'empirica_has_access_',
             lastCheck: 'empirica_last_check_'
         }
@@ -118,14 +119,18 @@
         }
 
         // MÓDULOS DE PAGO - Verificación estricta
-        console.log('🔒 Verificando acceso a módulo de pago...');
+        console.log('🔒 Verificando acceso a módulo de pago para:', course);
 
-        // Obtener email del usuario
+        // Obtener email del usuario (SOLO de pago, NO gratuito)
         const userEmail = localStorage.getItem(CONFIG.STORAGE_KEYS.email);
+        const freeEmail = localStorage.getItem(CONFIG.STORAGE_KEYS.freeEmail);
 
-        // Si no hay email, bloquear acceso inmediatamente
+        console.log('📧 Email de pago encontrado:', userEmail ? '✓ Sí' : '✗ No');
+        console.log('📧 Email gratuito encontrado:', freeEmail ? '✓ Sí (' + freeEmail + ')' : '✗ No');
+
+        // Si no hay email DE PAGO, bloquear acceso inmediatamente
         if (!userEmail) {
-            console.log('❌ Sin email guardado - Usuario debe pagar');
+            console.log('❌ Sin email de pago guardado - Usuario debe pagar o verificar acceso');
             return false;
         }
 
@@ -612,8 +617,8 @@
 
             await fetch(registerUrl);
 
-            // Guardar email y otorgar acceso localmente
-            localStorage.setItem(CONFIG.STORAGE_KEYS.email, email);
+            // Guardar email SOLO en storage de emails gratuitos (NO en email de pago)
+            localStorage.setItem(CONFIG.STORAGE_KEYS.freeEmail, email);
             localStorage.setItem('empirica_free_module_1', 'true');
 
             message.style.display = 'block';
