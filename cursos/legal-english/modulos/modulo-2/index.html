@@ -1,0 +1,2032 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Module 2: Contract Law Fundamentals | Legal English</title>
+    <meta name="description" content="Aprende sobre fundamentos del derecho contractual angloamericano. Legal English Module 2.">
+    <meta name="keywords" content="legal english, contract law, derecho contractual, common law contracts, force majeure, curso inglés jurídico">
+    <link rel="stylesheet" href="../../../../css/styles.css">
+    <style>
+        /* ============================================
+           ESTILOS DEL MÓDULO INTERACTIVO
+           ============================================ */
+
+        .module-layout {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0;
+            min-height: calc(100vh - 80px);
+            max-width: 1600px;
+            margin: 0 auto;
+        }
+
+        /* Video Section */
+        .video-section {
+            background: #000;
+            position: sticky;
+            top: 80px;
+            height: calc(100vh - 80px);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .video-container {
+            flex: 1;
+            position: relative;
+            background: #000;
+        }
+
+        .video-container iframe,
+        .video-container video {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+
+        .video-placeholder {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, var(--primary) 0%, #2d4942 100%);
+            color: var(--white);
+            flex-direction: column;
+            gap: 20px;
+            padding: 40px;
+            text-align: center;
+        }
+
+        .video-placeholder .icon {
+            font-size: 5rem;
+            opacity: 0.5;
+        }
+
+        .video-controls {
+            background: var(--primary);
+            padding: 15px 20px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            border-top: 2px solid var(--secondary);
+        }
+
+        .video-controls .btn-control {
+            background: var(--secondary);
+            color: var(--primary);
+            border: none;
+            padding: 8px 16px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+
+        .video-controls .btn-control:hover {
+            transform: scale(1.05);
+        }
+
+        .time-markers {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+            flex: 1;
+        }
+
+        .time-marker {
+            background: rgba(255, 255, 255, 0.1);
+            color: var(--white);
+            padding: 5px 10px;
+            border-radius: 15px;
+            font-size: 0.8rem;
+            cursor: pointer;
+            transition: all 0.3s;
+            border: 1px solid transparent;
+        }
+
+        .time-marker:hover {
+            background: var(--secondary);
+            color: var(--primary);
+        }
+
+        .time-marker.active {
+            border-color: var(--secondary);
+            background: rgba(207, 168, 146, 0.3);
+        }
+
+        /* Content Section */
+        .content-section {
+            background: var(--light-bg);
+            overflow-y: auto;
+            height: calc(100vh - 80px);
+            padding: 30px;
+        }
+
+        .module-header {
+            background: var(--white);
+            padding: 25px;
+            border-radius: 15px;
+            margin-bottom: 25px;
+            box-shadow: var(--shadow);
+            border-left: 5px solid var(--secondary);
+        }
+
+        .module-header h1 {
+            color: var(--primary);
+            font-size: 1.8rem;
+            margin-bottom: 10px;
+        }
+
+        .module-meta {
+            display: flex;
+            gap: 20px;
+            color: var(--text-light);
+            font-size: 0.9rem;
+            flex-wrap: wrap;
+        }
+
+        .module-meta span {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        /* Content Blocks */
+        .content-block {
+            background: var(--white);
+            padding: 25px;
+            border-radius: 15px;
+            margin-bottom: 20px;
+            box-shadow: var(--shadow);
+            transition: all 0.3s;
+        }
+
+        .content-block.highlight {
+            border-left: 5px solid var(--secondary);
+        }
+
+        .content-block h2 {
+            color: var(--primary);
+            font-size: 1.4rem;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .content-block h3 {
+            color: var(--primary);
+            font-size: 1.2rem;
+            margin: 20px 0 10px;
+        }
+
+        .content-block h4 {
+            color: var(--primary);
+            font-size: 1.1rem;
+            margin: 15px 0 10px;
+        }
+
+        .content-block p {
+            color: var(--text-dark);
+            line-height: 1.8;
+            margin-bottom: 15px;
+        }
+
+        .content-block ul {
+            margin-left: 20px;
+            margin-bottom: 15px;
+        }
+
+        .content-block li {
+            margin-bottom: 8px;
+            line-height: 1.6;
+        }
+
+        .content-block strong {
+            color: var(--primary);
+        }
+
+        .pause-indicator {
+            background: linear-gradient(135deg, #ff6b6b, #ee5a5a);
+            color: white;
+            padding: 15px 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .pause-indicator:hover {
+            transform: scale(1.02);
+        }
+
+        .pause-indicator .icon {
+            font-size: 1.5rem;
+        }
+
+        .pause-indicator .text {
+            flex: 1;
+        }
+
+        .pause-indicator .text strong {
+            display: block;
+            margin-bottom: 3px;
+            color: white;
+        }
+
+        /* Exercise Blocks */
+        .exercise-block {
+            background: var(--white);
+            border: 2px solid var(--secondary);
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 20px;
+        }
+
+        .exercise-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid var(--light-bg);
+        }
+
+        .exercise-number {
+            background: var(--secondary);
+            color: var(--primary);
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 1.2rem;
+            flex-shrink: 0;
+        }
+
+        .exercise-title {
+            flex: 1;
+        }
+
+        .exercise-title h3 {
+            color: var(--primary);
+            margin: 0 0 5px;
+        }
+
+        .exercise-title span {
+            color: var(--text-light);
+            font-size: 0.85rem;
+        }
+
+        .exercise-content {
+            margin-bottom: 20px;
+        }
+
+        /* Options List */
+        .options-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .option-item {
+            background: var(--light-bg);
+            border: 2px solid transparent;
+            border-radius: 10px;
+            padding: 15px 20px;
+            margin-bottom: 10px;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .option-item:hover {
+            border-color: var(--secondary);
+            transform: translateX(5px);
+        }
+
+        .option-item.selected {
+            border-color: var(--primary);
+            background: rgba(27, 44, 39, 0.05);
+        }
+
+        .option-item.correct {
+            border-color: #28a745;
+            background: rgba(40, 167, 69, 0.1);
+        }
+
+        .option-item.incorrect {
+            border-color: #dc3545;
+            background: rgba(220, 53, 69, 0.1);
+        }
+
+        .option-letter {
+            background: var(--primary);
+            color: var(--white);
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            font-size: 0.9rem;
+            flex-shrink: 0;
+        }
+
+        .option-item.correct .option-letter {
+            background: #28a745;
+        }
+
+        .option-item.incorrect .option-letter {
+            background: #dc3545;
+        }
+
+        /* Fill in the blank */
+        .fill-blank-input {
+            border: 2px solid var(--secondary);
+            border-radius: 5px;
+            padding: 8px 15px;
+            font-size: 1rem;
+            min-width: 150px;
+            transition: all 0.3s;
+        }
+
+        .fill-blank-input:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(27, 44, 39, 0.1);
+        }
+
+        .fill-blank-input.correct {
+            border-color: #28a745;
+            background: rgba(40, 167, 69, 0.1);
+        }
+
+        .fill-blank-input.incorrect {
+            border-color: #dc3545;
+            background: rgba(220, 53, 69, 0.1);
+        }
+
+        /* Exercise Actions */
+        .exercise-actions {
+            display: flex;
+            gap: 10px;
+            margin-top: 20px;
+            flex-wrap: wrap;
+        }
+
+        .btn-check {
+            background: var(--primary);
+            color: var(--white);
+            border: none;
+            padding: 12px 25px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+
+        .btn-check:hover {
+            background: #2d4942;
+            transform: translateY(-2px);
+        }
+
+        .btn-hint {
+            background: transparent;
+            color: var(--primary);
+            border: 2px solid var(--primary);
+            padding: 12px 25px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+
+        .btn-hint:hover {
+            background: var(--light-bg);
+        }
+
+        .feedback-message {
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 15px;
+            display: none;
+        }
+
+        .feedback-message.success {
+            background: rgba(40, 167, 69, 0.1);
+            border: 1px solid #28a745;
+            color: #155724;
+            display: block;
+        }
+
+        .feedback-message.error {
+            background: rgba(220, 53, 69, 0.1);
+            border: 1px solid #dc3545;
+            color: #721c24;
+            display: block;
+        }
+
+        .feedback-message.hint {
+            background: rgba(255, 193, 7, 0.1);
+            border: 1px solid #ffc107;
+            color: #856404;
+            display: block;
+        }
+
+        /* Vocabulary Box */
+        .vocabulary-box {
+            background: linear-gradient(135deg, var(--light-bg), #e8e8e8);
+            border-radius: 15px;
+            padding: 25px;
+            margin: 20px 0;
+        }
+
+        .vocabulary-box h4 {
+            color: var(--primary);
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .vocab-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 15px;
+        }
+
+        .vocab-item {
+            background: var(--white);
+            padding: 15px;
+            border-radius: 10px;
+            border-left: 4px solid var(--secondary);
+        }
+
+        .vocab-item .term {
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 5px;
+            font-size: 1.1rem;
+        }
+
+        .vocab-item .definition {
+            font-size: 0.9rem;
+            color: var(--text-dark);
+            line-height: 1.5;
+        }
+
+        .vocab-item .spanish {
+            font-size: 0.85rem;
+            color: var(--text-light);
+            font-style: italic;
+            margin-top: 5px;
+        }
+
+        /* Comparison Table */
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            background: var(--white);
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+        }
+
+        .comparison-table th {
+            background: var(--primary);
+            color: var(--white);
+            padding: 15px;
+            text-align: left;
+            font-weight: 600;
+        }
+
+        .comparison-table td {
+            padding: 12px 15px;
+            border-bottom: 1px solid var(--light-bg);
+        }
+
+        .comparison-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        .comparison-table tr:hover {
+            background: rgba(207, 168, 146, 0.05);
+        }
+
+        /* Document Display */
+        .document-display {
+            background: var(--white);
+            border: 2px solid var(--primary);
+            border-radius: 10px;
+            padding: 30px;
+            margin: 20px 0;
+            font-family: 'Courier New', monospace;
+            font-size: 0.95rem;
+            line-height: 1.8;
+        }
+
+        .document-display .doc-header {
+            text-align: center;
+            font-weight: 700;
+            font-size: 1.1rem;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid var(--primary);
+        }
+
+        .document-display .doc-to {
+            margin: 15px 0;
+        }
+
+        .document-display .doc-section {
+            margin: 15px 0;
+        }
+
+        /* Progress Bar */
+        .progress-bar {
+            background: var(--light-bg);
+            height: 8px;
+            border-radius: 4px;
+            margin-bottom: 20px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            background: linear-gradient(90deg, var(--secondary), var(--primary));
+            height: 100%;
+            border-radius: 4px;
+            transition: width 0.5s ease;
+        }
+
+        /* Module Navigation */
+        .module-navigation {
+            display: flex;
+            justify-content: space-between;
+            padding: 20px 0;
+            margin-top: 30px;
+            border-top: 2px solid var(--light-bg);
+            gap: 10px;
+        }
+
+        .nav-btn {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 15px 25px;
+            background: var(--white);
+            border: 2px solid var(--primary);
+            border-radius: 10px;
+            text-decoration: none;
+            color: var(--primary);
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+
+        .nav-btn:hover {
+            background: var(--primary);
+            color: var(--white);
+        }
+
+        .nav-btn.disabled {
+            opacity: 0.5;
+            pointer-events: none;
+        }
+
+        /* Pronunciation Guide */
+        .pronunciation {
+            color: var(--text-light);
+            font-style: italic;
+            font-size: 0.9rem;
+        }
+
+        /* Info Box */
+        .info-box {
+            background: rgba(207, 168, 146, 0.1);
+            border-left: 4px solid var(--secondary);
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 8px;
+        }
+
+        .info-box strong {
+            color: var(--primary);
+        }
+
+        /* Reading Text Block */
+        .reading-text {
+            background: #f8f9fa;
+            padding: 25px;
+            border-radius: 10px;
+            margin: 20px 0;
+            line-height: 1.8;
+            border-left: 4px solid var(--primary);
+        }
+
+        .reading-text p {
+            margin-bottom: 15px;
+        }
+
+        /* Responsive */
+        @media (max-width: 1200px) {
+            .module-layout {
+                grid-template-columns: 1fr;
+            }
+
+            .video-section {
+                position: sticky;
+                height: 50vh;
+                top: 80px;
+                z-index: 100;
+            }
+
+            .content-section {
+                height: auto;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .video-section {
+                position: sticky;
+                height: 35vh;
+                top: 60px;
+                z-index: 100;
+            }
+
+            .video-controls {
+                padding: 10px 15px;
+                flex-wrap: wrap;
+                transition: all 0.3s ease;
+                max-height: 500px;
+                overflow-y: auto;
+                overflow-x: hidden;
+                cursor: pointer;
+                -webkit-overflow-scrolling: touch;
+            }
+
+            .video-controls::-webkit-scrollbar {
+                width: 4px;
+            }
+
+            .video-controls::-webkit-scrollbar-track {
+                background: rgba(255, 255, 255, 0.1);
+            }
+
+            .video-controls::-webkit-scrollbar-thumb {
+                background: var(--secondary);
+                border-radius: 2px;
+            }
+
+            .video-controls.collapsed {
+                max-height: 45px;
+                padding: 8px 15px;
+                overflow: hidden;
+            }
+
+            .video-controls.collapsed .time-markers {
+                display: none;
+            }
+
+            .video-controls.collapsed::after {
+                content: "📍 Tap para ver capítulos";
+                display: block;
+                font-size: 0.7rem;
+                color: rgba(255, 255, 255, 0.7);
+                margin-left: auto;
+                white-space: nowrap;
+            }
+
+            .video-controls .btn-control {
+                flex-shrink: 0;
+                margin-bottom: 8px;
+                width: 100%;
+                max-width: 150px;
+            }
+
+            .time-markers {
+                gap: 6px;
+                transition: opacity 0.3s ease;
+                width: 100%;
+                max-height: 380px;
+                overflow-y: auto;
+            }
+
+            .time-marker {
+                font-size: 0.7rem;
+                padding: 6px 10px;
+                white-space: normal;
+                line-height: 1.3;
+                text-align: left;
+                width: 100%;
+            }
+
+            .content-section {
+                padding: 20px;
+            }
+
+            .module-header h1 {
+                font-size: 1.4rem;
+            }
+
+            .module-meta {
+                flex-direction: column;
+                gap: 10px;
+            }
+
+            .vocab-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .exercise-actions {
+                flex-direction: column;
+            }
+
+            .comparison-table {
+                font-size: 0.85rem;
+            }
+
+            .comparison-table th,
+            .comparison-table td {
+                padding: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="nav-container">
+            <div class="logo-container">
+                <a href="../../../../index.html">
+                    <img src="../../../../images/logo.png" alt="Cursos Jurídicos Empírica" class="logo-img" onerror="this.style.display='none'">
+                </a>
+                <div class="logo-text">
+                    <h1>Legal English</h1>
+                    <p>Anglo-American Law in Action</p>
+                </div>
+            </div>
+            <button class="mobile-menu-toggle" onclick="toggleMenu()">☰</button>
+            <ul class="nav-menu" id="navMenu">
+                <li><a href="../../index.html">Curso</a></li>
+                <li><a href="../index.html">Módulos</a></li>
+                <li><a href="../../../../contacto.html">Contacto</a></li>
+            </ul>
+        </div>
+    </header>
+
+    <!-- Main Layout -->
+    <main class="module-layout">
+        <!-- Video Section -->
+        <section class="video-section">
+            <div class="video-container">
+                <div class="video-placeholder">
+                    <span class="icon">🎬</span>
+                    <div>
+                        <h2 style="margin-bottom: 15px;">Video Coming Soon</h2>
+                        <p style="opacity: 0.9; max-width: 500px;">La clase en video estará disponible próximamente.<br>Mientras tanto, puedes completar los ejercicios y revisar el contenido.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="video-controls">
+                <div class="time-markers">
+                    <span class="time-marker">Video próximamente / Video coming soon</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Content Section -->
+        <section class="content-section">
+            <!-- Progress Bar -->
+            <div class="progress-bar">
+                <div class="progress-fill" id="progressFill" style="width: 0%"></div>
+            </div>
+
+            <!-- Module Header -->
+            <div class="module-header">
+                <h1>Module 2: Contract Law Fundamentals</h1>
+                <div class="module-meta">
+                    <span>📚 Module 2 of 15</span>
+                    <span>⏱ 45-60 min</span>
+                    <span>📝 11 exercises</span>
+                    <span>🎯 Level: B2</span>
+                </div>
+            </div>
+
+            <!-- Student Identification -->
+            <div class="content-block" style="background: linear-gradient(135deg, #f8f9fa, #e9ecef); border: 2px solid var(--secondary);">
+                <h2>👤 Student Information / Información del Estudiante</h2>
+                <p style="margin-bottom: 15px; color: var(--text-light);">Please enter your information before starting the module. This will help us track your progress.</p>
+                <p style="margin-bottom: 20px; color: var(--text-light); font-size: 0.9rem;">Por favor ingresa tu información antes de iniciar el módulo. Esto nos ayudará a seguir tu progreso.</p>
+                <div style="display: flex; flex-direction: column; gap: 15px; max-width: 600px;">
+                    <div>
+                        <label for="studentName" style="display: block; font-weight: 600; color: var(--primary); margin-bottom: 8px;">
+                            Full Name / Nombre Completo: <span style="color: #dc3545;">*</span>
+                        </label>
+                        <input
+                            type="text"
+                            id="studentName"
+                            placeholder="Juan Pérez García"
+                            style="width: 100%; padding: 12px; border: 2px solid var(--secondary); border-radius: 8px; font-size: 1rem;"
+                            required
+                        >
+                    </div>
+                    <div>
+                        <label for="studentEmail" style="display: block; font-weight: 600; color: var(--primary); margin-bottom: 8px;">
+                            Email (optional) / Correo electrónico (opcional):
+                        </label>
+                        <input
+                            type="email"
+                            id="studentEmail"
+                            placeholder="juan@example.com"
+                            style="width: 100%; padding: 12px; border: 2px solid var(--secondary); border-radius: 8px; font-size: 1rem;"
+                        >
+                    </div>
+                    <button
+                        onclick="saveStudentInfo()"
+                        class="btn-check"
+                        style="max-width: 200px;"
+                    >
+                        Save & Start / Guardar
+                    </button>
+                    <div id="student-info-feedback" style="display: none; padding: 10px; border-radius: 5px; font-size: 0.9rem;"></div>
+                </div>
+            </div>
+
+            <!-- Learning Objectives -->
+            <div class="content-block highlight">
+                <h2>🎯 Learning Objectives</h2>
+                <p>By the end of this module, you will be able to:</p>
+                <ul>
+                    <li>Identify the essential elements of a valid contract in common law</li>
+                    <li>Understand key differences between US, UK, and Mexican contract law</li>
+                    <li>Apply contract terminology in professional contexts</li>
+                    <li>Analyze the MUR Shipping v. RTI case on force majeure</li>
+                    <li>Draft basic force majeure notices and understand reasonable endeavours</li>
+                </ul>
+            </div>
+
+            <!-- ===================== PART 1: WARM-UP ===================== -->
+            <div class="content-block" style="background: linear-gradient(135deg, var(--primary), #2d4942); color: white; margin-top: 30px;">
+                <h2 style="color: white; margin: 0;">📖 PART 1: WARM-UP</h2>
+                <p style="margin: 10px 0 0 0; opacity: 0.9;">Get familiar with essential contract law vocabulary</p>
+            </div>
+
+            <!-- KEY VOCABULARY -->
+            <div class="vocabulary-box">
+                <h4>📚 Key Vocabulary - Study These Terms</h4>
+                <div class="vocab-grid">
+                    <div class="vocab-item">
+                        <div class="term">offer</div>
+                        <div class="definition">A clear proposal to enter into an agreement on specific terms</div>
+                        <div class="spanish">oferta</div>
+                    </div>
+                    <div class="vocab-item">
+                        <div class="term">acceptance</div>
+                        <div class="definition">Agreement to the exact terms of an offer</div>
+                        <div class="spanish">aceptación</div>
+                    </div>
+                    <div class="vocab-item">
+                        <div class="term">consideration</div>
+                        <div class="definition">Something of value exchanged between parties</div>
+                        <div class="spanish">contraprestación</div>
+                    </div>
+                    <div class="vocab-item">
+                        <div class="term">breach</div>
+                        <div class="definition">Failure to perform a contractual obligation</div>
+                        <div class="spanish">incumplimiento</div>
+                    </div>
+                    <div class="vocab-item">
+                        <div class="term">damages</div>
+                        <div class="definition">Money compensation for loss caused by breach</div>
+                        <div class="spanish">daños y perjuicios</div>
+                    </div>
+                    <div class="vocab-item">
+                        <div class="term">force majeure</div>
+                        <div class="definition">An unforeseeable event that prevents contract performance</div>
+                        <div class="spanish">fuerza mayor</div>
+                        <div class="pronunciation">/fɔːs mæˈʒɜː/</div>
+                    </div>
+                    <div class="vocab-item">
+                        <div class="term">reasonable endeavours</div>
+                        <div class="definition">Efforts a reasonable person would make to overcome an obstacle</div>
+                        <div class="spanish">esfuerzos razonables</div>
+                    </div>
+                    <div class="vocab-item">
+                        <div class="term">remedy</div>
+                        <div class="definition">Legal means to enforce a right or compensate for a wrong</div>
+                        <div class="spanish">recurso/remedio</div>
+                    </div>
+                    <div class="vocab-item">
+                        <div class="term">clause</div>
+                        <div class="definition">A specific provision or section within a contract</div>
+                        <div class="spanish">cláusula</div>
+                    </div>
+                    <div class="vocab-item">
+                        <div class="term">party</div>
+                        <div class="definition">A person or company that enters into a contract</div>
+                        <div class="spanish">parte</div>
+                    </div>
+                    <div class="vocab-item">
+                        <div class="term">sanction</div>
+                        <div class="definition">A penalty or restriction imposed by government</div>
+                        <div class="spanish">sanción</div>
+                    </div>
+                    <div class="vocab-item">
+                        <div class="term">charterer</div>
+                        <div class="definition">Party who hires a ship for cargo transport</div>
+                        <div class="spanish">fletador</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Exercise 1: Match the Terms -->
+            <div class="exercise-block" id="exercise1">
+                <div class="exercise-header">
+                    <div class="exercise-number">1</div>
+                    <div class="exercise-title">
+                        <h3>Match the Terms</h3>
+                        <span>Match these terms (1-8) with their definitions (a-h)</span>
+                    </div>
+                </div>
+                <div class="exercise-content">
+                    <p><strong>Click on pairs to match them:</strong></p>
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-top: 20px;">
+                        <div>
+                            <h4 style="color: var(--primary); margin-bottom: 10px;">Terms</h4>
+                            <div class="option-item" data-match="c" onclick="selectMatch(this, 'exercise1')">
+                                <span class="option-letter">1</span>
+                                <span>offer</span>
+                            </div>
+                            <div class="option-item" data-match="e" onclick="selectMatch(this, 'exercise1')">
+                                <span class="option-letter">2</span>
+                                <span>acceptance</span>
+                            </div>
+                            <div class="option-item" data-match="g" onclick="selectMatch(this, 'exercise1')">
+                                <span class="option-letter">3</span>
+                                <span>consideration</span>
+                            </div>
+                            <div class="option-item" data-match="f" onclick="selectMatch(this, 'exercise1')">
+                                <span class="option-letter">4</span>
+                                <span>breach</span>
+                            </div>
+                            <div class="option-item" data-match="a" onclick="selectMatch(this, 'exercise1')">
+                                <span class="option-letter">5</span>
+                                <span>damages</span>
+                            </div>
+                            <div class="option-item" data-match="b" onclick="selectMatch(this, 'exercise1')">
+                                <span class="option-letter">6</span>
+                                <span>force majeure</span>
+                            </div>
+                            <div class="option-item" data-match="h" onclick="selectMatch(this, 'exercise1')">
+                                <span class="option-letter">7</span>
+                                <span>remedy</span>
+                            </div>
+                            <div class="option-item" data-match="d" onclick="selectMatch(this, 'exercise1')">
+                                <span class="option-letter">8</span>
+                                <span>party</span>
+                            </div>
+                        </div>
+                        <div>
+                            <h4 style="color: var(--primary); margin-bottom: 10px;">Definitions</h4>
+                            <div class="option-item" data-match="a" onclick="selectMatch(this, 'exercise1')">
+                                <span class="option-letter">a</span>
+                                <span>Money paid to compensate for a loss</span>
+                            </div>
+                            <div class="option-item" data-match="b" onclick="selectMatch(this, 'exercise1')">
+                                <span class="option-letter">b</span>
+                                <span>An event beyond control that prevents performance</span>
+                            </div>
+                            <div class="option-item" data-match="c" onclick="selectMatch(this, 'exercise1')">
+                                <span class="option-letter">c</span>
+                                <span>A proposal to enter into an agreement</span>
+                            </div>
+                            <div class="option-item" data-match="d" onclick="selectMatch(this, 'exercise1')">
+                                <span class="option-letter">d</span>
+                                <span>A person or company in a contract</span>
+                            </div>
+                            <div class="option-item" data-match="e" onclick="selectMatch(this, 'exercise1')">
+                                <span class="option-letter">e</span>
+                                <span>Agreement to the terms proposed</span>
+                            </div>
+                            <div class="option-item" data-match="f" onclick="selectMatch(this, 'exercise1')">
+                                <span class="option-letter">f</span>
+                                <span>Failure to fulfill a contractual duty</span>
+                            </div>
+                            <div class="option-item" data-match="g" onclick="selectMatch(this, 'exercise1')">
+                                <span class="option-letter">g</span>
+                                <span>Value exchanged between parties</span>
+                            </div>
+                            <div class="option-item" data-match="h" onclick="selectMatch(this, 'exercise1')">
+                                <span class="option-letter">h</span>
+                                <span>Legal solution to enforce a right</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="exercise-actions">
+                    <button class="btn-check" onclick="checkExercise1()">Check Answers</button>
+                    <button class="btn-hint" onclick="resetExercise('exercise1')">Reset</button>
+                </div>
+                <div id="feedback-exercise1" class="feedback-message"></div>
+            </div>
+
+            <!-- Exercise 2: Complete the Sentences -->
+            <div class="exercise-block" id="exercise2">
+                <div class="exercise-header">
+                    <div class="exercise-number">2</div>
+                    <div class="exercise-title">
+                        <h3>Complete the Sentences</h3>
+                        <span>Use words from the vocabulary to complete these sentences</span>
+                    </div>
+                </div>
+                <div class="exercise-content">
+                    <div class="info-box">
+                        <strong>Word Bank:</strong> breach, consideration, damages, force majeure, offer, acceptance, remedy, reasonable endeavours
+                    </div>
+                    <ol>
+                        <li style="margin-bottom: 15px;">
+                            When Company A proposes terms, they make an <input type="text" class="fill-blank-input" id="ex2-1" data-answer="offer"> to Company B.
+                        </li>
+                        <li style="margin-bottom: 15px;">
+                            If Company B agrees to all the terms, this constitutes <input type="text" class="fill-blank-input" id="ex2-2" data-answer="acceptance">.
+                        </li>
+                        <li style="margin-bottom: 15px;">
+                            In common law, a contract requires <input type="text" class="fill-blank-input" id="ex2-3" data-answer="consideration"> — something of value from both sides.
+                        </li>
+                        <li style="margin-bottom: 15px;">
+                            When a party fails to perform, this is called a <input type="text" class="fill-blank-input" id="ex2-4" data-answer="breach"> of contract.
+                        </li>
+                        <li style="margin-bottom: 15px;">
+                            The injured party may seek <input type="text" class="fill-blank-input" id="ex2-5" data-answer="damages"> as compensation in court.
+                        </li>
+                        <li style="margin-bottom: 15px;">
+                            A <input type="text" class="fill-blank-input" id="ex2-6" data-answer="force majeure"> clause excuses performance when unforeseeable events occur.
+                        </li>
+                        <li style="margin-bottom: 15px;">
+                            The contract required the parties to use <input type="text" class="fill-blank-input" id="ex2-7" data-answer="reasonable endeavours"> to overcome any obstacles.
+                        </li>
+                        <li style="margin-bottom: 15px;">
+                            The court will determine the appropriate <input type="text" class="fill-blank-input" id="ex2-8" data-answer="remedy"> for the breach.
+                        </li>
+                    </ol>
+                </div>
+                <div class="exercise-actions">
+                    <button class="btn-check" onclick="checkExercise2()">Check Answers</button>
+                    <button class="btn-hint" onclick="resetFillBlanks('exercise2')">Reset</button>
+                </div>
+                <div id="feedback-exercise2" class="feedback-message"></div>
+            </div>
+
+            <!-- ===================== PART 2: READING ===================== -->
+            <div class="content-block" style="background: linear-gradient(135deg, var(--primary), #2d4942); color: white; margin-top: 30px;">
+                <h2 style="color: white; margin: 0;">📖 PART 2: READING - CONTRACT FORMATION</h2>
+                <p style="margin: 10px 0 0 0; opacity: 0.9;">Understand the essential elements of valid contracts</p>
+            </div>
+
+            <!-- Reading Text -->
+            <div class="content-block">
+                <h2>Essential Elements of a Valid Contract</h2>
+                <div class="reading-text">
+                    <p>In Anglo-American common law, a valid contract requires four essential elements: <strong>offer</strong>, <strong>acceptance</strong>, <strong>consideration</strong>, and <strong>intention to create legal relations</strong>. This differs significantly from civil law systems like Mexico's, where <em>causa</em> (cause) replaces consideration.</p>
+
+                    <p>An <strong>offer</strong> must be clear, definite, and communicated to the offeree. The principle of <em>consensus ad idem</em> (meeting of minds) means both parties must agree on the same terms. <strong>Acceptance</strong> must mirror the offer exactly—any changes constitute a counter-offer. This is called the "mirror image rule."</p>
+
+                    <p><strong>Consideration</strong> is uniquely important in common law. Each party must provide something of value: money, goods, services, or even a promise to do (or not do) something. The Latin maxim <em>quid pro quo</em> ("something for something") captures this concept. Without consideration, a promise is merely a gift, unenforceable in court.</p>
+
+                    <p>When unforeseen events prevent performance, parties may invoke <strong>force majeure</strong> (<em>vis major</em> in Latin). However, unlike Mexican law where <em>caso fortuito</em> is codified in the Civil Code, common law has no general doctrine of force majeure. Parties must include specific clauses in their contracts.</p>
+
+                    <p>The recent UK Supreme Court case <strong>MUR Shipping BV v. RTI Ltd [2024]</strong> clarified that "reasonable endeavours" to overcome force majeure does not require accepting non-contractual performance. The court upheld the principle of <em>pacta sunt servanda</em>—agreements must be kept as written.</p>
+                </div>
+            </div>
+
+            <!-- Comparative Table -->
+            <div class="content-block">
+                <h3>Comparative Table: Contract Formation</h3>
+                <table class="comparison-table">
+                    <thead>
+                        <tr>
+                            <th>Element</th>
+                            <th>🇺🇸 United States</th>
+                            <th>🇬🇧 United Kingdom</th>
+                            <th>🇲🇽 Mexico</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Basic requirement</strong></td>
+                            <td>Offer + Acceptance + Consideration</td>
+                            <td>Offer + Acceptance + Consideration</td>
+                            <td>Consentimiento + Objeto + Causa</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Consideration</strong></td>
+                            <td>✅ Required for enforceability</td>
+                            <td>✅ Required for enforceability</td>
+                            <td>❌ Not required (<em>causa</em> instead)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Written form</strong></td>
+                            <td>Statute of Frauds for certain contracts</td>
+                            <td>Similar requirements</td>
+                            <td>More contracts require written form</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Force majeure</strong></td>
+                            <td>Must be in contract</td>
+                            <td>Must be in contract</td>
+                            <td>Codified in Civil Code (Art. 2111)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Good faith</strong></td>
+                            <td>Implied in performance (UCC)</td>
+                            <td>Limited application</td>
+                            <td>Fundamental principle</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Exercise 3: True or False -->
+            <div class="exercise-block" id="exercise3">
+                <div class="exercise-header">
+                    <div class="exercise-number">3</div>
+                    <div class="exercise-title">
+                        <h3>True or False</h3>
+                        <span>Read each statement and select True or False</span>
+                    </div>
+                </div>
+                <div class="exercise-content">
+                    <div style="margin-bottom: 20px;">
+                        <p><strong>1. In common law, consideration is optional for contract validity.</strong></p>
+                        <div class="options-list">
+                            <div class="option-item" data-correct="false" onclick="selectOption(this, 'exercise3-q1')">
+                                <span class="option-letter">T</span>
+                                <span>True</span>
+                            </div>
+                            <div class="option-item" data-correct="true" onclick="selectOption(this, 'exercise3-q1')">
+                                <span class="option-letter">F</span>
+                                <span>False</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div style="margin-bottom: 20px;">
+                        <p><strong>2. The "mirror image rule" means acceptance must match the offer exactly.</strong></p>
+                        <div class="options-list">
+                            <div class="option-item" data-correct="true" onclick="selectOption(this, 'exercise3-q2')">
+                                <span class="option-letter">T</span>
+                                <span>True</span>
+                            </div>
+                            <div class="option-item" data-correct="false" onclick="selectOption(this, 'exercise3-q2')">
+                                <span class="option-letter">F</span>
+                                <span>False</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div style="margin-bottom: 20px;">
+                        <p><strong>3. Mexican law requires consideration just like US and UK law.</strong></p>
+                        <div class="options-list">
+                            <div class="option-item" data-correct="false" onclick="selectOption(this, 'exercise3-q3')">
+                                <span class="option-letter">T</span>
+                                <span>True</span>
+                            </div>
+                            <div class="option-item" data-correct="true" onclick="selectOption(this, 'exercise3-q3')">
+                                <span class="option-letter">F</span>
+                                <span>False</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div style="margin-bottom: 20px;">
+                        <p><strong>4. Force majeure is automatically implied in all English law contracts.</strong></p>
+                        <div class="options-list">
+                            <div class="option-item" data-correct="false" onclick="selectOption(this, 'exercise3-q4')">
+                                <span class="option-letter">T</span>
+                                <span>True</span>
+                            </div>
+                            <div class="option-item" data-correct="true" onclick="selectOption(this, 'exercise3-q4')">
+                                <span class="option-letter">F</span>
+                                <span>False</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div style="margin-bottom: 20px;">
+                        <p><strong>5. <em>Pacta sunt servanda</em> means contracts must be performed as agreed.</strong></p>
+                        <div class="options-list">
+                            <div class="option-item" data-correct="true" onclick="selectOption(this, 'exercise3-q5')">
+                                <span class="option-letter">T</span>
+                                <span>True</span>
+                            </div>
+                            <div class="option-item" data-correct="false" onclick="selectOption(this, 'exercise3-q5')">
+                                <span class="option-letter">F</span>
+                                <span>False</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="exercise-actions">
+                    <button class="btn-check" onclick="checkExercise3()">Check Answers</button>
+                    <button class="btn-hint" onclick="resetExercise('exercise3')">Reset</button>
+                </div>
+                <div id="feedback-exercise3" class="feedback-message"></div>
+            </div>
+
+            <!-- Exercise 4: Find the Words -->
+            <div class="exercise-block" id="exercise4">
+                <div class="exercise-header">
+                    <div class="exercise-number">4</div>
+                    <div class="exercise-title">
+                        <h3>Find the Words</h3>
+                        <span>Find words or phrases in the text that match these definitions</span>
+                    </div>
+                </div>
+                <div class="exercise-content">
+                    <ol>
+                        <li style="margin-bottom: 15px;">
+                            A Latin phrase meaning "meeting of minds": <input type="text" class="fill-blank-input" id="ex4-1" data-answer="consensus ad idem" style="min-width: 200px;">
+                        </li>
+                        <li style="margin-bottom: 15px;">
+                            Something given in exchange for something else: <input type="text" class="fill-blank-input" id="ex4-2" data-answer="consideration" style="min-width: 200px;">
+                        </li>
+                        <li style="margin-bottom: 15px;">
+                            The Latin term for "agreements must be kept": <input type="text" class="fill-blank-input" id="ex4-3" data-answer="pacta sunt servanda" style="min-width: 200px;">
+                        </li>
+                        <li style="margin-bottom: 15px;">
+                            A superior force that prevents contract performance: <input type="text" class="fill-blank-input" id="ex4-4" data-answer="force majeure" style="min-width: 200px;">
+                        </li>
+                        <li style="margin-bottom: 15px;">
+                            The requirement that acceptance must exactly match the offer: <input type="text" class="fill-blank-input" id="ex4-5" data-answer="mirror image rule" style="min-width: 200px;">
+                        </li>
+                    </ol>
+                </div>
+                <div class="exercise-actions">
+                    <button class="btn-check" onclick="checkExercise4()">Check Answers</button>
+                    <button class="btn-hint" onclick="resetFillBlanks('exercise4')">Reset</button>
+                </div>
+                <div id="feedback-exercise4" class="feedback-message"></div>
+            </div>
+
+            <!-- ===================== PART 3: THE MUR SHIPPING CASE ===================== -->
+            <div class="content-block" style="background: linear-gradient(135deg, var(--primary), #2d4942); color: white; margin-top: 30px;">
+                <h2 style="color: white; margin: 0;">⚖️ PART 3: THE MUR SHIPPING CASE</h2>
+                <p style="margin: 10px 0 0 0; opacity: 0.9;">Analyzing a landmark force majeure decision</p>
+            </div>
+
+            <!-- Case Overview -->
+            <div class="content-block highlight">
+                <h2>📋 RTI Ltd v. MUR Shipping BV [2024] UKSC 18</h2>
+                <div class="info-box">
+                    <p><strong>Court:</strong> UK Supreme Court</p>
+                    <p><strong>Date:</strong> May 15, 2024</p>
+                    <p><strong>Parties:</strong> MUR Shipping BV (shipowner) v. RTI Ltd (charterer)</p>
+                    <p><strong>Contract type:</strong> Contract of affreightment (bauxite, Guinea → Ukraine)</p>
+                    <p><strong>Central issue:</strong> Does "reasonable endeavours" require accepting euros instead of dollars?</p>
+                    <p><strong>Holding:</strong> <strong>NO</strong> — Reasonable endeavours does not require accepting non-contractual performance</p>
+                </div>
+            </div>
+
+            <!-- Case Facts -->
+            <div class="content-block">
+                <h3>📖 Case Facts</h3>
+                <p>In June 2016, MUR Shipping BV and RTI Ltd entered into a <strong>contract of affreightment</strong> for the carriage of bauxite from Guinea to Ukraine. The contract specified that all payments must be made in <strong>US dollars</strong>.</p>
+
+                <p>Everything proceeded smoothly until April 2018. On <strong>April 6, 2018</strong>, RTI's parent company—United Company Rusal—was placed on the <strong>Specially Designated Nationals List by OFAC</strong> (Office of Foreign Assets Control). This meant that dollar payments would be subject to restrictions and potential delays.</p>
+
+                <p>Four days later, <strong>MUR served a force majeure notice</strong>, stating they could not continue without receiving payment as contractually agreed. Specifically, Clause 36 of the contract contained a force majeure provision requiring that the event "cannot be overcome by reasonable endeavours."</p>
+
+                <p><strong>RTI rejected the force majeure notice.</strong> They offered to pay in <strong>euros instead of dollars</strong> and agreed to cover all currency conversion costs. RTI argued this would cause MUR no financial detriment whatsoever.</p>
+
+                <p>But <strong>MUR refused.</strong> They maintained their contractual right to receive US dollars, not euros. MUR suspended performance under the contract.</p>
+            </div>
+
+            <!-- Legal Journey -->
+            <div class="content-block">
+                <h3>⚖️ Legal Journey</h3>
+                <ul>
+                    <li><strong>Arbitration Tribunal:</strong> Ruled in favor of RTI (MUR should have accepted euros)</li>
+                    <li><strong>Commercial Court:</strong> Allowed MUR's appeal</li>
+                    <li><strong>Court of Appeal:</strong> Sided with RTI again</li>
+                    <li><strong>Supreme Court:</strong> Unanimously ruled in favor of MUR Shipping</li>
+                </ul>
+            </div>
+
+            <!-- Key Principle -->
+            <div class="content-block highlight">
+                <h3>🔑 Key Principle</h3>
+                <div class="info-box">
+                    <p><strong>Lord Hamblen</strong> stated that reasonable endeavours clauses ensure a causal connection between the force majeure event and non-performance. They <strong>do not require accepting performance that differs from what the contract specifies</strong>.</p>
+
+                    <p>The court emphasized that <strong>freedom of contract</strong> is fundamental to English commercial law. Clear words are needed to give up valuable contractual rights. MUR was entitled to receive dollars, as agreed. They did not have to accept euros, even if it would cause them no loss.</p>
+
+                    <p style="margin-bottom: 0;"><strong><em>Pacta sunt servanda</em></strong> — the contract terms as written must be honored.</p>
+                </div>
+            </div>
+
+            <!-- Exercise 5: Case Comprehension -->
+            <div class="exercise-block" id="exercise5">
+                <div class="exercise-header">
+                    <div class="exercise-number">5</div>
+                    <div class="exercise-title">
+                        <h3>Case Comprehension</h3>
+                        <span>Test your understanding of the MUR Shipping case</span>
+                    </div>
+                </div>
+                <div class="exercise-content">
+                    <div style="margin-bottom: 20px;">
+                        <p><strong>1. MUR Shipping was the shipowner.</strong></p>
+                        <div class="options-list">
+                            <div class="option-item" data-correct="true" onclick="selectOption(this, 'exercise5-q1')">
+                                <span class="option-letter">T</span>
+                                <span>True</span>
+                            </div>
+                            <div class="option-item" data-correct="false" onclick="selectOption(this, 'exercise5-q1')">
+                                <span class="option-letter">F</span>
+                                <span>False</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div style="margin-bottom: 20px;">
+                        <p><strong>2. Payment was required in US dollars.</strong></p>
+                        <div class="options-list">
+                            <div class="option-item" data-correct="true" onclick="selectOption(this, 'exercise5-q2')">
+                                <span class="option-letter">T</span>
+                                <span>True</span>
+                            </div>
+                            <div class="option-item" data-correct="false" onclick="selectOption(this, 'exercise5-q2')">
+                                <span class="option-letter">F</span>
+                                <span>False</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div style="margin-bottom: 20px;">
+                        <p><strong>3. MUR offered to accept euros.</strong></p>
+                        <div class="options-list">
+                            <div class="option-item" data-correct="false" onclick="selectOption(this, 'exercise5-q3')">
+                                <span class="option-letter">T</span>
+                                <span>True</span>
+                            </div>
+                            <div class="option-item" data-correct="true" onclick="selectOption(this, 'exercise5-q3')">
+                                <span class="option-letter">F</span>
+                                <span>False</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div style="margin-bottom: 20px;">
+                        <p><strong>4. The Supreme Court ruled in favor of MUR.</strong></p>
+                        <div class="options-list">
+                            <div class="option-item" data-correct="true" onclick="selectOption(this, 'exercise5-q4')">
+                                <span class="option-letter">T</span>
+                                <span>True</span>
+                            </div>
+                            <div class="option-item" data-correct="false" onclick="selectOption(this, 'exercise5-q4')">
+                                <span class="option-letter">F</span>
+                                <span>False</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div style="margin-bottom: 20px;">
+                        <p><strong>5. The principle of <em>pacta sunt servanda</em> was central to the decision.</strong></p>
+                        <div class="options-list">
+                            <div class="option-item" data-correct="true" onclick="selectOption(this, 'exercise5-q5')">
+                                <span class="option-letter">T</span>
+                                <span>True</span>
+                            </div>
+                            <div class="option-item" data-correct="false" onclick="selectOption(this, 'exercise5-q5')">
+                                <span class="option-letter">F</span>
+                                <span>False</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="exercise-actions">
+                    <button class="btn-check" onclick="checkExercise5()">Check Answers</button>
+                    <button class="btn-hint" onclick="resetExercise('exercise5')">Reset</button>
+                </div>
+                <div id="feedback-exercise5" class="feedback-message"></div>
+            </div>
+
+            <!-- ===================== PART 4: PRACTICAL APPLICATION ===================== -->
+            <div class="content-block" style="background: linear-gradient(135deg, var(--primary), #2d4942); color: white; margin-top: 30px;">
+                <h2 style="color: white; margin: 0;">💼 PART 4: PRACTICAL APPLICATION</h2>
+                <p style="margin: 10px 0 0 0; opacity: 0.9;">Apply your knowledge to real contract documents</p>
+            </div>
+
+            <!-- Force Majeure Clause Analysis -->
+            <div class="content-block">
+                <h2>📄 Document Analysis: Force Majeure Clause</h2>
+                <p>Read this authentic force majeure clause from the MUR Shipping contract:</p>
+
+                <div class="document-display">
+                    <div class="doc-header">CLAUSE 36 - FORCE MAJEURE</div>
+                    <div class="doc-section">
+                        <p><strong>36.1</strong> Subject to the terms of this Clause 36, neither Owners nor Charterers shall be liable to the other for loss, damage, delay or failure in performance caused by a Force Majeure Event as hereinafter defined.</p>
+                    </div>
+                    <div class="doc-section">
+                        <p><strong>36.3</strong> A Force Majeure Event is an event or state of affairs which meets all of the following criteria:</p>
+                        <p style="margin-left: 20px;">(a) It is outside the immediate control of the Party giving the Force Majeure Notice;</p>
+                        <p style="margin-left: 20px;">(b) It prevents or delays the loading or discharge of the cargo;</p>
+                        <p style="margin-left: 20px;">(c) It is caused by one or more of [listed events including sanctions];</p>
+                        <p style="margin-left: 20px;">(d) It cannot be overcome by reasonable endeavours from the Party affected.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Exercise 6: Clause Analysis -->
+            <div class="exercise-block" id="exercise6">
+                <div class="exercise-header">
+                    <div class="exercise-number">6</div>
+                    <div class="exercise-title">
+                        <h3>Identify Elements</h3>
+                        <span>Answer questions about the force majeure clause</span>
+                    </div>
+                </div>
+                <div class="exercise-content">
+                    <p><strong>Question: What is the significance of criterion (d) "cannot be overcome by reasonable endeavours" for the MUR Shipping case?</strong></p>
+                    <div class="options-list">
+                        <div class="option-item" data-correct="false" onclick="selectOption(this, 'exercise6-q1')">
+                            <span class="option-letter">A</span>
+                            <span>MUR had to accept any alternative payment method to overcome the obstacle</span>
+                        </div>
+                        <div class="option-item" data-correct="true" onclick="selectOption(this, 'exercise6-q1')">
+                            <span class="option-letter">B</span>
+                            <span>Reasonable endeavours does not require accepting non-contractual performance like euros</span>
+                        </div>
+                        <div class="option-item" data-correct="false" onclick="selectOption(this, 'exercise6-q1')">
+                            <span class="option-letter">C</span>
+                            <span>The clause was invalid because it was too vague</span>
+                        </div>
+                        <div class="option-item" data-correct="false" onclick="selectOption(this, 'exercise6-q1')">
+                            <span class="option-letter">D</span>
+                            <span>RTI should have offered more money to compensate MUR</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="exercise-actions">
+                    <button class="btn-check" onclick="checkExercise6()">Check Answer</button>
+                    <button class="btn-hint" onclick="resetExercise('exercise6')">Reset</button>
+                </div>
+                <div id="feedback-exercise6" class="feedback-message"></div>
+            </div>
+
+            <!-- Exercise 7: Latin Terms -->
+            <div class="exercise-block" id="exercise7">
+                <div class="exercise-header">
+                    <div class="exercise-number">7</div>
+                    <div class="exercise-title">
+                        <h3>Match Latin Terms</h3>
+                        <span>Match each Latin term with its English equivalent</span>
+                    </div>
+                </div>
+                <div class="exercise-content">
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-top: 20px;">
+                        <div>
+                            <h4 style="color: var(--primary); margin-bottom: 10px;">Latin Terms</h4>
+                            <div class="option-item" data-match="d" onclick="selectMatch(this, 'exercise7')">
+                                <span class="option-letter">1</span>
+                                <span><em>pacta sunt servanda</em></span>
+                            </div>
+                            <div class="option-item" data-match="f" onclick="selectMatch(this, 'exercise7')">
+                                <span class="option-letter">2</span>
+                                <span><em>consensus ad idem</em></span>
+                            </div>
+                            <div class="option-item" data-match="b" onclick="selectMatch(this, 'exercise7')">
+                                <span class="option-letter">3</span>
+                                <span><em>quid pro quo</em></span>
+                            </div>
+                            <div class="option-item" data-match="e" onclick="selectMatch(this, 'exercise7')">
+                                <span class="option-letter">4</span>
+                                <span><em>vis major</em></span>
+                            </div>
+                            <div class="option-item" data-match="a" onclick="selectMatch(this, 'exercise7')">
+                                <span class="option-letter">5</span>
+                                <span><em>bona fide</em></span>
+                            </div>
+                            <div class="option-item" data-match="c" onclick="selectMatch(this, 'exercise7')">
+                                <span class="option-letter">6</span>
+                                <span><em>ex contractu</em></span>
+                            </div>
+                        </div>
+                        <div>
+                            <h4 style="color: var(--primary); margin-bottom: 10px;">English Equivalents</h4>
+                            <div class="option-item" data-match="a" onclick="selectMatch(this, 'exercise7')">
+                                <span class="option-letter">a</span>
+                                <span>in good faith</span>
+                            </div>
+                            <div class="option-item" data-match="b" onclick="selectMatch(this, 'exercise7')">
+                                <span class="option-letter">b</span>
+                                <span>something for something</span>
+                            </div>
+                            <div class="option-item" data-match="c" onclick="selectMatch(this, 'exercise7')">
+                                <span class="option-letter">c</span>
+                                <span>arising from the contract</span>
+                            </div>
+                            <div class="option-item" data-match="d" onclick="selectMatch(this, 'exercise7')">
+                                <span class="option-letter">d</span>
+                                <span>agreements must be kept</span>
+                            </div>
+                            <div class="option-item" data-match="e" onclick="selectMatch(this, 'exercise7')">
+                                <span class="option-letter">e</span>
+                                <span>superior/irresistible force</span>
+                            </div>
+                            <div class="option-item" data-match="f" onclick="selectMatch(this, 'exercise7')">
+                                <span class="option-letter">f</span>
+                                <span>meeting of minds</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="exercise-actions">
+                    <button class="btn-check" onclick="checkExercise7()">Check Answers</button>
+                    <button class="btn-hint" onclick="resetExercise('exercise7')">Reset</button>
+                </div>
+                <div id="feedback-exercise7" class="feedback-message"></div>
+            </div>
+
+            <!-- Module Summary -->
+            <div class="content-block highlight">
+                <h2>📝 Module Summary</h2>
+                <h3>Key Takeaways</h3>
+                <ul>
+                    <li>✅ Common law contracts require offer, acceptance, consideration, and intent</li>
+                    <li>✅ Force majeure must be explicitly included in common law contracts</li>
+                    <li>✅ "Reasonable endeavours" does not require accepting non-contractual performance</li>
+                    <li>✅ <em>Pacta sunt servanda</em>: the contract terms as written control</li>
+                    <li>✅ Mexican lawyers must draft force majeure clauses carefully for international contracts</li>
+                </ul>
+
+                <div class="info-box" style="margin-top: 20px;">
+                    <p><strong>💡 Professional Tip:</strong> When reviewing international contracts, always check if force majeure is defined and what "reasonable endeavours" obligations exist.</p>
+                </div>
+            </div>
+
+            <!-- Module Navigation -->
+            <div class="module-navigation">
+                <a href="../modulo-1/index.html" class="nav-btn">
+                    <span>←</span>
+                    <span>Previous Module</span>
+                </a>
+                <a href="../modulo-3/index.html" class="nav-btn disabled">
+                    <span>Next Module</span>
+                    <span>→</span>
+                </a>
+            </div>
+
+        </section>
+    </main>
+
+    <script>
+        let selectedMatches = {};
+        let exerciseStates = {};
+
+        // Mobile menu toggle
+        function toggleMenu() {
+            const navMenu = document.getElementById('navMenu');
+            navMenu.classList.toggle('active');
+        }
+
+        // Student Information
+        function saveStudentInfo() {
+            const name = document.getElementById('studentName').value.trim();
+            const email = document.getElementById('studentEmail').value.trim();
+            const feedback = document.getElementById('student-info-feedback');
+
+            if (!name) {
+                feedback.style.display = 'block';
+                feedback.style.background = 'rgba(220, 53, 69, 0.1)';
+                feedback.style.border = '1px solid #dc3545';
+                feedback.style.color = '#721c24';
+                feedback.textContent = '⚠ Please enter your name / Por favor ingresa tu nombre';
+                return;
+            }
+
+            const studentInfo = {
+                name: name,
+                email: email,
+                timestamp: new Date().toISOString(),
+                module: 'module-2'
+            };
+
+            localStorage.setItem('student_info_module2', JSON.stringify(studentInfo));
+            sendToBackend({ type: 'student_info', data: studentInfo });
+
+            feedback.style.display = 'block';
+            feedback.style.background = 'rgba(40, 167, 69, 0.1)';
+            feedback.style.border = '1px solid #28a745';
+            feedback.style.color = '#155724';
+            feedback.textContent = '✓ Information saved! You can now start the module. / ¡Información guardada! Ahora puedes comenzar el módulo.';
+
+            document.getElementById('studentName').disabled = true;
+            document.getElementById('studentEmail').disabled = true;
+        }
+
+        function loadStudentInfo() {
+            const saved = localStorage.getItem('student_info_module2');
+            if (saved) {
+                const info = JSON.parse(saved);
+                document.getElementById('studentName').value = info.name;
+                document.getElementById('studentEmail').value = info.email || '';
+                document.getElementById('studentName').disabled = true;
+                document.getElementById('studentEmail').disabled = true;
+
+                const feedback = document.getElementById('student-info-feedback');
+                feedback.style.display = 'block';
+                feedback.style.background = 'rgba(40, 167, 69, 0.1)';
+                feedback.style.border = '1px solid #28a745';
+                feedback.style.color = '#155724';
+                feedback.textContent = '✓ Welcome back, ' + info.name + '!';
+            }
+        }
+
+        function getStudentInfo() {
+            const saved = localStorage.getItem('student_info_module2');
+            return saved ? JSON.parse(saved) : { name: 'Anonymous', email: '' };
+        }
+
+        // Backend communication
+        function sendToBackend(payload) {
+            // This would be replaced with actual backend API call
+            console.log('Sending to backend:', payload);
+            // Example: fetch('/api/module-data', { method: 'POST', body: JSON.stringify(payload) });
+        }
+
+        // Progress tracking
+        function updateProgressBar() {
+            const exercises = document.querySelectorAll('.exercise-block');
+            let completed = 0;
+            exercises.forEach(ex => {
+                const feedback = ex.querySelector('.feedback-message.success');
+                if (feedback && feedback.style.display === 'block') {
+                    completed++;
+                }
+            });
+            const percentage = (completed / exercises.length) * 100;
+            document.getElementById('progressFill').style.width = percentage + '%';
+
+            localStorage.setItem('module2_progress', percentage);
+        }
+
+        function loadProgress() {
+            const saved = localStorage.getItem('module2_progress');
+            if (saved) {
+                document.getElementById('progressFill').style.width = saved + '%';
+            }
+        }
+
+        // Exercise 1: Matching
+        function selectMatch(element, exerciseId) {
+            const matchValue = element.getAttribute('data-match');
+
+            if (!selectedMatches[exerciseId]) {
+                selectedMatches[exerciseId] = [];
+            }
+
+            // If already selected, deselect
+            if (element.classList.contains('selected')) {
+                element.classList.remove('selected');
+                selectedMatches[exerciseId] = selectedMatches[exerciseId].filter(item => item.element !== element);
+                return;
+            }
+
+            // If this is a new selection
+            element.classList.add('selected');
+            selectedMatches[exerciseId].push({ element: element, value: matchValue });
+
+            // Check if we have a pair
+            if (selectedMatches[exerciseId].length === 2) {
+                const [first, second] = selectedMatches[exerciseId];
+
+                if (first.value === second.value) {
+                    // Correct match
+                    first.element.classList.remove('selected');
+                    second.element.classList.remove('selected');
+                    first.element.classList.add('correct');
+                    second.element.classList.add('correct');
+                    first.element.style.pointerEvents = 'none';
+                    second.element.style.pointerEvents = 'none';
+                } else {
+                    // Incorrect match
+                    setTimeout(() => {
+                        first.element.classList.remove('selected');
+                        second.element.classList.remove('selected');
+                    }, 500);
+                }
+
+                selectedMatches[exerciseId] = [];
+            }
+        }
+
+        function checkExercise1() {
+            const exercise = document.getElementById('exercise1');
+            const items = exercise.querySelectorAll('.option-item');
+            const correctItems = exercise.querySelectorAll('.option-item.correct');
+            const feedback = document.getElementById('feedback-exercise1');
+
+            if (correctItems.length === items.length) {
+                feedback.className = 'feedback-message success';
+                feedback.textContent = '✓ Excellent! All matches are correct! / ¡Excelente! Todas las respuestas son correctas!';
+                saveExerciseState('exercise1', { completed: true });
+                updateProgressBar();
+            } else {
+                feedback.className = 'feedback-message error';
+                feedback.textContent = '✗ Not all matches are correct. Keep trying! / No todas las respuestas son correctas. ¡Sigue intentando!';
+            }
+        }
+
+        // Exercise 2: Fill in the blanks
+        function checkExercise2() {
+            const inputs = document.querySelectorAll('#exercise2 .fill-blank-input');
+            let allCorrect = true;
+
+            inputs.forEach(input => {
+                const answer = input.getAttribute('data-answer').toLowerCase().trim();
+                const userAnswer = input.value.toLowerCase().trim();
+
+                if (userAnswer === answer) {
+                    input.classList.remove('incorrect');
+                    input.classList.add('correct');
+                } else {
+                    input.classList.remove('correct');
+                    input.classList.add('incorrect');
+                    allCorrect = false;
+                }
+            });
+
+            const feedback = document.getElementById('feedback-exercise2');
+            if (allCorrect) {
+                feedback.className = 'feedback-message success';
+                feedback.textContent = '✓ Perfect! All answers are correct! / ¡Perfecto! Todas las respuestas son correctas!';
+                saveExerciseState('exercise2', { completed: true });
+                updateProgressBar();
+            } else {
+                feedback.className = 'feedback-message error';
+                feedback.textContent = '✗ Some answers are incorrect. Check the red boxes. / Algunas respuestas son incorrectas. Revisa las casillas rojas.';
+            }
+        }
+
+        // Exercise 3: True/False
+        function selectOption(element, questionId) {
+            // Deselect all options in this question
+            const parent = element.parentElement;
+            const siblings = parent.querySelectorAll('.option-item');
+            siblings.forEach(sib => {
+                sib.classList.remove('selected');
+            });
+
+            // Select this option
+            element.classList.add('selected');
+        }
+
+        function checkExercise3() {
+            const questions = ['exercise3-q1', 'exercise3-q2', 'exercise3-q3', 'exercise3-q4', 'exercise3-q5'];
+            let allCorrect = true;
+
+            questions.forEach(qId => {
+                const selected = document.querySelector(`[onclick*="${qId}"].selected`);
+                if (!selected) {
+                    allCorrect = false;
+                    return;
+                }
+
+                const isCorrect = selected.getAttribute('data-correct') === 'true';
+                if (isCorrect) {
+                    selected.classList.add('correct');
+                    selected.classList.remove('incorrect');
+                } else {
+                    selected.classList.add('incorrect');
+                    selected.classList.remove('correct');
+                    allCorrect = false;
+                }
+            });
+
+            const feedback = document.getElementById('feedback-exercise3');
+            if (allCorrect) {
+                feedback.className = 'feedback-message success';
+                feedback.textContent = '✓ Excellent! All answers are correct! / ¡Excelente! Todas las respuestas son correctas!';
+                saveExerciseState('exercise3', { completed: true });
+                updateProgressBar();
+            } else {
+                feedback.className = 'feedback-message error';
+                feedback.textContent = '✗ Some answers are incorrect. Review the reading text. / Algunas respuestas son incorrectas. Revisa el texto.';
+            }
+        }
+
+        // Exercise 4: Find the words
+        function checkExercise4() {
+            const inputs = [
+                { id: 'ex4-1', answer: 'consensus ad idem' },
+                { id: 'ex4-2', answer: 'consideration' },
+                { id: 'ex4-3', answer: 'pacta sunt servanda' },
+                { id: 'ex4-4', answer: 'force majeure' },
+                { id: 'ex4-5', answer: 'mirror image rule' }
+            ];
+
+            let allCorrect = true;
+
+            inputs.forEach(item => {
+                const input = document.getElementById(item.id);
+                const answer = item.answer.toLowerCase().trim();
+                const userAnswer = input.value.toLowerCase().trim();
+
+                if (userAnswer === answer) {
+                    input.classList.remove('incorrect');
+                    input.classList.add('correct');
+                } else {
+                    input.classList.remove('correct');
+                    input.classList.add('incorrect');
+                    allCorrect = false;
+                }
+            });
+
+            const feedback = document.getElementById('feedback-exercise4');
+            if (allCorrect) {
+                feedback.className = 'feedback-message success';
+                feedback.textContent = '✓ Perfect! You found all the terms! / ¡Perfecto! Encontraste todos los términos!';
+                saveExerciseState('exercise4', { completed: true });
+                updateProgressBar();
+            } else {
+                feedback.className = 'feedback-message error';
+                feedback.textContent = '✗ Some answers are incorrect. Check the reading text carefully. / Algunas respuestas son incorrectas. Revisa el texto cuidadosamente.';
+            }
+        }
+
+        // Exercise 5: Case comprehension
+        function checkExercise5() {
+            const questions = ['exercise5-q1', 'exercise5-q2', 'exercise5-q3', 'exercise5-q4', 'exercise5-q5'];
+            let allCorrect = true;
+
+            questions.forEach(qId => {
+                const selected = document.querySelector(`[onclick*="${qId}"].selected`);
+                if (!selected) {
+                    allCorrect = false;
+                    return;
+                }
+
+                const isCorrect = selected.getAttribute('data-correct') === 'true';
+                if (isCorrect) {
+                    selected.classList.add('correct');
+                    selected.classList.remove('incorrect');
+                } else {
+                    selected.classList.add('incorrect');
+                    selected.classList.remove('correct');
+                    allCorrect = false;
+                }
+            });
+
+            const feedback = document.getElementById('feedback-exercise5');
+            if (allCorrect) {
+                feedback.className = 'feedback-message success';
+                feedback.textContent = '✓ Excellent understanding of the case! / ¡Excelente comprensión del caso!';
+                saveExerciseState('exercise5', { completed: true });
+                updateProgressBar();
+            } else {
+                feedback.className = 'feedback-message error';
+                feedback.textContent = '✗ Some answers are incorrect. Review the case facts. / Algunas respuestas son incorrectas. Revisa los hechos del caso.';
+            }
+        }
+
+        // Exercise 6: Clause analysis
+        function checkExercise6() {
+            const selected = document.querySelector(`[onclick*="exercise6-q1"].selected`);
+            const feedback = document.getElementById('feedback-exercise6');
+
+            if (!selected) {
+                feedback.className = 'feedback-message error';
+                feedback.textContent = '⚠ Please select an answer. / Por favor selecciona una respuesta.';
+                return;
+            }
+
+            const isCorrect = selected.getAttribute('data-correct') === 'true';
+            if (isCorrect) {
+                selected.classList.add('correct');
+                selected.classList.remove('incorrect');
+                feedback.className = 'feedback-message success';
+                feedback.textContent = '✓ Correct! This is the key holding of the MUR Shipping case. / ¡Correcto! Este es el principio clave del caso MUR Shipping.';
+                saveExerciseState('exercise6', { completed: true });
+                updateProgressBar();
+            } else {
+                selected.classList.add('incorrect');
+                selected.classList.remove('correct');
+                feedback.className = 'feedback-message error';
+                feedback.textContent = '✗ Not quite. Review the Supreme Court\'s reasoning. / No es correcto. Revisa el razonamiento de la Corte Suprema.';
+            }
+        }
+
+        // Exercise 7: Latin terms matching
+        function checkExercise7() {
+            const exercise = document.getElementById('exercise7');
+            const items = exercise.querySelectorAll('.option-item');
+            const correctItems = exercise.querySelectorAll('.option-item.correct');
+            const feedback = document.getElementById('feedback-exercise7');
+
+            if (correctItems.length === items.length) {
+                feedback.className = 'feedback-message success';
+                feedback.textContent = '✓ Perfect! You know your Latin legal terms! / ¡Perfecto! Dominas los términos legales en latín!';
+                saveExerciseState('exercise7', { completed: true });
+                updateProgressBar();
+            } else {
+                feedback.className = 'feedback-message error';
+                feedback.textContent = '✗ Not all matches are correct. Review the vocabulary section. / No todas las respuestas son correctas. Revisa la sección de vocabulario.';
+            }
+        }
+
+        // Reset functions
+        function resetExercise(exerciseId) {
+            const exercise = document.getElementById(exerciseId);
+            const items = exercise.querySelectorAll('.option-item');
+            items.forEach(item => {
+                item.classList.remove('selected', 'correct', 'incorrect');
+                item.style.pointerEvents = 'auto';
+            });
+            const feedback = exercise.querySelector('.feedback-message');
+            if (feedback) {
+                feedback.className = 'feedback-message';
+                feedback.textContent = '';
+            }
+            if (selectedMatches[exerciseId]) {
+                selectedMatches[exerciseId] = [];
+            }
+        }
+
+        function resetFillBlanks(exerciseId) {
+            const exercise = document.getElementById(exerciseId);
+            const inputs = exercise.querySelectorAll('.fill-blank-input');
+            inputs.forEach(input => {
+                input.value = '';
+                input.classList.remove('correct', 'incorrect');
+            });
+            const feedback = exercise.querySelector('.feedback-message');
+            if (feedback) {
+                feedback.className = 'feedback-message';
+                feedback.textContent = '';
+            }
+        }
+
+        // Save/restore exercise states
+        function saveExerciseState(exerciseId, state) {
+            exerciseStates[exerciseId] = state;
+            localStorage.setItem('module2_exercises', JSON.stringify(exerciseStates));
+
+            // Send to backend
+            const studentInfo = getStudentInfo();
+            sendToBackend({
+                type: 'exercise_completed',
+                data: {
+                    module: 'module-2',
+                    exercise: exerciseId,
+                    studentName: studentInfo.name,
+                    studentEmail: studentInfo.email,
+                    timestamp: new Date().toISOString(),
+                    state: state
+                }
+            });
+        }
+
+        function restoreAllExercises() {
+            const saved = localStorage.getItem('module2_exercises');
+            if (saved) {
+                exerciseStates = JSON.parse(saved);
+            }
+        }
+
+        // Initialize on load
+        document.addEventListener('DOMContentLoaded', function() {
+            // Load student information
+            loadStudentInfo();
+
+            // Restore all exercise states
+            restoreAllExercises();
+
+            // Load progress
+            loadProgress();
+
+            // Collapse video controls on mobile
+            const videoControls = document.querySelector('.video-controls');
+            if (videoControls && window.innerWidth <= 768) {
+                videoControls.classList.add('collapsed');
+                videoControls.addEventListener('click', function() {
+                    this.classList.toggle('collapsed');
+                });
+            }
+        });
+    </script>
+
+    <!-- Payment & Access Control System -->
+    <script src="../../../../js/payment-access-control.js"></script>
+</body>
+</html>
