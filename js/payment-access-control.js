@@ -619,7 +619,10 @@
             message.style.display = 'block';
             message.style.background = '#D1FAE5';
             message.style.color = '#065F46';
-            message.innerHTML = '✅ ¡Acceso concedido!<br>Disfrutando del Módulo 1...';
+            message.innerHTML = '✅ ¡Acceso concedido!<br>Desbloqueando contenido...';
+
+            // DESBLOQUEAR CONTENIDO INMEDIATAMENTE
+            unlockContent();
 
             // Disparar evento
             window.dispatchEvent(new CustomEvent('empiricaFreeAccessGranted', {
@@ -628,7 +631,10 @@
 
             // Ocultar modal y permitir acceso
             setTimeout(() => {
-                document.getElementById('freeAccessModal').remove();
+                const modal = document.getElementById('freeAccessModal');
+                if (modal) {
+                    modal.remove();
+                }
                 document.body.style.overflow = '';
             }, 1500);
 
@@ -717,16 +723,23 @@
                 verifyMessage.style.display = 'block';
                 verifyMessage.style.background = '#D1FAE5';
                 verifyMessage.style.color = '#065F46';
-                verifyMessage.innerHTML = '✅ Acceso verificado correctamente!<br>Recargando la página...';
+                verifyMessage.innerHTML = '✅ Acceso verificado correctamente!<br>Desbloqueando contenido...';
+
+                // DESBLOQUEAR CONTENIDO INMEDIATAMENTE
+                unlockContent();
 
                 // Disparar evento para que el sistema de progreso pueda escucharlo
                 window.dispatchEvent(new CustomEvent('empiricaAccessGranted', {
                     detail: { email: email, course: course }
                 }));
 
-                // Recargar la página después de 1.5 segundos
+                // Cerrar modal después de 1.5 segundos
                 setTimeout(() => {
-                    location.reload();
+                    const modal = document.getElementById('paymentModal');
+                    if (modal) {
+                        modal.remove();
+                    }
+                    document.body.style.overflow = '';
                 }, 1500);
 
             } else {
@@ -754,6 +767,43 @@
             verifyBtn.innerHTML = '🔍 Verificar Acceso';
         }
     };
+
+    // ═══════════════════════════════════════
+    // 🔓 DESBLOQUEAR CONTENIDO
+    // ═══════════════════════════════════════
+    function unlockContent() {
+        console.log('🔓 Desbloqueando contenido...');
+
+        // Desbloquear contenido principal
+        const mainContent = document.querySelector('.content-section, main, .module-content');
+        if (mainContent) {
+            mainContent.style.filter = 'none';
+            mainContent.style.pointerEvents = 'auto';
+            mainContent.style.userSelect = 'auto';
+        }
+
+        // Desbloquear videos
+        const videos = document.querySelectorAll('iframe, video');
+        videos.forEach(video => {
+            video.style.filter = 'none';
+            video.style.pointerEvents = 'auto';
+        });
+
+        // Desbloquear ejercicios
+        const exercises = document.querySelectorAll('.exercise-block, .exercise-content');
+        exercises.forEach(exercise => {
+            exercise.style.filter = 'none';
+            exercise.style.pointerEvents = 'auto';
+        });
+
+        // Habilitar inputs y botones
+        const inputs = document.querySelectorAll('input, button, textarea, select');
+        inputs.forEach(input => {
+            input.disabled = false;
+        });
+
+        console.log('✅ Contenido desbloqueado exitosamente');
+    }
 
     // ═══════════════════════════════════════
     // 🚫 BLOQUEAR CONTENIDO PREMIUM
