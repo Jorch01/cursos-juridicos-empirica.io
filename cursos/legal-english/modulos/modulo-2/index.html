@@ -1248,42 +1248,110 @@
                 <div id="feedback-exercise3" class="feedback-message"></div>
             </div>
 
-            <!-- Exercise 4: Comprehension Questions -->
+            <!-- Exercise 4: Comprehension Questions (Multiple Choice) -->
             <div class="exercise-block" id="exercise4">
                 <div class="exercise-header">
                     <div class="exercise-number">4</div>
                     <div class="exercise-title">
-                        <h3>Comprehension Questions</h3>
-                        <span>Answer these questions based on the reading text</span>
+                        <h3>Reading Comprehension</h3>
+                        <span>Choose the best answer for each question</span>
                     </div>
                 </div>
                 <div class="exercise-content">
-                    <div style="margin-bottom: 20px;">
+                    <!-- Question 1 -->
+                    <div style="margin-bottom: 25px;">
                         <p><strong>1. What are the four essential elements of a valid contract in common law?</strong></p>
-                        <textarea class="fill-blank-input" id="ex4-q1" rows="2" style="width: 100%; min-width: 100%; max-width: 100%; padding: 10px; margin-top: 10px;" placeholder="Write your answer here..."></textarea>
+                        <ul class="options-list" style="margin-top: 10px;">
+                            <li class="option-item" data-correct="true" onclick="selectOption(this, 'ex4-q1')">
+                                <span class="option-letter">A</span>
+                                <span>Offer, acceptance, consideration, and intention to create legal relations</span>
+                            </li>
+                            <li class="option-item" data-correct="false" onclick="selectOption(this, 'ex4-q1')">
+                                <span class="option-letter">B</span>
+                                <span>Offer, acceptance, causa, and intention to create legal relations</span>
+                            </li>
+                            <li class="option-item" data-correct="false" onclick="selectOption(this, 'ex4-q1')">
+                                <span class="option-letter">C</span>
+                                <span>Offer, consideration, good faith, and force majeure clause</span>
+                            </li>
+                            <li class="option-item" data-correct="false" onclick="selectOption(this, 'ex4-q1')">
+                                <span class="option-letter">D</span>
+                                <span>Consensus ad idem, consideration, causa, and pacta sunt servanda</span>
+                            </li>
+                        </ul>
                     </div>
 
-                    <div style="margin-bottom: 20px;">
-                        <p><strong>2. What is the "mirror image rule" and why is it important?</strong></p>
-                        <textarea class="fill-blank-input" id="ex4-q2" rows="2" style="width: 100%; min-width: 100%; max-width: 100%; padding: 10px; margin-top: 10px;" placeholder="Write your answer here..."></textarea>
+                    <!-- Question 2 -->
+                    <div style="margin-bottom: 25px;">
+                        <p><strong>2. What is the "mirror image rule"?</strong></p>
+                        <ul class="options-list" style="margin-top: 10px;">
+                            <li class="option-item" data-correct="true" onclick="selectOption(this, 'ex4-q2')">
+                                <span class="option-letter">A</span>
+                                <span>Acceptance must match the offer exactly; any changes constitute a counter-offer</span>
+                            </li>
+                            <li class="option-item" data-correct="false" onclick="selectOption(this, 'ex4-q2')">
+                                <span class="option-letter">B</span>
+                                <span>Acceptance can modify the offer as long as the changes are minor</span>
+                            </li>
+                            <li class="option-item" data-correct="false" onclick="selectOption(this, 'ex4-q2')">
+                                <span class="option-letter">C</span>
+                                <span>Both parties must provide equal consideration to form a valid contract</span>
+                            </li>
+                            <li class="option-item" data-correct="false" onclick="selectOption(this, 'ex4-q2')">
+                                <span class="option-letter">D</span>
+                                <span>The contract terms must reflect the exact intentions of both parties</span>
+                            </li>
+                        </ul>
                     </div>
 
-                    <div style="margin-bottom: 20px;">
-                        <p><strong>3. How does Mexican law differ from common law regarding consideration and contract validity?</strong></p>
-                        <textarea class="fill-blank-input" id="ex4-q3" rows="3" style="width: 100%; min-width: 100%; max-width: 100%; padding: 10px; margin-top: 10px;" placeholder="Write your answer here..."></textarea>
+                    <!-- Question 3 -->
+                    <div style="margin-bottom: 25px;">
+                        <p><strong>3. How does Mexican law differ from common law regarding consideration?</strong></p>
+                        <ul class="options-list" style="margin-top: 10px;">
+                            <li class="option-item" data-correct="false" onclick="selectOption(this, 'ex4-q3')">
+                                <span class="option-letter">A</span>
+                                <span>Mexican law requires consideration just like common law for all contracts</span>
+                            </li>
+                            <li class="option-item" data-correct="true" onclick="selectOption(this, 'ex4-q3')">
+                                <span class="option-letter">B</span>
+                                <span>Mexican law uses causa instead; a gratuitous contract like a donation can be valid without contraprestación</span>
+                            </li>
+                            <li class="option-item" data-correct="false" onclick="selectOption(this, 'ex4-q3')">
+                                <span class="option-letter">C</span>
+                                <span>Mexican law requires contraprestación in all contracts, while common law does not</span>
+                            </li>
+                            <li class="option-item" data-correct="false" onclick="selectOption(this, 'ex4-q3')">
+                                <span class="option-letter">D</span>
+                                <span>Mexican law and common law treat consideration identically in all respects</span>
+                            </li>
+                        </ul>
                     </div>
 
-                    <div style="margin-bottom: 20px;">
+                    <!-- Question 4 -->
+                    <div style="margin-bottom: 25px;">
                         <p><strong>4. Why must force majeure clauses be explicitly included in common law contracts?</strong></p>
-                        <textarea class="fill-blank-input" id="ex4-q4" rows="2" style="width: 100%; min-width: 100%; max-width: 100%; padding: 10px; margin-top: 10px;" placeholder="Write your answer here..."></textarea>
-                    </div>
-
-                    <div class="info-box" style="margin-top: 20px;">
-                        <p><strong>💡 Tip:</strong> Use complete sentences and reference specific concepts from the text. This exercise helps you practice legal writing in English.</p>
+                        <ul class="options-list" style="margin-top: 10px;">
+                            <li class="option-item" data-correct="false" onclick="selectOption(this, 'ex4-q4')">
+                                <span class="option-letter">A</span>
+                                <span>Because force majeure is implied by law in all common law jurisdictions</span>
+                            </li>
+                            <li class="option-item" data-correct="true" onclick="selectOption(this, 'ex4-q4')">
+                                <span class="option-letter">B</span>
+                                <span>Because common law has no general doctrine of force majeure, unlike Mexican law which codifies caso fortuito</span>
+                            </li>
+                            <li class="option-item" data-correct="false" onclick="selectOption(this, 'ex4-q4')">
+                                <span class="option-letter">C</span>
+                                <span>Because parties want to limit liability even though force majeure already exists in common law</span>
+                            </li>
+                            <li class="option-item" data-correct="false" onclick="selectOption(this, 'ex4-q4')">
+                                <span class="option-letter">D</span>
+                                <span>Because force majeure is only recognized in common law if mentioned three times in the contract</span>
+                            </li>
+                        </ul>
                     </div>
                 </div>
                 <div class="exercise-actions">
-                    <button class="btn-check" onclick="checkExercise4()">Check Completeness</button>
+                    <button class="btn-check" onclick="checkExercise4()">Check Answers</button>
                 </div>
                 <div id="feedback-exercise4" class="feedback-message"></div>
             </div>
@@ -2372,45 +2440,75 @@
             }
         }
 
-        // Exercise 4: Comprehension Questions (NEW)
+        // Exercise 4: Reading Comprehension (Multiple Choice)
         function checkExercise4() {
-            const textareas = ['ex4-q1', 'ex4-q2', 'ex4-q3', 'ex4-q4'];
-            let allComplete = true;
+            const questions = ['ex4-q1', 'ex4-q2', 'ex4-q3', 'ex4-q4'];
+            const studentInfo = getStudentInfo();
+            let correctCount = 0;
+            let allAnswered = true;
 
-            textareas.forEach(id => {
-                const textarea = document.getElementById(id);
-                if (textarea.value.trim().length > 20) {
-                    textarea.classList.remove('incorrect');
-                    textarea.classList.add('correct');
-                } else {
-                    textarea.classList.remove('correct');
-                    textarea.classList.add('incorrect');
-                    allComplete = false;
+            questions.forEach(qId => {
+                const selected = document.querySelector(`[onclick*="${qId}"].selected`);
+                if (!selected) {
+                    allAnswered = false;
+                    return;
                 }
+
+                const isCorrect = selected.getAttribute('data-correct') === 'true';
+                if (isCorrect) {
+                    selected.classList.add('correct');
+                    selected.classList.remove('incorrect');
+                    correctCount++;
+                } else {
+                    selected.classList.add('incorrect');
+                    selected.classList.remove('correct');
+                }
+
+                // Save each answer
+                const key = `${studentInfo.email}_exercise4_${qId}`;
+                localStorage.setItem(key, JSON.stringify({
+                    selected: selected.textContent.trim(),
+                    correct: isCorrect,
+                    timestamp: new Date().toISOString()
+                }));
             });
 
             const feedback = document.getElementById('feedback-exercise4');
-            if (allComplete) {
+            const totalQuestions = questions.length;
+
+            if (!allAnswered) {
+                feedback.className = 'feedback-message error';
+                feedback.textContent = '✗ Please answer all questions before checking. / Por favor responde todas las preguntas antes de revisar.';
+                return;
+            }
+
+            if (correctCount === totalQuestions) {
                 feedback.className = 'feedback-message success';
-                feedback.textContent = '✓ Good work! All questions answered! / ¡Buen trabajo! Todas las preguntas contestadas!';
-                saveExerciseState('exercise4', { completed: true });
+                feedback.textContent = `✓ Perfect! ${correctCount}/${totalQuestions} correct! / ¡Perfecto! ${correctCount}/${totalQuestions} correctas!`;
+                saveExerciseState('exercise4', { completed: true, score: `${correctCount}/${totalQuestions}` });
                 updateProgressBar();
             } else {
                 feedback.className = 'feedback-message error';
-                feedback.textContent = '✗ Please answer all questions with complete sentences (minimum 20 characters). / Por favor responde todas las preguntas con oraciones completas (mínimo 20 caracteres).';
+                feedback.textContent = `Score: ${correctCount}/${totalQuestions} correct. Review the incorrect answers (red). / Puntuación: ${correctCount}/${totalQuestions} correctas. Revisa las incorrectas (rojo).`;
+                saveExerciseState('exercise4', { completed: true, score: `${correctCount}/${totalQuestions}` });
             }
-        }
 
-        function showExercise4Hints() {
-            const feedback = document.getElementById('feedback-exercise4');
-            feedback.className = 'feedback-message hint';
-            feedback.innerHTML = `
-                <strong>💡 Example Answers:</strong><br><br>
-                <strong>1.</strong> The four essential elements are: offer, acceptance, consideration, and intention to create legal relations.<br><br>
-                <strong>2.</strong> The "mirror image rule" states that acceptance must match the offer exactly. Any changes constitute a counter-offer. This is important because it ensures consensus ad idem (meeting of minds).<br><br>
-                <strong>3.</strong> In common law, consideration is essential for contract validity—without it, there's no enforceable contract. In Mexican law, while contraprestación exists in contracts for value, validity depends on consentimiento, objeto, and causa. A gratuitous contract like a donation is valid without contraprestación.<br><br>
-                <strong>4.</strong> Force majeure must be explicitly included because common law has no general doctrine of force majeure, unlike Mexican law where caso fortuito is codified in the Civil Code.
-            `;
+            // Disable check button
+            document.querySelector('#exercise4 .btn-check').disabled = true;
+
+            // Send score to backend
+            sendToBackend({
+                type: 'exercise_score',
+                data: {
+                    module: 'module-2',
+                    exercise: 'exercise4',
+                    studentName: studentInfo.name,
+                    studentEmail: studentInfo.email,
+                    score: `${correctCount}/${totalQuestions}`,
+                    percentage: (correctCount / totalQuestions * 100).toFixed(1),
+                    timestamp: new Date().toISOString()
+                }
+            });
         }
 
         // Exercise 5: Find the words (RENUMBERED from old Exercise 4)
