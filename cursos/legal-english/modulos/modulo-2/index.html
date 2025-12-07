@@ -1284,8 +1284,6 @@
                 </div>
                 <div class="exercise-actions">
                     <button class="btn-check" onclick="checkExercise4()">Check Completeness</button>
-                    <button class="btn-hint" onclick="showExercise4Hints()">Show Example Answers</button>
-                    <button class="btn-hint" onclick="resetFillBlanks('exercise4')">Reset</button>
                 </div>
                 <div id="feedback-exercise4" class="feedback-message"></div>
             </div>
@@ -1819,8 +1817,6 @@
                 </div>
                 <div class="exercise-actions">
                     <button class="btn-check" onclick="checkExercise11()">Check Answers</button>
-                    <button class="btn-hint" onclick="showExercise11Hint()">Show Example Answer</button>
-                    <button class="btn-hint" onclick="resetFillBlanks('exercise11')">Reset</button>
                 </div>
                 <div id="feedback-exercise11" class="feedback-message"></div>
             </div>
@@ -1917,6 +1913,103 @@
 
                 <div class="info-box" style="margin-top: 20px;">
                     <p><strong>💡 Professional Tip:</strong> When reviewing international contracts, always check if force majeure is defined and what "reasonable endeavours" obligations exist.</p>
+                </div>
+            </div>
+
+            <!-- Module Evaluation Survey -->
+            <div class="exercise-block" id="moduleSurvey" style="background: linear-gradient(135deg, #f8f9fa, #e9ecef); border: 2px solid var(--primary); margin-top: 40px;">
+                <div class="exercise-header">
+                    <div class="exercise-number">📊</div>
+                    <div class="exercise-title">
+                        <h3>Module Evaluation / Evaluación del Módulo</h3>
+                        <span>Help us improve this course by sharing your feedback</span>
+                    </div>
+                </div>
+                <div class="exercise-content">
+                    <form id="surveyForm" style="display: flex; flex-direction: column; gap: 20px;">
+                        <!-- Question 1: Difficulty -->
+                        <div style="padding: 15px; background: white; border-radius: 10px;">
+                            <label style="font-weight: 600; color: var(--primary); display: block; margin-bottom: 10px;">
+                                1. How would you rate the difficulty level of this module?<br>
+                                <span style="font-size: 0.9rem; color: var(--text-light);">¿Cómo calificarías el nivel de dificultad de este módulo?</span>
+                            </label>
+                            <div style="display: flex; flex-direction: column; gap: 8px; margin-top: 10px;">
+                                <label style="display: flex; align-items: center; gap: 10px; cursor: pointer;">
+                                    <input type="radio" name="difficulty" value="too_easy" required>
+                                    <span>Too easy / Muy fácil</span>
+                                </label>
+                                <label style="display: flex; align-items: center; gap: 10px; cursor: pointer;">
+                                    <input type="radio" name="difficulty" value="appropriate" required>
+                                    <span>Appropriate / Apropiado</span>
+                                </label>
+                                <label style="display: flex; align-items: center; gap: 10px; cursor: pointer;">
+                                    <input type="radio" name="difficulty" value="challenging" required>
+                                    <span>Challenging but manageable / Desafiante pero manejable</span>
+                                </label>
+                                <label style="display: flex; align-items: center; gap: 10px; cursor: pointer;">
+                                    <input type="radio" name="difficulty" value="too_hard" required>
+                                    <span>Too difficult / Muy difícil</span>
+                                </label>
+                            </div>
+                        </div>
+
+                        <!-- Question 2: Content Quality -->
+                        <div style="padding: 15px; background: white; border-radius: 10px;">
+                            <label style="font-weight: 600; color: var(--primary); display: block; margin-bottom: 10px;">
+                                2. Rate the quality of the content (1-5 stars)<br>
+                                <span style="font-size: 0.9rem; color: var(--text-light);">Califica la calidad del contenido (1-5 estrellas)</span>
+                            </label>
+                            <div style="display: flex; gap: 10px; margin-top: 10px;">
+                                <label style="cursor: pointer;"><input type="radio" name="quality" value="1" required> 1⭐</label>
+                                <label style="cursor: pointer;"><input type="radio" name="quality" value="2" required> 2⭐</label>
+                                <label style="cursor: pointer;"><input type="radio" name="quality" value="3" required> 3⭐</label>
+                                <label style="cursor: pointer;"><input type="radio" name="quality" value="4" required> 4⭐</label>
+                                <label style="cursor: pointer;"><input type="radio" name="quality" value="5" required> 5⭐</label>
+                            </div>
+                        </div>
+
+                        <!-- Question 3: Most Useful -->
+                        <div style="padding: 15px; background: white; border-radius: 10px;">
+                            <label style="font-weight: 600; color: var(--primary); display: block; margin-bottom: 10px;">
+                                3. What was the most useful part of this module?<br>
+                                <span style="font-size: 0.9rem; color: var(--text-light);">¿Cuál fue la parte más útil de este módulo?</span>
+                            </label>
+                            <textarea name="most_useful" rows="3" style="width: 100%; padding: 10px; border: 2px solid var(--light-bg); border-radius: 8px; font-family: inherit; font-size: 0.95rem;" placeholder="Your answer / Tu respuesta..."></textarea>
+                        </div>
+
+                        <!-- Question 4: Suggestions -->
+                        <div style="padding: 15px; background: white; border-radius: 10px;">
+                            <label style="font-weight: 600; color: var(--primary); display: block; margin-bottom: 10px;">
+                                4. Any suggestions for improvement?<br>
+                                <span style="font-size: 0.9rem; color: var(--text-light);">¿Alguna sugerencia de mejora?</span>
+                            </label>
+                            <textarea name="suggestions" rows="3" style="width: 100%; padding: 10px; border: 2px solid var(--light-bg); border-radius: 8px; font-family: inherit; font-size: 0.95rem;" placeholder="Your suggestions / Tus sugerencias..."></textarea>
+                        </div>
+
+                        <!-- Question 5: Time Spent -->
+                        <div style="padding: 15px; background: white; border-radius: 10px;">
+                            <label style="font-weight: 600; color: var(--primary); display: block; margin-bottom: 10px;">
+                                5. How long did it take you to complete this module?<br>
+                                <span style="font-size: 0.9rem; color: var(--text-light);">¿Cuánto tiempo te tomó completar este módulo?</span>
+                            </label>
+                            <select name="time_spent" required style="width: 100%; padding: 10px; border: 2px solid var(--light-bg); border-radius: 8px; font-size: 0.95rem;">
+                                <option value="">Select... / Selecciona...</option>
+                                <option value="less_30">Less than 30 minutes / Menos de 30 minutos</option>
+                                <option value="30_45">30-45 minutes / 30-45 minutos</option>
+                                <option value="45_60">45-60 minutes / 45-60 minutos</option>
+                                <option value="60_90">60-90 minutes / 60-90 minutos</option>
+                                <option value="more_90">More than 90 minutes / Más de 90 minutos</option>
+                            </select>
+                        </div>
+
+                        <!-- Submit Button -->
+                        <div style="display: flex; gap: 10px;">
+                            <button type="submit" class="btn-check" style="flex: 1;">
+                                Submit Survey / Enviar Encuesta
+                            </button>
+                        </div>
+                    </form>
+                    <div class="feedback-message" id="feedback-survey"></div>
                 </div>
             </div>
 
@@ -2037,11 +2130,16 @@
         function selectMatch(element, exerciseId) {
             const matchValue = element.getAttribute('data-match');
 
+            // Don't allow clicking on already matched items
+            if (element.classList.contains('correct') || element.classList.contains('incorrect')) {
+                return;
+            }
+
             if (!selectedMatches[exerciseId]) {
                 selectedMatches[exerciseId] = [];
             }
 
-            // If already selected, deselect
+            // If already selected, deselect (only if not part of a matched pair)
             if (element.classList.contains('selected')) {
                 element.classList.remove('selected');
                 selectedMatches[exerciseId] = selectedMatches[exerciseId].filter(item => item.element !== element);
@@ -2064,16 +2162,62 @@
                     second.element.classList.add('correct');
                     first.element.style.pointerEvents = 'none';
                     second.element.style.pointerEvents = 'none';
+
+                    // Save match to localStorage
+                    saveMatchToStorage(exerciseId, first.element.textContent.trim(), second.element.textContent.trim(), true);
                 } else {
-                    // Incorrect match
-                    setTimeout(() => {
-                        first.element.classList.remove('selected');
-                        second.element.classList.remove('selected');
-                    }, 500);
+                    // Incorrect match - keep them visible with incorrect styling
+                    first.element.classList.remove('selected');
+                    second.element.classList.remove('selected');
+                    first.element.classList.add('incorrect');
+                    second.element.classList.add('incorrect');
+                    first.element.style.pointerEvents = 'none';
+                    second.element.style.pointerEvents = 'none';
+
+                    // Save incorrect match to localStorage
+                    saveMatchToStorage(exerciseId, first.element.textContent.trim(), second.element.textContent.trim(), false);
                 }
 
                 selectedMatches[exerciseId] = [];
             }
+        }
+
+        function saveMatchToStorage(exerciseId, item1, item2, isCorrect) {
+            const studentInfo = getStudentInfo();
+            const key = `${studentInfo.email}_${exerciseId}_matches`;
+            let matches = JSON.parse(localStorage.getItem(key) || '[]');
+            matches.push({ item1, item2, isCorrect, timestamp: new Date().toISOString() });
+            localStorage.setItem(key, JSON.stringify(matches));
+        }
+
+        // Levenshtein distance for fuzzy matching (tolerates misspellings)
+        function levenshteinDistance(str1, str2) {
+            const len1 = str1.length;
+            const len2 = str2.length;
+            const matrix = Array(len1 + 1).fill(null).map(() => Array(len2 + 1).fill(0));
+
+            for (let i = 0; i <= len1; i++) matrix[i][0] = i;
+            for (let j = 0; j <= len2; j++) matrix[0][j] = j;
+
+            for (let i = 1; i <= len1; i++) {
+                for (let j = 1; j <= len2; j++) {
+                    const cost = str1[i - 1] === str2[j - 1] ? 0 : 1;
+                    matrix[i][j] = Math.min(
+                        matrix[i - 1][j] + 1,
+                        matrix[i][j - 1] + 1,
+                        matrix[i - 1][j - 1] + cost
+                    );
+                }
+            }
+            return matrix[len1][len2];
+        }
+
+        function isSimilarEnough(userAnswer, correctAnswer) {
+            const distance = levenshteinDistance(userAnswer.toLowerCase(), correctAnswer.toLowerCase());
+            const maxLength = Math.max(userAnswer.length, correctAnswer.length);
+            const similarity = 1 - (distance / maxLength);
+            // Accept if 80% similar (allows 1-2 character mistakes)
+            return similarity >= 0.80;
         }
 
         function checkExercise1() {
@@ -2089,7 +2233,7 @@
                 updateProgressBar();
             } else {
                 feedback.className = 'feedback-message error';
-                feedback.textContent = '✗ Not all matches are correct. Keep trying! / No todas las respuestas son correctas. ¡Sigue intentando!';
+                feedback.textContent = '✗ Not all matches are correct. Review the incorrect matches (red). / No todas las respuestas son correctas. Revisa las incorrectas (rojo).';
             }
         }
 
@@ -2097,19 +2241,31 @@
         function checkExercise2() {
             const inputs = document.querySelectorAll('#exercise2 .fill-blank-input');
             let allCorrect = true;
+            const studentInfo = getStudentInfo();
 
             inputs.forEach(input => {
                 const answer = input.getAttribute('data-answer').toLowerCase().trim();
                 const userAnswer = input.value.toLowerCase().trim();
 
-                if (userAnswer === answer) {
+                // Use fuzzy matching to tolerate misspellings
+                if (userAnswer === answer || isSimilarEnough(userAnswer, answer)) {
                     input.classList.remove('incorrect');
                     input.classList.add('correct');
+                    input.disabled = true; // Prevent further edits
                 } else {
                     input.classList.remove('correct');
                     input.classList.add('incorrect');
+                    input.disabled = true; // Prevent further edits
                     allCorrect = false;
                 }
+
+                // Save answer to localStorage
+                const key = `${studentInfo.email}_exercise2_${input.id}`;
+                localStorage.setItem(key, JSON.stringify({
+                    answer: userAnswer,
+                    correct: userAnswer === answer || isSimilarEnough(userAnswer, answer),
+                    timestamp: new Date().toISOString()
+                }));
             });
 
             const feedback = document.getElementById('feedback-exercise2');
@@ -2120,8 +2276,11 @@
                 updateProgressBar();
             } else {
                 feedback.className = 'feedback-message error';
-                feedback.textContent = '✗ Some answers are incorrect. Check the red boxes. / Algunas respuestas son incorrectas. Revisa las casillas rojas.';
+                feedback.textContent = '✗ Some answers are incorrect. Check the red boxes. Answers are now locked. / Algunas respuestas son incorrectas. Revisa las casillas rojas. Las respuestas están bloqueadas.';
             }
+
+            // Disable the check button after first check
+            document.querySelector('#exercise2 .btn-check').disabled = true;
         }
 
         // Exercise 3: True/False
@@ -2223,20 +2382,32 @@
             ];
 
             let allCorrect = true;
+            const studentInfo = getStudentInfo();
 
             inputs.forEach(item => {
                 const input = document.getElementById(item.id);
                 const answer = item.answer.toLowerCase().trim();
                 const userAnswer = input.value.toLowerCase().trim();
 
-                if (userAnswer === answer) {
+                // Use fuzzy matching to tolerate misspellings
+                if (userAnswer === answer || isSimilarEnough(userAnswer, answer)) {
                     input.classList.remove('incorrect');
                     input.classList.add('correct');
+                    input.disabled = true;
                 } else {
                     input.classList.remove('correct');
                     input.classList.add('incorrect');
+                    input.disabled = true;
                     allCorrect = false;
                 }
+
+                // Save answer to localStorage
+                const key = `${studentInfo.email}_exercise5_${item.id}`;
+                localStorage.setItem(key, JSON.stringify({
+                    answer: userAnswer,
+                    correct: userAnswer === answer || isSimilarEnough(userAnswer, answer),
+                    timestamp: new Date().toISOString()
+                }));
             });
 
             const feedback = document.getElementById('feedback-exercise5');
@@ -2247,8 +2418,11 @@
                 updateProgressBar();
             } else {
                 feedback.className = 'feedback-message error';
-                feedback.textContent = '✗ Some answers are incorrect. Check the reading text carefully. / Algunas respuestas son incorrectas. Revisa el texto cuidadosamente.';
+                feedback.textContent = '✗ Some answers are incorrect. Answers are now locked. / Algunas respuestas son incorrectas. Las respuestas están bloqueadas.';
             }
+
+            // Disable the check button after first check
+            document.querySelector('#exercise5 .btn-check').disabled = true;
         }
 
         // Exercise 6: Listen and Tick (Listening)
@@ -2262,10 +2436,22 @@
             let totalCorrect = 0;
             let totalChecked = 0;
             const checkboxes = document.querySelectorAll('#exercise6 input[type="checkbox"]');
+            const studentInfo = getStudentInfo();
 
             checkboxes.forEach(checkbox => {
                 const isCorrect = checkbox.getAttribute('data-correct') === 'true';
                 const isChecked = checkbox.checked;
+
+                // Save checkbox state to localStorage
+                const key = `${studentInfo.email}_exercise6_${checkbox.id}`;
+                localStorage.setItem(key, JSON.stringify({
+                    checked: isChecked,
+                    correct: isCorrect && isChecked,
+                    timestamp: new Date().toISOString()
+                }));
+
+                // Disable checkbox after check
+                checkbox.disabled = true;
 
                 if (isChecked) {
                     totalChecked++;
@@ -2296,8 +2482,11 @@
                 updateProgressBar();
             } else {
                 feedback.className = 'feedback-message error';
-                feedback.textContent = `You got ${totalCorrect}/${correctAnswers} correct. Review the case facts. / Obtuviste ${totalCorrect}/${correctAnswers} correctas. Revisa los hechos del caso.`;
+                feedback.textContent = `You got ${totalCorrect}/${correctAnswers} correct. Answers are now locked. / Obtuviste ${totalCorrect}/${correctAnswers} correctas. Las respuestas están bloqueadas.`;
             }
+
+            // Disable the check button after first check
+            document.querySelector('#exercise6 .btn-check').disabled = true;
         }
 
         // Exercise 7: Listen Again and Complete
@@ -2306,7 +2495,7 @@
                 { id: 'ex7-1', answer: 'affreightment' },
                 { id: 'ex7-2', answer: 'bauxite' },
                 { id: 'ex7-3', answer: 'dollars' },
-                { id: 'ex7-4', answer: 'specially' }, // Case-insensitive
+                { id: 'ex7-4', answer: 'specially' },
                 { id: 'ex7-5', answer: 'restrictions' },
                 { id: 'ex7-6', answer: 'notice' },
                 { id: 'ex7-7', answer: 'agreed' },
@@ -2316,20 +2505,32 @@
             ];
 
             let allCorrect = true;
+            const studentInfo = getStudentInfo();
 
             inputs.forEach(item => {
                 const input = document.getElementById(item.id);
                 const answer = item.answer.toLowerCase().trim();
                 const userAnswer = input.value.toLowerCase().trim();
 
-                if (userAnswer === answer) {
+                // Use fuzzy matching to tolerate misspellings
+                if (userAnswer === answer || isSimilarEnough(userAnswer, answer)) {
                     input.classList.remove('incorrect');
                     input.classList.add('correct');
+                    input.disabled = true;
                 } else {
                     input.classList.remove('correct');
                     input.classList.add('incorrect');
+                    input.disabled = true;
                     allCorrect = false;
                 }
+
+                // Save answer to localStorage
+                const key = `${studentInfo.email}_exercise7_${item.id}`;
+                localStorage.setItem(key, JSON.stringify({
+                    answer: userAnswer,
+                    correct: userAnswer === answer || isSimilarEnough(userAnswer, answer),
+                    timestamp: new Date().toISOString()
+                }));
             });
 
             const feedback = document.getElementById('feedback-exercise7');
@@ -2340,8 +2541,11 @@
                 updateProgressBar();
             } else {
                 feedback.className = 'feedback-message error';
-                feedback.textContent = '✗ Some answers are incorrect. Listen again and check the red boxes. / Algunas respuestas son incorrectas. Escucha de nuevo y verifica las casillas rojas.';
+                feedback.textContent = '✗ Some answers are incorrect. Answers are now locked. / Algunas respuestas son incorrectas. Las respuestas están bloqueadas.';
             }
+
+            // Disable the check button after first check
+            document.querySelector('#exercise7 .btn-check').disabled = true;
         }
 
         // Exercise 8: Match Speakers
@@ -2565,6 +2769,44 @@
                 videoControls.classList.add('collapsed');
                 videoControls.addEventListener('click', function() {
                     this.classList.toggle('collapsed');
+                });
+            }
+
+            // Survey form handler
+            const surveyForm = document.getElementById('surveyForm');
+            if (surveyForm) {
+                surveyForm.addEventListener('submit', function(e) {
+                    e.preventDefault();
+
+                    const formData = new FormData(surveyForm);
+                    const studentInfo = getStudentInfo();
+                    const surveyData = {
+                        module: 'module-2',
+                        studentName: studentInfo.name,
+                        studentEmail: studentInfo.email,
+                        timestamp: new Date().toISOString(),
+                        difficulty: formData.get('difficulty'),
+                        quality: formData.get('quality'),
+                        most_useful: formData.get('most_useful'),
+                        suggestions: formData.get('suggestions'),
+                        time_spent: formData.get('time_spent')
+                    };
+
+                    // Save survey to localStorage
+                    let surveys = JSON.parse(localStorage.getItem('module_surveys') || '[]');
+                    surveys.push(surveyData);
+                    localStorage.setItem('module_surveys', JSON.stringify(surveys));
+
+                    // Send to backend
+                    sendToBackend({ type: 'survey', data: surveyData });
+
+                    // Show success message
+                    const feedback = document.getElementById('feedback-survey');
+                    feedback.className = 'feedback-message success';
+                    feedback.textContent = '✓ Thank you for your feedback! / ¡Gracias por tu retroalimentación!';
+
+                    // Disable form
+                    surveyForm.querySelectorAll('input, textarea, select, button').forEach(el => el.disabled = true);
                 });
             }
         });
