@@ -1248,42 +1248,110 @@
                 <div id="feedback-exercise3" class="feedback-message"></div>
             </div>
 
-            <!-- Exercise 4: Comprehension Questions -->
+            <!-- Exercise 4: Comprehension Questions (Multiple Choice) -->
             <div class="exercise-block" id="exercise4">
                 <div class="exercise-header">
                     <div class="exercise-number">4</div>
                     <div class="exercise-title">
-                        <h3>Comprehension Questions</h3>
-                        <span>Answer these questions based on the reading text</span>
+                        <h3>Reading Comprehension</h3>
+                        <span>Choose the best answer for each question</span>
                     </div>
                 </div>
                 <div class="exercise-content">
-                    <div style="margin-bottom: 20px;">
+                    <!-- Question 1 -->
+                    <div style="margin-bottom: 25px;">
                         <p><strong>1. What are the four essential elements of a valid contract in common law?</strong></p>
-                        <textarea class="fill-blank-input" id="ex4-q1" rows="2" style="width: 100%; min-width: 100%; max-width: 100%; padding: 10px; margin-top: 10px;" placeholder="Write your answer here..."></textarea>
+                        <ul class="options-list" style="margin-top: 10px;">
+                            <li class="option-item" data-correct="true" onclick="selectOption(this, 'ex4-q1')">
+                                <span class="option-letter">A</span>
+                                <span>Offer, acceptance, consideration, and intention to create legal relations</span>
+                            </li>
+                            <li class="option-item" data-correct="false" onclick="selectOption(this, 'ex4-q1')">
+                                <span class="option-letter">B</span>
+                                <span>Offer, acceptance, causa, and intention to create legal relations</span>
+                            </li>
+                            <li class="option-item" data-correct="false" onclick="selectOption(this, 'ex4-q1')">
+                                <span class="option-letter">C</span>
+                                <span>Offer, consideration, good faith, and force majeure clause</span>
+                            </li>
+                            <li class="option-item" data-correct="false" onclick="selectOption(this, 'ex4-q1')">
+                                <span class="option-letter">D</span>
+                                <span>Consensus ad idem, consideration, causa, and pacta sunt servanda</span>
+                            </li>
+                        </ul>
                     </div>
 
-                    <div style="margin-bottom: 20px;">
-                        <p><strong>2. What is the "mirror image rule" and why is it important?</strong></p>
-                        <textarea class="fill-blank-input" id="ex4-q2" rows="2" style="width: 100%; min-width: 100%; max-width: 100%; padding: 10px; margin-top: 10px;" placeholder="Write your answer here..."></textarea>
+                    <!-- Question 2 -->
+                    <div style="margin-bottom: 25px;">
+                        <p><strong>2. What is the "mirror image rule"?</strong></p>
+                        <ul class="options-list" style="margin-top: 10px;">
+                            <li class="option-item" data-correct="true" onclick="selectOption(this, 'ex4-q2')">
+                                <span class="option-letter">A</span>
+                                <span>Acceptance must match the offer exactly; any changes constitute a counter-offer</span>
+                            </li>
+                            <li class="option-item" data-correct="false" onclick="selectOption(this, 'ex4-q2')">
+                                <span class="option-letter">B</span>
+                                <span>Acceptance can modify the offer as long as the changes are minor</span>
+                            </li>
+                            <li class="option-item" data-correct="false" onclick="selectOption(this, 'ex4-q2')">
+                                <span class="option-letter">C</span>
+                                <span>Both parties must provide equal consideration to form a valid contract</span>
+                            </li>
+                            <li class="option-item" data-correct="false" onclick="selectOption(this, 'ex4-q2')">
+                                <span class="option-letter">D</span>
+                                <span>The contract terms must reflect the exact intentions of both parties</span>
+                            </li>
+                        </ul>
                     </div>
 
-                    <div style="margin-bottom: 20px;">
-                        <p><strong>3. How does Mexican law differ from common law regarding consideration and contract validity?</strong></p>
-                        <textarea class="fill-blank-input" id="ex4-q3" rows="3" style="width: 100%; min-width: 100%; max-width: 100%; padding: 10px; margin-top: 10px;" placeholder="Write your answer here..."></textarea>
+                    <!-- Question 3 -->
+                    <div style="margin-bottom: 25px;">
+                        <p><strong>3. How does Mexican law differ from common law regarding consideration?</strong></p>
+                        <ul class="options-list" style="margin-top: 10px;">
+                            <li class="option-item" data-correct="false" onclick="selectOption(this, 'ex4-q3')">
+                                <span class="option-letter">A</span>
+                                <span>Mexican law requires consideration just like common law for all contracts</span>
+                            </li>
+                            <li class="option-item" data-correct="true" onclick="selectOption(this, 'ex4-q3')">
+                                <span class="option-letter">B</span>
+                                <span>Mexican law uses causa instead; a gratuitous contract like a donation can be valid without contraprestación</span>
+                            </li>
+                            <li class="option-item" data-correct="false" onclick="selectOption(this, 'ex4-q3')">
+                                <span class="option-letter">C</span>
+                                <span>Mexican law requires contraprestación in all contracts, while common law does not</span>
+                            </li>
+                            <li class="option-item" data-correct="false" onclick="selectOption(this, 'ex4-q3')">
+                                <span class="option-letter">D</span>
+                                <span>Mexican law and common law treat consideration identically in all respects</span>
+                            </li>
+                        </ul>
                     </div>
 
-                    <div style="margin-bottom: 20px;">
+                    <!-- Question 4 -->
+                    <div style="margin-bottom: 25px;">
                         <p><strong>4. Why must force majeure clauses be explicitly included in common law contracts?</strong></p>
-                        <textarea class="fill-blank-input" id="ex4-q4" rows="2" style="width: 100%; min-width: 100%; max-width: 100%; padding: 10px; margin-top: 10px;" placeholder="Write your answer here..."></textarea>
-                    </div>
-
-                    <div class="info-box" style="margin-top: 20px;">
-                        <p><strong>💡 Tip:</strong> Use complete sentences and reference specific concepts from the text. This exercise helps you practice legal writing in English.</p>
+                        <ul class="options-list" style="margin-top: 10px;">
+                            <li class="option-item" data-correct="false" onclick="selectOption(this, 'ex4-q4')">
+                                <span class="option-letter">A</span>
+                                <span>Because force majeure is implied by law in all common law jurisdictions</span>
+                            </li>
+                            <li class="option-item" data-correct="true" onclick="selectOption(this, 'ex4-q4')">
+                                <span class="option-letter">B</span>
+                                <span>Because common law has no general doctrine of force majeure, unlike Mexican law which codifies caso fortuito</span>
+                            </li>
+                            <li class="option-item" data-correct="false" onclick="selectOption(this, 'ex4-q4')">
+                                <span class="option-letter">C</span>
+                                <span>Because parties want to limit liability even though force majeure already exists in common law</span>
+                            </li>
+                            <li class="option-item" data-correct="false" onclick="selectOption(this, 'ex4-q4')">
+                                <span class="option-letter">D</span>
+                                <span>Because force majeure is only recognized in common law if mentioned three times in the contract</span>
+                            </li>
+                        </ul>
                     </div>
                 </div>
                 <div class="exercise-actions">
-                    <button class="btn-check" onclick="checkExercise4()">Check Completeness</button>
+                    <button class="btn-check" onclick="checkExercise4()">Check Answers</button>
                 </div>
                 <div id="feedback-exercise4" class="feedback-message"></div>
             </div>
@@ -1453,51 +1521,50 @@
                     <p><strong>Tick (✓) the statements you hear in the audio:</strong></p>
 
                     <div style="margin-top: 20px;">
-                        <div style="margin-bottom: 15px; padding: 10px; background: var(--light-bg); border-radius: 8px; cursor: pointer;" onclick="toggleListeningCheck(this, 'ex6-1', true)">
-                            <input type="checkbox" id="ex6-1" style="margin-right: 10px;">
-                            <label for="ex6-1" style="cursor: pointer;">MUR Shipping was the shipowner</label>
+                        <div class="tick-option" data-checkbox-id="ex6-1" data-correct="true" style="margin-bottom: 15px; padding: 15px; background: var(--light-bg); border-radius: 8px; cursor: pointer; border: 2px solid transparent;">
+                            <input type="checkbox" id="ex6-1" style="margin-right: 10px; pointer-events: none;">
+                            <label for="ex6-1" style="cursor: pointer; pointer-events: none;">MUR Shipping was the shipowner</label>
                         </div>
-                        <div style="margin-bottom: 15px; padding: 10px; background: var(--light-bg); border-radius: 8px; cursor: pointer;" onclick="toggleListeningCheck(this, 'ex6-2', false)">
-                            <input type="checkbox" id="ex6-2" style="margin-right: 10px;">
-                            <label for="ex6-2" style="cursor: pointer;">The contract was for oil transportation</label>
+                        <div class="tick-option" data-checkbox-id="ex6-2" data-correct="false" style="margin-bottom: 15px; padding: 15px; background: var(--light-bg); border-radius: 8px; cursor: pointer; border: 2px solid transparent;">
+                            <input type="checkbox" id="ex6-2" style="margin-right: 10px; pointer-events: none;">
+                            <label for="ex6-2" style="cursor: pointer; pointer-events: none;">The contract was for oil transportation</label>
                         </div>
-                        <div style="margin-bottom: 15px; padding: 10px; background: var(--light-bg); border-radius: 8px; cursor: pointer;" onclick="toggleListeningCheck(this, 'ex6-3', true)">
-                            <input type="checkbox" id="ex6-3" style="margin-right: 10px;">
-                            <label for="ex6-3" style="cursor: pointer;">Payment was required in US dollars</label>
+                        <div class="tick-option" data-checkbox-id="ex6-3" data-correct="true" style="margin-bottom: 15px; padding: 15px; background: var(--light-bg); border-radius: 8px; cursor: pointer; border: 2px solid transparent;">
+                            <input type="checkbox" id="ex6-3" style="margin-right: 10px; pointer-events: none;">
+                            <label for="ex6-3" style="cursor: pointer; pointer-events: none;">Payment was required in US dollars</label>
                         </div>
-                        <div style="margin-bottom: 15px; padding: 10px; background: var(--light-bg); border-radius: 8px; cursor: pointer;" onclick="toggleListeningCheck(this, 'ex6-4', true)">
-                            <input type="checkbox" id="ex6-4" style="margin-right: 10px;">
-                            <label for="ex6-4" style="cursor: pointer;">RTI's parent company was placed on a sanctions list</label>
+                        <div class="tick-option" data-checkbox-id="ex6-4" data-correct="true" style="margin-bottom: 15px; padding: 15px; background: var(--light-bg); border-radius: 8px; cursor: pointer; border: 2px solid transparent;">
+                            <input type="checkbox" id="ex6-4" style="margin-right: 10px; pointer-events: none;">
+                            <label for="ex6-4" style="cursor: pointer; pointer-events: none;">RTI's parent company was placed on a sanctions list</label>
                         </div>
-                        <div style="margin-bottom: 15px; padding: 10px; background: var(--light-bg); border-radius: 8px; cursor: pointer;" onclick="toggleListeningCheck(this, 'ex6-5', false)">
-                            <input type="checkbox" id="ex6-5" style="margin-right: 10px;">
-                            <label for="ex6-5" style="cursor: pointer;">MUR offered to accept euros</label>
+                        <div class="tick-option" data-checkbox-id="ex6-5" data-correct="false" style="margin-bottom: 15px; padding: 15px; background: var(--light-bg); border-radius: 8px; cursor: pointer; border: 2px solid transparent;">
+                            <input type="checkbox" id="ex6-5" style="margin-right: 10px; pointer-events: none;">
+                            <label for="ex6-5" style="cursor: pointer; pointer-events: none;">MUR offered to accept euros</label>
                         </div>
-                        <div style="margin-bottom: 15px; padding: 10px; background: var(--light-bg); border-radius: 8px; cursor: pointer;" onclick="toggleListeningCheck(this, 'ex6-6', true)">
-                            <input type="checkbox" id="ex6-6" style="margin-right: 10px;">
-                            <label for="ex6-6" style="cursor: pointer;">RTI offered to pay the currency conversion costs</label>
+                        <div class="tick-option" data-checkbox-id="ex6-6" data-correct="true" style="margin-bottom: 15px; padding: 15px; background: var(--light-bg); border-radius: 8px; cursor: pointer; border: 2px solid transparent;">
+                            <input type="checkbox" id="ex6-6" style="margin-right: 10px; pointer-events: none;">
+                            <label for="ex6-6" style="cursor: pointer; pointer-events: none;">RTI offered to pay the currency conversion costs</label>
                         </div>
-                        <div style="margin-bottom: 15px; padding: 10px; background: var(--light-bg); border-radius: 8px; cursor: pointer;" onclick="toggleListeningCheck(this, 'ex6-7', false)">
-                            <input type="checkbox" id="ex6-7" style="margin-right: 10px;">
-                            <label for="ex6-7" style="cursor: pointer;">The arbitration tribunal ruled in favor of MUR</label>
+                        <div class="tick-option" data-checkbox-id="ex6-7" data-correct="false" style="margin-bottom: 15px; padding: 15px; background: var(--light-bg); border-radius: 8px; cursor: pointer; border: 2px solid transparent;">
+                            <input type="checkbox" id="ex6-7" style="margin-right: 10px; pointer-events: none;">
+                            <label for="ex6-7" style="cursor: pointer; pointer-events: none;">The arbitration tribunal ruled in favor of MUR</label>
                         </div>
-                        <div style="margin-bottom: 15px; padding: 10px; background: var(--light-bg); border-radius: 8px; cursor: pointer;" onclick="toggleListeningCheck(this, 'ex6-8', true)">
-                            <input type="checkbox" id="ex6-8" style="margin-right: 10px;">
-                            <label for="ex6-8" style="cursor: pointer;">The Supreme Court overturned the Court of Appeal</label>
+                        <div class="tick-option" data-checkbox-id="ex6-8" data-correct="true" style="margin-bottom: 15px; padding: 15px; background: var(--light-bg); border-radius: 8px; cursor: pointer; border: 2px solid transparent;">
+                            <input type="checkbox" id="ex6-8" style="margin-right: 10px; pointer-events: none;">
+                            <label for="ex6-8" style="cursor: pointer; pointer-events: none;">The Supreme Court overturned the Court of Appeal</label>
                         </div>
-                        <div style="margin-bottom: 15px; padding: 10px; background: var(--light-bg); border-radius: 8px; cursor: pointer;" onclick="toggleListeningCheck(this, 'ex6-9', false)">
-                            <input type="checkbox" id="ex6-9" style="margin-right: 10px;">
-                            <label for="ex6-9" style="cursor: pointer;">The case was about breach of contract</label>
+                        <div class="tick-option" data-checkbox-id="ex6-9" data-correct="false" style="margin-bottom: 15px; padding: 15px; background: var(--light-bg); border-radius: 8px; cursor: pointer; border: 2px solid transparent;">
+                            <input type="checkbox" id="ex6-9" style="margin-right: 10px; pointer-events: none;">
+                            <label for="ex6-9" style="cursor: pointer; pointer-events: none;">The case was about breach of contract</label>
                         </div>
-                        <div style="margin-bottom: 15px; padding: 10px; background: var(--light-bg); border-radius: 8px; cursor: pointer;" onclick="toggleListeningCheck(this, 'ex6-10', true)">
-                            <input type="checkbox" id="ex6-10" style="margin-right: 10px;">
-                            <label for="ex6-10" style="cursor: pointer;">The principle of <em>pacta sunt servanda</em> was discussed</label>
+                        <div class="tick-option" data-checkbox-id="ex6-10" data-correct="true" style="margin-bottom: 15px; padding: 15px; background: var(--light-bg); border-radius: 8px; cursor: pointer; border: 2px solid transparent;">
+                            <input type="checkbox" id="ex6-10" style="margin-right: 10px; pointer-events: none;">
+                            <label for="ex6-10" style="cursor: pointer; pointer-events: none;">The principle of <em>pacta sunt servanda</em> was discussed</label>
                         </div>
                     </div>
                 </div>
                 <div class="exercise-actions">
                     <button class="btn-check" onclick="checkExercise6()">Check Answers</button>
-                    <button class="btn-hint" onclick="resetExercise('exercise6')">Reset</button>
                 </div>
                 <div id="feedback-exercise6" class="feedback-message"></div>
             </div>
@@ -2126,12 +2193,12 @@
             }
         }
 
-        // Exercise 1: Matching
+        // Exercise 1: Matching - Store pairs but don't show correctness until Check Answers
         function selectMatch(element, exerciseId) {
             const matchValue = element.getAttribute('data-match');
 
             // Don't allow clicking on already matched items
-            if (element.classList.contains('correct') || element.classList.contains('incorrect')) {
+            if (element.classList.contains('matched') || element.classList.contains('locked')) {
                 return;
             }
 
@@ -2139,7 +2206,7 @@
                 selectedMatches[exerciseId] = [];
             }
 
-            // If already selected, deselect (only if not part of a matched pair)
+            // If already selected, deselect
             if (element.classList.contains('selected')) {
                 element.classList.remove('selected');
                 selectedMatches[exerciseId] = selectedMatches[exerciseId].filter(item => item.element !== element);
@@ -2154,40 +2221,22 @@
             if (selectedMatches[exerciseId].length === 2) {
                 const [first, second] = selectedMatches[exerciseId];
 
-                if (first.value === second.value) {
-                    // Correct match
-                    first.element.classList.remove('selected');
-                    second.element.classList.remove('selected');
-                    first.element.classList.add('correct');
-                    second.element.classList.add('correct');
-                    first.element.style.pointerEvents = 'none';
-                    second.element.style.pointerEvents = 'none';
+                // Remove selected styling and mark as matched (but don't show if correct/incorrect yet)
+                first.element.classList.remove('selected');
+                second.element.classList.remove('selected');
+                first.element.classList.add('matched');
+                second.element.classList.add('matched');
 
-                    // Save match to localStorage
-                    saveMatchToStorage(exerciseId, first.element.textContent.trim(), second.element.textContent.trim(), true);
-                } else {
-                    // Incorrect match - keep them visible with incorrect styling
-                    first.element.classList.remove('selected');
-                    second.element.classList.remove('selected');
-                    first.element.classList.add('incorrect');
-                    second.element.classList.add('incorrect');
-                    first.element.style.pointerEvents = 'none';
-                    second.element.style.pointerEvents = 'none';
+                // Store the match value on both elements for checking later
+                first.element.setAttribute('data-matched-with', second.value);
+                second.element.setAttribute('data-matched-with', first.value);
 
-                    // Save incorrect match to localStorage
-                    saveMatchToStorage(exerciseId, first.element.textContent.trim(), second.element.textContent.trim(), false);
-                }
+                // Disable clicking on these items
+                first.element.style.pointerEvents = 'none';
+                second.element.style.pointerEvents = 'none';
 
                 selectedMatches[exerciseId] = [];
             }
-        }
-
-        function saveMatchToStorage(exerciseId, item1, item2, isCorrect) {
-            const studentInfo = getStudentInfo();
-            const key = `${studentInfo.email}_${exerciseId}_matches`;
-            let matches = JSON.parse(localStorage.getItem(key) || '[]');
-            matches.push({ item1, item2, isCorrect, timestamp: new Date().toISOString() });
-            localStorage.setItem(key, JSON.stringify(matches));
         }
 
         // Levenshtein distance for fuzzy matching (tolerates misspellings)
@@ -2222,19 +2271,80 @@
 
         function checkExercise1() {
             const exercise = document.getElementById('exercise1');
-            const items = exercise.querySelectorAll('.option-item');
-            const correctItems = exercise.querySelectorAll('.option-item.correct');
+            const items = exercise.querySelectorAll('.option-item.matched');
             const feedback = document.getElementById('feedback-exercise1');
+            const studentInfo = getStudentInfo();
+            let correctCount = 0;
+            let totalPairs = 0;
 
-            if (correctItems.length === items.length) {
+            // Check each matched item
+            items.forEach(item => {
+                const itemValue = item.getAttribute('data-match');
+                const matchedWith = item.getAttribute('data-matched-with');
+
+                // Check if it's a correct match (both values should be the same)
+                if (itemValue === matchedWith) {
+                    item.classList.add('correct');
+                    item.classList.remove('incorrect');
+                    correctCount++;
+                } else {
+                    item.classList.add('incorrect');
+                    item.classList.remove('correct');
+                }
+
+                // Lock the item
+                item.classList.add('locked');
+            });
+
+            // Total pairs is half the matched items (since each pair has 2 items)
+            totalPairs = items.length / 2;
+            const correctPairs = correctCount / 2;
+
+            // Save all matches to localStorage
+            const matches = [];
+            items.forEach(item => {
+                matches.push({
+                    item: item.textContent.trim(),
+                    matchedWith: item.getAttribute('data-matched-with'),
+                    correct: item.classList.contains('correct')
+                });
+            });
+
+            const key = `${studentInfo.email}_exercise1_matches`;
+            localStorage.setItem(key, JSON.stringify({
+                matches: matches,
+                score: `${correctPairs}/${totalPairs}`,
+                timestamp: new Date().toISOString()
+            }));
+
+            // Show feedback with score
+            if (correctPairs === totalPairs) {
                 feedback.className = 'feedback-message success';
-                feedback.textContent = '✓ Excellent! All matches are correct! / ¡Excelente! Todas las respuestas son correctas!';
-                saveExerciseState('exercise1', { completed: true });
+                feedback.textContent = `✓ Perfect! ${correctPairs}/${totalPairs} correct matches! / ¡Perfecto! ${correctPairs}/${totalPairs} emparejamientos correctos!`;
+                saveExerciseState('exercise1', { completed: true, score: `${correctPairs}/${totalPairs}` });
                 updateProgressBar();
             } else {
                 feedback.className = 'feedback-message error';
-                feedback.textContent = '✗ Not all matches are correct. Review the incorrect matches (red). / No todas las respuestas son correctas. Revisa las incorrectas (rojo).';
+                feedback.textContent = `Score: ${correctPairs}/${totalPairs} correct. Review the incorrect matches (red). / Puntuación: ${correctPairs}/${totalPairs} correctas. Revisa las incorrectas (rojo).`;
+                saveExerciseState('exercise1', { completed: true, score: `${correctPairs}/${totalPairs}` });
             }
+
+            // Disable check button
+            document.querySelector('#exercise1 .btn-check').disabled = true;
+
+            // Send score to backend
+            sendToBackend({
+                type: 'exercise_score',
+                data: {
+                    module: 'module-2',
+                    exercise: 'exercise1',
+                    studentName: studentInfo.name,
+                    studentEmail: studentInfo.email,
+                    score: `${correctPairs}/${totalPairs}`,
+                    percentage: (correctPairs / totalPairs * 100).toFixed(1),
+                    timestamp: new Date().toISOString()
+                }
+            });
         }
 
         // Exercise 2: Fill in the blanks
@@ -2330,45 +2440,75 @@
             }
         }
 
-        // Exercise 4: Comprehension Questions (NEW)
+        // Exercise 4: Reading Comprehension (Multiple Choice)
         function checkExercise4() {
-            const textareas = ['ex4-q1', 'ex4-q2', 'ex4-q3', 'ex4-q4'];
-            let allComplete = true;
+            const questions = ['ex4-q1', 'ex4-q2', 'ex4-q3', 'ex4-q4'];
+            const studentInfo = getStudentInfo();
+            let correctCount = 0;
+            let allAnswered = true;
 
-            textareas.forEach(id => {
-                const textarea = document.getElementById(id);
-                if (textarea.value.trim().length > 20) {
-                    textarea.classList.remove('incorrect');
-                    textarea.classList.add('correct');
-                } else {
-                    textarea.classList.remove('correct');
-                    textarea.classList.add('incorrect');
-                    allComplete = false;
+            questions.forEach(qId => {
+                const selected = document.querySelector(`[onclick*="${qId}"].selected`);
+                if (!selected) {
+                    allAnswered = false;
+                    return;
                 }
+
+                const isCorrect = selected.getAttribute('data-correct') === 'true';
+                if (isCorrect) {
+                    selected.classList.add('correct');
+                    selected.classList.remove('incorrect');
+                    correctCount++;
+                } else {
+                    selected.classList.add('incorrect');
+                    selected.classList.remove('correct');
+                }
+
+                // Save each answer
+                const key = `${studentInfo.email}_exercise4_${qId}`;
+                localStorage.setItem(key, JSON.stringify({
+                    selected: selected.textContent.trim(),
+                    correct: isCorrect,
+                    timestamp: new Date().toISOString()
+                }));
             });
 
             const feedback = document.getElementById('feedback-exercise4');
-            if (allComplete) {
+            const totalQuestions = questions.length;
+
+            if (!allAnswered) {
+                feedback.className = 'feedback-message error';
+                feedback.textContent = '✗ Please answer all questions before checking. / Por favor responde todas las preguntas antes de revisar.';
+                return;
+            }
+
+            if (correctCount === totalQuestions) {
                 feedback.className = 'feedback-message success';
-                feedback.textContent = '✓ Good work! All questions answered! / ¡Buen trabajo! Todas las preguntas contestadas!';
-                saveExerciseState('exercise4', { completed: true });
+                feedback.textContent = `✓ Perfect! ${correctCount}/${totalQuestions} correct! / ¡Perfecto! ${correctCount}/${totalQuestions} correctas!`;
+                saveExerciseState('exercise4', { completed: true, score: `${correctCount}/${totalQuestions}` });
                 updateProgressBar();
             } else {
                 feedback.className = 'feedback-message error';
-                feedback.textContent = '✗ Please answer all questions with complete sentences (minimum 20 characters). / Por favor responde todas las preguntas con oraciones completas (mínimo 20 caracteres).';
+                feedback.textContent = `Score: ${correctCount}/${totalQuestions} correct. Review the incorrect answers (red). / Puntuación: ${correctCount}/${totalQuestions} correctas. Revisa las incorrectas (rojo).`;
+                saveExerciseState('exercise4', { completed: true, score: `${correctCount}/${totalQuestions}` });
             }
-        }
 
-        function showExercise4Hints() {
-            const feedback = document.getElementById('feedback-exercise4');
-            feedback.className = 'feedback-message hint';
-            feedback.innerHTML = `
-                <strong>💡 Example Answers:</strong><br><br>
-                <strong>1.</strong> The four essential elements are: offer, acceptance, consideration, and intention to create legal relations.<br><br>
-                <strong>2.</strong> The "mirror image rule" states that acceptance must match the offer exactly. Any changes constitute a counter-offer. This is important because it ensures consensus ad idem (meeting of minds).<br><br>
-                <strong>3.</strong> In common law, consideration is essential for contract validity—without it, there's no enforceable contract. In Mexican law, while contraprestación exists in contracts for value, validity depends on consentimiento, objeto, and causa. A gratuitous contract like a donation is valid without contraprestación.<br><br>
-                <strong>4.</strong> Force majeure must be explicitly included because common law has no general doctrine of force majeure, unlike Mexican law where caso fortuito is codified in the Civil Code.
-            `;
+            // Disable check button
+            document.querySelector('#exercise4 .btn-check').disabled = true;
+
+            // Send score to backend
+            sendToBackend({
+                type: 'exercise_score',
+                data: {
+                    module: 'module-2',
+                    exercise: 'exercise4',
+                    studentName: studentInfo.name,
+                    studentEmail: studentInfo.email,
+                    score: `${correctCount}/${totalQuestions}`,
+                    percentage: (correctCount / totalQuestions * 100).toFixed(1),
+                    timestamp: new Date().toISOString()
+                }
+            });
         }
 
         // Exercise 5: Find the words (RENUMBERED from old Exercise 4)
@@ -2426,48 +2566,45 @@
         }
 
         // Exercise 6: Listen and Tick (Listening)
-        function toggleListeningCheck(element, checkboxId, isCorrect) {
-            const checkbox = document.getElementById(checkboxId);
-            checkbox.checked = !checkbox.checked;
-            checkbox.setAttribute('data-correct', isCorrect);
-        }
-
         function checkExercise6() {
             let totalCorrect = 0;
             let totalChecked = 0;
-            const checkboxes = document.querySelectorAll('#exercise6 input[type="checkbox"]');
+            const tickOptions = document.querySelectorAll('#exercise6 .tick-option');
             const studentInfo = getStudentInfo();
 
-            checkboxes.forEach(checkbox => {
-                const isCorrect = checkbox.getAttribute('data-correct') === 'true';
+            tickOptions.forEach(div => {
+                const checkboxId = div.getAttribute('data-checkbox-id');
+                const checkbox = document.getElementById(checkboxId);
+                const isCorrect = div.getAttribute('data-correct') === 'true';
                 const isChecked = checkbox.checked;
 
+                // Lock the div to prevent further clicks
+                div.classList.add('locked');
+                div.style.cursor = 'not-allowed';
+
                 // Save checkbox state to localStorage
-                const key = `${studentInfo.email}_exercise6_${checkbox.id}`;
+                const key = `${studentInfo.email}_exercise6_${checkboxId}`;
                 localStorage.setItem(key, JSON.stringify({
                     checked: isChecked,
                     correct: isCorrect && isChecked,
                     timestamp: new Date().toISOString()
                 }));
 
-                // Disable checkbox after check
-                checkbox.disabled = true;
-
                 if (isChecked) {
                     totalChecked++;
                     if (isCorrect) {
                         totalCorrect++;
-                        checkbox.parentElement.style.borderColor = '#28a745';
-                        checkbox.parentElement.style.background = 'rgba(40, 167, 69, 0.1)';
+                        div.style.borderColor = '#28a745';
+                        div.style.background = 'rgba(40, 167, 69, 0.1)';
                     } else {
-                        checkbox.parentElement.style.borderColor = '#dc3545';
-                        checkbox.parentElement.style.background = 'rgba(220, 53, 69, 0.1)';
+                        div.style.borderColor = '#dc3545';
+                        div.style.background = 'rgba(220, 53, 69, 0.1)';
                     }
                 } else {
                     if (isCorrect) {
                         // Should have been checked
-                        checkbox.parentElement.style.borderColor = '#ffc107';
-                        checkbox.parentElement.style.background = 'rgba(255, 193, 7, 0.1)';
+                        div.style.borderColor = '#ffc107';
+                        div.style.background = 'rgba(255, 193, 7, 0.1)';
                     }
                 }
             });
@@ -2478,15 +2615,30 @@
             if (totalCorrect === correctAnswers && totalChecked === correctAnswers) {
                 feedback.className = 'feedback-message success';
                 feedback.textContent = `✓ Perfect! ${totalCorrect}/${correctAnswers} correct! / ¡Perfecto! ${totalCorrect}/${correctAnswers} correctas!`;
-                saveExerciseState('exercise6', { completed: true });
+                saveExerciseState('exercise6', { completed: true, score: `${totalCorrect}/${correctAnswers}` });
                 updateProgressBar();
             } else {
                 feedback.className = 'feedback-message error';
-                feedback.textContent = `You got ${totalCorrect}/${correctAnswers} correct. Answers are now locked. / Obtuviste ${totalCorrect}/${correctAnswers} correctas. Las respuestas están bloqueadas.`;
+                feedback.textContent = `Score: ${totalCorrect}/${correctAnswers} correct. Answers are now locked. / Puntuación: ${totalCorrect}/${correctAnswers} correctas. Las respuestas están bloqueadas.`;
+                saveExerciseState('exercise6', { completed: true, score: `${totalCorrect}/${correctAnswers}` });
             }
 
             // Disable the check button after first check
             document.querySelector('#exercise6 .btn-check').disabled = true;
+
+            // Send score to backend
+            sendToBackend({
+                type: 'exercise_score',
+                data: {
+                    module: 'module-2',
+                    exercise: 'exercise6',
+                    studentName: studentInfo.name,
+                    studentEmail: studentInfo.email,
+                    score: `${totalCorrect}/${correctAnswers}`,
+                    percentage: (totalCorrect / correctAnswers * 100).toFixed(1),
+                    timestamp: new Date().toISOString()
+                }
+            });
         }
 
         // Exercise 7: Listen Again and Complete
@@ -2771,6 +2923,17 @@
                     this.classList.toggle('collapsed');
                 });
             }
+
+            // Tick exercise click handlers - make entire rectangle clickable
+            document.querySelectorAll('.tick-option').forEach(div => {
+                div.addEventListener('click', function(e) {
+                    if (this.classList.contains('locked')) return; // Don't allow clicks after check
+
+                    const checkboxId = this.getAttribute('data-checkbox-id');
+                    const checkbox = document.getElementById(checkboxId);
+                    checkbox.checked = !checkbox.checked;
+                });
+            });
 
             // Survey form handler
             const surveyForm = document.getElementById('surveyForm');
