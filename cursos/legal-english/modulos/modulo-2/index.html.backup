@@ -7,7 +7,760 @@
     <meta name="description" content="Aprende sobre fundamentos del derecho contractual angloamericano. Legal English Module 2.">
     <meta name="keywords" content="legal english, contract law, derecho contractual, common law contracts, force majeure, curso inglés jurídico">
     <link rel="stylesheet" href="../../../../css/styles.css">
-    <link rel="stylesheet" href="../../shared/module-styles.css">
+    <style>
+        /* ============================================
+           ESTILOS DEL MÓDULO INTERACTIVO
+           ============================================ */
+
+        .module-layout {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0;
+            min-height: calc(100vh - 80px);
+            max-width: 1600px;
+            margin: 0 auto;
+        }
+
+        /* Video Section */
+        .video-section {
+            background: #000;
+            position: sticky;
+            top: 80px;
+            height: calc(100vh - 80px);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .video-container {
+            flex: 1;
+            position: relative;
+            background: #000;
+        }
+
+        .video-container iframe,
+        .video-container video {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+
+        .video-placeholder {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, var(--primary) 0%, #2d4942 100%);
+            color: var(--white);
+            flex-direction: column;
+            gap: 20px;
+            padding: 40px;
+            text-align: center;
+        }
+
+        .video-placeholder .icon {
+            font-size: 5rem;
+            opacity: 0.5;
+        }
+
+        .video-controls {
+            background: var(--primary);
+            padding: 15px 20px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            border-top: 2px solid var(--secondary);
+        }
+
+        .video-controls .btn-control {
+            background: var(--secondary);
+            color: var(--primary);
+            border: none;
+            padding: 8px 16px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+
+        .video-controls .btn-control:hover {
+            transform: scale(1.05);
+        }
+
+        .time-markers {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+            flex: 1;
+        }
+
+        .time-marker {
+            background: rgba(255, 255, 255, 0.1);
+            color: var(--white);
+            padding: 5px 10px;
+            border-radius: 15px;
+            font-size: 0.8rem;
+            cursor: pointer;
+            transition: all 0.3s;
+            border: 1px solid transparent;
+        }
+
+        .time-marker:hover {
+            background: var(--secondary);
+            color: var(--primary);
+        }
+
+        .time-marker.active {
+            border-color: var(--secondary);
+            background: rgba(207, 168, 146, 0.3);
+        }
+
+        /* Content Section */
+        .content-section {
+            background: var(--light-bg);
+            overflow-y: auto;
+            height: calc(100vh - 80px);
+            padding: 30px;
+        }
+
+        .module-header {
+            background: var(--white);
+            padding: 25px;
+            border-radius: 15px;
+            margin-bottom: 25px;
+            box-shadow: var(--shadow);
+            border-left: 5px solid var(--secondary);
+        }
+
+        .module-header h1 {
+            color: var(--primary);
+            font-size: 1.8rem;
+            margin-bottom: 10px;
+        }
+
+        .module-meta {
+            display: flex;
+            gap: 20px;
+            color: var(--text-light);
+            font-size: 0.9rem;
+            flex-wrap: wrap;
+        }
+
+        .module-meta span {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        /* Content Blocks */
+        .content-block {
+            background: var(--white);
+            padding: 25px;
+            border-radius: 15px;
+            margin-bottom: 20px;
+            box-shadow: var(--shadow);
+            transition: all 0.3s;
+        }
+
+        .content-block.highlight {
+            border-left: 5px solid var(--secondary);
+        }
+
+        .content-block h2 {
+            color: var(--primary);
+            font-size: 1.4rem;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .content-block h3 {
+            color: var(--primary);
+            font-size: 1.2rem;
+            margin: 20px 0 10px;
+        }
+
+        .content-block h4 {
+            color: var(--primary);
+            font-size: 1.1rem;
+            margin: 15px 0 10px;
+        }
+
+        .content-block p {
+            color: var(--text-dark);
+            line-height: 1.8;
+            margin-bottom: 15px;
+        }
+
+        .content-block ul {
+            margin-left: 20px;
+            margin-bottom: 15px;
+        }
+
+        .content-block li {
+            margin-bottom: 8px;
+            line-height: 1.6;
+        }
+
+        .content-block strong {
+            color: var(--primary);
+        }
+
+        .pause-indicator {
+            background: linear-gradient(135deg, #ff6b6b, #ee5a5a);
+            color: white;
+            padding: 15px 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .pause-indicator:hover {
+            transform: scale(1.02);
+        }
+
+        .pause-indicator .icon {
+            font-size: 1.5rem;
+        }
+
+        .pause-indicator .text {
+            flex: 1;
+        }
+
+        .pause-indicator .text strong {
+            display: block;
+            margin-bottom: 3px;
+            color: white;
+        }
+
+        /* Exercise Blocks */
+        .exercise-block {
+            background: var(--white);
+            border: 2px solid var(--secondary);
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 20px;
+        }
+
+        .exercise-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid var(--light-bg);
+        }
+
+        .exercise-number {
+            background: var(--secondary);
+            color: var(--primary);
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 1.2rem;
+            flex-shrink: 0;
+        }
+
+        .exercise-title {
+            flex: 1;
+        }
+
+        .exercise-title h3 {
+            color: var(--primary);
+            margin: 0 0 5px;
+        }
+
+        .exercise-title span {
+            color: var(--text-light);
+            font-size: 0.85rem;
+        }
+
+        .exercise-content {
+            margin-bottom: 20px;
+        }
+
+        /* Options List */
+        .options-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .option-item {
+            background: var(--light-bg);
+            border: 2px solid transparent;
+            border-radius: 10px;
+            padding: 15px 20px;
+            margin-bottom: 10px;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .option-item:hover {
+            border-color: var(--secondary);
+            transform: translateX(5px);
+        }
+
+        .option-item.selected {
+            border-color: var(--primary);
+            background: rgba(27, 44, 39, 0.05);
+        }
+
+        .option-item.correct {
+            border-color: #28a745;
+            background: rgba(40, 167, 69, 0.1);
+        }
+
+        .option-item.incorrect {
+            border-color: #dc3545;
+            background: rgba(220, 53, 69, 0.1);
+        }
+
+        .option-letter {
+            background: var(--primary);
+            color: var(--white);
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            font-size: 0.9rem;
+            flex-shrink: 0;
+        }
+
+        .option-item.correct .option-letter {
+            background: #28a745;
+        }
+
+        .option-item.incorrect .option-letter {
+            background: #dc3545;
+        }
+
+        /* Fill in the blank */
+        .fill-blank-input {
+            border: 2px solid var(--secondary);
+            border-radius: 5px;
+            padding: 8px 15px;
+            font-size: 1rem;
+            min-width: 150px;
+            transition: all 0.3s;
+        }
+
+        .fill-blank-input:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(27, 44, 39, 0.1);
+        }
+
+        .fill-blank-input.correct {
+            border-color: #28a745;
+            background: rgba(40, 167, 69, 0.1);
+        }
+
+        .fill-blank-input.incorrect {
+            border-color: #dc3545;
+            background: rgba(220, 53, 69, 0.1);
+        }
+
+        /* Exercise Actions */
+        .exercise-actions {
+            display: flex;
+            gap: 10px;
+            margin-top: 20px;
+            flex-wrap: wrap;
+        }
+
+        .btn-check {
+            background: var(--primary);
+            color: var(--white);
+            border: none;
+            padding: 12px 25px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+
+        .btn-check:hover {
+            background: #2d4942;
+            transform: translateY(-2px);
+        }
+
+        .btn-hint {
+            background: transparent;
+            color: var(--primary);
+            border: 2px solid var(--primary);
+            padding: 12px 25px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+
+        .btn-hint:hover {
+            background: var(--light-bg);
+        }
+
+        .feedback-message {
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 15px;
+            display: none;
+        }
+
+        .feedback-message.success {
+            background: rgba(40, 167, 69, 0.1);
+            border: 1px solid #28a745;
+            color: #155724;
+            display: block;
+        }
+
+        .feedback-message.error {
+            background: rgba(220, 53, 69, 0.1);
+            border: 1px solid #dc3545;
+            color: #721c24;
+            display: block;
+        }
+
+        .feedback-message.hint {
+            background: rgba(255, 193, 7, 0.1);
+            border: 1px solid #ffc107;
+            color: #856404;
+            display: block;
+        }
+
+        /* Vocabulary Box */
+        .vocabulary-box {
+            background: linear-gradient(135deg, var(--light-bg), #e8e8e8);
+            border-radius: 15px;
+            padding: 25px;
+            margin: 20px 0;
+        }
+
+        .vocabulary-box h4 {
+            color: var(--primary);
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .vocab-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 15px;
+        }
+
+        .vocab-item {
+            background: var(--white);
+            padding: 15px;
+            border-radius: 10px;
+            border-left: 4px solid var(--secondary);
+        }
+
+        .vocab-item .term {
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 5px;
+            font-size: 1.1rem;
+        }
+
+        .vocab-item .definition {
+            font-size: 0.9rem;
+            color: var(--text-dark);
+            line-height: 1.5;
+        }
+
+        .vocab-item .spanish {
+            font-size: 0.85rem;
+            color: var(--text-light);
+            font-style: italic;
+            margin-top: 5px;
+        }
+
+        /* Comparison Table */
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            background: var(--white);
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+        }
+
+        .comparison-table th {
+            background: var(--primary);
+            color: var(--white);
+            padding: 15px;
+            text-align: left;
+            font-weight: 600;
+        }
+
+        .comparison-table td {
+            padding: 12px 15px;
+            border-bottom: 1px solid var(--light-bg);
+        }
+
+        .comparison-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        .comparison-table tr:hover {
+            background: rgba(207, 168, 146, 0.05);
+        }
+
+        /* Document Display */
+        .document-display {
+            background: var(--white);
+            border: 2px solid var(--primary);
+            border-radius: 10px;
+            padding: 30px;
+            margin: 20px 0;
+            font-family: 'Courier New', monospace;
+            font-size: 0.95rem;
+            line-height: 1.8;
+        }
+
+        .document-display .doc-header {
+            text-align: center;
+            font-weight: 700;
+            font-size: 1.1rem;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid var(--primary);
+        }
+
+        .document-display .doc-to {
+            margin: 15px 0;
+        }
+
+        .document-display .doc-section {
+            margin: 15px 0;
+        }
+
+        /* Progress Bar */
+        .progress-bar {
+            background: var(--light-bg);
+            height: 8px;
+            border-radius: 4px;
+            margin-bottom: 20px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            background: linear-gradient(90deg, var(--secondary), var(--primary));
+            height: 100%;
+            border-radius: 4px;
+            transition: width 0.5s ease;
+        }
+
+        /* Module Navigation */
+        .module-navigation {
+            display: flex;
+            justify-content: space-between;
+            padding: 20px 0;
+            margin-top: 30px;
+            border-top: 2px solid var(--light-bg);
+            gap: 10px;
+        }
+
+        .nav-btn {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 15px 25px;
+            background: var(--white);
+            border: 2px solid var(--primary);
+            border-radius: 10px;
+            text-decoration: none;
+            color: var(--primary);
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+
+        .nav-btn:hover {
+            background: var(--primary);
+            color: var(--white);
+        }
+
+        .nav-btn.disabled {
+            opacity: 0.5;
+            pointer-events: none;
+        }
+
+        /* Pronunciation Guide */
+        .pronunciation {
+            color: var(--text-light);
+            font-style: italic;
+            font-size: 0.9rem;
+        }
+
+        /* Info Box */
+        .info-box {
+            background: rgba(207, 168, 146, 0.1);
+            border-left: 4px solid var(--secondary);
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 8px;
+        }
+
+        .info-box strong {
+            color: var(--primary);
+        }
+
+        /* Reading Text Block */
+        .reading-text {
+            background: #f8f9fa;
+            padding: 25px;
+            border-radius: 10px;
+            margin: 20px 0;
+            line-height: 1.8;
+            border-left: 4px solid var(--primary);
+        }
+
+        .reading-text p {
+            margin-bottom: 15px;
+        }
+
+        /* Responsive */
+        @media (max-width: 1200px) {
+            .module-layout {
+                grid-template-columns: 1fr;
+            }
+
+            .video-section {
+                position: sticky;
+                height: 50vh;
+                top: 80px;
+                z-index: 100;
+            }
+
+            .content-section {
+                height: auto;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .video-section {
+                position: sticky;
+                height: 35vh;
+                top: 60px;
+                z-index: 100;
+            }
+
+            .video-controls {
+                padding: 10px 15px;
+                flex-wrap: wrap;
+                transition: all 0.3s ease;
+                max-height: 500px;
+                overflow-y: auto;
+                overflow-x: hidden;
+                cursor: pointer;
+                -webkit-overflow-scrolling: touch;
+            }
+
+            .video-controls::-webkit-scrollbar {
+                width: 4px;
+            }
+
+            .video-controls::-webkit-scrollbar-track {
+                background: rgba(255, 255, 255, 0.1);
+            }
+
+            .video-controls::-webkit-scrollbar-thumb {
+                background: var(--secondary);
+                border-radius: 2px;
+            }
+
+            .video-controls.collapsed {
+                max-height: 45px;
+                padding: 8px 15px;
+                overflow: hidden;
+            }
+
+            .video-controls.collapsed .time-markers {
+                display: none;
+            }
+
+            .video-controls.collapsed::after {
+                content: "📍 Tap para ver capítulos";
+                display: block;
+                font-size: 0.7rem;
+                color: rgba(255, 255, 255, 0.7);
+                margin-left: auto;
+                white-space: nowrap;
+            }
+
+            .video-controls .btn-control {
+                flex-shrink: 0;
+                margin-bottom: 8px;
+                width: 100%;
+                max-width: 150px;
+            }
+
+            .time-markers {
+                gap: 6px;
+                transition: opacity 0.3s ease;
+                width: 100%;
+                max-height: 380px;
+                overflow-y: auto;
+            }
+
+            .time-marker {
+                font-size: 0.7rem;
+                padding: 6px 10px;
+                white-space: normal;
+                line-height: 1.3;
+                text-align: left;
+                width: 100%;
+            }
+
+            .content-section {
+                padding: 20px;
+            }
+
+            .module-header h1 {
+                font-size: 1.4rem;
+            }
+
+            .module-meta {
+                flex-direction: column;
+                gap: 10px;
+            }
+
+            .vocab-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .exercise-actions {
+                flex-direction: column;
+            }
+
+            .comparison-table {
+                font-size: 0.85rem;
+            }
+
+            .comparison-table th,
+            .comparison-table td {
+                padding: 10px;
+            }
+        }
+    </style>
 </head>
 <body>
     <!-- Header -->
@@ -1334,20 +2087,887 @@
         </section>
     </main>
 
-
     <script>
-    // CONFIGURACIÓN DEL MÓDULO
-    window.MODULE_CONFIG = {
-        moduleNumber: 2,
-        moduleName: 'Contract Law Foundations',
-        totalExercises: 11,
-        backendURL: 'https://script.google.com/macros/s/YOUR_SCRIPT_ID/exec',
-        isFreeModule: false
-    };
+        let selectedMatches = {};
+        let exerciseStates = {};
+
+        // Mobile menu toggle
+        function toggleMenu() {
+            const navMenu = document.getElementById('navMenu');
+            navMenu.classList.toggle('active');
+        }
+
+        // Student Information
+        function saveStudentInfo() {
+            const name = document.getElementById('studentName').value.trim();
+            const email = document.getElementById('studentEmail').value.trim();
+            const feedback = document.getElementById('student-info-feedback');
+
+            if (!name) {
+                feedback.style.display = 'block';
+                feedback.style.background = 'rgba(220, 53, 69, 0.1)';
+                feedback.style.border = '1px solid #dc3545';
+                feedback.style.color = '#721c24';
+                feedback.textContent = '⚠ Please enter your name / Por favor ingresa tu nombre';
+                return;
+            }
+
+            const studentInfo = {
+                name: name,
+                email: email,
+                timestamp: new Date().toISOString(),
+                module: 'module-2'
+            };
+
+            localStorage.setItem('student_info_module2', JSON.stringify(studentInfo));
+            sendToBackend({ type: 'student_info', data: studentInfo });
+
+            feedback.style.display = 'block';
+            feedback.style.background = 'rgba(40, 167, 69, 0.1)';
+            feedback.style.border = '1px solid #28a745';
+            feedback.style.color = '#155724';
+            feedback.textContent = '✓ Information saved! You can now start the module. / ¡Información guardada! Ahora puedes comenzar el módulo.';
+
+            document.getElementById('studentName').disabled = true;
+            document.getElementById('studentEmail').disabled = true;
+        }
+
+        function loadStudentInfo() {
+            const saved = localStorage.getItem('student_info_module2');
+            if (saved) {
+                const info = JSON.parse(saved);
+                document.getElementById('studentName').value = info.name;
+                document.getElementById('studentEmail').value = info.email || '';
+                document.getElementById('studentName').disabled = true;
+                document.getElementById('studentEmail').disabled = true;
+
+                const feedback = document.getElementById('student-info-feedback');
+                feedback.style.display = 'block';
+                feedback.style.background = 'rgba(40, 167, 69, 0.1)';
+                feedback.style.border = '1px solid #28a745';
+                feedback.style.color = '#155724';
+                feedback.textContent = '✓ Welcome back, ' + info.name + '!';
+            }
+        }
+
+        function getStudentInfo() {
+            const saved = localStorage.getItem('student_info_module2');
+            return saved ? JSON.parse(saved) : { name: 'Anonymous', email: '' };
+        }
+
+        // Backend communication
+        function sendToBackend(payload) {
+            // This would be replaced with actual backend API call
+            console.log('Sending to backend:', payload);
+            // Example: fetch('/api/module-data', { method: 'POST', body: JSON.stringify(payload) });
+        }
+
+        // Progress tracking
+        function updateProgressBar() {
+            const exercises = document.querySelectorAll('.exercise-block');
+            let completed = 0;
+            exercises.forEach(ex => {
+                const feedback = ex.querySelector('.feedback-message.success');
+                if (feedback && feedback.style.display === 'block') {
+                    completed++;
+                }
+            });
+            const percentage = (completed / exercises.length) * 100;
+            document.getElementById('progressFill').style.width = percentage + '%';
+
+            localStorage.setItem('module2_progress', percentage);
+        }
+
+        function loadProgress() {
+            const saved = localStorage.getItem('module2_progress');
+            if (saved) {
+                document.getElementById('progressFill').style.width = saved + '%';
+            }
+        }
+
+        // Exercise 1: Matching - Store pairs but don't show correctness until Check Answers
+        function selectMatch(element, exerciseId) {
+            const matchValue = element.getAttribute('data-match');
+
+            // Don't allow clicking on already matched items
+            if (element.classList.contains('matched') || element.classList.contains('locked')) {
+                return;
+            }
+
+            if (!selectedMatches[exerciseId]) {
+                selectedMatches[exerciseId] = [];
+            }
+
+            // If already selected, deselect
+            if (element.classList.contains('selected')) {
+                element.classList.remove('selected');
+                selectedMatches[exerciseId] = selectedMatches[exerciseId].filter(item => item.element !== element);
+                return;
+            }
+
+            // If this is a new selection
+            element.classList.add('selected');
+            selectedMatches[exerciseId].push({ element: element, value: matchValue });
+
+            // Check if we have a pair
+            if (selectedMatches[exerciseId].length === 2) {
+                const [first, second] = selectedMatches[exerciseId];
+
+                // Remove selected styling and mark as matched (but don't show if correct/incorrect yet)
+                first.element.classList.remove('selected');
+                second.element.classList.remove('selected');
+                first.element.classList.add('matched');
+                second.element.classList.add('matched');
+
+                // Store the match value on both elements for checking later
+                first.element.setAttribute('data-matched-with', second.value);
+                second.element.setAttribute('data-matched-with', first.value);
+
+                // Disable clicking on these items
+                first.element.style.pointerEvents = 'none';
+                second.element.style.pointerEvents = 'none';
+
+                selectedMatches[exerciseId] = [];
+            }
+        }
+
+        // Levenshtein distance for fuzzy matching (tolerates misspellings)
+        function levenshteinDistance(str1, str2) {
+            const len1 = str1.length;
+            const len2 = str2.length;
+            const matrix = Array(len1 + 1).fill(null).map(() => Array(len2 + 1).fill(0));
+
+            for (let i = 0; i <= len1; i++) matrix[i][0] = i;
+            for (let j = 0; j <= len2; j++) matrix[0][j] = j;
+
+            for (let i = 1; i <= len1; i++) {
+                for (let j = 1; j <= len2; j++) {
+                    const cost = str1[i - 1] === str2[j - 1] ? 0 : 1;
+                    matrix[i][j] = Math.min(
+                        matrix[i - 1][j] + 1,
+                        matrix[i][j - 1] + 1,
+                        matrix[i - 1][j - 1] + cost
+                    );
+                }
+            }
+            return matrix[len1][len2];
+        }
+
+        function isSimilarEnough(userAnswer, correctAnswer) {
+            const distance = levenshteinDistance(userAnswer.toLowerCase(), correctAnswer.toLowerCase());
+            const maxLength = Math.max(userAnswer.length, correctAnswer.length);
+            const similarity = 1 - (distance / maxLength);
+            // Accept if 80% similar (allows 1-2 character mistakes)
+            return similarity >= 0.80;
+        }
+
+        function checkExercise1() {
+            const exercise = document.getElementById('exercise1');
+            const items = exercise.querySelectorAll('.option-item.matched');
+            const feedback = document.getElementById('feedback-exercise1');
+            const studentInfo = getStudentInfo();
+            let correctCount = 0;
+            let totalPairs = 0;
+
+            // Check each matched item
+            items.forEach(item => {
+                const itemValue = item.getAttribute('data-match');
+                const matchedWith = item.getAttribute('data-matched-with');
+
+                // Check if it's a correct match (both values should be the same)
+                if (itemValue === matchedWith) {
+                    item.classList.add('correct');
+                    item.classList.remove('incorrect');
+                    correctCount++;
+                } else {
+                    item.classList.add('incorrect');
+                    item.classList.remove('correct');
+                }
+
+                // Lock the item
+                item.classList.add('locked');
+            });
+
+            // Total pairs is half the matched items (since each pair has 2 items)
+            totalPairs = items.length / 2;
+            const correctPairs = correctCount / 2;
+
+            // Save all matches to localStorage
+            const matches = [];
+            items.forEach(item => {
+                matches.push({
+                    item: item.textContent.trim(),
+                    matchedWith: item.getAttribute('data-matched-with'),
+                    correct: item.classList.contains('correct')
+                });
+            });
+
+            const key = `${studentInfo.email}_exercise1_matches`;
+            localStorage.setItem(key, JSON.stringify({
+                matches: matches,
+                score: `${correctPairs}/${totalPairs}`,
+                timestamp: new Date().toISOString()
+            }));
+
+            // Show feedback with score
+            if (correctPairs === totalPairs) {
+                feedback.className = 'feedback-message success';
+                feedback.textContent = `✓ Perfect! ${correctPairs}/${totalPairs} correct matches! / ¡Perfecto! ${correctPairs}/${totalPairs} emparejamientos correctos!`;
+                saveExerciseState('exercise1', { completed: true, score: `${correctPairs}/${totalPairs}` });
+                updateProgressBar();
+            } else {
+                feedback.className = 'feedback-message error';
+                feedback.textContent = `Score: ${correctPairs}/${totalPairs} correct. Review the incorrect matches (red). / Puntuación: ${correctPairs}/${totalPairs} correctas. Revisa las incorrectas (rojo).`;
+                saveExerciseState('exercise1', { completed: true, score: `${correctPairs}/${totalPairs}` });
+            }
+
+            // Disable check button
+            document.querySelector('#exercise1 .btn-check').disabled = true;
+
+            // Send score to backend
+            sendToBackend({
+                type: 'exercise_score',
+                data: {
+                    module: 'module-2',
+                    exercise: 'exercise1',
+                    studentName: studentInfo.name,
+                    studentEmail: studentInfo.email,
+                    score: `${correctPairs}/${totalPairs}`,
+                    percentage: (correctPairs / totalPairs * 100).toFixed(1),
+                    timestamp: new Date().toISOString()
+                }
+            });
+        }
+
+        // Exercise 2: Fill in the blanks
+        function checkExercise2() {
+            const inputs = document.querySelectorAll('#exercise2 .fill-blank-input');
+            let allCorrect = true;
+            const studentInfo = getStudentInfo();
+
+            inputs.forEach(input => {
+                const answer = input.getAttribute('data-answer').toLowerCase().trim();
+                const userAnswer = input.value.toLowerCase().trim();
+
+                // Use fuzzy matching to tolerate misspellings
+                if (userAnswer === answer || isSimilarEnough(userAnswer, answer)) {
+                    input.classList.remove('incorrect');
+                    input.classList.add('correct');
+                    input.disabled = true; // Prevent further edits
+                } else {
+                    input.classList.remove('correct');
+                    input.classList.add('incorrect');
+                    input.disabled = true; // Prevent further edits
+                    allCorrect = false;
+                }
+
+                // Save answer to localStorage
+                const key = `${studentInfo.email}_exercise2_${input.id}`;
+                localStorage.setItem(key, JSON.stringify({
+                    answer: userAnswer,
+                    correct: userAnswer === answer || isSimilarEnough(userAnswer, answer),
+                    timestamp: new Date().toISOString()
+                }));
+            });
+
+            const feedback = document.getElementById('feedback-exercise2');
+            if (allCorrect) {
+                feedback.className = 'feedback-message success';
+                feedback.textContent = '✓ Perfect! All answers are correct! / ¡Perfecto! Todas las respuestas son correctas!';
+                saveExerciseState('exercise2', { completed: true });
+                updateProgressBar();
+            } else {
+                feedback.className = 'feedback-message error';
+                feedback.textContent = '✗ Some answers are incorrect. Check the red boxes. Answers are now locked. / Algunas respuestas son incorrectas. Revisa las casillas rojas. Las respuestas están bloqueadas.';
+            }
+
+            // Disable the check button after first check
+            document.querySelector('#exercise2 .btn-check').disabled = true;
+        }
+
+        // Exercise 3: True/False
+        function selectOption(element, questionId) {
+            // Deselect all options in this question
+            const parent = element.parentElement;
+            const siblings = parent.querySelectorAll('.option-item');
+            siblings.forEach(sib => {
+                sib.classList.remove('selected');
+            });
+
+            // Select this option
+            element.classList.add('selected');
+        }
+
+        function checkExercise3() {
+            const questions = ['exercise3-q1', 'exercise3-q2', 'exercise3-q3', 'exercise3-q4', 'exercise3-q5'];
+            let allCorrect = true;
+
+            questions.forEach(qId => {
+                const selected = document.querySelector(`[onclick*="${qId}"].selected`);
+                if (!selected) {
+                    allCorrect = false;
+                    return;
+                }
+
+                const isCorrect = selected.getAttribute('data-correct') === 'true';
+                if (isCorrect) {
+                    selected.classList.add('correct');
+                    selected.classList.remove('incorrect');
+                } else {
+                    selected.classList.add('incorrect');
+                    selected.classList.remove('correct');
+                    allCorrect = false;
+                }
+            });
+
+            const feedback = document.getElementById('feedback-exercise3');
+            if (allCorrect) {
+                feedback.className = 'feedback-message success';
+                feedback.textContent = '✓ Excellent! All answers are correct! / ¡Excelente! Todas las respuestas son correctas!';
+                saveExerciseState('exercise3', { completed: true });
+                updateProgressBar();
+            } else {
+                feedback.className = 'feedback-message error';
+                feedback.textContent = '✗ Some answers are incorrect. Review the reading text. / Algunas respuestas son incorrectas. Revisa el texto.';
+            }
+        }
+
+        // Exercise 4: Reading Comprehension (Multiple Choice)
+        function checkExercise4() {
+            const questions = ['ex4-q1', 'ex4-q2', 'ex4-q3', 'ex4-q4'];
+            const studentInfo = getStudentInfo();
+            let correctCount = 0;
+            let allAnswered = true;
+
+            questions.forEach(qId => {
+                const selected = document.querySelector(`[onclick*="${qId}"].selected`);
+                if (!selected) {
+                    allAnswered = false;
+                    return;
+                }
+
+                const isCorrect = selected.getAttribute('data-correct') === 'true';
+                if (isCorrect) {
+                    selected.classList.add('correct');
+                    selected.classList.remove('incorrect');
+                    correctCount++;
+                } else {
+                    selected.classList.add('incorrect');
+                    selected.classList.remove('correct');
+                }
+
+                // Save each answer
+                const key = `${studentInfo.email}_exercise4_${qId}`;
+                localStorage.setItem(key, JSON.stringify({
+                    selected: selected.textContent.trim(),
+                    correct: isCorrect,
+                    timestamp: new Date().toISOString()
+                }));
+            });
+
+            const feedback = document.getElementById('feedback-exercise4');
+            const totalQuestions = questions.length;
+
+            if (!allAnswered) {
+                feedback.className = 'feedback-message error';
+                feedback.textContent = '✗ Please answer all questions before checking. / Por favor responde todas las preguntas antes de revisar.';
+                return;
+            }
+
+            if (correctCount === totalQuestions) {
+                feedback.className = 'feedback-message success';
+                feedback.textContent = `✓ Perfect! ${correctCount}/${totalQuestions} correct! / ¡Perfecto! ${correctCount}/${totalQuestions} correctas!`;
+                saveExerciseState('exercise4', { completed: true, score: `${correctCount}/${totalQuestions}` });
+                updateProgressBar();
+            } else {
+                feedback.className = 'feedback-message error';
+                feedback.textContent = `Score: ${correctCount}/${totalQuestions} correct. Review the incorrect answers (red). / Puntuación: ${correctCount}/${totalQuestions} correctas. Revisa las incorrectas (rojo).`;
+                saveExerciseState('exercise4', { completed: true, score: `${correctCount}/${totalQuestions}` });
+            }
+
+            // Disable check button
+            document.querySelector('#exercise4 .btn-check').disabled = true;
+
+            // Send score to backend
+            sendToBackend({
+                type: 'exercise_score',
+                data: {
+                    module: 'module-2',
+                    exercise: 'exercise4',
+                    studentName: studentInfo.name,
+                    studentEmail: studentInfo.email,
+                    score: `${correctCount}/${totalQuestions}`,
+                    percentage: (correctCount / totalQuestions * 100).toFixed(1),
+                    timestamp: new Date().toISOString()
+                }
+            });
+        }
+
+        // Exercise 5: Find the words (RENUMBERED from old Exercise 4)
+        function checkExercise5() {
+            const inputs = [
+                { id: 'ex5-1', answer: 'consensus ad idem' },
+                { id: 'ex5-2', answer: 'consideration' },
+                { id: 'ex5-3', answer: 'pacta sunt servanda' },
+                { id: 'ex5-4', answer: 'force majeure' },
+                { id: 'ex5-5', answer: 'mirror image rule' }
+            ];
+
+            let allCorrect = true;
+            const studentInfo = getStudentInfo();
+
+            inputs.forEach(item => {
+                const input = document.getElementById(item.id);
+                const answer = item.answer.toLowerCase().trim();
+                const userAnswer = input.value.toLowerCase().trim();
+
+                // Use fuzzy matching to tolerate misspellings
+                if (userAnswer === answer || isSimilarEnough(userAnswer, answer)) {
+                    input.classList.remove('incorrect');
+                    input.classList.add('correct');
+                    input.disabled = true;
+                } else {
+                    input.classList.remove('correct');
+                    input.classList.add('incorrect');
+                    input.disabled = true;
+                    allCorrect = false;
+                }
+
+                // Save answer to localStorage
+                const key = `${studentInfo.email}_exercise5_${item.id}`;
+                localStorage.setItem(key, JSON.stringify({
+                    answer: userAnswer,
+                    correct: userAnswer === answer || isSimilarEnough(userAnswer, answer),
+                    timestamp: new Date().toISOString()
+                }));
+            });
+
+            const feedback = document.getElementById('feedback-exercise5');
+            if (allCorrect) {
+                feedback.className = 'feedback-message success';
+                feedback.textContent = '✓ Perfect! You found all the terms! / ¡Perfecto! Encontraste todos los términos!';
+                saveExerciseState('exercise5', { completed: true });
+                updateProgressBar();
+            } else {
+                feedback.className = 'feedback-message error';
+                feedback.textContent = '✗ Some answers are incorrect. Answers are now locked. / Algunas respuestas son incorrectas. Las respuestas están bloqueadas.';
+            }
+
+            // Disable the check button after first check
+            document.querySelector('#exercise5 .btn-check').disabled = true;
+        }
+
+        // Exercise 6: Listen and Tick (Listening)
+        function checkExercise6() {
+            let totalCorrect = 0;
+            let totalChecked = 0;
+            const tickOptions = document.querySelectorAll('#exercise6 .tick-option');
+            const studentInfo = getStudentInfo();
+
+            tickOptions.forEach(div => {
+                const checkboxId = div.getAttribute('data-checkbox-id');
+                const checkbox = document.getElementById(checkboxId);
+                const isCorrect = div.getAttribute('data-correct') === 'true';
+                const isChecked = checkbox.checked;
+
+                // Lock the div to prevent further clicks
+                div.classList.add('locked');
+                div.style.cursor = 'not-allowed';
+
+                // Save checkbox state to localStorage
+                const key = `${studentInfo.email}_exercise6_${checkboxId}`;
+                localStorage.setItem(key, JSON.stringify({
+                    checked: isChecked,
+                    correct: isCorrect && isChecked,
+                    timestamp: new Date().toISOString()
+                }));
+
+                if (isChecked) {
+                    totalChecked++;
+                    if (isCorrect) {
+                        totalCorrect++;
+                        div.style.borderColor = '#28a745';
+                        div.style.background = 'rgba(40, 167, 69, 0.1)';
+                    } else {
+                        div.style.borderColor = '#dc3545';
+                        div.style.background = 'rgba(220, 53, 69, 0.1)';
+                    }
+                } else {
+                    if (isCorrect) {
+                        // Should have been checked
+                        div.style.borderColor = '#ffc107';
+                        div.style.background = 'rgba(255, 193, 7, 0.1)';
+                    }
+                }
+            });
+
+            const feedback = document.getElementById('feedback-exercise6');
+            const correctAnswers = 7; // Total correct answers according to answer key
+
+            if (totalCorrect === correctAnswers && totalChecked === correctAnswers) {
+                feedback.className = 'feedback-message success';
+                feedback.textContent = `✓ Perfect! ${totalCorrect}/${correctAnswers} correct! / ¡Perfecto! ${totalCorrect}/${correctAnswers} correctas!`;
+                saveExerciseState('exercise6', { completed: true, score: `${totalCorrect}/${correctAnswers}` });
+                updateProgressBar();
+            } else {
+                feedback.className = 'feedback-message error';
+                feedback.textContent = `Score: ${totalCorrect}/${correctAnswers} correct. Answers are now locked. / Puntuación: ${totalCorrect}/${correctAnswers} correctas. Las respuestas están bloqueadas.`;
+                saveExerciseState('exercise6', { completed: true, score: `${totalCorrect}/${correctAnswers}` });
+            }
+
+            // Disable the check button after first check
+            document.querySelector('#exercise6 .btn-check').disabled = true;
+
+            // Send score to backend
+            sendToBackend({
+                type: 'exercise_score',
+                data: {
+                    module: 'module-2',
+                    exercise: 'exercise6',
+                    studentName: studentInfo.name,
+                    studentEmail: studentInfo.email,
+                    score: `${totalCorrect}/${correctAnswers}`,
+                    percentage: (totalCorrect / correctAnswers * 100).toFixed(1),
+                    timestamp: new Date().toISOString()
+                }
+            });
+        }
+
+        // Exercise 7: Listen Again and Complete
+        function checkExercise7() {
+            const inputs = [
+                { id: 'ex7-1', answer: 'affreightment' },
+                { id: 'ex7-2', answer: 'bauxite' },
+                { id: 'ex7-3', answer: 'dollars' },
+                { id: 'ex7-4', answer: 'specially' },
+                { id: 'ex7-5', answer: 'restrictions' },
+                { id: 'ex7-6', answer: 'notice' },
+                { id: 'ex7-7', answer: 'agreed' },
+                { id: 'ex7-8', answer: 'euros' },
+                { id: 'ex7-9', answer: 'reasonable' },
+                { id: 'ex7-10', answer: 'non' }
+            ];
+
+            let allCorrect = true;
+            const studentInfo = getStudentInfo();
+
+            inputs.forEach(item => {
+                const input = document.getElementById(item.id);
+                const answer = item.answer.toLowerCase().trim();
+                const userAnswer = input.value.toLowerCase().trim();
+
+                // Use fuzzy matching to tolerate misspellings
+                if (userAnswer === answer || isSimilarEnough(userAnswer, answer)) {
+                    input.classList.remove('incorrect');
+                    input.classList.add('correct');
+                    input.disabled = true;
+                } else {
+                    input.classList.remove('correct');
+                    input.classList.add('incorrect');
+                    input.disabled = true;
+                    allCorrect = false;
+                }
+
+                // Save answer to localStorage
+                const key = `${studentInfo.email}_exercise7_${item.id}`;
+                localStorage.setItem(key, JSON.stringify({
+                    answer: userAnswer,
+                    correct: userAnswer === answer || isSimilarEnough(userAnswer, answer),
+                    timestamp: new Date().toISOString()
+                }));
+            });
+
+            const feedback = document.getElementById('feedback-exercise7');
+            if (allCorrect) {
+                feedback.className = 'feedback-message success';
+                feedback.textContent = '✓ Excellent! All answers are correct! / ¡Excelente! Todas las respuestas son correctas!';
+                saveExerciseState('exercise7', { completed: true });
+                updateProgressBar();
+            } else {
+                feedback.className = 'feedback-message error';
+                feedback.textContent = '✗ Some answers are incorrect. Answers are now locked. / Algunas respuestas son incorrectas. Las respuestas están bloqueadas.';
+            }
+
+            // Disable the check button after first check
+            document.querySelector('#exercise7 .btn-check').disabled = true;
+        }
+
+        // Exercise 8: Match Speakers
+        function checkExercise8() {
+            const questions = ['exercise8-q1', 'exercise8-q2', 'exercise8-q3'];
+            let allCorrect = true;
+
+            questions.forEach(qId => {
+                const selected = document.querySelector(`[onclick*="${qId}"].selected`);
+                if (!selected) {
+                    allCorrect = false;
+                    return;
+                }
+
+                const isCorrect = selected.getAttribute('data-correct') === 'true';
+                if (isCorrect) {
+                    selected.classList.add('correct');
+                    selected.classList.remove('incorrect');
+                } else {
+                    selected.classList.add('incorrect');
+                    selected.classList.remove('correct');
+                    allCorrect = false;
+                }
+            });
+
+            const feedback = document.getElementById('feedback-exercise8');
+            if (allCorrect) {
+                feedback.className = 'feedback-message success';
+                feedback.textContent = '✓ Perfect! You understand the arguments in the case! / ¡Perfecto! Comprendes los argumentos del caso!';
+                saveExerciseState('exercise8', { completed: true });
+                updateProgressBar();
+            } else {
+                feedback.className = 'feedback-message error';
+                feedback.textContent = '✗ Some answers are incorrect. Review who argued what. / Algunas respuestas son incorrectas. Revisa quién argumentó qué.';
+            }
+        }
+
+        // Exercise 9: Clause Analysis (renumbered from old Exercise 6)
+        function checkExercise9() {
+            const selected = document.querySelector(`[onclick*="exercise9-q1"].selected`);
+            const feedback = document.getElementById('feedback-exercise9');
+
+            if (!selected) {
+                feedback.className = 'feedback-message error';
+                feedback.textContent = '⚠ Please select an answer. / Por favor selecciona una respuesta.';
+                return;
+            }
+
+            const isCorrect = selected.getAttribute('data-correct') === 'true';
+            if (isCorrect) {
+                selected.classList.add('correct');
+                selected.classList.remove('incorrect');
+                feedback.className = 'feedback-message success';
+                feedback.textContent = '✓ Correct! This is the key holding of the MUR Shipping case. / ¡Correcto! Este es el principio clave del caso MUR Shipping.';
+                saveExerciseState('exercise9', { completed: true });
+                updateProgressBar();
+            } else {
+                selected.classList.add('incorrect');
+                selected.classList.remove('correct');
+                feedback.className = 'feedback-message error';
+                feedback.textContent = '✗ Not quite. Review the Supreme Court\'s reasoning. / No es correcto. Revisa el razonamiento de la Corte Suprema.';
+            }
+        }
+
+        // Exercise 11: Complete the Force Majeure Notice Template
+        function checkExercise11() {
+            const inputs = [
+                { id: 'ex11-1', answer: 'june 9, 2016' }, // Case insensitive
+                { id: 'ex11-2', answer: '36' }
+            ];
+
+            let allCorrect = true;
+
+            // Check simple inputs
+            inputs.forEach(item => {
+                const input = document.getElementById(item.id);
+                const answer = item.answer.toLowerCase().trim();
+                const userAnswer = input.value.toLowerCase().trim();
+
+                if (userAnswer.includes(answer) || answer.includes(userAnswer)) {
+                    input.classList.remove('incorrect');
+                    input.classList.add('correct');
+                } else {
+                    input.classList.remove('correct');
+                    input.classList.add('incorrect');
+                    allCorrect = false;
+                }
+            });
+
+            // Check textareas (just check if they have content)
+            const textareas = ['ex11-3', 'ex11-4', 'ex11-5'];
+            textareas.forEach(id => {
+                const textarea = document.getElementById(id);
+                if (textarea.value.trim().length > 20) {
+                    textarea.classList.remove('incorrect');
+                    textarea.classList.add('correct');
+                } else {
+                    textarea.classList.remove('correct');
+                    textarea.classList.add('incorrect');
+                    allCorrect = false;
+                }
+            });
+
+            const feedback = document.getElementById('feedback-exercise11');
+            if (allCorrect) {
+                feedback.className = 'feedback-message success';
+                feedback.textContent = '✓ Good work! Your force majeure notice is complete! / ¡Buen trabajo! Tu aviso de fuerza mayor está completo!';
+                saveExerciseState('exercise11', { completed: true });
+                updateProgressBar();
+            } else {
+                feedback.className = 'feedback-message error';
+                feedback.textContent = '✗ Please complete all fields with sufficient detail. / Por favor completa todos los campos con suficiente detalle.';
+            }
+        }
+
+        function showExercise11Hint() {
+            const feedback = document.getElementById('feedback-exercise11');
+            feedback.className = 'feedback-message hint';
+            feedback.innerHTML = `
+                <strong>💡 Example Answer:</strong><br><br>
+                <strong>(3) The Force Majeure Event consists of:</strong><br>
+                "The placement of United Company Rusal on the OFAC Specially Designated Nationals List on April 6, 2018, creating sanctions that restrict our ability to receive US dollar payments."<br><br>
+                <strong>(4) This event prevents performance because:</strong><br>
+                "The sanctions mean that any US dollar payment from RTI would be subject to regulatory restrictions and potential delays, making it impossible to receive payment as contractually specified."<br><br>
+                <strong>(5) We cannot overcome this by reasonable endeavours because:</strong><br>
+                "Accepting payment in euros would require us to give up our contractual right to payment in US dollars. Reasonable endeavours does not require accepting non-contractual performance."
+            `;
+        }
+
+        // Exercise 10: Latin terms matching
+        function checkExercise10() {
+            const exercise = document.getElementById('exercise10');
+            const items = exercise.querySelectorAll('.option-item');
+            const correctItems = exercise.querySelectorAll('.option-item.correct');
+            const feedback = document.getElementById('feedback-exercise10');
+
+            if (correctItems.length === items.length) {
+                feedback.className = 'feedback-message success';
+                feedback.textContent = '✓ Perfect! You know your Latin legal terms! / ¡Perfecto! Dominas los términos legales en latín!';
+                saveExerciseState('exercise10', { completed: true });
+                updateProgressBar();
+            } else {
+                feedback.className = 'feedback-message error';
+                feedback.textContent = '✗ Not all matches are correct. Review the vocabulary section. / No todas las respuestas son correctas. Revisa la sección de vocabulario.';
+            }
+        }
+
+        // Reset functions
+        function resetExercise(exerciseId) {
+            const exercise = document.getElementById(exerciseId);
+            const items = exercise.querySelectorAll('.option-item');
+            items.forEach(item => {
+                item.classList.remove('selected', 'correct', 'incorrect');
+                item.style.pointerEvents = 'auto';
+            });
+            const feedback = exercise.querySelector('.feedback-message');
+            if (feedback) {
+                feedback.className = 'feedback-message';
+                feedback.textContent = '';
+            }
+            if (selectedMatches[exerciseId]) {
+                selectedMatches[exerciseId] = [];
+            }
+        }
+
+        function resetFillBlanks(exerciseId) {
+            const exercise = document.getElementById(exerciseId);
+            const inputs = exercise.querySelectorAll('.fill-blank-input');
+            inputs.forEach(input => {
+                input.value = '';
+                input.classList.remove('correct', 'incorrect');
+            });
+            const feedback = exercise.querySelector('.feedback-message');
+            if (feedback) {
+                feedback.className = 'feedback-message';
+                feedback.textContent = '';
+            }
+        }
+
+        // Save/restore exercise states
+        function saveExerciseState(exerciseId, state) {
+            exerciseStates[exerciseId] = state;
+            localStorage.setItem('module2_exercises', JSON.stringify(exerciseStates));
+
+            // Send to backend
+            const studentInfo = getStudentInfo();
+            sendToBackend({
+                type: 'exercise_completed',
+                data: {
+                    module: 'module-2',
+                    exercise: exerciseId,
+                    studentName: studentInfo.name,
+                    studentEmail: studentInfo.email,
+                    timestamp: new Date().toISOString(),
+                    state: state
+                }
+            });
+        }
+
+        function restoreAllExercises() {
+            const saved = localStorage.getItem('module2_exercises');
+            if (saved) {
+                exerciseStates = JSON.parse(saved);
+            }
+        }
+
+        // Initialize on load
+        document.addEventListener('DOMContentLoaded', function() {
+            // Load student information
+            loadStudentInfo();
+
+            // Restore all exercise states
+            restoreAllExercises();
+
+            // Load progress
+            loadProgress();
+
+            // Collapse video controls on mobile
+            const videoControls = document.querySelector('.video-controls');
+            if (videoControls && window.innerWidth <= 768) {
+                videoControls.classList.add('collapsed');
+                videoControls.addEventListener('click', function() {
+                    this.classList.toggle('collapsed');
+                });
+            }
+
+            // Tick exercise click handlers - make entire rectangle clickable
+            document.querySelectorAll('.tick-option').forEach(div => {
+                div.addEventListener('click', function(e) {
+                    if (this.classList.contains('locked')) return; // Don't allow clicks after check
+
+                    const checkboxId = this.getAttribute('data-checkbox-id');
+                    const checkbox = document.getElementById(checkboxId);
+                    checkbox.checked = !checkbox.checked;
+                });
+            });
+
+            // Survey form handler
+            const surveyForm = document.getElementById('surveyForm');
+            if (surveyForm) {
+                surveyForm.addEventListener('submit', function(e) {
+                    e.preventDefault();
+
+                    const formData = new FormData(surveyForm);
+                    const studentInfo = getStudentInfo();
+                    const surveyData = {
+                        module: 'module-2',
+                        studentName: studentInfo.name,
+                        studentEmail: studentInfo.email,
+                        timestamp: new Date().toISOString(),
+                        difficulty: formData.get('difficulty'),
+                        quality: formData.get('quality'),
+                        most_useful: formData.get('most_useful'),
+                        suggestions: formData.get('suggestions'),
+                        time_spent: formData.get('time_spent')
+                    };
+
+                    // Save survey to localStorage
+                    let surveys = JSON.parse(localStorage.getItem('module_surveys') || '[]');
+                    surveys.push(surveyData);
+                    localStorage.setItem('module_surveys', JSON.stringify(surveys));
+
+                    // Send to backend
+                    sendToBackend({ type: 'survey', data: surveyData });
+
+                    // Show success message
+                    const feedback = document.getElementById('feedback-survey');
+                    feedback.className = 'feedback-message success';
+                    feedback.textContent = '✓ Thank you for your feedback! / ¡Gracias por tu retroalimentación!';
+
+                    // Disable form
+                    surveyForm.querySelectorAll('input, textarea, select, button').forEach(el => el.disabled = true);
+                });
+            }
+        });
     </script>
 
-    <!-- Archivos compartidos -->
-    <script src="../../shared/module-functions.js"></script>
+    <!-- Payment & Access Control System -->
     <script src="../../../../js/payment-access-control.js"></script>
 </body>
 </html>
