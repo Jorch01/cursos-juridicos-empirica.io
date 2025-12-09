@@ -1253,7 +1253,7 @@
                     </div>
                 </div>
                 <div class="exercise-actions">
-                    <button class="btn-check" onclick="checkTrueFalse('exercise3', 6)">Check Answers</button>
+                    <button class="btn-check" onclick="checkExercise3()">Check Answers</button>
                 </div>
                 <div class="feedback-message" id="feedback-exercise3"></div>
             </div>
@@ -1366,7 +1366,7 @@
                     </div>
                 </div>
                 <div class="exercise-actions">
-                    <button class="btn-check" onclick="checkTrueFalse('exercise4', 4)">Check Answers</button>
+                    <button class="btn-check" onclick="checkExercise4()">Check Answers</button>
                 </div>
                 <div class="feedback-message" id="feedback-exercise4"></div>
             </div>
@@ -1492,7 +1492,7 @@
                     </div>
                 </div>
                 <div class="exercise-actions">
-                    <button class="btn-check" onclick="checkTrueFalse('exercise5', 5)">Check Answers</button>
+                    <button class="btn-check" onclick="checkExercise5()">Check Answers</button>
                 </div>
                 <div class="feedback-message" id="feedback-exercise5"></div>
             </div>
@@ -3546,6 +3546,129 @@
                     });
                     surveyForm.style.opacity = '0.6';
                 });
+            }
+
+            // ========== CUSTOM VALIDATION FUNCTIONS FOR MODULE 1 ==========
+            // These are temporary until Module 1 is fully migrated to shared system
+
+            /**
+             * Validates Exercise 4 (Multiple Choice - mc4-1, mc4-2, mc4-3, mc4-4)
+             */
+            function checkExercise4() {
+                const exercise = document.getElementById('exercise4');
+                const feedback = exercise.querySelector('.feedback-message');
+
+                if (isExerciseCompleted('exercise4')) {
+                    feedback.textContent = '✓ Exercise already completed and locked.';
+                    feedback.style.color = '#28a745';
+                    return;
+                }
+
+                const questionIds = ['mc4-1', 'mc4-2', 'mc4-3', 'mc4-4'];
+                let allAnswered = true;
+                let correctCount = 0;
+
+                questionIds.forEach(qId => {
+                    const selected = exercise.querySelector(`[onclick*="${qId}"].selected`);
+                    if (!selected) {
+                        allAnswered = false;
+                        return;
+                    }
+
+                    const isCorrect = selected.getAttribute('data-correct') === 'true';
+                    if (isCorrect) {
+                        selected.classList.add('correct');
+                        correctCount++;
+                    } else {
+                        selected.classList.add('incorrect');
+                    }
+                });
+
+                if (!allAnswered) {
+                    feedback.textContent = '✗ Please answer all 4 questions before checking.';
+                    feedback.style.color = '#dc3545';
+                    return;
+                }
+
+                feedback.textContent = `Score: ${correctCount}/4 correct.`;
+                feedback.style.color = correctCount === 4 ? '#28a745' : '#856404';
+
+                const studentInfo = getStudentInfo();
+                sendToBackend({
+                    type: 'exercise_score',
+                    data: {
+                        module: 'module-1',
+                        exercise: 'exercise4',
+                        studentEmail: studentInfo.email,
+                        score: `${correctCount}/4`,
+                        percentage: (correctCount / 4 * 100).toFixed(1),
+                        timestamp: new Date().toISOString()
+                    }
+                });
+
+                saveExerciseState('exercise4', { completed: true, score: `${correctCount}/4` });
+                updateProgressBar();
+                lockExercise('exercise4');
+            }
+
+            /**
+             * Validates Exercise 5 (Multiple Choice - mc5-1, mc5-2, mc5-3, mc5-4, mc5-5)
+             */
+            function checkExercise5() {
+                const exercise = document.getElementById('exercise5');
+                const feedback = exercise.querySelector('.feedback-message');
+
+                if (isExerciseCompleted('exercise5')) {
+                    feedback.textContent = '✓ Exercise already completed and locked.';
+                    feedback.style.color = '#28a745';
+                    return;
+                }
+
+                const questionIds = ['mc5-1', 'mc5-2', 'mc5-3', 'mc5-4', 'mc5-5'];
+                let allAnswered = true;
+                let correctCount = 0;
+
+                questionIds.forEach(qId => {
+                    const selected = exercise.querySelector(`[onclick*="${qId}"].selected`);
+                    if (!selected) {
+                        allAnswered = false;
+                        return;
+                    }
+
+                    const isCorrect = selected.getAttribute('data-correct') === 'true';
+                    if (isCorrect) {
+                        selected.classList.add('correct');
+                        correctCount++;
+                    } else {
+                        selected.classList.add('incorrect');
+                    }
+                });
+
+                if (!allAnswered) {
+                    feedback.textContent = '✗ Please answer all 5 questions before checking.';
+                    feedback.style.color = '#dc3545';
+                    return;
+                }
+
+                feedback.textContent = `Score: ${correctCount}/5 correct.`;
+                feedback.style.color = correctCount === 5 ? '#28a745' : '#856404';
+
+                const studentInfo = getStudentInfo();
+                sendToBackend({
+                    type: 'exercise_score',
+                    data: {
+                        module: 'module-1',
+                        exercise: 'exercise5',
+                        studentEmail: studentInfo.email,
+                        score: `${correctCount}/5`,
+                        percentage: (correctCount / 5 * 100).toFixed(1),
+                        timestamp: new Date().toISOString()
+                    }
+                });
+
+                saveExerciseState('exercise5', { completed: true, score: `${correctCount}/5` });
+                updateProgressBar();
+                lockExercise('exercise5');
             }
 
             // Load YouTube IFrame API
