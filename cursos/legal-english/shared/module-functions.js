@@ -493,6 +493,20 @@ function checkExercise2() {
     const inputs = exercise.querySelectorAll('.fill-blank-input');
     const studentInfo = getStudentInfo();
 
+    // Verificar que todos los campos estén llenos
+    let allFilled = true;
+    inputs.forEach(input => {
+        if (!input.value.trim()) {
+            allFilled = false;
+        }
+    });
+
+    if (!allFilled) {
+        feedback.textContent = '✗ Please complete all blanks before checking.';
+        feedback.style.color = '#dc3545';
+        return;
+    }
+
     let allCorrect = true;
     let correctCount = 0;
 
@@ -704,6 +718,20 @@ function checkExercise5() {
     const inputs = exercise.querySelectorAll('.fill-blank-input');
     const studentInfo = getStudentInfo();
 
+    // Verificar que todos los campos estén llenos
+    let allFilled = true;
+    inputs.forEach(input => {
+        if (!input.value.trim()) {
+            allFilled = false;
+        }
+    });
+
+    if (!allFilled) {
+        feedback.textContent = '✗ Please complete all blanks before checking.';
+        feedback.style.color = '#dc3545';
+        return;
+    }
+
     let correctCount = 0;
 
     inputs.forEach(input => {
@@ -848,6 +876,20 @@ function checkExercise7() {
 
     const inputs = exercise.querySelectorAll('.fill-blank-input');
     const studentInfo = getStudentInfo();
+
+    // Verificar que todos los campos estén llenos
+    let allFilled = true;
+    inputs.forEach(input => {
+        if (!input.value.trim()) {
+            allFilled = false;
+        }
+    });
+
+    if (!allFilled) {
+        feedback.textContent = '✗ Please complete all blanks before checking.';
+        feedback.style.color = '#dc3545';
+        return;
+    }
 
     let correctCount = 0;
 

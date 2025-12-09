@@ -76,24 +76,24 @@
                 <p style="margin-bottom: 20px; color: var(--text-light); font-size: 0.9rem;">Por favor ingresa tu información antes de iniciar el módulo. Esto nos ayudará a seguir tu progreso.</p>
                 <div style="display: flex; flex-direction: column; gap: 15px; max-width: 600px;">
                     <div>
-                        <label for="studentName" style="display: block; font-weight: 600; color: var(--primary); margin-bottom: 8px;">
+                        <label for="student-name" style="display: block; font-weight: 600; color: var(--primary); margin-bottom: 8px;">
                             Full Name / Nombre Completo: <span style="color: #dc3545;">*</span>
                         </label>
                         <input
                             type="text"
-                            id="studentName"
+                            id="student-name"
                             placeholder="Juan Pérez García"
                             style="width: 100%; padding: 12px; border: 2px solid var(--secondary); border-radius: 8px; font-size: 1rem;"
                             required
                         >
                     </div>
                     <div>
-                        <label for="studentEmail" style="display: block; font-weight: 600; color: var(--primary); margin-bottom: 8px;">
+                        <label for="student-email" style="display: block; font-weight: 600; color: var(--primary); margin-bottom: 8px;">
                             Email (optional) / Correo electrónico (opcional):
                         </label>
                         <input
                             type="email"
-                            id="studentEmail"
+                            id="student-email"
                             placeholder="juan@example.com"
                             style="width: 100%; padding: 12px; border: 2px solid var(--secondary); border-radius: 8px; font-size: 1rem;"
                         >
@@ -105,7 +105,7 @@
                     >
                         Save & Start / Guardar
                     </button>
-                    <div id="student-info-feedback" style="display: none; padding: 10px; border-radius: 5px; font-size: 0.9rem;"></div>
+                    <div id="student-info-feedback" style="padding: 10px; border-radius: 5px; font-size: 0.9rem;"></div>
                 </div>
             </div>
 
@@ -1075,7 +1075,7 @@
                         </div>
 
                         <div class="doc-section">
-                            <p><strong>Re:</strong> Contract of Affreightment dated <input type="text" class="fill-blank-input" id="ex11-1" data-answer="June 9, 2016" placeholder="(1)____________" style="min-width: 150px;"></p>
+                            <p><strong>Re:</strong> Contract of Affreightment dated <input type="text" class="fill-blank-input" id="ex11-date" data-answer="June 9, 2016" placeholder="(1)____________" style="min-width: 150px;"></p>
                         </div>
 
                         <div class="doc-section">
@@ -1083,22 +1083,22 @@
                         </div>
 
                         <div class="doc-section">
-                            <p>We hereby give notice of a Force Majeure Event pursuant to Clause <input type="text" class="fill-blank-input" id="ex11-2" data-answer="36" placeholder="(2)____" style="width: 60px;"> of the above Contract.</p>
+                            <p>We hereby give notice of a Force Majeure Event pursuant to Clause <input type="text" class="fill-blank-input" id="ex11-number" data-answer="36" placeholder="(2)____" style="width: 60px;"> of the above Contract.</p>
                         </div>
 
                         <div class="doc-section">
                             <p><strong>The Force Majeure Event consists of:</strong></p>
-                            <textarea class="fill-blank-input" id="ex11-3" rows="3" style="width: 100%; min-width: 100%; max-width: 100%; padding: 10px;" placeholder="(3) Describe the sanctions event..."></textarea>
+                            <textarea class="fill-blank-input" id="ex11-circumstances" rows="3" style="width: 100%; min-width: 100%; max-width: 100%; padding: 10px;" placeholder="(3) Describe the sanctions event..."></textarea>
                         </div>
 
                         <div class="doc-section">
                             <p><strong>This event prevents performance because:</strong></p>
-                            <textarea class="fill-blank-input" id="ex11-4" rows="3" style="width: 100%; min-width: 100%; max-width: 100%; padding: 10px;" placeholder="(4) Explain how sanctions prevent payment..."></textarea>
+                            <textarea class="fill-blank-input" id="ex11-impact" rows="3" style="width: 100%; min-width: 100%; max-width: 100%; padding: 10px;" placeholder="(4) Explain how sanctions prevent payment..."></textarea>
                         </div>
 
                         <div class="doc-section">
                             <p><strong>We have been unable to overcome this event by reasonable endeavours because:</strong></p>
-                            <textarea class="fill-blank-input" id="ex11-5" rows="3" style="width: 100%; min-width: 100%; max-width: 100%; padding: 10px;" placeholder="(5) Explain why reasonable endeavours cannot overcome this..."></textarea>
+                            <textarea class="fill-blank-input" id="ex11-request" rows="3" style="width: 100%; min-width: 100%; max-width: 100%; padding: 10px;" placeholder="(5) Explain why reasonable endeavours cannot overcome this..."></textarea>
                         </div>
 
                         <div class="doc-section">
@@ -1232,7 +1232,7 @@
                     </div>
                 </div>
                 <div class="exercise-content">
-                    <form id="surveyForm" style="display: flex; flex-direction: column; gap: 20px;">
+                    <form id="survey-form" style="display: flex; flex-direction: column; gap: 20px;">
                         <!-- Question 1: Difficulty -->
                         <div style="padding: 15px; background: white; border-radius: 10px;">
                             <label style="font-weight: 600; color: var(--primary); display: block; margin-bottom: 10px;">
