@@ -2596,7 +2596,9 @@
 
             // Check answers
             for (let i = 1; i <= totalQuestions; i++) {
-                const selected = exercise.querySelector(`[data-group="tf${exerciseId.slice(-1)}-${i}"].selected`);
+                // Find by the onclick pattern - options have onclick="selectOption(this, 'mc4-X')" or onclick="selectOption(this, 'tf5-X')"
+                const questionNum = exerciseId === 'exercise4' ? `mc4-${i}` : `tf5-${i}`;
+                const selected = exercise.querySelector(`[onclick*="${questionNum}"].selected`);
                 if (!selected) {
                     answeredAll = false;
                 } else {

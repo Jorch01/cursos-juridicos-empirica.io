@@ -273,9 +273,9 @@ function selectMatch(element, exerciseId) {
             // Limpiar selecciones
             selectedMatches[exerciseId] = [];
         } else {
-            // Si son del mismo tipo, deseleccionar el primero y mantener el segundo
-            first.element.classList.remove('selected');
-            selectedMatches[exerciseId] = [second];
+            // BUG FIX: Si son del mismo tipo, ignorar el segundo click y deseleccionarlo
+            second.element.classList.remove('selected');
+            selectedMatches[exerciseId] = selectedMatches[exerciseId].filter(item => item.element !== second.element);
         }
     }
 }
@@ -338,6 +338,54 @@ function selectOption(element, questionId) {
     element.classList.add('selected');
 }
 
+/**
+ * Verifica si un ejercicio ya fue completado
+ * @param {string} exerciseId - ID del ejercicio
+ * @returns {boolean}
+ */
+function isExerciseCompleted(exerciseId) {
+    const studentInfo = getStudentInfo();
+    const storageKey = `${studentInfo.email}_${exerciseId}_completed`;
+    return localStorage.getItem(storageKey) === 'true';
+}
+
+/**
+ * Bloquea un ejercicio después de completarlo
+ * @param {string} exerciseId - ID del ejercicio
+ */
+function lockExercise(exerciseId) {
+    const exercise = document.getElementById(exerciseId);
+    if (!exercise) return;
+
+    // Deshabilitar todos los inputs, textareas y selects
+    exercise.querySelectorAll('input, textarea, select').forEach(el => {
+        el.disabled = true;
+    });
+
+    // Bloquear todos los option-items (opciones clickeables)
+    exercise.querySelectorAll('.option-item').forEach(el => {
+        el.classList.add('locked');
+        el.style.pointerEvents = 'none';
+    });
+
+    // Bloquear tick-options (checkboxes visuales)
+    exercise.querySelectorAll('.tick-option').forEach(el => {
+        el.classList.add('locked');
+        el.style.pointerEvents = 'none';
+    });
+
+    // Deshabilitar botón de check
+    const checkButton = exercise.querySelector('.btn-check');
+    if (checkButton) {
+        checkButton.disabled = true;
+    }
+
+    // Guardar estado de completado
+    const studentInfo = getStudentInfo();
+    const storageKey = `${studentInfo.email}_${exerciseId}_completed`;
+    localStorage.setItem(storageKey, 'true');
+}
+
 // ============================================================================
 // 6. EXERCISE CHECK FUNCTIONS
 // ============================================================================
@@ -349,6 +397,14 @@ function selectOption(element, questionId) {
 function checkExercise1() {
     const exercise = document.getElementById('exercise1');
     const feedback = exercise.querySelector('.feedback-message');
+
+    // Check if already completed
+    if (isExerciseCompleted('exercise1')) {
+        feedback.textContent = '✓ Exercise already completed and locked.';
+        feedback.style.color = '#28a745';
+        return;
+    }
+
     const items = exercise.querySelectorAll('.option-item.matched');
 
     if (items.length === 0) {
@@ -415,9 +471,8 @@ function checkExercise1() {
     saveExerciseState('exercise1', { completed: true, score: `${correctPairs}/${totalPairs}` });
     updateProgressBar();
 
-    // Deshabilitar botón
-    const checkButton = exercise.querySelector('.btn-check');
-    if (checkButton) checkButton.disabled = true;
+    // Lock exercise permanently
+    lockExercise('exercise1');
 }
 
 /**
@@ -427,6 +482,14 @@ function checkExercise1() {
 function checkExercise2() {
     const exercise = document.getElementById('exercise2');
     const feedback = exercise.querySelector('.feedback-message');
+
+    // Check if already completed
+    if (isExerciseCompleted('exercise2')) {
+        feedback.textContent = '✓ Exercise already completed and locked.';
+        feedback.style.color = '#28a745';
+        return;
+    }
+
     const inputs = exercise.querySelectorAll('.fill-blank-input');
     const studentInfo = getStudentInfo();
 
@@ -482,8 +545,8 @@ function checkExercise2() {
     saveExerciseState('exercise2', { completed: true, score: `${correctCount}/${inputs.length}` });
     updateProgressBar();
 
-    const checkButton = exercise.querySelector('.btn-check');
-    if (checkButton) checkButton.disabled = true;
+    // Lock exercise permanently
+    lockExercise('exercise2');
 }
 
 /**
@@ -493,6 +556,14 @@ function checkExercise2() {
 function checkExercise3() {
     const exercise = document.getElementById('exercise3');
     const feedback = exercise.querySelector('.feedback-message');
+
+    // Check if already completed
+    if (isExerciseCompleted('exercise3')) {
+        feedback.textContent = '✓ Exercise already completed and locked.';
+        feedback.style.color = '#28a745';
+        return;
+    }
+
     const questions = exercise.querySelectorAll('.option-item.selected');
 
     if (questions.length < 5) {
@@ -501,7 +572,6 @@ function checkExercise3() {
         return;
     }
 
-    let allCorrect = true;
     let correctCount = 0;
 
     questions.forEach(option => {
@@ -511,17 +581,12 @@ function checkExercise3() {
             correctCount++;
         } else {
             option.classList.add('incorrect');
-            allCorrect = false;
         }
     });
 
-    if (allCorrect) {
-        feedback.textContent = '✓ Perfect! All answers are correct.';
-        feedback.style.color = '#28a745';
-    } else {
-        feedback.textContent = `Score: ${correctCount}/5 correct.`;
-        feedback.style.color = '#856404';
-    }
+    // Always show score
+    feedback.textContent = `Score: ${correctCount}/5 correct.`;
+    feedback.style.color = correctCount === 5 ? '#28a745' : '#856404';
 
     const studentInfo = getStudentInfo();
     sendToBackend({
@@ -538,6 +603,9 @@ function checkExercise3() {
 
     saveExerciseState('exercise3', { completed: true, score: `${correctCount}/5` });
     updateProgressBar();
+
+    // Lock exercise permanently
+    lockExercise('exercise3');
 }
 
 /**
@@ -547,6 +615,14 @@ function checkExercise3() {
 function checkExercise4() {
     const exercise = document.getElementById('exercise4');
     const feedback = exercise.querySelector('.feedback-message');
+
+    // Check if already completed
+    if (isExerciseCompleted('exercise4')) {
+        feedback.textContent = '✓ Exercise already completed and locked.';
+        feedback.style.color = '#28a745';
+        return;
+    }
+
     const questions = ['ex4-q1', 'ex4-q2', 'ex4-q3', 'ex4-q4'];
     const studentInfo = getStudentInfo();
 
@@ -555,7 +631,9 @@ function checkExercise4() {
     const totalQuestions = questions.length;
 
     questions.forEach(qId => {
-        const selected = document.querySelector(`[onclick*="${qId}"].selected`);
+        // Fixed selector - look within exercise4 for selected options
+        const selected = exercise.querySelector(`.option-item.selected[data-question="${qId}"]`) ||
+                        exercise.querySelector(`[onclick*="${qId}"].selected`);
 
         if (!selected) {
             allAnswered = false;
@@ -604,8 +682,8 @@ function checkExercise4() {
     saveExerciseState('exercise4', { completed: true, score: `${correctCount}/${totalQuestions}` });
     updateProgressBar();
 
-    const checkButton = exercise.querySelector('.btn-check');
-    if (checkButton) checkButton.disabled = true;
+    // Lock exercise permanently
+    lockExercise('exercise4');
 }
 
 /**
@@ -615,6 +693,14 @@ function checkExercise4() {
 function checkExercise5() {
     const exercise = document.getElementById('exercise5');
     const feedback = exercise.querySelector('.feedback-message');
+
+    // Check if already completed
+    if (isExerciseCompleted('exercise5')) {
+        feedback.textContent = '✓ Exercise already completed and locked.';
+        feedback.style.color = '#28a745';
+        return;
+    }
+
     const inputs = exercise.querySelectorAll('.fill-blank-input');
     const studentInfo = getStudentInfo();
 
@@ -659,8 +745,8 @@ function checkExercise5() {
     saveExerciseState('exercise5', { completed: true, score: `${correctCount}/${inputs.length}` });
     updateProgressBar();
 
-    const checkButton = exercise.querySelector('.btn-check');
-    if (checkButton) checkButton.disabled = true;
+    // Lock exercise permanently
+    lockExercise('exercise5');
 }
 
 /**
@@ -670,6 +756,14 @@ function checkExercise5() {
 function checkExercise6() {
     const exercise = document.getElementById('exercise6');
     const feedback = exercise.querySelector('.feedback-message');
+
+    // Check if already completed
+    if (isExerciseCompleted('exercise6')) {
+        feedback.textContent = '✓ Exercise already completed and locked.';
+        feedback.style.color = '#28a745';
+        return;
+    }
+
     const tickOptions = exercise.querySelectorAll('.tick-option');
     const studentInfo = getStudentInfo();
 
@@ -733,8 +827,8 @@ function checkExercise6() {
     saveExerciseState('exercise6', { completed: true, score: `${totalCorrect}/${totalStatements}` });
     updateProgressBar();
 
-    const checkButton = exercise.querySelector('.btn-check');
-    if (checkButton) checkButton.disabled = true;
+    // Lock exercise permanently
+    lockExercise('exercise6');
 }
 
 /**
@@ -744,6 +838,14 @@ function checkExercise6() {
 function checkExercise7() {
     const exercise = document.getElementById('exercise7');
     const feedback = exercise.querySelector('.feedback-message');
+
+    // Check if already completed
+    if (isExerciseCompleted('exercise7')) {
+        feedback.textContent = '✓ Exercise already completed and locked.';
+        feedback.style.color = '#28a745';
+        return;
+    }
+
     const inputs = exercise.querySelectorAll('.fill-blank-input');
     const studentInfo = getStudentInfo();
 
@@ -788,8 +890,8 @@ function checkExercise7() {
     saveExerciseState('exercise7', { completed: true, score: `${correctCount}/${inputs.length}` });
     updateProgressBar();
 
-    const checkButton = exercise.querySelector('.btn-check');
-    if (checkButton) checkButton.disabled = true;
+    // Lock exercise permanently
+    lockExercise('exercise7');
 }
 
 /**
@@ -799,6 +901,14 @@ function checkExercise7() {
 function checkExercise8() {
     const exercise = document.getElementById('exercise8');
     const feedback = exercise.querySelector('.feedback-message');
+
+    // Check if already completed
+    if (isExerciseCompleted('exercise8')) {
+        feedback.textContent = '✓ Exercise already completed and locked.';
+        feedback.style.color = '#28a745';
+        return;
+    }
+
     const selectedOptions = exercise.querySelectorAll('.option-item.selected');
     const studentInfo = getStudentInfo();
 
@@ -837,6 +947,9 @@ function checkExercise8() {
 
     saveExerciseState('exercise8', { completed: true, score: `${correctCount}/3` });
     updateProgressBar();
+
+    // Lock exercise permanently
+    lockExercise('exercise8');
 }
 
 /**
@@ -845,6 +958,14 @@ function checkExercise8() {
 function checkExercise9() {
     const exercise = document.getElementById('exercise9');
     const feedback = exercise.querySelector('.feedback-message');
+
+    // Check if already completed
+    if (isExerciseCompleted('exercise9')) {
+        feedback.textContent = '✓ Exercise already completed and locked.';
+        feedback.style.color = '#28a745';
+        return;
+    }
+
     const selected = exercise.querySelector('.option-item.selected');
 
     if (!selected) {
@@ -857,13 +978,13 @@ function checkExercise9() {
 
     if (isCorrect) {
         selected.classList.add('correct');
-        feedback.textContent = '✓ Correct!';
-        feedback.style.color = '#28a745';
     } else {
         selected.classList.add('incorrect');
-        feedback.textContent = '✗ Incorrect. Review the case details.';
-        feedback.style.color = '#dc3545';
     }
+
+    // Always show score
+    feedback.textContent = `Score: ${isCorrect ? '1' : '0'}/1 correct.`;
+    feedback.style.color = isCorrect ? '#28a745' : '#856404';
 
     const studentInfo = getStudentInfo();
     sendToBackend({
@@ -880,6 +1001,9 @@ function checkExercise9() {
 
     saveExerciseState('exercise9', { completed: true, score: isCorrect ? '1/1' : '0/1' });
     updateProgressBar();
+
+    // Lock exercise permanently
+    lockExercise('exercise9');
 }
 
 /**
@@ -888,6 +1012,14 @@ function checkExercise9() {
 function checkExercise10() {
     const exercise = document.getElementById('exercise10');
     const feedback = exercise.querySelector('.feedback-message');
+
+    // Check if already completed
+    if (isExerciseCompleted('exercise10')) {
+        feedback.textContent = '✓ Exercise already completed and locked.';
+        feedback.style.color = '#28a745';
+        return;
+    }
+
     const items = exercise.querySelectorAll('.option-item.matched');
 
     if (items.length === 0) {
@@ -943,8 +1075,8 @@ function checkExercise10() {
     saveExerciseState('exercise10', { completed: true, score: `${correctPairs}/${totalPairs}` });
     updateProgressBar();
 
-    const checkButton = exercise.querySelector('.btn-check');
-    if (checkButton) checkButton.disabled = true;
+    // Lock exercise permanently
+    lockExercise('exercise10');
 }
 
 /**
@@ -954,11 +1086,31 @@ function checkExercise10() {
 function checkExercise11() {
     const exercise = document.getElementById('exercise11');
     const feedback = exercise.querySelector('.feedback-message');
+
+    // Check if already completed
+    if (isExerciseCompleted('exercise11')) {
+        feedback.textContent = '✓ Exercise already completed and locked.';
+        feedback.style.color = '#28a745';
+        return;
+    }
+
     const date = document.getElementById('ex11-date');
     const number = document.getElementById('ex11-number');
     const circumstances = document.getElementById('ex11-circumstances');
     const impact = document.getElementById('ex11-impact');
     const request = document.getElementById('ex11-request');
+
+    // Check if elements exist
+    if (!date || !number || !circumstances || !impact || !request) {
+        feedback.textContent = '✗ Error: Some form fields are missing.';
+        feedback.style.color = '#dc3545';
+        return;
+    }
+
+    // Clear previous validation classes
+    [circumstances, impact, request].forEach(el => {
+        el.classList.remove('incorrect', 'correct');
+    });
 
     // Validar campos simples
     if (!date.value.trim() || !number.value.trim()) {
@@ -968,29 +1120,32 @@ function checkExercise11() {
     }
 
     // Validar textareas (mínimo 20 caracteres)
-    const textareas = [circumstances, impact, request];
+    const textareas = [
+        { element: circumstances, name: 'Circumstances' },
+        { element: impact, name: 'Impact' },
+        { element: request, name: 'Request' }
+    ];
     let allValid = true;
+    let invalidFields = [];
 
-    textareas.forEach(textarea => {
-        if (textarea.value.trim().length < 20) {
-            textarea.classList.add('incorrect');
+    textareas.forEach(({ element, name }) => {
+        if (element.value.trim().length < 20) {
+            element.classList.add('incorrect');
             allValid = false;
+            invalidFields.push(name);
         } else {
-            textarea.classList.add('correct');
-            textarea.disabled = true;
+            element.classList.add('correct');
         }
     });
 
     if (!allValid) {
-        feedback.textContent = '✗ Please provide more detail in all sections (min 20 characters each).';
+        feedback.textContent = `✗ Please provide more detail in: ${invalidFields.join(', ')} (min 20 characters each).`;
         feedback.style.color = '#dc3545';
         return;
     }
 
-    date.disabled = true;
-    number.disabled = true;
-
-    feedback.textContent = '✓ Exercise completed! Your force majeure notice is complete.';
+    // All validation passed - show score
+    feedback.textContent = 'Score: 1/1 correct. Your force majeure notice is complete!';
     feedback.style.color = '#28a745';
 
     const studentInfo = getStudentInfo();
@@ -1015,6 +1170,9 @@ function checkExercise11() {
 
     saveExerciseState('exercise11', { completed: true, score: '1/1' });
     updateProgressBar();
+
+    // Lock exercise permanently
+    lockExercise('exercise11');
 }
 
 /**
@@ -1065,6 +1223,7 @@ function saveExerciseState(exerciseId, state) {
 
 /**
  * Restaura todos los estados de ejercicios guardados
+ * Bloquea los ejercicios que ya fueron completados
  */
 function restoreAllExercises() {
     const storageKey = `module${MODULE_CONFIG.moduleNumber}_exercises`;
@@ -1073,6 +1232,52 @@ function restoreAllExercises() {
     if (saved) {
         exerciseStates = JSON.parse(saved);
         console.log('Estados restaurados:', exerciseStates);
+    }
+
+    // Restaurar estados de bloqueo para ejercicios completados
+    const studentInfo = getStudentInfo();
+    for (let i = 1; i <= MODULE_CONFIG.totalExercises; i++) {
+        const exerciseId = `exercise${i}`;
+        const completedKey = `${studentInfo.email}_${exerciseId}_completed`;
+        const isCompleted = localStorage.getItem(completedKey) === 'true';
+
+        if (isCompleted) {
+            const exercise = document.getElementById(exerciseId);
+            if (exercise) {
+                // Bloquear todos los inputs, textareas y selects
+                exercise.querySelectorAll('input, textarea, select').forEach(el => {
+                    el.disabled = true;
+                });
+
+                // Bloquear todos los option-items (opciones clickeables)
+                exercise.querySelectorAll('.option-item').forEach(el => {
+                    el.classList.add('locked');
+                    el.style.pointerEvents = 'none';
+                });
+
+                // Bloquear tick-options (checkboxes visuales)
+                exercise.querySelectorAll('.tick-option').forEach(el => {
+                    el.classList.add('locked');
+                    el.style.pointerEvents = 'none';
+                });
+
+                // Deshabilitar botón de check
+                const checkButton = exercise.querySelector('.btn-check');
+                if (checkButton) {
+                    checkButton.disabled = true;
+                }
+
+                // Mostrar mensaje de completado en el feedback
+                const feedback = exercise.querySelector('.feedback-message');
+                if (feedback && exerciseStates[exerciseId]) {
+                    const score = exerciseStates[exerciseId].score;
+                    feedback.textContent = `✓ Completed (Score: ${score})`;
+                    feedback.style.color = '#28a745';
+                }
+
+                console.log(`✓ Ejercicio ${exerciseId} restaurado como completado`);
+            }
+        }
     }
 }
 
@@ -1088,6 +1293,8 @@ function handleSurveySubmit(event) {
     event.preventDefault();
 
     const form = document.getElementById('survey-form');
+    if (!form) return;
+
     const formData = new FormData(form);
     const studentInfo = getStudentInfo();
 
@@ -1115,12 +1322,17 @@ function handleSurveySubmit(event) {
 
     // Mostrar confirmación
     const feedback = document.getElementById('survey-feedback');
-    feedback.textContent = '✓ Thank you for your feedback!';
-    feedback.style.color = '#28a745';
-    feedback.style.display = 'block';
+    if (feedback) {
+        feedback.textContent = '✓ Thank you for your feedback!';
+        feedback.style.color = '#28a745';
+        feedback.style.display = 'block';
+    }
 
-    // Deshabilitar formulario
-    form.querySelectorAll('input, textarea, button').forEach(el => el.disabled = true);
+    // Deshabilitar formulario SIN borrar las respuestas
+    // No llamar form.reset() para preservar las respuestas
+    form.querySelectorAll('input, textarea, button, select').forEach(el => {
+        el.disabled = true;
+    });
 }
 
 // ============================================================================
@@ -1204,6 +1416,8 @@ if (typeof module !== 'undefined' && module.exports) {
         checkExercise11,
         selectOption,
         selectMatch,
-        showExercise11Hint
+        showExercise11Hint,
+        isExerciseCompleted,
+        lockExercise
     };
 }
