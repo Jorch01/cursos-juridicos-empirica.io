@@ -545,7 +545,8 @@
     padding: 15px;
     border-radius: 8px;
     margin-top: 15px;
-    display: none;
+    min-height: 20px;
+    /* Messages will be visible when content is added */
 }
 
 .feedback-message.success {
