@@ -2663,6 +2663,16 @@
 
         // Multiple Choice / True-False
         function selectOption(element, groupId) {
+            // Prevent selection if element is already marked as correct/incorrect (after check)
+            if (element.classList.contains('correct') || element.classList.contains('incorrect')) {
+                return;
+            }
+
+            // Prevent selection if element is locked
+            if (element.classList.contains('locked') || element.style.pointerEvents === 'none') {
+                return;
+            }
+
             const container = element.closest('.options-list') || element.parentElement;
             container.querySelectorAll('.option-item').forEach(item => {
                 item.classList.remove('selected');
@@ -3489,7 +3499,14 @@
             // Restore selections
             if (state.userAnswers) {
                 state.userAnswers.forEach(answer => {
-                    const selector = `[data-group="tf${exerciseId.slice(-1)}-${answer.question}"]`;
+                    // Use onclick attribute to find options (e.g., tf3-1, mc4-1)
+                    const exerciseNum = exerciseId.slice(-1);
+                    let prefix = 'tf';
+                    // exercise4 and exercise5 use 'mc' prefix, exercise3 uses 'tf'
+                    if (exerciseId === 'exercise4' || exerciseId === 'exercise5') {
+                        prefix = 'mc';
+                    }
+                    const selector = `[onclick*="${prefix}${exerciseNum}-${answer.question}"]`;
                     const options = exercise.querySelectorAll(selector);
 
                     options.forEach(option => {
@@ -3728,6 +3745,113 @@
 
             // ========== CUSTOM VALIDATION FUNCTIONS FOR MODULE 1 ==========
             // These are temporary until Module 1 is fully migrated to shared system
+
+            /**
+             * Validates Exercise 3 (True/False - tf3-1 to tf3-6)
+             */
+            function checkExercise3() {
+                const exercise = document.getElementById('exercise3');
+                const feedback = exercise.querySelector('.feedback-message');
+
+                if (isExerciseCompleted('exercise3')) {
+                    feedback.textContent = '✓ Exercise already completed and locked.';
+                    feedback.className = 'feedback-message success';
+                    feedback.style.display = 'block';
+                    return;
+                }
+
+                const questionIds = ['tf3-1', 'tf3-2', 'tf3-3', 'tf3-4', 'tf3-5', 'tf3-6'];
+                let allAnswered = true;
+                let correctCount = 0;
+                const results = [];
+
+                questionIds.forEach(qId => {
+                    const selected = exercise.querySelector(`[onclick*="${qId}"].selected`);
+                    if (!selected) {
+                        allAnswered = false;
+                        return;
+                    }
+
+                    const isCorrect = selected.getAttribute('data-correct') === 'true';
+                    if (isCorrect) {
+                        selected.classList.add('correct');
+                        correctCount++;
+                    } else {
+                        selected.classList.add('incorrect');
+                    }
+
+                    results.push({
+                        questionId: qId,
+                        answer: selected.textContent.trim(),
+                        correct: isCorrect
+                    });
+                });
+
+                if (!allAnswered) {
+                    feedback.textContent = '✗ Please answer all 6 questions before checking.';
+                    feedback.className = 'feedback-message error';
+                    feedback.style.display = 'block';
+                    return;
+                }
+
+                const totalQuestions = questionIds.length;
+                const score = (correctCount / totalQuestions) * 100;
+                const points = Math.round(score);
+                const allCorrect = correctCount === totalQuestions;
+
+                // Save to backend with new system
+                saveExerciseResponse(
+                    'exercise3',
+                    'true-false',
+                    {
+                        results: results,
+                        correctCount: correctCount,
+                        totalQuestions: totalQuestions
+                    },
+                    allCorrect,
+                    score
+                );
+
+                // Show feedback with points
+                feedback.textContent = `Score: ${correctCount}/${totalQuestions} correct. Puntos obtenidos: ${points}/100`;
+                feedback.className = allCorrect ? 'feedback-message success' : 'feedback-message error';
+                feedback.style.display = 'block';
+
+                const studentInfo = getStudentInfo();
+                sendToBackend({
+                    type: 'exercise_score',
+                    data: {
+                        module: 'module-1',
+                        exercise: 'exercise3',
+                        studentEmail: studentInfo.email,
+                        score: `${correctCount}/${totalQuestions}`,
+                        percentage: score.toFixed(1),
+                        points: points,
+                        timestamp: new Date().toISOString()
+                    }
+                });
+
+                // Convert results to userAnswers format for restoration compatibility
+                const userAnswers = results.map((r, i) => ({
+                    question: i + 1,
+                    answer: r.answer,
+                    correct: r.correct
+                }));
+
+                const feedbackText = `Score: ${correctCount}/${totalQuestions} correct. Puntos obtenidos: ${points}/100`;
+
+                saveExerciseState('exercise3', {
+                    type: 'true-false',
+                    completed: true,
+                    score: `${correctCount}/${totalQuestions}`,
+                    points: points,
+                    isCorrect: allCorrect,
+                    userAnswers: userAnswers,
+                    feedbackText: feedbackText
+                });
+                updateProgressBar();
+                lockExercise('exercise3');
+            }
 
             /**
              * Validates Exercise 4 (Multiple Choice - mc4-1, mc4-2, mc4-3, mc4-4)
