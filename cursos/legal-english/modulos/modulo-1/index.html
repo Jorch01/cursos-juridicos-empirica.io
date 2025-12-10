@@ -4032,8 +4032,13 @@
         }
     </script>
 
-    <!-- Shared Module Functions -->
-    <script src="../../shared/module-functions.js"></script>
+    <!--
+    NOTA: module-functions.js DESHABILITADO para módulo 1
+    Este módulo tiene sus propias implementaciones en el script inline.
+    Cargar module-functions.js causaba conflictos porque sobrescribía
+    las funciones selectMatch, selectOption, checkExercise3/4/5, etc.
+    -->
+    <!-- <script src="../../shared/module-functions.js"></script> -->
 
     <!-- Payment & Access Control System -->
     <script src="../../../../js/payment-access-control.js"></script>
