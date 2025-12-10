@@ -3263,6 +3263,54 @@
             return null;
         }
 
+        // Utility function to clear exercise states (available in browser console)
+        window.clearExerciseStates = function(exerciseId) {
+            if (exerciseId) {
+                // Clear specific exercise
+                const key = 'exercise_state_' + exerciseId;
+                localStorage.removeItem(key);
+                console.log(`✅ Cleared state for ${exerciseId}. Reload the page to see changes.`);
+            } else {
+                // Clear all exercise states
+                const keys = Object.keys(localStorage).filter(key => key.startsWith('exercise_state_'));
+                keys.forEach(key => localStorage.removeItem(key));
+                console.log(`✅ Cleared ${keys.length} exercise states. Reload the page to see changes.`);
+            }
+        };
+
+        // Utility to reset ALL matching exercises
+        window.resetMatchingExercises = function() {
+            ['exercise1', 'exercise8', 'exercise11'].forEach(id => {
+                localStorage.removeItem('exercise_state_' + id);
+                // Clear visual state
+                const exercise = document.getElementById(id);
+                if (exercise) {
+                    exercise.querySelectorAll('.option-item').forEach(item => {
+                        item.classList.remove('paired', 'selected', 'correct', 'incorrect');
+                        item.style.backgroundColor = '';
+                        item.style.border = '';
+                        item.style.pointerEvents = '';
+                        item.style.cursor = '';
+                        item.title = '';
+                    });
+                    const button = exercise.querySelector('.btn-check');
+                    if (button) {
+                        button.disabled = false;
+                        button.style.opacity = '';
+                        button.style.cursor = '';
+                    }
+                    const feedback = document.getElementById('feedback-' + id);
+                    if (feedback) {
+                        feedback.textContent = '';
+                        feedback.style.display = 'none';
+                    }
+                }
+            });
+            // Clear userMatches
+            userMatches = {};
+            console.log('✅ Reset all matching exercises (1, 8, 11). You can now try them again!');
+        };
+
         function restoreAllExercises() {
             console.log('🔄 Restoring all exercise states from localStorage...');
 
@@ -3295,6 +3343,8 @@
         }
 
         function restoreMatchingExercise(exerciseId, state, exercise, feedback, button) {
+            console.log(`🔄 Restoring matching exercise ${exerciseId}`, state);
+
             // Restore user matches
             if (state.userMatches && state.completed) {
                 // Find elements and restore their visual state
@@ -3305,10 +3355,12 @@
                     let rightElem = null;
 
                     allItems.forEach(item => {
-                        if (item.dataset.match === match.leftMatch && item.textContent.trim() === match.left) {
+                        const itemText = item.textContent.trim();
+                        // More flexible matching - check if the text contains the match text
+                        if (item.dataset.match === match.leftMatch && (itemText === match.left || itemText.includes(match.left))) {
                             leftElem = item;
                         }
-                        if (item.dataset.match === match.rightMatch && item.textContent.trim() === match.right) {
+                        if (item.dataset.match === match.rightMatch && (itemText === match.right || itemText.includes(match.right))) {
                             rightElem = item;
                         }
                     });
@@ -3332,6 +3384,7 @@
                             rightElem.style.border = '2px solid #dc3545';
                         }
 
+                        // Only disable the specific paired elements
                         leftElem.style.pointerEvents = 'none';
                         rightElem.style.pointerEvents = 'none';
                     }
@@ -3343,7 +3396,7 @@
                 exerciseAttempts[exerciseId] = state.attempts;
             }
 
-            // Restore feedback and button state
+            // Restore feedback and button state only if completed
             if (state.completed) {
                 if (feedback) {
                     feedback.className = state.isCorrect ? 'feedback-message success' : 'feedback-message error';
@@ -3357,8 +3410,20 @@
                     button.style.cursor = 'not-allowed';
                 }
 
+                // IMPORTANT: Only disable ALL option-items if the exercise is truly completed
+                // This prevents blocking clicks on fresh exercises or incomplete ones
+                if (state.userMatches && state.userMatches.length > 0) {
+                    exercise.querySelectorAll('.option-item').forEach(item => {
+                        item.style.pointerEvents = 'none';
+                    });
+                }
+            } else {
+                // If not completed, ensure items are clickable
+                console.log(`⚠️ Exercise ${exerciseId} not completed, ensuring items are clickable`);
                 exercise.querySelectorAll('.option-item').forEach(item => {
-                    item.style.pointerEvents = 'none';
+                    if (!item.classList.contains('correct') && !item.classList.contains('incorrect')) {
+                        item.style.pointerEvents = '';
+                    }
                 });
             }
         }
