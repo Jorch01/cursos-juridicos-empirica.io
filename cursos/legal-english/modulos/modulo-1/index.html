@@ -2328,109 +2328,118 @@
         // ============================================
         // EXERCISE FUNCTIONS
         // ============================================
-        // MATCHING EXERCISES - REFORMULACIÓN COMPLETA
+        // MATCHING EXERCISES - SISTEMA SIMPLIFICADO Y ROBUSTO
         // ============================================
 
-        // Estado independiente para cada ejercicio
+        // Estado global para ejercicios de matching
         const matchingExercises = {};
 
+        // Inicializar ejercicio de matching
         function initMatchingExercise(exerciseId) {
             if (!matchingExercises[exerciseId]) {
                 matchingExercises[exerciseId] = {
                     selectedLeft: null,
                     selectedRight: null,
                     pairs: [],
-                    pairCounter: 0
+                    pairCounter: 0,
+                    isLocked: false
                 };
-                console.log(`🎯 Initialized matching exercise: ${exerciseId}`);
             }
             return matchingExercises[exerciseId];
         }
 
+        // Función principal para seleccionar elementos en matching
         function selectMatch(element, exerciseId) {
-            console.log(`🖱️ Click detected on exercise ${exerciseId}:`, element.textContent.trim());
+            console.log('🖱️ selectMatch called:', exerciseId, element.textContent.trim().substring(0, 30));
 
-            // Initialize exercise state
-            const state = initMatchingExercise(exerciseId);
-
-            // Don't allow selection if exercise is already checked
-            const savedState = loadExerciseState(exerciseId);
-            if (savedState && savedState.completed) {
-                console.log(`⚠️ Exercise ${exerciseId} is already completed`);
+            // Verificar que el ejercicio existe
+            const exercise = document.getElementById(exerciseId);
+            if (!exercise) {
+                console.error('Exercise not found:', exerciseId);
                 return;
             }
 
-            // If element is already paired, UNPAIR it
+            // Inicializar estado
+            const state = initMatchingExercise(exerciseId);
+
+            // Si el ejercicio está bloqueado, no hacer nada
+            if (state.isLocked) {
+                console.log('Exercise is locked');
+                return;
+            }
+
+            // Verificar si ya está completado en localStorage
+            const savedState = loadExerciseState(exerciseId);
+            if (savedState && savedState.completed) {
+                console.log('Exercise already completed');
+                state.isLocked = true;
+                return;
+            }
+
+            // Si el elemento ya tiene clases de resultado, no permitir cambios
+            if (element.classList.contains('correct') || element.classList.contains('incorrect')) {
+                return;
+            }
+
+            // Si el elemento está emparejado, desemparejarlo
             if (element.dataset.paired) {
                 unpairMatch(element, exerciseId);
                 return;
             }
 
-            // If element is marked as correct/incorrect (after check), don't allow changes
-            if (element.classList.contains('correct') || element.classList.contains('incorrect')) {
-                console.log(`⚠️ Exercise ${exerciseId} has been checked`);
-                return;
-            }
+            // Obtener todos los elementos del ejercicio
+            const allItems = Array.from(exercise.querySelectorAll('[data-match]'));
+            const midpoint = allItems.length / 2;
+            const itemIndex = allItems.indexOf(element);
 
-            // Determine if this is left or right column
-            const allItems = document.getElementById(exerciseId).querySelectorAll('[data-match]');
-            const itemsArray = Array.from(allItems);
-            const midpoint = itemsArray.length / 2;
-            const itemIndex = itemsArray.indexOf(element);
+            // Determinar si es columna izquierda o derecha
             const isLeft = itemIndex < midpoint;
 
-            console.log(`📍 Item is in ${isLeft ? 'LEFT' : 'RIGHT'} column (index: ${itemIndex}, midpoint: ${midpoint})`);
-
-            // Handle selection
             if (isLeft) {
-                // Deselect previous left selection
-                if (state.selectedLeft) {
+                // Deseleccionar anterior izquierdo
+                if (state.selectedLeft && state.selectedLeft !== element) {
                     state.selectedLeft.classList.remove('selected');
                     state.selectedLeft.style.backgroundColor = '';
                     state.selectedLeft.style.border = '';
                 }
-                // Select new left item
+                // Seleccionar nuevo
                 state.selectedLeft = element;
                 element.classList.add('selected');
                 element.style.backgroundColor = '#fff3cd';
                 element.style.border = '2px solid #ffc107';
-                console.log(`✓ Selected LEFT: "${element.textContent.trim()}"`);
             } else {
-                // Deselect previous right selection
-                if (state.selectedRight) {
+                // Deseleccionar anterior derecho
+                if (state.selectedRight && state.selectedRight !== element) {
                     state.selectedRight.classList.remove('selected');
                     state.selectedRight.style.backgroundColor = '';
                     state.selectedRight.style.border = '';
                 }
-                // Select new right item
+                // Seleccionar nuevo
                 state.selectedRight = element;
                 element.classList.add('selected');
                 element.style.backgroundColor = '#fff3cd';
                 element.style.border = '2px solid #ffc107';
-                console.log(`✓ Selected RIGHT: "${element.textContent.trim()}"`);
             }
 
-            // When both are selected, create a pair
+            // Si ambos están seleccionados, crear par
             if (state.selectedLeft && state.selectedRight) {
                 createPair(state.selectedLeft, state.selectedRight, exerciseId);
             }
         }
 
+        // Crear un par de elementos emparejados
         function createPair(leftElement, rightElement, exerciseId) {
             const state = matchingExercises[exerciseId];
             state.pairCounter++;
             const pairId = `${exerciseId}-pair-${state.pairCounter}`;
 
-            console.log(`✨ Creating pair ${pairId}:`, {
-                left: leftElement.textContent.trim(),
-                right: rightElement.textContent.trim()
-            });
+            console.log('✨ Creating pair:', pairId);
 
-            // Mark elements as paired
+            // Marcar como emparejados
             leftElement.dataset.paired = pairId;
             rightElement.dataset.paired = pairId;
 
-            // Visual feedback for paired items
+            // Estilo visual para elementos emparejados
             leftElement.classList.remove('selected');
             rightElement.classList.remove('selected');
             leftElement.classList.add('paired');
@@ -2440,12 +2449,10 @@
             rightElement.style.backgroundColor = '#e9ecef';
             leftElement.style.border = '2px solid #6c757d';
             rightElement.style.border = '2px solid #6c757d';
-            leftElement.style.cursor = 'pointer';
-            rightElement.style.cursor = 'pointer';
-            leftElement.title = '🔄 Click to unpair / Click para deshacer';
-            rightElement.title = '🔄 Click to unpair / Click para deshacer';
+            leftElement.title = 'Click para deshacer';
+            rightElement.title = 'Click para deshacer';
 
-            // Store the pair
+            // Guardar el par
             state.pairs.push({
                 pairId: pairId,
                 leftElement: leftElement,
@@ -2456,118 +2463,103 @@
                 rightText: rightElement.textContent.trim()
             });
 
-            // Clear selections
+            // Limpiar selecciones
             state.selectedLeft = null;
             state.selectedRight = null;
 
-            console.log(`✅ Pair created! Total pairs: ${state.pairs.length}`);
+            console.log('Total pairs:', state.pairs.length);
         }
 
+        // Desemparejar elementos
         function unpairMatch(element, exerciseId) {
             const state = matchingExercises[exerciseId];
-            if (!state) {
-                console.log(`⚠️ No state found for ${exerciseId}`);
-                return;
-            }
+            if (!state) return;
 
             const pairId = element.dataset.paired;
-            if (!pairId) {
-                console.log(`⚠️ Element not paired`);
-                return;
-            }
+            if (!pairId) return;
 
-            // Find and remove the pair
             const pairIndex = state.pairs.findIndex(p => p.pairId === pairId);
-            if (pairIndex === -1) {
-                console.log(`⚠️ Pair not found: ${pairId}`);
-                return;
-            }
+            if (pairIndex === -1) return;
 
             const pair = state.pairs[pairIndex];
-            console.log(`♻️ Unpairing: "${pair.leftText}" ↔ "${pair.rightText}"`);
+            console.log('♻️ Unpairing:', pairId);
 
-            // Reset visual state
+            // Resetear estado visual
             [pair.leftElement, pair.rightElement].forEach(elem => {
                 delete elem.dataset.paired;
                 elem.classList.remove('paired', 'selected');
                 elem.style.backgroundColor = '';
                 elem.style.border = '';
-                elem.style.cursor = '';
                 elem.title = '';
             });
 
-            // Remove from pairs array
+            // Remover del array
             state.pairs.splice(pairIndex, 1);
-
-            console.log(`✅ Unpaired! Remaining pairs: ${state.pairs.length}`);
         }
 
+        // Verificar ejercicio de matching
         function checkMatching(exerciseId) {
-            console.log(`🔍 Checking matching exercise: ${exerciseId}`);
+            console.log('🔍 checkMatching called:', exerciseId);
 
             const exercise = document.getElementById(exerciseId);
-            const feedback = document.getElementById('feedback-' + exerciseId);
-            const button = exercise.querySelector('.btn-check');
-
             if (!exercise) {
-                console.error(`❌ Exercise ${exerciseId} not found`);
+                console.error('Exercise not found:', exerciseId);
                 return;
             }
 
-            // Get state for this exercise
-            const state = matchingExercises[exerciseId];
-            if (!state) {
-                console.error(`❌ No state found for ${exerciseId}`);
+            const feedback = document.getElementById('feedback-' + exerciseId);
+            if (!feedback) {
+                console.error('Feedback not found for:', exerciseId);
                 return;
             }
 
-            // Get all items to calculate total pairs
-            const allItems = exercise.querySelectorAll('[data-match]');
-            const totalPairs = allItems.length / 2;
-            const userPairs = state.pairs || [];
+            // Inicializar estado si no existe
+            const state = initMatchingExercise(exerciseId);
 
-            console.log(`📊 Matching check: ${userPairs.length}/${totalPairs} pairs completed`);
-
-            // Check if user has made all pairs
-            if (userPairs.length < totalPairs) {
+            // Verificar si ya está completado
+            if (state.isLocked) {
+                feedback.textContent = 'Este ejercicio ya fue completado.';
                 feedback.className = 'feedback-message error';
-                feedback.textContent = `⚠️ Por favor completa todos los pares. Tienes ${userPairs.length}/${totalPairs} pares.`;
                 feedback.style.display = 'block';
                 return;
             }
 
-            // NOW REVEAL ALL RESULTS AT ONCE
+            // Contar pares esperados
+            const allItems = exercise.querySelectorAll('[data-match]');
+            const totalPairs = allItems.length / 2;
+            const userPairs = state.pairs || [];
+
+            console.log('Pairs:', userPairs.length, '/', totalPairs);
+
+            // Verificar que todos los pares estén hechos
+            if (userPairs.length < totalPairs) {
+                feedback.className = 'feedback-message error';
+                feedback.textContent = `⚠️ Completa todos los pares. Tienes ${userPairs.length}/${totalPairs}.`;
+                feedback.style.display = 'block';
+                return;
+            }
+
+            // Evaluar respuestas
             let correctCount = 0;
             const results = [];
 
             userPairs.forEach(pair => {
                 const isCorrect = pair.leftMatch === pair.rightMatch;
-                if (isCorrect) {
-                    correctCount++;
-                }
+                if (isCorrect) correctCount++;
 
-                // Mark as correct or incorrect
-                if (isCorrect) {
-                    pair.leftElement.classList.add('correct');
-                    pair.rightElement.classList.add('correct');
-                    pair.leftElement.classList.remove('paired');
-                    pair.rightElement.classList.remove('paired');
-                    pair.leftElement.style.backgroundColor = '#d4edda';
-                    pair.rightElement.style.backgroundColor = '#d4edda';
-                    pair.leftElement.style.border = '2px solid #28a745';
-                    pair.rightElement.style.border = '2px solid #28a745';
-                } else {
-                    pair.leftElement.classList.add('incorrect');
-                    pair.rightElement.classList.add('incorrect');
-                    pair.leftElement.classList.remove('paired');
-                    pair.rightElement.classList.remove('paired');
-                    pair.leftElement.style.backgroundColor = '#f8d7da';
-                    pair.rightElement.style.backgroundColor = '#f8d7da';
-                    pair.leftElement.style.border = '2px solid #dc3545';
-                    pair.rightElement.style.border = '2px solid #dc3545';
-                }
+                // Aplicar estilos de resultado
+                const bgColor = isCorrect ? '#d4edda' : '#f8d7da';
+                const borderColor = isCorrect ? '#28a745' : '#dc3545';
+                const resultClass = isCorrect ? 'correct' : 'incorrect';
 
-                // Disable all items (no more attempts)
+                pair.leftElement.classList.remove('paired');
+                pair.rightElement.classList.remove('paired');
+                pair.leftElement.classList.add(resultClass);
+                pair.rightElement.classList.add(resultClass);
+                pair.leftElement.style.backgroundColor = bgColor;
+                pair.rightElement.style.backgroundColor = bgColor;
+                pair.leftElement.style.border = `2px solid ${borderColor}`;
+                pair.rightElement.style.border = `2px solid ${borderColor}`;
                 pair.leftElement.style.pointerEvents = 'none';
                 pair.rightElement.style.pointerEvents = 'none';
 
@@ -2578,87 +2570,50 @@
                 });
             });
 
+            // Calcular puntuación
             const allCorrect = correctCount === totalPairs;
-            const score = (correctCount / totalPairs) * 100;
+            const score = Math.round((correctCount / totalPairs) * 100);
 
-            // Initialize attempt tracking
-            if (!exerciseAttempts[exerciseId]) {
-                exerciseAttempts[exerciseId] = { count: 0, attempts: [] };
-            }
+            // Mostrar feedback
+            const feedbackText = allCorrect
+                ? `✓ ¡Perfecto! ${correctCount}/${totalPairs} pares correctos. Puntos: ${score}/100`
+                : `${correctCount}/${totalPairs} pares correctos. Puntos: ${score}/100. Solo 1 intento.`;
 
-            exerciseAttempts[exerciseId].count++;
-
-            // Save attempt data
-            const attemptData = {
-                attemptNumber: 1, // Always 1 since only one attempt allowed
-                correctCount: correctCount,
-                totalPairs: totalPairs,
-                isCorrect: allCorrect,
-                score: score,
-                timestamp: new Date().toISOString(),
-                results: results
-            };
-            exerciseAttempts[exerciseId].attempts.push(attemptData);
-
-            // Save to backend
-            saveExerciseResponse(
-                exerciseId,
-                'matching',
-                {
-                    attemptNumber: 1,
-                    matches: results,
-                    allAttempts: exerciseAttempts[exerciseId].attempts
-                },
-                allCorrect,
-                score
-            );
-
-            // Show feedback with points
-            let feedbackText = '';
-            const points = Math.round(score);
-            if (allCorrect) {
-                feedback.className = 'feedback-message success';
-                feedbackText = `✓ ¡Perfecto! Todos los pares son correctos (${correctCount}/${totalPairs}) - Puntos obtenidos: ${points}/100`;
-                updateExerciseProgress();
-            } else {
-                feedback.className = 'feedback-message error';
-                feedbackText = `${correctCount}/${totalPairs} pares correctos. Puntos obtenidos: ${points}/100. Solo se permite 1 intento.`;
-            }
+            feedback.className = allCorrect ? 'feedback-message success' : 'feedback-message error';
             feedback.textContent = feedbackText;
             feedback.style.display = 'block';
 
-            // Disable button (only 1 attempt allowed)
+            // Bloquear ejercicio
+            state.isLocked = true;
+            const button = exercise.querySelector('.btn-check');
             if (button) {
                 button.disabled = true;
                 button.style.opacity = '0.5';
                 button.style.cursor = 'not-allowed';
             }
 
-            // Disable all items
+            // Bloquear todos los items
             exercise.querySelectorAll('.option-item').forEach(item => {
                 item.style.pointerEvents = 'none';
             });
 
-            // Save exercise state to localStorage
-            const matchData = userPairs.map(pair => ({
-                left: pair.leftText,
-                right: pair.rightText,
-                leftMatch: pair.leftMatch,
-                rightMatch: pair.rightMatch
-            }));
-
+            // Guardar estado
             saveExerciseState(exerciseId, {
                 type: 'matching',
-                userMatches: matchData,
-                attempts: exerciseAttempts[exerciseId],
-                isCorrect: allCorrect,
                 completed: true,
-                feedbackText: feedbackText,
+                isCorrect: allCorrect,
                 correctCount: correctCount,
-                totalPairs: totalPairs
+                totalPairs: totalPairs,
+                feedbackText: feedbackText,
+                userMatches: userPairs.map(p => ({
+                    left: p.leftText,
+                    right: p.rightText,
+                    leftMatch: p.leftMatch,
+                    rightMatch: p.rightMatch
+                }))
             });
 
-            console.log(`✅ Exercise ${exerciseId} checked successfully. Score: ${points}/100`);
+            console.log(`✅ ${exerciseId} completed. Score: ${score}/100`);
         }
 
         // Multiple Choice / True-False
@@ -3743,312 +3698,308 @@
                 });
             }
 
-            // ========== CUSTOM VALIDATION FUNCTIONS FOR MODULE 1 ==========
-            // These are temporary until Module 1 is fully migrated to shared system
-
-            /**
-             * Validates Exercise 3 (True/False - tf3-1 to tf3-6)
-             */
-            function checkExercise3() {
-                const exercise = document.getElementById('exercise3');
-                const feedback = exercise.querySelector('.feedback-message');
-
-                if (isExerciseCompleted('exercise3')) {
-                    feedback.textContent = '✓ Exercise already completed and locked.';
-                    feedback.className = 'feedback-message success';
-                    feedback.style.display = 'block';
-                    return;
-                }
-
-                const questionIds = ['tf3-1', 'tf3-2', 'tf3-3', 'tf3-4', 'tf3-5', 'tf3-6'];
-                let allAnswered = true;
-                let correctCount = 0;
-                const results = [];
-
-                questionIds.forEach(qId => {
-                    const selected = exercise.querySelector(`[onclick*="${qId}"].selected`);
-                    if (!selected) {
-                        allAnswered = false;
-                        return;
-                    }
-
-                    const isCorrect = selected.getAttribute('data-correct') === 'true';
-                    if (isCorrect) {
-                        selected.classList.add('correct');
-                        correctCount++;
-                    } else {
-                        selected.classList.add('incorrect');
-                    }
-
-                    results.push({
-                        questionId: qId,
-                        answer: selected.textContent.trim(),
-                        correct: isCorrect
-                    });
-                });
-
-                if (!allAnswered) {
-                    feedback.textContent = '✗ Please answer all 6 questions before checking.';
-                    feedback.className = 'feedback-message error';
-                    feedback.style.display = 'block';
-                    return;
-                }
-
-                const totalQuestions = questionIds.length;
-                const score = (correctCount / totalQuestions) * 100;
-                const points = Math.round(score);
-                const allCorrect = correctCount === totalQuestions;
-
-                // Save to backend with new system
-                saveExerciseResponse(
-                    'exercise3',
-                    'true-false',
-                    {
-                        results: results,
-                        correctCount: correctCount,
-                        totalQuestions: totalQuestions
-                    },
-                    allCorrect,
-                    score
-                );
-
-                // Show feedback with points
-                feedback.textContent = `Score: ${correctCount}/${totalQuestions} correct. Puntos obtenidos: ${points}/100`;
-                feedback.className = allCorrect ? 'feedback-message success' : 'feedback-message error';
-                feedback.style.display = 'block';
-
-                const studentInfo = getStudentInfo();
-                sendToBackend({
-                    type: 'exercise_score',
-                    data: {
-                        module: 'module-1',
-                        exercise: 'exercise3',
-                        studentEmail: studentInfo.email,
-                        score: `${correctCount}/${totalQuestions}`,
-                        percentage: score.toFixed(1),
-                        points: points,
-                        timestamp: new Date().toISOString()
-                    }
-                });
-
-                // Convert results to userAnswers format for restoration compatibility
-                const userAnswers = results.map((r, i) => ({
-                    question: i + 1,
-                    answer: r.answer,
-                    correct: r.correct
-                }));
-
-                const feedbackText = `Score: ${correctCount}/${totalQuestions} correct. Puntos obtenidos: ${points}/100`;
-
-                saveExerciseState('exercise3', {
-                    type: 'true-false',
-                    completed: true,
-                    score: `${correctCount}/${totalQuestions}`,
-                    points: points,
-                    isCorrect: allCorrect,
-                    userAnswers: userAnswers,
-                    feedbackText: feedbackText
-                });
-                updateProgressBar();
-                lockExercise('exercise3');
-            }
-
-            /**
-             * Validates Exercise 4 (Multiple Choice - mc4-1, mc4-2, mc4-3, mc4-4)
-             */
-            function checkExercise4() {
-                const exercise = document.getElementById('exercise4');
-                const feedback = exercise.querySelector('.feedback-message');
-
-                if (isExerciseCompleted('exercise4')) {
-                    feedback.textContent = '✓ Exercise already completed and locked.';
-                    feedback.className = 'feedback-message success';
-                    feedback.style.display = 'block';
-                    return;
-                }
-
-                const questionIds = ['mc4-1', 'mc4-2', 'mc4-3', 'mc4-4'];
-                let allAnswered = true;
-                let correctCount = 0;
-                const results = [];
-
-                questionIds.forEach(qId => {
-                    const selected = exercise.querySelector(`[onclick*="${qId}"].selected`);
-                    if (!selected) {
-                        allAnswered = false;
-                        return;
-                    }
-
-                    const isCorrect = selected.getAttribute('data-correct') === 'true';
-                    if (isCorrect) {
-                        selected.classList.add('correct');
-                        correctCount++;
-                    } else {
-                        selected.classList.add('incorrect');
-                    }
-
-                    results.push({
-                        questionId: qId,
-                        answer: selected.textContent.trim(),
-                        correct: isCorrect
-                    });
-                });
-
-                if (!allAnswered) {
-                    feedback.textContent = '✗ Please answer all 4 questions before checking.';
-                    feedback.className = 'feedback-message error';
-                    feedback.style.display = 'block';
-                    return;
-                }
-
-                const totalQuestions = questionIds.length;
-                const score = (correctCount / totalQuestions) * 100;
-                const points = Math.round(score);
-                const allCorrect = correctCount === totalQuestions;
-
-                // Save to backend with new system
-                saveExerciseResponse(
-                    'exercise4',
-                    'multiple-choice',
-                    {
-                        results: results,
-                        correctCount: correctCount,
-                        totalQuestions: totalQuestions
-                    },
-                    allCorrect,
-                    score
-                );
-
-                // Show feedback with points
-                feedback.textContent = `Score: ${correctCount}/${totalQuestions} correct. Puntos obtenidos: ${points}/100`;
-                feedback.className = allCorrect ? 'feedback-message success' : 'feedback-message error';
-                feedback.style.display = 'block';
-
-                const studentInfo = getStudentInfo();
-                sendToBackend({
-                    type: 'exercise_score',
-                    data: {
-                        module: 'module-1',
-                        exercise: 'exercise4',
-                        studentEmail: studentInfo.email,
-                        score: `${correctCount}/${totalQuestions}`,
-                        percentage: score.toFixed(1),
-                        points: points,
-                        timestamp: new Date().toISOString()
-                    }
-                });
-
-                saveExerciseState('exercise4', {
-                    completed: true,
-                    score: `${correctCount}/${totalQuestions}`,
-                    points: points,
-                    isCorrect: allCorrect
-                });
-                updateProgressBar();
-                lockExercise('exercise4');
-            }
-
-            /**
-             * Validates Exercise 5 (Multiple Choice - mc5-1, mc5-2, mc5-3, mc5-4, mc5-5)
-             */
-            function checkExercise5() {
-                const exercise = document.getElementById('exercise5');
-                const feedback = exercise.querySelector('.feedback-message');
-
-                if (isExerciseCompleted('exercise5')) {
-                    feedback.textContent = '✓ Exercise already completed and locked.';
-                    feedback.className = 'feedback-message success';
-                    feedback.style.display = 'block';
-                    return;
-                }
-
-                const questionIds = ['mc5-1', 'mc5-2', 'mc5-3', 'mc5-4', 'mc5-5'];
-                let allAnswered = true;
-                let correctCount = 0;
-                const results = [];
-
-                questionIds.forEach(qId => {
-                    const selected = exercise.querySelector(`[onclick*="${qId}"].selected`);
-                    if (!selected) {
-                        allAnswered = false;
-                        return;
-                    }
-
-                    const isCorrect = selected.getAttribute('data-correct') === 'true';
-                    if (isCorrect) {
-                        selected.classList.add('correct');
-                        correctCount++;
-                    } else {
-                        selected.classList.add('incorrect');
-                    }
-
-                    results.push({
-                        questionId: qId,
-                        answer: selected.textContent.trim(),
-                        correct: isCorrect
-                    });
-                });
-
-                if (!allAnswered) {
-                    feedback.textContent = '✗ Please answer all 5 questions before checking.';
-                    feedback.className = 'feedback-message error';
-                    feedback.style.display = 'block';
-                    return;
-                }
-
-                const totalQuestions = questionIds.length;
-                const score = (correctCount / totalQuestions) * 100;
-                const points = Math.round(score);
-                const allCorrect = correctCount === totalQuestions;
-
-                // Save to backend with new system
-                saveExerciseResponse(
-                    'exercise5',
-                    'multiple-choice',
-                    {
-                        results: results,
-                        correctCount: correctCount,
-                        totalQuestions: totalQuestions
-                    },
-                    allCorrect,
-                    score
-                );
-
-                // Show feedback with points
-                feedback.textContent = `Score: ${correctCount}/${totalQuestions} correct. Puntos obtenidos: ${points}/100`;
-                feedback.className = allCorrect ? 'feedback-message success' : 'feedback-message error';
-                feedback.style.display = 'block';
-
-                const studentInfo = getStudentInfo();
-                sendToBackend({
-                    type: 'exercise_score',
-                    data: {
-                        module: 'module-1',
-                        exercise: 'exercise5',
-                        studentEmail: studentInfo.email,
-                        score: `${correctCount}/${totalQuestions}`,
-                        percentage: score.toFixed(1),
-                        points: points,
-                        timestamp: new Date().toISOString()
-                    }
-                });
-
-                saveExerciseState('exercise5', {
-                    completed: true,
-                    score: `${correctCount}/${totalQuestions}`,
-                    points: points,
-                    isCorrect: allCorrect
-                });
-                updateProgressBar();
-                lockExercise('exercise5');
-            }
-
             // Load YouTube IFrame API
             const tag = document.createElement('script');
             tag.src = "https://www.youtube.com/iframe_api";
             const firstScriptTag = document.getElementsByTagName('script')[0];
             firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
         });
+
+        // ========== GLOBAL VALIDATION FUNCTIONS FOR MODULE 1 ==========
+        // These functions MUST be in global scope to be accessible from onclick handlers
+
+        /**
+         * Validates Exercise 3 (True/False - tf3-1 to tf3-6)
+         */
+        function checkExercise3() {
+            console.log('🔍 checkExercise3 called');
+            const exercise = document.getElementById('exercise3');
+            if (!exercise) {
+                console.error('Exercise 3 not found');
+                return;
+            }
+
+            const feedback = document.getElementById('feedback-exercise3');
+            if (!feedback) {
+                console.error('Feedback element for exercise 3 not found');
+                return;
+            }
+
+            // Check if already completed
+            const savedState = loadExerciseState('exercise3');
+            if (savedState && savedState.completed) {
+                feedback.textContent = '✓ Exercise already completed and locked.';
+                feedback.className = 'feedback-message success';
+                feedback.style.display = 'block';
+                return;
+            }
+
+            const questionIds = ['tf3-1', 'tf3-2', 'tf3-3', 'tf3-4', 'tf3-5', 'tf3-6'];
+            let allAnswered = true;
+            let correctCount = 0;
+            const results = [];
+
+            questionIds.forEach(qId => {
+                const selected = exercise.querySelector(`[onclick*="${qId}"].selected`);
+                if (!selected) {
+                    allAnswered = false;
+                    return;
+                }
+
+                const isCorrect = selected.getAttribute('data-correct') === 'true';
+                if (isCorrect) {
+                    selected.classList.add('correct');
+                    correctCount++;
+                } else {
+                    selected.classList.add('incorrect');
+                }
+
+                results.push({
+                    questionId: qId,
+                    answer: selected.textContent.trim(),
+                    correct: isCorrect
+                });
+            });
+
+            if (!allAnswered) {
+                feedback.textContent = '✗ Please answer all 6 questions before checking.';
+                feedback.className = 'feedback-message error';
+                feedback.style.display = 'block';
+                return;
+            }
+
+            const totalQuestions = questionIds.length;
+            const score = (correctCount / totalQuestions) * 100;
+            const points = Math.round(score);
+            const allCorrect = correctCount === totalQuestions;
+
+            // Show feedback with points
+            const feedbackText = `Score: ${correctCount}/${totalQuestions} correct. Puntos obtenidos: ${points}/100`;
+            feedback.textContent = feedbackText;
+            feedback.className = allCorrect ? 'feedback-message success' : 'feedback-message error';
+            feedback.style.display = 'block';
+
+            // Convert results to userAnswers format for restoration compatibility
+            const userAnswers = results.map((r, i) => ({
+                question: i + 1,
+                answer: r.answer,
+                correct: r.correct
+            }));
+
+            // Save state
+            saveExerciseState('exercise3', {
+                type: 'true-false',
+                completed: true,
+                score: `${correctCount}/${totalQuestions}`,
+                points: points,
+                isCorrect: allCorrect,
+                userAnswers: userAnswers,
+                feedbackText: feedbackText
+            });
+
+            // Lock exercise
+            const button = exercise.querySelector('.btn-check');
+            if (button) {
+                button.disabled = true;
+                button.style.opacity = '0.5';
+                button.style.cursor = 'not-allowed';
+            }
+            exercise.querySelectorAll('.option-item').forEach(item => {
+                item.style.pointerEvents = 'none';
+            });
+
+            console.log(`✅ Exercise 3 checked. Score: ${points}/100`);
+        }
+
+        /**
+         * Validates Exercise 4 (Multiple Choice - mc4-1, mc4-2, mc4-3, mc4-4)
+         */
+        function checkExercise4() {
+            console.log('🔍 checkExercise4 called');
+            const exercise = document.getElementById('exercise4');
+            if (!exercise) {
+                console.error('Exercise 4 not found');
+                return;
+            }
+
+            const feedback = document.getElementById('feedback-exercise4');
+            if (!feedback) {
+                console.error('Feedback element for exercise 4 not found');
+                return;
+            }
+
+            // Check if already completed
+            const savedState = loadExerciseState('exercise4');
+            if (savedState && savedState.completed) {
+                feedback.textContent = '✓ Exercise already completed and locked.';
+                feedback.className = 'feedback-message success';
+                feedback.style.display = 'block';
+                return;
+            }
+
+            const questionIds = ['mc4-1', 'mc4-2', 'mc4-3', 'mc4-4'];
+            let allAnswered = true;
+            let correctCount = 0;
+            const results = [];
+
+            questionIds.forEach(qId => {
+                const selected = exercise.querySelector(`[onclick*="${qId}"].selected`);
+                if (!selected) {
+                    allAnswered = false;
+                    return;
+                }
+
+                const isCorrect = selected.getAttribute('data-correct') === 'true';
+                if (isCorrect) {
+                    selected.classList.add('correct');
+                    correctCount++;
+                } else {
+                    selected.classList.add('incorrect');
+                }
+
+                results.push({
+                    questionId: qId,
+                    answer: selected.textContent.trim(),
+                    correct: isCorrect
+                });
+            });
+
+            if (!allAnswered) {
+                feedback.textContent = '✗ Please answer all 4 questions before checking.';
+                feedback.className = 'feedback-message error';
+                feedback.style.display = 'block';
+                return;
+            }
+
+            const totalQuestions = questionIds.length;
+            const score = (correctCount / totalQuestions) * 100;
+            const points = Math.round(score);
+            const allCorrect = correctCount === totalQuestions;
+
+            // Show feedback with points
+            const feedbackText = `Score: ${correctCount}/${totalQuestions} correct. Puntos obtenidos: ${points}/100`;
+            feedback.textContent = feedbackText;
+            feedback.className = allCorrect ? 'feedback-message success' : 'feedback-message error';
+            feedback.style.display = 'block';
+
+            // Save state
+            saveExerciseState('exercise4', {
+                type: 'multiple-choice',
+                completed: true,
+                score: `${correctCount}/${totalQuestions}`,
+                points: points,
+                isCorrect: allCorrect,
+                feedbackText: feedbackText
+            });
+
+            // Lock exercise
+            const button = exercise.querySelector('.btn-check');
+            if (button) {
+                button.disabled = true;
+                button.style.opacity = '0.5';
+                button.style.cursor = 'not-allowed';
+            }
+            exercise.querySelectorAll('.option-item').forEach(item => {
+                item.style.pointerEvents = 'none';
+            });
+
+            console.log(`✅ Exercise 4 checked. Score: ${points}/100`);
+        }
+
+        /**
+         * Validates Exercise 5 (Multiple Choice - mc5-1, mc5-2, mc5-3, mc5-4, mc5-5)
+         */
+        function checkExercise5() {
+            console.log('🔍 checkExercise5 called');
+            const exercise = document.getElementById('exercise5');
+            if (!exercise) {
+                console.error('Exercise 5 not found');
+                return;
+            }
+
+            const feedback = document.getElementById('feedback-exercise5');
+            if (!feedback) {
+                console.error('Feedback element for exercise 5 not found');
+                return;
+            }
+
+            // Check if already completed
+            const savedState = loadExerciseState('exercise5');
+            if (savedState && savedState.completed) {
+                feedback.textContent = '✓ Exercise already completed and locked.';
+                feedback.className = 'feedback-message success';
+                feedback.style.display = 'block';
+                return;
+            }
+
+            const questionIds = ['mc5-1', 'mc5-2', 'mc5-3', 'mc5-4', 'mc5-5'];
+            let allAnswered = true;
+            let correctCount = 0;
+            const results = [];
+
+            questionIds.forEach(qId => {
+                const selected = exercise.querySelector(`[onclick*="${qId}"].selected`);
+                if (!selected) {
+                    allAnswered = false;
+                    return;
+                }
+
+                const isCorrect = selected.getAttribute('data-correct') === 'true';
+                if (isCorrect) {
+                    selected.classList.add('correct');
+                    correctCount++;
+                } else {
+                    selected.classList.add('incorrect');
+                }
+
+                results.push({
+                    questionId: qId,
+                    answer: selected.textContent.trim(),
+                    correct: isCorrect
+                });
+            });
+
+            if (!allAnswered) {
+                feedback.textContent = '✗ Please answer all 5 questions before checking.';
+                feedback.className = 'feedback-message error';
+                feedback.style.display = 'block';
+                return;
+            }
+
+            const totalQuestions = questionIds.length;
+            const score = (correctCount / totalQuestions) * 100;
+            const points = Math.round(score);
+            const allCorrect = correctCount === totalQuestions;
+
+            // Show feedback with points
+            const feedbackText = `Score: ${correctCount}/${totalQuestions} correct. Puntos obtenidos: ${points}/100`;
+            feedback.textContent = feedbackText;
+            feedback.className = allCorrect ? 'feedback-message success' : 'feedback-message error';
+            feedback.style.display = 'block';
+
+            // Save state
+            saveExerciseState('exercise5', {
+                type: 'multiple-choice',
+                completed: true,
+                score: `${correctCount}/${totalQuestions}`,
+                points: points,
+                isCorrect: allCorrect,
+                feedbackText: feedbackText
+            });
+
+            // Lock exercise
+            const button = exercise.querySelector('.btn-check');
+            if (button) {
+                button.disabled = true;
+                button.style.opacity = '0.5';
+                button.style.cursor = 'not-allowed';
+            }
+            exercise.querySelectorAll('.option-item').forEach(item => {
+                item.style.pointerEvents = 'none';
+            });
+
+            console.log(`✅ Exercise 5 checked. Score: ${points}/100`);
+        }
 
         // YouTube API Ready Callback
         function onYouTubeIframeAPIReady() {
