@@ -23,13 +23,27 @@
 // CONFIGURACIÓN GLOBAL - Debe ser establecida por cada módulo
 // ============================================================================
 
+// ============================================================================
+// URL CENTRALIZADA DEL BACKEND
+// ============================================================================
+// IMPORTANTE: Esta es la UNICA URL que necesitas configurar.
+// Todos los módulos y el sistema de pagos usan esta misma URL.
+//
+// INSTRUCCIONES:
+// 1. Copia el archivo google-apps-script/SISTEMA-CENTRALIZADO.gs a Google Apps Script
+// 2. Despliega como Web App (Deploy > New deployment > Web app)
+// 3. Copia la URL generada y pégala aquí abajo
+// ============================================================================
+
+const EMPIRICA_BACKEND_URL = 'https://script.google.com/macros/s/YOUR_CENTRALIZED_SCRIPT_ID/exec';
+
 // Variable global que cada módulo debe definir ANTES de cargar este script
 // Ejemplo: window.MODULE_CONFIG = { moduleNumber: 2, moduleName: 'Contract Law', ... }
 window.MODULE_CONFIG = window.MODULE_CONFIG || {
     moduleNumber: 1,
     moduleName: 'Default Module',
     totalExercises: 11,
-    backendURL: 'https://script.google.com/macros/s/YOUR_SCRIPT_ID/exec',
+    backendURL: EMPIRICA_BACKEND_URL,  // Usa la URL centralizada
     isFreeModule: false
 };
 
