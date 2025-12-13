@@ -9,11 +9,21 @@
     'use strict';
 
     // ═══════════════════════════════════════
-    // ⚙️ CONFIGURACIÓN
+    // ⚙️ CONFIGURACIÓN - SISTEMA CENTRALIZADO
+    // ═══════════════════════════════════════
+    // IMPORTANTE: Esta URL debe ser la MISMA que en:
+    // - /cursos/legal-english/shared/module-functions.js (EMPIRICA_BACKEND_URL)
+    //
+    // El sistema centralizado maneja TODO:
+    // - Control de acceso y pagos
+    // - Respuestas de ejercicios
+    // - Progreso de estudiantes
+    // - Encuestas y analytics
     // ═══════════════════════════════════════
     const CONFIG = {
-        // URL del Google Apps Script Web App
-        GOOGLE_SCRIPT_URL: 'https://script.google.com/macros/s/AKfycbwoB76CQ6v9xVPL4ryywRmJdIobmHy9Fe3eSAKpZoYrEVgtOttxVWOIpPo-pe6PydbY/exec',
+        // URL del Google Apps Script Web App CENTRALIZADO
+        // Reemplaza con la URL de tu script desplegado
+        GOOGLE_SCRIPT_URL: 'https://script.google.com/macros/s/YOUR_CENTRALIZED_SCRIPT_ID/exec',
 
         // Links de pago de Stripe
         STRIPE_LINKS: {
