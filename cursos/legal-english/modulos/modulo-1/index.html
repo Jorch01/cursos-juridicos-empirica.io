@@ -3584,50 +3584,22 @@
             console.log('🔗 Backend URL:', BACKEND_URL);
             console.log('📦 Data:', JSON.stringify(data, null, 2));
 
-            // Try with regular fetch first to get response
+            // Usar no-cors con text/plain para evitar preflight CORS
             fetch(BACKEND_URL, {
                 method: 'POST',
+                mode: 'no-cors',
                 headers: {
-                    'Content-Type': 'application/json',
+                    'Content-Type': 'text/plain'
                 },
-                body: JSON.stringify(data),
-                redirect: 'follow'
+                body: JSON.stringify(data)
             })
-            .then(response => {
-                console.log('📨 Response received:', response);
-                console.log('📊 Response status:', response.status);
-                console.log('✅ Data sent successfully!');
-                return response.text();
-            })
-            .then(text => {
-                console.log('📄 Response text:', text);
+            .then(() => {
+                console.log('✅ Data sent successfully (no-cors mode)');
+                console.log('ℹ️ Check your Google Sheet to verify data was received');
             })
             .catch(error => {
-                console.warn('⚠️ Regular fetch failed (CORS), trying no-cors mode...');
-                console.warn('Error:', error);
-
-                // Fallback to no-cors mode
-                return fetch(BACKEND_URL, {
-                    method: 'POST',
-                    mode: 'no-cors',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify(data)
-                })
-                .then(() => {
-                    console.log('✅ Data sent with no-cors mode (response not readable)');
-                    console.log('ℹ️ Check your Google Sheet to verify data was received');
-                })
-                .catch(error2 => {
-                    console.error('❌ Both fetch attempts failed:', error2);
-                    console.log('💾 Data is still saved locally in localStorage');
-                    console.log('🔍 Troubleshooting:');
-                    console.log('  1. Verify Web App URL is correct');
-                    console.log('  2. Check Web App is deployed with "Execute as: Me"');
-                    console.log('  3. Check "Who has access: Anyone"');
-                    console.log('  4. Check Activity_Log sheet in your Google Spreadsheet');
-                });
+                console.error('❌ Error sending data:', error);
+                console.log('💾 Data is still saved locally in localStorage');
             });
         }
 

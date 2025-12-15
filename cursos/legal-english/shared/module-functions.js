@@ -173,11 +173,13 @@ function sendToBackend(payload) {
         return;
     }
 
+    // IMPORTANTE: Usar 'text/plain' para evitar preflight CORS
+    // Google Apps Script parseará el JSON correctamente
     fetch(BACKEND_URL, {
         method: 'POST',
         mode: 'no-cors',
         headers: {
-            'Content-Type': 'application/json'
+            'Content-Type': 'text/plain'
         },
         body: JSON.stringify(payload)
     })
