@@ -23,7 +23,7 @@
     const CONFIG = {
         // URL del Google Apps Script Web App CENTRALIZADO
         // Reemplaza con la URL de tu script desplegado
-        GOOGLE_SCRIPT_URL: 'https://script.google.com/macros/s/YOUR_CENTRALIZED_SCRIPT_ID/exec',
+        GOOGLE_SCRIPT_URL: 'https://script.google.com/macros/s/AKfycbwLjiDy5ZEpP97JUF-FA8Z4Lf6mbMHDDUzLH0JH9rGXFCHnh9KLeSU8oBNS3NTDFb4Xvg/exec',
 
         // Links de pago de Stripe
         STRIPE_LINKS: {

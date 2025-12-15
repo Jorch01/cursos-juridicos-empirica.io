@@ -35,7 +35,7 @@
 // 3. Copia la URL generada y pégala aquí abajo
 // ============================================================================
 
-const EMPIRICA_BACKEND_URL = 'https://script.google.com/macros/s/YOUR_CENTRALIZED_SCRIPT_ID/exec';
+const EMPIRICA_BACKEND_URL = 'https://script.google.com/macros/s/AKfycbwLjiDy5ZEpP97JUF-FA8Z4Lf6mbMHDDUzLH0JH9rGXFCHnh9KLeSU8oBNS3NTDFb4Xvg/exec';
 
 // Variable global que cada módulo debe definir ANTES de cargar este script
 // Ejemplo: window.MODULE_CONFIG = { moduleNumber: 2, moduleName: 'Contract Law', ... }
