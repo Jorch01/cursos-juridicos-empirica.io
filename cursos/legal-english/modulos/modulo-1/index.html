@@ -2613,6 +2613,20 @@
                 }))
             });
 
+            // Send to backend
+            sendToBackend({
+                type: 'exercise_score',
+                module: 'module-1',
+                exerciseId: exerciseId,
+                exerciseType: 'matching',
+                studentEmail: localStorage.getItem('empirica_user_email') || localStorage.getItem('empirica_free_email') || '',
+                score: `${correctCount}/${totalPairs}`,
+                percentage: score.toString(),
+                isCorrect: allCorrect,
+                userAnswers: results,
+                timestamp: new Date().toISOString()
+            });
+
             console.log(`✅ ${exerciseId} completed. Score: ${score}/100`);
         }
 
@@ -3769,6 +3783,20 @@
                 feedbackText: feedbackText
             });
 
+            // Send to backend
+            sendToBackend({
+                type: 'exercise_score',
+                module: 'module-1',
+                exerciseId: 'exercise3',
+                exerciseType: 'true-false',
+                studentEmail: localStorage.getItem('empirica_user_email') || localStorage.getItem('empirica_free_email') || '',
+                score: `${correctCount}/${totalQuestions}`,
+                percentage: score.toFixed(1),
+                isCorrect: allCorrect,
+                userAnswers: userAnswers,
+                timestamp: new Date().toISOString()
+            });
+
             // Lock exercise
             const button = exercise.querySelector('.btn-check');
             if (button) {
@@ -3864,6 +3892,20 @@
                 feedbackText: feedbackText
             });
 
+            // Send to backend
+            sendToBackend({
+                type: 'exercise_score',
+                module: 'module-1',
+                exerciseId: 'exercise4',
+                exerciseType: 'multiple-choice',
+                studentEmail: localStorage.getItem('empirica_user_email') || localStorage.getItem('empirica_free_email') || '',
+                score: `${correctCount}/${totalQuestions}`,
+                percentage: score.toFixed(1),
+                isCorrect: allCorrect,
+                userAnswers: results,
+                timestamp: new Date().toISOString()
+            });
+
             // Lock exercise
             const button = exercise.querySelector('.btn-check');
             if (button) {
@@ -3957,6 +3999,20 @@
                 points: points,
                 isCorrect: allCorrect,
                 feedbackText: feedbackText
+            });
+
+            // Send to backend
+            sendToBackend({
+                type: 'exercise_score',
+                module: 'module-1',
+                exerciseId: 'exercise5',
+                exerciseType: 'multiple-choice',
+                studentEmail: localStorage.getItem('empirica_user_email') || localStorage.getItem('empirica_free_email') || '',
+                score: `${correctCount}/${totalQuestions}`,
+                percentage: score.toFixed(1),
+                isCorrect: allCorrect,
+                userAnswers: results,
+                timestamp: new Date().toISOString()
             });
 
             // Lock exercise
