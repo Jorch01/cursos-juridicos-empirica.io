@@ -476,9 +476,13 @@ function checkExercise1() {
         data: {
             module: `module-${MODULE_CONFIG.moduleNumber}`,
             exercise: 'exercise1',
+            exerciseType: 'matching',
             studentEmail: studentInfo.email,
+            studentName: studentInfo.name,
             score: `${correctPairs}/${totalPairs}`,
             percentage: (correctPairs / totalPairs * 100).toFixed(1),
+            isCorrect: correctPairs === totalPairs,
+            userAnswers: matches,
             timestamp: new Date().toISOString()
         }
     });
@@ -525,13 +529,15 @@ function checkExercise2() {
 
     let allCorrect = true;
     let correctCount = 0;
+    const userAnswers = [];
 
     inputs.forEach(input => {
         const correctAnswer = input.getAttribute('data-answer').toLowerCase().trim();
         const userAnswer = input.value.toLowerCase().trim();
+        const isCorrect = userAnswer === correctAnswer || isSimilarEnough(userAnswer, correctAnswer);
 
         // Usar fuzzy matching para tolerancia
-        if (userAnswer === correctAnswer || isSimilarEnough(userAnswer, correctAnswer)) {
+        if (isCorrect) {
             input.classList.add('correct');
             input.disabled = true;
             correctCount++;
@@ -541,11 +547,19 @@ function checkExercise2() {
             allCorrect = false;
         }
 
-        // Guardar respuesta individual
+        // Guardar respuesta para enviar al backend
+        userAnswers.push({
+            inputId: input.id,
+            userAnswer: userAnswer,
+            correctAnswer: correctAnswer,
+            isCorrect: isCorrect
+        });
+
+        // Guardar respuesta individual en localStorage
         const storageKey = `${studentInfo.email}_exercise2_${input.id}`;
         localStorage.setItem(storageKey, JSON.stringify({
             answer: userAnswer,
-            correct: userAnswer === correctAnswer || isSimilarEnough(userAnswer, correctAnswer),
+            correct: isCorrect,
             timestamp: new Date().toISOString()
         }));
     });
@@ -565,9 +579,13 @@ function checkExercise2() {
         data: {
             module: `module-${MODULE_CONFIG.moduleNumber}`,
             exercise: 'exercise2',
+            exerciseType: 'fill-blanks',
             studentEmail: studentInfo.email,
+            studentName: studentInfo.name,
             score: `${correctCount}/${inputs.length}`,
             percentage: (correctCount / inputs.length * 100).toFixed(1),
+            isCorrect: allCorrect,
+            userAnswers: userAnswers,
             timestamp: new Date().toISOString()
         }
     });
@@ -603,8 +621,9 @@ function checkExercise3() {
     }
 
     let correctCount = 0;
+    const userAnswers = [];
 
-    questions.forEach(option => {
+    questions.forEach((option, index) => {
         const isCorrect = option.getAttribute('data-correct') === 'true';
         if (isCorrect) {
             option.classList.add('correct');
@@ -612,6 +631,11 @@ function checkExercise3() {
         } else {
             option.classList.add('incorrect');
         }
+        userAnswers.push({
+            question: index + 1,
+            answer: option.textContent.trim(),
+            isCorrect: isCorrect
+        });
     });
 
     // Always show score
@@ -624,9 +648,13 @@ function checkExercise3() {
         data: {
             module: `module-${MODULE_CONFIG.moduleNumber}`,
             exercise: 'exercise3',
+            exerciseType: 'true-false',
             studentEmail: studentInfo.email,
+            studentName: studentInfo.name,
             score: `${correctCount}/5`,
             percentage: (correctCount / 5 * 100).toFixed(1),
+            isCorrect: correctCount === 5,
+            userAnswers: userAnswers,
             timestamp: new Date().toISOString()
         }
     });
@@ -659,6 +687,7 @@ function checkExercise4() {
     let correctCount = 0;
     let allAnswered = true;
     const totalQuestions = questions.length;
+    const userAnswers = [];
 
     questions.forEach(qId => {
         // Fixed selector - look within exercise4 for selected options
@@ -678,6 +707,13 @@ function checkExercise4() {
         } else {
             selected.classList.add('incorrect');
         }
+
+        // Guardar respuesta para enviar
+        userAnswers.push({
+            questionId: qId,
+            answer: selected.textContent.trim(),
+            isCorrect: isCorrect
+        });
 
         // Guardar respuesta individual
         const storageKey = `${studentInfo.email}_exercise4_${qId}`;
@@ -702,9 +738,13 @@ function checkExercise4() {
         data: {
             module: `module-${MODULE_CONFIG.moduleNumber}`,
             exercise: 'exercise4',
+            exerciseType: 'multiple-choice',
             studentEmail: studentInfo.email,
+            studentName: studentInfo.name,
             score: `${correctCount}/${totalQuestions}`,
             percentage: (correctCount / totalQuestions * 100).toFixed(1),
+            isCorrect: correctCount === totalQuestions,
+            userAnswers: userAnswers,
             timestamp: new Date().toISOString()
         }
     });
@@ -1356,13 +1396,21 @@ function handleSurveySubmit(event) {
     const formData = new FormData(form);
     const studentInfo = getStudentInfo();
 
+    // Capturar todos los campos del survey (compatibles con diferentes formularios)
     const surveyData = {
         module: `module-${MODULE_CONFIG.moduleNumber}`,
         studentEmail: studentInfo.email,
-        rating: formData.get('rating'),
-        mostUseful: formData.get('most-useful'),
-        leastUseful: formData.get('least-useful'),
-        suggestions: formData.get('suggestions'),
+        studentName: studentInfo.name,
+        // Campos de dificultad y calidad
+        difficulty: formData.get('difficulty') || '',
+        quality: formData.get('quality') || formData.get('rating') || '',
+        rating: formData.get('rating') || formData.get('quality') || '',
+        // Campos de texto (soportar ambos formatos de nombre)
+        mostUseful: formData.get('most_useful') || formData.get('most-useful') || '',
+        leastUseful: formData.get('least_useful') || formData.get('least-useful') || '',
+        suggestions: formData.get('suggestions') || '',
+        // Tiempo invertido
+        timeSpent: formData.get('time_spent') || formData.get('time-spent') || '',
         timestamp: new Date().toISOString()
     };
 
