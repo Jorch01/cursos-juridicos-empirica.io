@@ -476,9 +476,13 @@ function checkExercise1() {
         data: {
             module: `module-${MODULE_CONFIG.moduleNumber}`,
             exercise: 'exercise1',
+            exerciseType: 'matching',
             studentEmail: studentInfo.email,
+            studentName: studentInfo.name,
             score: `${correctPairs}/${totalPairs}`,
             percentage: (correctPairs / totalPairs * 100).toFixed(1),
+            isCorrect: correctPairs === totalPairs,
+            userAnswers: matches,
             timestamp: new Date().toISOString()
         }
     });
@@ -525,13 +529,15 @@ function checkExercise2() {
 
     let allCorrect = true;
     let correctCount = 0;
+    const userAnswers = [];
 
     inputs.forEach(input => {
         const correctAnswer = input.getAttribute('data-answer').toLowerCase().trim();
         const userAnswer = input.value.toLowerCase().trim();
+        const isCorrect = userAnswer === correctAnswer || isSimilarEnough(userAnswer, correctAnswer);
 
         // Usar fuzzy matching para tolerancia
-        if (userAnswer === correctAnswer || isSimilarEnough(userAnswer, correctAnswer)) {
+        if (isCorrect) {
             input.classList.add('correct');
             input.disabled = true;
             correctCount++;
@@ -541,11 +547,19 @@ function checkExercise2() {
             allCorrect = false;
         }
 
-        // Guardar respuesta individual
+        // Guardar respuesta para enviar al backend
+        userAnswers.push({
+            inputId: input.id,
+            userAnswer: userAnswer,
+            correctAnswer: correctAnswer,
+            isCorrect: isCorrect
+        });
+
+        // Guardar respuesta individual en localStorage
         const storageKey = `${studentInfo.email}_exercise2_${input.id}`;
         localStorage.setItem(storageKey, JSON.stringify({
             answer: userAnswer,
-            correct: userAnswer === correctAnswer || isSimilarEnough(userAnswer, correctAnswer),
+            correct: isCorrect,
             timestamp: new Date().toISOString()
         }));
     });
@@ -565,9 +579,13 @@ function checkExercise2() {
         data: {
             module: `module-${MODULE_CONFIG.moduleNumber}`,
             exercise: 'exercise2',
+            exerciseType: 'fill-blanks',
             studentEmail: studentInfo.email,
+            studentName: studentInfo.name,
             score: `${correctCount}/${inputs.length}`,
             percentage: (correctCount / inputs.length * 100).toFixed(1),
+            isCorrect: allCorrect,
+            userAnswers: userAnswers,
             timestamp: new Date().toISOString()
         }
     });
@@ -603,8 +621,9 @@ function checkExercise3() {
     }
 
     let correctCount = 0;
+    const userAnswers = [];
 
-    questions.forEach(option => {
+    questions.forEach((option, index) => {
         const isCorrect = option.getAttribute('data-correct') === 'true';
         if (isCorrect) {
             option.classList.add('correct');
@@ -612,6 +631,11 @@ function checkExercise3() {
         } else {
             option.classList.add('incorrect');
         }
+        userAnswers.push({
+            question: index + 1,
+            answer: option.textContent.trim(),
+            isCorrect: isCorrect
+        });
     });
 
     // Always show score
@@ -624,9 +648,13 @@ function checkExercise3() {
         data: {
             module: `module-${MODULE_CONFIG.moduleNumber}`,
             exercise: 'exercise3',
+            exerciseType: 'true-false',
             studentEmail: studentInfo.email,
+            studentName: studentInfo.name,
             score: `${correctCount}/5`,
             percentage: (correctCount / 5 * 100).toFixed(1),
+            isCorrect: correctCount === 5,
+            userAnswers: userAnswers,
             timestamp: new Date().toISOString()
         }
     });
@@ -659,6 +687,7 @@ function checkExercise4() {
     let correctCount = 0;
     let allAnswered = true;
     const totalQuestions = questions.length;
+    const userAnswers = [];
 
     questions.forEach(qId => {
         // Fixed selector - look within exercise4 for selected options
@@ -678,6 +707,13 @@ function checkExercise4() {
         } else {
             selected.classList.add('incorrect');
         }
+
+        // Guardar respuesta para enviar
+        userAnswers.push({
+            questionId: qId,
+            answer: selected.textContent.trim(),
+            isCorrect: isCorrect
+        });
 
         // Guardar respuesta individual
         const storageKey = `${studentInfo.email}_exercise4_${qId}`;
@@ -702,9 +738,13 @@ function checkExercise4() {
         data: {
             module: `module-${MODULE_CONFIG.moduleNumber}`,
             exercise: 'exercise4',
+            exerciseType: 'multiple-choice',
             studentEmail: studentInfo.email,
+            studentName: studentInfo.name,
             score: `${correctCount}/${totalQuestions}`,
             percentage: (correctCount / totalQuestions * 100).toFixed(1),
+            isCorrect: correctCount === totalQuestions,
+            userAnswers: userAnswers,
             timestamp: new Date().toISOString()
         }
     });
@@ -749,12 +789,14 @@ function checkExercise5() {
     }
 
     let correctCount = 0;
+    const userAnswers = [];
 
     inputs.forEach(input => {
         const correctAnswer = input.getAttribute('data-answer').toLowerCase().trim();
         const userAnswer = input.value.toLowerCase().trim();
+        const isCorrect = userAnswer === correctAnswer || isSimilarEnough(userAnswer, correctAnswer);
 
-        if (userAnswer === correctAnswer || isSimilarEnough(userAnswer, correctAnswer)) {
+        if (isCorrect) {
             input.classList.add('correct');
             input.disabled = true;
             correctCount++;
@@ -763,10 +805,17 @@ function checkExercise5() {
             input.disabled = true;
         }
 
+        userAnswers.push({
+            inputId: input.id,
+            userAnswer: userAnswer,
+            correctAnswer: correctAnswer,
+            isCorrect: isCorrect
+        });
+
         const storageKey = `${studentInfo.email}_exercise5_${input.id}`;
         localStorage.setItem(storageKey, JSON.stringify({
             answer: userAnswer,
-            correct: userAnswer === correctAnswer || isSimilarEnough(userAnswer, correctAnswer),
+            correct: isCorrect,
             timestamp: new Date().toISOString()
         }));
     });
@@ -779,9 +828,13 @@ function checkExercise5() {
         data: {
             module: `module-${MODULE_CONFIG.moduleNumber}`,
             exercise: 'exercise5',
+            exerciseType: 'fill-blanks',
             studentEmail: studentInfo.email,
+            studentName: studentInfo.name,
             score: `${correctCount}/${inputs.length}`,
             percentage: (correctCount / inputs.length * 100).toFixed(1),
+            isCorrect: correctCount === inputs.length,
+            userAnswers: userAnswers,
             timestamp: new Date().toISOString()
         }
     });
@@ -813,42 +866,46 @@ function checkExercise6() {
 
     let totalCorrect = 0;
     const totalStatements = 7;
+    const userAnswers = [];
 
     tickOptions.forEach(div => {
         const checkboxId = div.getAttribute('data-checkbox-id');
         const checkbox = document.getElementById(checkboxId);
-        const isCorrect = div.getAttribute('data-correct') === 'true';
+        const shouldBeChecked = div.getAttribute('data-correct') === 'true';
         const isChecked = checkbox.checked;
+        const answerCorrect = (isChecked && shouldBeChecked) || (!isChecked && !shouldBeChecked);
 
         // Bloquear el div
         div.classList.add('locked');
         div.style.cursor = 'not-allowed';
 
         // Colorear según corrección
-        if (isChecked && isCorrect) {
-            // Correcto - marcado cuando debía
+        if (isChecked && shouldBeChecked) {
             div.style.borderColor = '#28a745';
             div.style.backgroundColor = '#d4edda';
             totalCorrect++;
-        } else if (isChecked && !isCorrect) {
-            // Incorrecto - marcado cuando no debía
+        } else if (isChecked && !shouldBeChecked) {
             div.style.borderColor = '#dc3545';
             div.style.backgroundColor = '#f8d7da';
-        } else if (!isChecked && isCorrect) {
-            // Incorrecto - NO marcado cuando debía
+        } else if (!isChecked && shouldBeChecked) {
             div.style.borderColor = '#ffc107';
             div.style.backgroundColor = '#fff3cd';
-        }
-        // Si no está marcado y no debía estarlo, dejar sin color (correcto implícito)
-        else {
+        } else {
             totalCorrect++;
         }
 
-        // Guardar estado
+        userAnswers.push({
+            checkboxId: checkboxId,
+            statement: div.textContent.trim().substring(0, 100),
+            userChecked: isChecked,
+            shouldBeChecked: shouldBeChecked,
+            isCorrect: answerCorrect
+        });
+
         const storageKey = `${studentInfo.email}_exercise6_${checkboxId}`;
         localStorage.setItem(storageKey, JSON.stringify({
             checked: isChecked,
-            correct: (isChecked && isCorrect) || (!isChecked && !isCorrect),
+            correct: answerCorrect,
             timestamp: new Date().toISOString()
         }));
     });
@@ -861,9 +918,13 @@ function checkExercise6() {
         data: {
             module: `module-${MODULE_CONFIG.moduleNumber}`,
             exercise: 'exercise6',
+            exerciseType: 'listening-checkbox',
             studentEmail: studentInfo.email,
+            studentName: studentInfo.name,
             score: `${totalCorrect}/${totalStatements}`,
             percentage: (totalCorrect / totalStatements * 100).toFixed(1),
+            isCorrect: totalCorrect === totalStatements,
+            userAnswers: userAnswers,
             timestamp: new Date().toISOString()
         }
     });
@@ -908,12 +969,14 @@ function checkExercise7() {
     }
 
     let correctCount = 0;
+    const userAnswers = [];
 
     inputs.forEach(input => {
         const correctAnswer = input.getAttribute('data-answer').toLowerCase().trim();
         const userAnswer = input.value.toLowerCase().trim();
+        const isCorrect = userAnswer === correctAnswer || isSimilarEnough(userAnswer, correctAnswer);
 
-        if (userAnswer === correctAnswer || isSimilarEnough(userAnswer, correctAnswer)) {
+        if (isCorrect) {
             input.classList.add('correct');
             input.disabled = true;
             correctCount++;
@@ -922,10 +985,17 @@ function checkExercise7() {
             input.disabled = true;
         }
 
+        userAnswers.push({
+            inputId: input.id,
+            userAnswer: userAnswer,
+            correctAnswer: correctAnswer,
+            isCorrect: isCorrect
+        });
+
         const storageKey = `${studentInfo.email}_exercise7_${input.id}`;
         localStorage.setItem(storageKey, JSON.stringify({
             answer: userAnswer,
-            correct: userAnswer === correctAnswer || isSimilarEnough(userAnswer, correctAnswer),
+            correct: isCorrect,
             timestamp: new Date().toISOString()
         }));
     });
@@ -938,9 +1008,13 @@ function checkExercise7() {
         data: {
             module: `module-${MODULE_CONFIG.moduleNumber}`,
             exercise: 'exercise7',
+            exerciseType: 'listening-fill-blanks',
             studentEmail: studentInfo.email,
+            studentName: studentInfo.name,
             score: `${correctCount}/${inputs.length}`,
             percentage: (correctCount / inputs.length * 100).toFixed(1),
+            isCorrect: correctCount === inputs.length,
+            userAnswers: userAnswers,
             timestamp: new Date().toISOString()
         }
     });
@@ -977,8 +1051,9 @@ function checkExercise8() {
     }
 
     let correctCount = 0;
+    const userAnswers = [];
 
-    selectedOptions.forEach(option => {
+    selectedOptions.forEach((option, index) => {
         const isCorrect = option.getAttribute('data-correct') === 'true';
         if (isCorrect) {
             option.classList.add('correct');
@@ -986,6 +1061,11 @@ function checkExercise8() {
         } else {
             option.classList.add('incorrect');
         }
+        userAnswers.push({
+            question: index + 1,
+            answer: option.textContent.trim(),
+            isCorrect: isCorrect
+        });
     });
 
     feedback.textContent = `Score: ${correctCount}/3 correct.`;
@@ -996,9 +1076,13 @@ function checkExercise8() {
         data: {
             module: `module-${MODULE_CONFIG.moduleNumber}`,
             exercise: 'exercise8',
+            exerciseType: 'listening-multiple-choice',
             studentEmail: studentInfo.email,
+            studentName: studentInfo.name,
             score: `${correctCount}/3`,
             percentage: (correctCount / 3 * 100).toFixed(1),
+            isCorrect: correctCount === 3,
+            userAnswers: userAnswers,
             timestamp: new Date().toISOString()
         }
     });
@@ -1033,6 +1117,7 @@ function checkExercise9() {
     }
 
     const isCorrect = selected.getAttribute('data-correct') === 'true';
+    const userAnswer = selected.textContent.trim();
 
     if (isCorrect) {
         selected.classList.add('correct');
@@ -1050,9 +1135,13 @@ function checkExercise9() {
         data: {
             module: `module-${MODULE_CONFIG.moduleNumber}`,
             exercise: 'exercise9',
+            exerciseType: 'single-choice',
             studentEmail: studentInfo.email,
+            studentName: studentInfo.name,
             score: isCorrect ? '1/1' : '0/1',
             percentage: isCorrect ? '100' : '0',
+            isCorrect: isCorrect,
+            userAnswers: [{ answer: userAnswer, isCorrect: isCorrect }],
             timestamp: new Date().toISOString()
         }
     });
@@ -1123,9 +1212,13 @@ function checkExercise10() {
         data: {
             module: `module-${MODULE_CONFIG.moduleNumber}`,
             exercise: 'exercise10',
+            exerciseType: 'matching',
             studentEmail: studentInfo.email,
+            studentName: studentInfo.name,
             score: `${correctPairs}/${totalPairs}`,
             percentage: (correctPairs / totalPairs * 100).toFixed(1),
+            isCorrect: correctPairs === totalPairs,
+            userAnswers: matches,
             timestamp: new Date().toISOString()
         }
     });
@@ -1212,10 +1305,13 @@ function checkExercise11() {
         data: {
             module: `module-${MODULE_CONFIG.moduleNumber}`,
             exercise: 'exercise11',
+            exerciseType: 'writing-task',
             studentEmail: studentInfo.email,
+            studentName: studentInfo.name,
             score: '1/1',
             percentage: '100',
-            writingContent: {
+            isCorrect: true,
+            userAnswers: {
                 date: date.value,
                 number: number.value,
                 circumstances: circumstances.value,
@@ -1356,13 +1452,21 @@ function handleSurveySubmit(event) {
     const formData = new FormData(form);
     const studentInfo = getStudentInfo();
 
+    // Capturar todos los campos del survey (compatibles con diferentes formularios)
     const surveyData = {
         module: `module-${MODULE_CONFIG.moduleNumber}`,
         studentEmail: studentInfo.email,
-        rating: formData.get('rating'),
-        mostUseful: formData.get('most-useful'),
-        leastUseful: formData.get('least-useful'),
-        suggestions: formData.get('suggestions'),
+        studentName: studentInfo.name,
+        // Campos de dificultad y calidad
+        difficulty: formData.get('difficulty') || '',
+        quality: formData.get('quality') || formData.get('rating') || '',
+        rating: formData.get('rating') || formData.get('quality') || '',
+        // Campos de texto (soportar ambos formatos de nombre)
+        mostUseful: formData.get('most_useful') || formData.get('most-useful') || '',
+        leastUseful: formData.get('least_useful') || formData.get('least-useful') || '',
+        suggestions: formData.get('suggestions') || '',
+        // Tiempo invertido
+        timeSpent: formData.get('time_spent') || formData.get('time-spent') || '',
         timestamp: new Date().toISOString()
     };
 
